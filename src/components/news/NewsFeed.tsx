@@ -10,6 +10,14 @@ interface NewsFeedProps {
   articles: NewsArticle[];
 }
 
+function AdPlaceholder({ index }: { index: number }) {
+  return (
+    <div className="rounded-lg border border-dashed border-border bg-bg-secondary/50 px-5 py-4 flex items-center justify-center">
+      <span className="text-xs text-text-muted font-mono">Ad Space Reserved for Google AdSense</span>
+    </div>
+  );
+}
+
 export default function NewsFeed({ articles }: NewsFeedProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [layout, setLayout] = useState<FeedLayout>('full');
@@ -61,21 +69,22 @@ export default function NewsFeed({ articles }: NewsFeedProps) {
         </div>
       </div>
 
-      {/* Articles */}
+      {/* Articles with ad slots every 10 articles */}
       {filteredArticles.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-text-muted text-lg">No articles found for this category.</p>
         </div>
       ) : (
-        <div
-          className={
-            layout === 'full'
-              ? 'grid gap-4 grid-cols-1'
-              : 'grid gap-3 grid-cols-1'
-          }
-        >
-          {filteredArticles.map((article) => (
-            <NewsCard key={article.id} article={article} />
+        <div className={layout === 'full' ? 'grid gap-4 grid-cols-1' : 'grid gap-3 grid-cols-1'}>
+          {filteredArticles.map((article, index) => (
+            <div key={article.id}>
+              <NewsCard article={article} />
+              {(index + 1) % 10 === 0 && index < filteredArticles.length - 1 && (
+                <div className="mt-4">
+                  <AdPlaceholder index={index} />
+                </div>
+              )}
+            </div>
           ))}
         </div>
       )}
