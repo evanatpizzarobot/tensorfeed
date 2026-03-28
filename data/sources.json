@@ -1,39 +1,12 @@
 {
   "sources": [
     {
-      "id": "anthropic-blog",
-      "name": "Anthropic Blog",
-      "url": "https://www.anthropic.com/rss.xml",
-      "domain": "anthropic.com",
-      "icon": "/images/sources/anthropic.png",
-      "categories": ["Anthropic/Claude"],
-      "active": true
-    },
-    {
-      "id": "openai-blog",
-      "name": "OpenAI Blog",
-      "url": "https://openai.com/blog/rss/",
-      "domain": "openai.com",
-      "icon": "/images/sources/openai.png",
-      "categories": ["OpenAI"],
-      "active": true
-    },
-    {
       "id": "google-ai",
       "name": "Google AI Blog",
       "url": "https://blog.google/technology/ai/rss/",
       "domain": "blog.google",
       "icon": "/images/sources/google.png",
       "categories": ["Google/Gemini"],
-      "active": true
-    },
-    {
-      "id": "meta-ai",
-      "name": "Meta AI Blog",
-      "url": "https://ai.meta.com/blog/rss/",
-      "domain": "ai.meta.com",
-      "icon": "/images/sources/meta.png",
-      "categories": ["Meta/Llama"],
       "active": true
     },
     {
@@ -109,30 +82,30 @@
       "active": true
     },
     {
-      "id": "arxiv-cl",
-      "name": "arXiv cs.CL",
-      "url": "https://rss.arxiv.org/rss/cs.CL",
-      "domain": "arxiv.org",
-      "icon": "/images/sources/arxiv.png",
-      "categories": ["Research", "NLP"],
-      "active": true
-    },
-    {
-      "id": "arxiv-lg",
-      "name": "arXiv cs.LG",
-      "url": "https://rss.arxiv.org/rss/cs.LG",
-      "domain": "arxiv.org",
-      "icon": "/images/sources/arxiv.png",
-      "categories": ["Research", "ML"],
-      "active": true
-    },
-    {
       "id": "hackernews-ai",
       "name": "Hacker News AI",
       "url": "https://hnrss.org/newest?q=AI+OR+LLM+OR+GPT+OR+Claude",
       "domain": "news.ycombinator.com",
       "icon": "/images/sources/hackernews.png",
       "categories": ["Community"],
+      "active": true
+    },
+    {
+      "id": "wired-ai",
+      "name": "WIRED AI",
+      "url": "https://www.wired.com/feed/tag/ai/latest/rss",
+      "domain": "wired.com",
+      "icon": "/images/sources/wired.png",
+      "categories": ["General AI"],
+      "active": true
+    },
+    {
+      "id": "zdnet-ai",
+      "name": "ZDNet AI",
+      "url": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml",
+      "domain": "zdnet.com",
+      "icon": "/images/sources/zdnet.png",
+      "categories": ["Enterprise", "General AI"],
       "active": true
     }
   ]

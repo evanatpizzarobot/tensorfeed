@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { PenTool, Clock, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -7,32 +8,32 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
+    slug: 'why-we-built-tensorfeed',
     title: 'Why We Built TensorFeed.ai',
     date: 'Mar 28, 2026',
     description:
-      'Every morning I found myself opening a dozen tabs to check AI news, model releases, and API status pages. TensorFeed started as a personal dashboard and grew into something we think the whole community can use.',
-    isFuture: false,
+      'Every morning I found myself opening a dozen tabs to check AI news, model releases, and API status pages. TensorFeed started as a personal frustration and grew into an aggregated hub built for humans and AI agents alike.',
   },
   {
+    slug: 'state-of-ai-apis-2026',
     title: 'The State of AI APIs in 2026',
-    date: 'Apr 1, 2026',
+    date: 'Mar 30, 2026',
     description:
-      'The API landscape has changed dramatically in the past year, with new pricing models, streaming protocols, and agent-native endpoints. We break down what matters for developers building production applications today.',
-    isFuture: true,
+      'The API landscape shifted dramatically over the past year. Pricing wars, the context window race, agent-native endpoints, MCP protocol adoption, and structured outputs all reshaped how developers build on AI. We break down what matters.',
   },
   {
+    slug: 'claude-vs-gpt-vs-gemini',
     title: 'Claude vs GPT vs Gemini: An Honest Comparison',
+    date: 'Apr 2, 2026',
+    description:
+      'Benchmarks only tell part of the story. We ran all three frontier models through real-world coding, writing, analysis, and research tasks. Here is what we found, including a task-by-task scorecard and pricing comparison.',
+  },
+  {
+    slug: 'building-for-ai-agents',
+    title: 'Building for AI Agents: What Developers Need to Know',
     date: 'Apr 5, 2026',
     description:
-      'Benchmarks only tell part of the story, so we ran all three models through real-world tasks spanning coding, writing, and analysis. Here is what we found when we stopped relying on leaderboards and started testing ourselves.',
-    isFuture: true,
-  },
-  {
-    title: 'Building for AI Agents: What Developers Need to Know',
-    date: 'Apr 10, 2026',
-    description:
-      'AI agents are moving from demos to production, and the infrastructure they need looks very different from traditional web apps. We cover the patterns, pitfalls, and practical advice we have gathered from building agent-first tooling.',
-    isFuture: true,
+      'AI agents are moving from demos to production, and the software they need looks different from traditional web apps. Structured data, llms.txt, MCP servers, and agent-friendly API design patterns that actually work.',
   },
 ];
 
@@ -52,10 +53,10 @@ export default function OriginalsPage() {
 
       {/* Articles */}
       <div className="grid gap-6">
-        {ARTICLES.map((article, i) => (
-          <a
-            key={i}
-            href="#"
+        {ARTICLES.map((article) => (
+          <Link
+            key={article.slug}
+            href={`/originals/${article.slug}`}
             className="group block bg-bg-secondary border border-border rounded-xl p-6 hover:border-accent-primary transition-colors"
           >
             <div className="flex items-start gap-4">
@@ -65,11 +66,6 @@ export default function OriginalsPage() {
                   <h2 className="text-lg font-semibold text-text-primary group-hover:text-accent-primary transition-colors">
                     {article.title}
                   </h2>
-                  {article.isFuture && (
-                    <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-accent-secondary/20 text-accent-secondary border border-accent-secondary/30">
-                      Coming Soon
-                    </span>
-                  )}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-text-muted mb-3">
                   <Clock className="w-3.5 h-3.5" />
@@ -86,7 +82,7 @@ export default function OriginalsPage() {
                 </span>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

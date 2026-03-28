@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import NewsFeed from '@/components/news/NewsFeed';
 import Sidebar from '@/components/layout/Sidebar';
-import { MOCK_ARTICLES, MOCK_STATUSES } from '@/lib/mock-data';
+import articlesData from '../../data/articles.json';
+import { MOCK_STATUSES } from '@/lib/mock-data';
 import { STATUS_DOTS } from '@/lib/constants';
 import {
   Rss,
@@ -78,7 +79,7 @@ function getShortName(name: string) {
 }
 
 export default function HomePage() {
-  const articles = MOCK_ARTICLES;
+  const articles = articlesData.articles;
   const statuses = MOCK_STATUSES;
 
   const quickStatuses = QUICK_STATUS_SERVICES.map((serviceName) => {

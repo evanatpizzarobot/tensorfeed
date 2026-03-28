@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { Menu, X, Zap, Search, ChevronDown } from 'lucide-react';
@@ -39,7 +40,15 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1 shrink-0 hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-2 shrink-0 hover:opacity-80 transition-opacity">
+            <Image
+              src="/tensorfeed-icon.png"
+              alt="TensorFeed"
+              width={28}
+              height={28}
+              className="w-7 h-7"
+              priority
+            />
             <span className="font-mono text-xl">
               <span className="font-bold text-text-primary">TENSOR</span>
               <span className="font-normal text-text-secondary">FEED</span>

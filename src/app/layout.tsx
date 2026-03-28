@@ -10,19 +10,23 @@ export const metadata: Metadata = {
   },
   description: 'AI news, model tracking, and real-time AI ecosystem data for humans and agents. Your daily hub for everything artificial intelligence.',
   metadataBase: new URL('https://tensorfeed.ai'),
+  icons: {
+    icon: '/tensorfeed-icon.png',
+    apple: '/tensorfeed-icon.png',
+  },
   openGraph: {
     type: 'website',
     siteName: 'TensorFeed.ai',
     title: 'TensorFeed.ai | AI News, Model Tracking & Real-Time Data',
     description: 'AI news, model tracking, and real-time AI ecosystem data for humans and agents.',
     url: 'https://tensorfeed.ai',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: '/tensorfeed-logo.png', width: 1024, height: 1024 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'TensorFeed.ai',
     description: 'AI news, model tracking, and real-time AI ecosystem data for humans and agents.',
-    images: ['/og-image.png'],
+    images: ['/tensorfeed-logo.png'],
   },
   robots: {
     index: true,

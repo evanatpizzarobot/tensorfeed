@@ -14,14 +14,9 @@ const TRENDING_TOPICS = [
   '#Safety',
 ];
 
-const MOCK_SOURCES = [
-  'Anthropic Blog',
-  'OpenAI Blog',
-  'Google AI Blog',
-  'TechCrunch AI',
-  'The Verge AI',
-  'Ars Technica',
-];
+import sourcesData from '../../../data/sources.json';
+
+const LIVE_SOURCES = sourcesData.sources.map(s => s.name).slice(0, 6);
 
 export default function Sidebar() {
   const topStatuses = MOCK_STATUSES.slice(0, 5);
@@ -67,11 +62,11 @@ export default function Sidebar() {
             Sources
           </h3>
           <span className="text-[10px] text-text-muted font-mono">
-            15 active feeds
+            {sourcesData.sources.length} active feeds
           </span>
         </div>
         <ul className="space-y-1.5">
-          {MOCK_SOURCES.map((name) => (
+          {LIVE_SOURCES.map((name) => (
             <li key={name} className="text-xs text-text-secondary">
               {name}
             </li>
