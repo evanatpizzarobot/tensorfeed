@@ -1,103 +1,40 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Radio, Zap } from 'lucide-react';
+import { Radio, Zap, Globe, Shield, TrendingUp, ExternalLink } from 'lucide-react';
 import { MOCK_STATUSES } from '@/lib/mock-data';
 import { STATUS_DOTS, STATUS_COLORS } from '@/lib/constants';
 import { ServiceStatus, ServiceComponent } from '@/lib/types';
 import pricingData from '@/../data/pricing.json';
-
-// Metadata must be exported from a server component, so we set document title via useEffect-free approach
-// For client components, metadata is handled by the layout or a head component.
+import {
+  useGithubTrending,
+  useInternetPulse,
+  usePredictions,
+  useCyberThreats,
+  useEconomicData,
+  useBriefing,
+  isAIRelated,
+  type TFGithubRepo,
+  type TFPulseRegion,
+  type TFPrediction,
+  type TFThreat,
+  type TFEconomicIndicator,
+} from '@/lib/terminalfeed';
 
 const TABS = [
   'Agent Activity',
   'AI Status',
-  'HN Feed',
   'GitHub Trending',
-  'arXiv Papers',
+  'Predictions',
+  'Internet Pulse',
+  'Cyber Threats',
   'API Pricing',
   'Model Tracker',
 ] as const;
 
 type TabName = (typeof TABS)[number];
 
-// ─── Mock Data ───────────────────────────────────────────────────────────────
-
-const MOCK_HN_POSTS = [
-  { id: 1, title: 'Claude Opus 4.6 achieves state-of-the-art on SWE-bench with 72% unassisted', points: 1483, comments: 612, timeAgo: '2 hours ago' },
-  { id: 2, title: 'GPT-5 Turbo benchmarks show diminishing returns on reasoning tasks', points: 987, comments: 445, timeAgo: '3 hours ago' },
-  { id: 3, title: 'Show HN: I built an open-source alternative to Cursor using local LLMs', points: 876, comments: 234, timeAgo: '4 hours ago' },
-  { id: 4, title: 'The EU AI Act is now being enforced. Here is what it means for startups', points: 743, comments: 389, timeAgo: '5 hours ago' },
-  { id: 5, title: 'Llama 4 Scout runs at 200 tokens/s on a single RTX 5090', points: 692, comments: 178, timeAgo: '6 hours ago' },
-  { id: 6, title: 'Why we switched from RAG to long-context models and saved 60% on infra', points: 634, comments: 267, timeAgo: '7 hours ago' },
-  { id: 7, title: 'DeepSeek-V4 open-weights release matches GPT-4o on MMLU-Pro', points: 589, comments: 198, timeAgo: '8 hours ago' },
-  { id: 8, title: 'AI-generated code now accounts for 38% of new GitHub commits (study)', points: 521, comments: 456, timeAgo: '10 hours ago' },
-  { id: 9, title: 'Anthropic publishes responsible scaling policy update for 2026', points: 478, comments: 312, timeAgo: '11 hours ago' },
-  { id: 10, title: 'The bitter lesson, revisited: what 2025 taught us about scale vs. architecture', points: 445, comments: 201, timeAgo: '13 hours ago' },
-];
-
-const MOCK_GITHUB_REPOS = [
-  { name: 'anthropics/claude-code', description: 'Official CLI for Claude. Agentic coding tool that lives in your terminal.', stars: 48200, language: 'TypeScript', langColor: 'bg-blue-400', growth: '+2,340 this week' },
-  { name: 'vllm-project/vllm', description: 'High-throughput and memory-efficient inference engine for LLMs.', stars: 52100, language: 'Python', langColor: 'bg-yellow-400', growth: '+1,870 this week' },
-  { name: 'deepseek-ai/DeepSeek-V4', description: 'Open-weight MoE model with 671B total parameters. Apache 2.0 licensed.', stars: 38900, language: 'Python', langColor: 'bg-yellow-400', growth: '+4,120 this week' },
-  { name: 'huggingface/transformers', description: 'State-of-the-art ML for PyTorch, TensorFlow, and JAX.', stars: 148000, language: 'Python', langColor: 'bg-yellow-400', growth: '+890 this week' },
-  { name: 'langchain-ai/langchain', description: 'Build context-aware reasoning applications with composable components.', stars: 102000, language: 'Python', langColor: 'bg-yellow-400', growth: '+760 this week' },
-  { name: 'meta-llama/llama-stack', description: 'Toolchain and APIs for building with Llama models.', stars: 21400, language: 'Python', langColor: 'bg-yellow-400', growth: '+1,530 this week' },
-  { name: 'openai/codex-agent', description: 'Autonomous coding agent powered by Codex. Runs in sandboxed environments.', stars: 29800, language: 'TypeScript', langColor: 'bg-blue-400', growth: '+3,210 this week' },
-  { name: 'mlc-ai/mlc-llm', description: 'Universal LLM deployment on any hardware. Supports WebGPU, Metal, CUDA, Vulkan.', stars: 24600, language: 'C++', langColor: 'bg-pink-400', growth: '+680 this week' },
-];
-
-const MOCK_ARXIV_PAPERS = [
-  {
-    id: '2603.18201',
-    title: 'Scaling Mixture-of-Experts Beyond 1 Trillion Parameters with Adaptive Routing',
-    authors: ['Wei, J.', 'Tay, Y.', 'Bommasani, R.'],
-    abstract: 'We present a novel adaptive routing mechanism for sparse MoE models that enables stable training at scales exceeding one trillion parameters. Our approach reduces expert collapse by 74% compared to top-k routing while maintaining computational efficiency.',
-    date: '2026-03-27',
-    tags: ['cs.LG', 'cs.AI'],
-  },
-  {
-    id: '2603.17845',
-    title: 'Constitutional Steering: Aligning Language Models Through Natural Language Constraints',
-    authors: ['Bai, Y.', 'Kadavath, S.', 'Askell, A.'],
-    abstract: 'We introduce constitutional steering, a technique that allows users to specify behavioral constraints in natural language at inference time. Models trained with this approach show 89% adherence to user-specified constitutions without fine-tuning.',
-    date: '2026-03-26',
-    tags: ['cs.CL', 'cs.AI'],
-  },
-  {
-    id: '2603.16932',
-    title: 'Long-Context Retrieval Without Retrieval: When 10M Token Windows Replace RAG Pipelines',
-    authors: ['Chen, M.', 'Borgeaud, S.', 'Wu, J.'],
-    abstract: 'We systematically compare retrieval-augmented generation with native long-context models on knowledge-intensive tasks. At context windows exceeding 2M tokens, native context achieves 94% of RAG performance while eliminating pipeline complexity.',
-    date: '2026-03-25',
-    tags: ['cs.CL', 'cs.IR'],
-  },
-  {
-    id: '2603.15678',
-    title: 'Agentic Code Generation: A Survey of Autonomous Programming Systems',
-    authors: ['Zhang, L.', 'Li, R.', 'Muennighoff, N.'],
-    abstract: 'We survey 47 autonomous coding systems released between 2024 and 2026, categorizing them by architecture, tool use patterns, and evaluation methodology. We identify key design principles that correlate with performance on SWE-bench and real-world codebases.',
-    date: '2026-03-24',
-    tags: ['cs.SE', 'cs.AI', 'cs.CL'],
-  },
-  {
-    id: '2603.14290',
-    title: 'Reward Hacking in RLHF: Detecting and Mitigating Specification Gaming at Scale',
-    authors: ['Amodei, D.', 'Cotra, A.', 'Leike, J.'],
-    abstract: 'We present a systematic taxonomy of reward hacking behaviors in RLHF-trained models, along with a detection framework that identifies specification gaming with 91% precision. We release a benchmark of 2,400 reward hacking examples.',
-    date: '2026-03-23',
-    tags: ['cs.AI', 'cs.LG'],
-  },
-  {
-    id: '2603.13105',
-    title: 'Sparse Attention Is All You Need: Sub-Quadratic Transformers for 10M Token Contexts',
-    authors: ['Dao, T.', 'Gu, A.', 'Dao, B.'],
-    abstract: 'We propose SparseFlash, an extension of FlashAttention that achieves sub-quadratic complexity through learned sparsity patterns. Our approach processes 10 million token sequences on a single A100 with less than 40GB of memory.',
-    date: '2026-03-22',
-    tags: ['cs.LG', 'cs.CL'],
-  },
-];
+// ─── Mock Data (kept for tabs not yet connected to live APIs) ────────────────
 
 const MOCK_MODEL_RELEASES = [
   {
@@ -144,7 +81,42 @@ const MOCK_MODEL_RELEASES = [
   },
 ];
 
-// ─── Tab Content Components ──────────────────────────────────────────────────
+// ─── Loading Skeleton ───────────────────────────────────────────────────────
+
+function LoadingSkeleton({ rows = 5 }: { rows?: number }) {
+  return (
+    <div className="space-y-3 animate-pulse">
+      {Array.from({ length: rows }).map((_, i) => (
+        <div key={i} className="bg-bg-secondary border border-border rounded-lg p-4">
+          <div className="h-4 bg-bg-tertiary rounded w-3/4 mb-2" />
+          <div className="h-3 bg-bg-tertiary rounded w-1/2" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ErrorFallback({ error }: { error: string }) {
+  return (
+    <div className="bg-bg-secondary border border-border rounded-lg p-6 text-center">
+      <p className="text-text-muted text-sm">Unable to load data</p>
+      <p className="text-text-muted text-xs mt-1">{error}</p>
+    </div>
+  );
+}
+
+function TFAttribution() {
+  return (
+    <p className="text-xs text-text-muted mt-4 flex items-center gap-1">
+      Data via{' '}
+      <a href="https://terminalfeed.io" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:text-accent-cyan transition-colors">
+        TerminalFeed.io
+      </a>
+    </p>
+  );
+}
+
+// ─── Tab Content Components ─────────────────────────────────────────────────
 
 function StatusDot({ status }: { status: string }) {
   return (
@@ -159,10 +131,7 @@ function AIStatusTab() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {statuses.map((service: ServiceStatus) => (
-        <div
-          key={service.name}
-          className="bg-bg-secondary border border-border rounded-lg p-4"
-        >
+        <div key={service.name} className="bg-bg-secondary border border-border rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
             <div>
               <h3 className="text-text-primary font-medium text-sm">{service.name}</h3>
@@ -193,99 +162,218 @@ function AIStatusTab() {
   );
 }
 
-function HNFeedTab() {
-  return (
-    <div className="space-y-0.5">
-      {MOCK_HN_POSTS.map((post, idx) => (
-        <div
-          key={post.id}
-          className="flex items-start gap-3 px-3 py-2.5 rounded-md hover:bg-bg-secondary transition-colors"
-        >
-          <span className="text-text-muted text-sm font-mono w-6 shrink-0 text-right pt-0.5">
-            {idx + 1}.
-          </span>
-          <div className="flex-1 min-w-0">
-            <p className="text-text-primary text-sm leading-snug">{post.title}</p>
-            <div className="flex items-center gap-3 mt-1 text-xs text-text-muted">
-              <span className="text-accent-amber">{post.points} pts</span>
-              <span>{post.comments} comments</span>
-              <span>{post.timeAgo}</span>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function GitHubTrendingTab() {
+  const { data, loading, error } = useGithubTrending();
+
+  if (loading) return <LoadingSkeleton rows={6} />;
+  if (error || !data) return <ErrorFallback error={error || 'No data'} />;
+
+  const LANG_COLORS: Record<string, string> = {
+    Python: 'bg-yellow-400',
+    TypeScript: 'bg-blue-400',
+    JavaScript: 'bg-amber-400',
+    Rust: 'bg-orange-500',
+    Go: 'bg-cyan-400',
+    'C++': 'bg-pink-400',
+    Java: 'bg-red-400',
+    Jupyter: 'bg-orange-400',
+  };
+
+  // Filter for AI-related repos
+  const aiRepos = data.filter((repo: TFGithubRepo) =>
+    isAIRelated(`${repo.name} ${repo.description || ''}`)
+  );
+  const displayRepos = aiRepos.length > 0 ? aiRepos : data.slice(0, 10);
+
   return (
-    <div className="space-y-3">
-      {MOCK_GITHUB_REPOS.map((repo) => (
-        <div
-          key={repo.name}
-          className="bg-bg-secondary border border-border rounded-lg p-4"
-        >
-          <div className="flex items-start justify-between">
-            <div className="flex-1 min-w-0">
-              <h3 className="text-accent-primary font-medium text-sm">{repo.name}</h3>
-              <p className="text-text-secondary text-xs mt-1 line-clamp-1">{repo.description}</p>
+    <div>
+      {aiRepos.length > 0 && (
+        <p className="text-xs text-text-muted mb-3">Showing {aiRepos.length} AI-related trending repos</p>
+      )}
+      <div className="space-y-3">
+        {displayRepos.map((repo: TFGithubRepo) => (
+          <a
+            key={repo.name || repo.url}
+            href={repo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-bg-secondary border border-border rounded-lg p-4 hover:border-accent-primary transition-colors group"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-accent-primary font-medium text-sm group-hover:text-accent-cyan transition-colors flex items-center gap-1.5">
+                  {repo.name}
+                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </h3>
+                <p className="text-text-secondary text-xs mt-1 line-clamp-1">{repo.description}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-4 mt-2 text-xs text-text-muted">
-            <span className="flex items-center gap-1.5">
-              <span className={`w-2.5 h-2.5 rounded-full ${repo.langColor}`} />
-              {repo.language}
-            </span>
-            <span>{repo.stars.toLocaleString()} stars</span>
-            <span className="text-accent-green">&#11014; {repo.growth}</span>
-          </div>
-        </div>
-      ))}
+            <div className="flex items-center gap-4 mt-2 text-xs text-text-muted">
+              {repo.language && (
+                <span className="flex items-center gap-1.5">
+                  <span className={`w-2.5 h-2.5 rounded-full ${LANG_COLORS[repo.language] || 'bg-gray-400'}`} />
+                  {repo.language}
+                </span>
+              )}
+              <span>{(repo.stars || 0).toLocaleString()} stars</span>
+              {repo.todayStars > 0 && (
+                <span className="text-accent-green">+{repo.todayStars.toLocaleString()} today</span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+      <TFAttribution />
     </div>
   );
 }
 
-function ArxivPapersTab() {
+function PredictionsTab() {
+  const { data, loading, error } = usePredictions();
+
+  if (loading) return <LoadingSkeleton rows={6} />;
+  if (error || !data) return <ErrorFallback error={error || 'No data'} />;
+
+  // Try to filter for AI-related predictions, fall back to all
+  const aiPredictions = data.filter((p: TFPrediction) => isAIRelated(p.question));
+  const displayPredictions = aiPredictions.length >= 3 ? aiPredictions : data.slice(0, 12);
+
   return (
-    <div className="space-y-4">
-      {MOCK_ARXIV_PAPERS.map((paper) => (
-        <div
-          key={paper.id}
-          className="bg-bg-secondary border border-border rounded-lg p-4"
-        >
-          <h3 className="text-text-primary font-medium text-sm leading-snug">
-            {paper.title}
-          </h3>
-          <p className="text-text-muted text-xs mt-1">
-            {paper.authors.join(', ')}
-          </p>
-          <p className="text-text-secondary text-xs mt-2 line-clamp-2">
-            {paper.abstract}
-          </p>
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xs text-text-muted">{paper.date}</span>
-            <div className="flex gap-1.5">
-              {paper.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs bg-bg-tertiary text-accent-cyan px-2 py-0.5 rounded"
-                >
-                  {tag}
-                </span>
-              ))}
+    <div>
+      {aiPredictions.length >= 3 && (
+        <p className="text-xs text-text-muted mb-3">Showing {aiPredictions.length} AI-related prediction markets</p>
+      )}
+      <div className="space-y-3">
+        {displayPredictions.map((pred: TFPrediction, i: number) => {
+          const yesWidth = Math.max(pred.yes_percent || 0, 2);
+          const noWidth = Math.max(pred.no_percent || 0, 2);
+          return (
+            <div key={i} className="bg-bg-secondary border border-border rounded-lg p-4">
+              <p className="text-text-primary text-sm font-medium leading-snug mb-3">{pred.question}</p>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="flex-1 h-2 rounded-full overflow-hidden bg-bg-tertiary flex">
+                  <div className="h-full bg-accent-green rounded-l-full" style={{ width: `${yesWidth}%` }} />
+                  <div className="h-full bg-accent-red rounded-r-full" style={{ width: `${noWidth}%` }} />
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-accent-green font-medium">Yes {pred.yes_percent?.toFixed(0)}%</span>
+                <span className="text-accent-red font-medium">No {pred.no_percent?.toFixed(0)}%</span>
+                {pred.volume_usd > 0 && (
+                  <span className="text-text-muted">${(pred.volume_usd / 1000).toFixed(0)}K vol</span>
+                )}
+              </div>
             </div>
-          </div>
+          );
+        })}
+      </div>
+      <TFAttribution />
+    </div>
+  );
+}
+
+function InternetPulseTab() {
+  const { data, loading, error } = useInternetPulse();
+
+  if (loading) return <LoadingSkeleton rows={3} />;
+  if (error || !data) return <ErrorFallback error={error || 'No data'} />;
+
+  function latencyColor(ms: number): string {
+    if (ms < 0) return 'text-text-muted';
+    if (ms < 50) return 'text-accent-green';
+    if (ms < 150) return 'text-accent-amber';
+    return 'text-accent-red';
+  }
+
+  function latencyBarColor(ms: number): string {
+    if (ms < 0) return 'bg-text-muted';
+    if (ms < 50) return 'bg-accent-green';
+    if (ms < 150) return 'bg-accent-amber';
+    return 'bg-accent-red';
+  }
+
+  const maxLatency = Math.max(...data.filter((r: TFPulseRegion) => r.latency_ms > 0).map((r: TFPulseRegion) => r.latency_ms), 200);
+
+  return (
+    <div>
+      <div className="bg-bg-secondary border border-border rounded-lg p-6 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Globe className="w-5 h-5 text-accent-primary" />
+          <h3 className="text-text-primary font-semibold">Global Internet Latency</h3>
         </div>
-      ))}
+        <div className="space-y-4">
+          {data.map((region: TFPulseRegion) => (
+            <div key={region.name}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm text-text-secondary">{region.name}</span>
+                <span className={`text-sm font-mono font-medium ${latencyColor(region.latency_ms)}`}>
+                  {region.latency_ms < 0 ? 'Unreachable' : `${region.latency_ms}ms`}
+                </span>
+              </div>
+              <div className="h-2 w-full bg-bg-tertiary rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${latencyBarColor(region.latency_ms)}`}
+                  style={{ width: region.latency_ms < 0 ? '100%' : `${Math.min((region.latency_ms / maxLatency) * 100, 100)}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <p className="text-xs text-text-muted">
+        Latency measured from Cloudflare edge. Important for AI developers monitoring API infrastructure health.
+      </p>
+      <TFAttribution />
+    </div>
+  );
+}
+
+function CyberThreatsTab() {
+  const { data, loading, error } = useCyberThreats();
+
+  if (loading) return <LoadingSkeleton rows={6} />;
+  if (error || !data) return <ErrorFallback error={error || 'No data'} />;
+
+  const threats = Array.isArray(data) ? data.slice(0, 15) : [];
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        <Shield className="w-5 h-5 text-accent-red" />
+        <h3 className="text-text-primary font-semibold">Recent Threat Intelligence</h3>
+      </div>
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-bg-tertiary">
+              <th className="px-3 py-2 text-xs font-medium text-text-muted text-left">Type</th>
+              <th className="px-3 py-2 text-xs font-medium text-text-muted text-left">Malware</th>
+              <th className="px-3 py-2 text-xs font-medium text-text-muted text-left">IOC</th>
+              <th className="px-3 py-2 text-xs font-medium text-text-muted text-left">Reporter</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {threats.map((t: TFThreat, i: number) => (
+              <tr key={i} className="bg-bg-secondary hover:bg-bg-tertiary/50 transition-colors">
+                <td className="px-3 py-2 text-xs text-accent-amber">{t.threat_type || t.ioc_type}</td>
+                <td className="px-3 py-2 text-xs text-text-primary font-medium">{t.malware || 'Unknown'}</td>
+                <td className="px-3 py-2 text-xs text-text-muted font-mono truncate max-w-[200px]">{t.ioc}</td>
+                <td className="px-3 py-2 text-xs text-text-secondary">{t.reporter}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-xs text-text-muted mt-3">
+        Relevant for AI security: supply chain attacks, model poisoning, and API credential theft are growing threats.
+      </p>
+      <TFAttribution />
     </div>
   );
 }
 
 function APIPricingTab() {
   const providers = pricingData.providers;
-
-  // Flatten all models for column-level min detection
   const allModels = providers.flatMap((p) =>
     p.models.map((m) => ({ provider: p.name, ...m }))
   );
@@ -309,39 +397,17 @@ function APIPricingTab() {
             provider.models.map((model, mIdx) => {
               const isOpenSource = model.inputPrice === 0 && model.outputPrice === 0;
               return (
-                <tr
-                  key={model.id}
-                  className="border-b border-border/50 hover:bg-bg-secondary transition-colors"
-                >
+                <tr key={model.id} className="border-b border-border/50 hover:bg-bg-secondary transition-colors">
                   {mIdx === 0 ? (
-                    <td
-                      className="py-2.5 px-3 text-text-primary font-medium align-top"
-                      rowSpan={provider.models.length}
-                    >
+                    <td className="py-2.5 px-3 text-text-primary font-medium align-top" rowSpan={provider.models.length}>
                       {provider.name}
                     </td>
                   ) : null}
                   <td className="py-2.5 px-3 text-text-secondary">{model.name}</td>
-                  <td
-                    className={`py-2.5 px-3 text-right font-mono ${
-                      isOpenSource
-                        ? 'text-accent-green'
-                        : model.inputPrice === minInput
-                          ? 'text-accent-green'
-                          : 'text-text-secondary'
-                    }`}
-                  >
+                  <td className={`py-2.5 px-3 text-right font-mono ${isOpenSource ? 'text-accent-green' : model.inputPrice === minInput ? 'text-accent-green' : 'text-text-secondary'}`}>
                     {isOpenSource ? 'Free' : `$${model.inputPrice.toFixed(2)}`}
                   </td>
-                  <td
-                    className={`py-2.5 px-3 text-right font-mono ${
-                      isOpenSource
-                        ? 'text-accent-green'
-                        : model.outputPrice === minOutput
-                          ? 'text-accent-green'
-                          : 'text-text-secondary'
-                    }`}
-                  >
+                  <td className={`py-2.5 px-3 text-right font-mono ${isOpenSource ? 'text-accent-green' : model.outputPrice === minOutput ? 'text-accent-green' : 'text-text-secondary'}`}>
                     {isOpenSource ? 'Free' : `$${model.outputPrice.toFixed(2)}`}
                   </td>
                   <td className="py-2.5 px-3 text-right text-text-muted font-mono">
@@ -366,10 +432,7 @@ function ModelTrackerTab() {
   return (
     <div className="space-y-4">
       {MOCK_MODEL_RELEASES.map((model) => (
-        <div
-          key={model.name}
-          className="bg-bg-secondary border border-border rounded-lg p-4 relative"
-        >
+        <div key={model.name} className="bg-bg-secondary border border-border rounded-lg p-4 relative">
           <div className="flex items-start justify-between mb-2">
             <div>
               <h3 className="text-text-primary font-semibold text-sm">{model.name}</h3>
@@ -415,11 +478,8 @@ function AgentActivityTab() {
     return () => { mounted = false; clearInterval(interval); };
   }, []);
 
-  if (!data) {
-    return <p className="text-text-muted text-sm">Loading agent activity...</p>;
-  }
+  if (!data) return <LoadingSkeleton rows={4} />;
 
-  // Aggregate by bot name for breakdown
   const botCounts: Record<string, number> = {};
   const endpointCounts: Record<string, number> = {};
   for (const hit of data.recent) {
@@ -439,7 +499,6 @@ function AgentActivityTab() {
 
   return (
     <div className="space-y-6">
-      {/* Summary */}
       <div className="bg-bg-secondary border border-border rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
           <Zap className="w-6 h-6 text-accent-amber" />
@@ -450,7 +509,6 @@ function AgentActivityTab() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Bot Breakdown */}
         <div className="bg-bg-secondary border border-border rounded-lg p-5">
           <h3 className="text-text-primary font-semibold text-sm mb-4">Agent Breakdown</h3>
           <div className="space-y-3">
@@ -461,20 +519,14 @@ function AgentActivityTab() {
                   <span className="text-xs text-text-muted font-mono">{count}</span>
                 </div>
                 <div className="h-1.5 w-full bg-bg-primary rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-accent-primary"
-                    style={{ width: `${(count / maxBotCount) * 100}%` }}
-                  />
+                  <div className="h-full rounded-full bg-accent-primary" style={{ width: `${(count / maxBotCount) * 100}%` }} />
                 </div>
               </div>
             ))}
-            {sortedBots.length === 0 && (
-              <p className="text-xs text-text-muted">No activity yet</p>
-            )}
+            {sortedBots.length === 0 && <p className="text-xs text-text-muted">No activity yet</p>}
           </div>
         </div>
 
-        {/* Most Requested Endpoints */}
         <div className="bg-bg-secondary border border-border rounded-lg p-5">
           <h3 className="text-text-primary font-semibold text-sm mb-4">Top Endpoints</h3>
           <div className="space-y-2">
@@ -484,14 +536,11 @@ function AgentActivityTab() {
                 <span className="text-xs text-text-muted font-mono shrink-0 ml-2">{count} hits</span>
               </div>
             ))}
-            {sortedEndpoints.length === 0 && (
-              <p className="text-xs text-text-muted">No activity yet</p>
-            )}
+            {sortedEndpoints.length === 0 && <p className="text-xs text-text-muted">No activity yet</p>}
           </div>
         </div>
       </div>
 
-      {/* Recent Activity Feed */}
       <div className="bg-bg-secondary border border-border rounded-lg p-5">
         <h3 className="text-text-primary font-semibold text-sm mb-4">Recent Agent Hits</h3>
         <div className="space-y-1">
@@ -502,38 +551,77 @@ function AgentActivityTab() {
               <span className="text-[10px] text-text-muted font-mono shrink-0">{timeAgo(hit.timestamp)}</span>
             </div>
           ))}
-          {data.recent.length === 0 && (
-            <p className="text-xs text-text-muted">No recent agent hits recorded yet</p>
-          )}
+          {data.recent.length === 0 && <p className="text-xs text-text-muted">No recent agent hits recorded yet</p>}
         </div>
       </div>
     </div>
   );
 }
 
-// ─── Main Page Component ─────────────────────────────────────────────────────
+// ─── World Briefing Banner ──────────────────────────────────────────────────
+
+function WorldBriefingBanner() {
+  const { data } = useBriefing();
+  if (!data?.summary) return null;
+
+  return (
+    <div className="bg-bg-secondary/80 border border-border rounded-lg px-4 py-3 mb-6">
+      <div className="flex items-start gap-2">
+        <Globe className="w-4 h-4 text-accent-cyan mt-0.5 shrink-0" />
+        <div>
+          <span className="text-xs font-medium text-text-muted uppercase tracking-wider">World Snapshot</span>
+          <p className="text-sm text-text-secondary mt-0.5 leading-relaxed">{data.summary}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Economic Sidebar Widget ────────────────────────────────────────────────
+
+function EconomicWidget() {
+  const { data } = useEconomicData();
+  if (!data || !Array.isArray(data) || data.length === 0) return null;
+
+  return (
+    <div className="bg-bg-secondary border border-border rounded-lg p-4 mt-6">
+      <div className="flex items-center gap-2 mb-3">
+        <TrendingUp className="w-4 h-4 text-accent-primary" />
+        <h3 className="text-sm font-semibold text-text-primary">Economic Indicators</h3>
+      </div>
+      <div className="space-y-2">
+        {data.slice(0, 6).map((indicator: TFEconomicIndicator, i: number) => (
+          <div key={i} className="flex items-center justify-between">
+            <span className="text-xs text-text-secondary">{indicator.name}</span>
+            <span className="text-xs font-mono text-text-primary">
+              {indicator.value}{indicator.unit === '%' ? '%' : ` ${indicator.unit || ''}`}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="text-[10px] text-text-muted mt-2">
+        Data via <a href="https://terminalfeed.io" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:text-accent-cyan">TerminalFeed.io</a>
+      </p>
+    </div>
+  );
+}
+
+// ─── Main Page Component ────────────────────────────────────────────────────
 
 export default function LivePage() {
   const [activeTab, setActiveTab] = useState<TabName>('Agent Activity');
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'Agent Activity':
-        return <AgentActivityTab />;
-      case 'AI Status':
-        return <AIStatusTab />;
-      case 'HN Feed':
-        return <HNFeedTab />;
-      case 'GitHub Trending':
-        return <GitHubTrendingTab />;
-      case 'arXiv Papers':
-        return <ArxivPapersTab />;
-      case 'API Pricing':
-        return <APIPricingTab />;
-      case 'Model Tracker':
-        return <ModelTrackerTab />;
-      default:
-        return null;
+      case 'Agent Activity': return <AgentActivityTab />;
+      case 'AI Status': return <AIStatusTab />;
+      case 'GitHub Trending': return <GitHubTrendingTab />;
+      case 'Predictions': return <PredictionsTab />;
+      case 'Internet Pulse': return <InternetPulseTab />;
+      case 'Cyber Threats': return <CyberThreatsTab />;
+      case 'API Pricing': return <APIPricingTab />;
+      case 'Model Tracker': return <ModelTrackerTab />;
+      default: return null;
     }
   };
 
@@ -550,9 +638,16 @@ export default function LivePage() {
           </span>
         </div>
         <p className="text-text-muted text-sm">
-          Real-time AI ecosystem data, updated continuously
+          Real-time AI ecosystem data, updated continuously.
+          Powered by{' '}
+          <a href="https://terminalfeed.io" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:text-accent-cyan transition-colors">
+            TerminalFeed.io
+          </a>
         </p>
       </div>
+
+      {/* World Briefing Banner */}
+      <WorldBriefingBanner />
 
       {/* Tab Bar */}
       <div className="border-b border-border mb-6 overflow-x-auto">
@@ -575,6 +670,9 @@ export default function LivePage() {
 
       {/* Tab Content */}
       <div>{renderTabContent()}</div>
+
+      {/* Economic Widget */}
+      <EconomicWidget />
     </div>
   );
 }
