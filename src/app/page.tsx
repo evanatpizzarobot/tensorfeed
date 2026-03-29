@@ -1,8 +1,19 @@
 import Link from 'next/link';
 import NewsFeed from '@/components/news/NewsFeed';
 import Sidebar from '@/components/layout/Sidebar';
-import articlesData from '../../data/articles.json';
+import fallbackArticlesData from '../../data/articles.json';
 import { STATUS_DOTS } from '@/lib/constants';
+
+async function fetchArticles() {
+  try {
+    const res = await fetch('https://tensorfeed.ai/api/news?limit=100', { next: { revalidate: 300 } });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.ok && data.articles?.length) return data.articles;
+    }
+  } catch {}
+  return fallbackArticlesData.articles;
+}
 import {
   Rss,
   Activity,
@@ -89,7 +100,7 @@ function getShortName(name: string) {
 }
 
 export default async function HomePage() {
-  const articles = articlesData.articles;
+  const articles = await fetchArticles();
   const statuses = await fetchStatuses();
 
   const quickStatuses = QUICK_STATUS_SERVICES.map((serviceName) => {
@@ -111,17 +122,26 @@ export default async function HomePage() {
           <div className="absolute top-8 right-1/3 w-48 h-48 bg-accent-cyan/8 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10">
-          {/* Live indicator */}
-          <div className="flex items-center gap-2 mb-6">
-            <span className="live-dot" />
-            <span className="text-sm font-medium text-accent-green tracking-wide uppercase">
-              Live Feed
-            </span>
+        <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+          {/* Top row: live indicator + stats */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="live-dot" />
+              <span className="text-sm font-medium text-accent-green tracking-wide uppercase">
+                Live
+              </span>
+            </div>
+            <div className="w-px h-4 bg-border" />
+            {HERO_STATS.map(({ icon: Icon, label }) => (
+              <div key={label} className="hidden sm:flex items-center gap-1.5 text-text-muted">
+                <Icon className="w-3.5 h-3.5 text-accent-primary" />
+                <span className="text-xs font-medium">{label}</span>
+              </div>
+            ))}
           </div>
 
           {/* Main heading */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-3">
             <span
               style={{
                 background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4)',
@@ -134,27 +154,9 @@ export default async function HomePage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg text-text-secondary max-w-2xl leading-relaxed">
             Real-time news, model tracking, and ecosystem data for the AI industry.
           </p>
-
-          {/* Stat counters */}
-          <div className="flex flex-wrap gap-4 sm:gap-6">
-            {HERO_STATS.map(({ icon: Icon, label, sublabel }) => (
-              <div
-                key={label}
-                className="flex items-center gap-3 bg-bg-secondary/80 backdrop-blur-sm border border-border rounded-lg px-4 py-3"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-primary/10">
-                  <Icon className="w-5 h-5 text-accent-primary" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-text-primary">{label}</div>
-                  <div className="text-xs text-text-muted">{sublabel}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Animated gradient border */}

@@ -17,6 +17,21 @@ const SOURCE_COLORS: Record<string, string> = {
   'ZDNet AI': 'bg-red-500/20 text-red-700 dark:text-red-400',
 };
 
+const SOURCE_BORDER_COLORS: Record<string, string> = {
+  'Google AI Blog': 'border-l-blue-500',
+  'Hugging Face Blog': 'border-l-yellow-500',
+  'TechCrunch AI': 'border-l-green-500',
+  'The Verge AI': 'border-l-purple-500',
+  'Ars Technica': 'border-l-orange-500',
+  'VentureBeat AI': 'border-l-teal-500',
+  'MIT Technology Review': 'border-l-red-500',
+  'NVIDIA AI Blog': 'border-l-lime-500',
+  'arXiv cs.AI': 'border-l-rose-500',
+  'Hacker News AI': 'border-l-orange-400',
+  'WIRED AI': 'border-l-gray-400',
+  'ZDNet AI': 'border-l-red-400',
+};
+
 function getSourceInitials(name: string): string {
   // Short abbreviations for known sources
   const abbrevs: Record<string, string> = {
@@ -40,12 +55,13 @@ interface NewsCardProps {
   article: NewsArticle;
 }
 
-export default function NewsCard({ article }: NewsCardProps) {
+export default function NewsCard({ article, featured = false }: NewsCardProps & { featured?: boolean }) {
   const colorClass = SOURCE_COLORS[article.source] || 'bg-accent-primary/20 text-accent-primary';
+  const borderColor = SOURCE_BORDER_COLORS[article.source] || 'border-l-accent-primary';
   const initials = getSourceInitials(article.source);
 
   return (
-    <article className="bg-bg-secondary rounded-lg border border-border p-5 hover:shadow-glow hover:border-accent-primary transition-all">
+    <article className={`bg-bg-secondary rounded-lg border border-border border-l-[3px] ${borderColor} p-5 hover:shadow-glow hover:border-accent-primary transition-all`}>
       {/* Source row */}
       <div className="flex items-center gap-2.5 mb-3">
         <span className={`inline-flex items-center justify-center w-7 h-7 rounded-md text-xs font-bold shrink-0 ${colorClass}`}>
@@ -62,15 +78,15 @@ export default function NewsCard({ article }: NewsCardProps) {
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-lg font-semibold text-accent-cyan hover:underline"
+          className={`font-semibold text-accent-cyan hover:underline ${featured ? 'text-xl leading-snug' : 'text-lg'}`}
         >
           {article.title}
         </a>
       </h3>
 
       {/* Snippet */}
-      {article.snippet && (
-        <p className="text-sm text-text-muted mb-4 line-clamp-2">
+      {article.snippet && (featured || article.snippet.length > 0) && (
+        <p className={`text-sm text-text-muted mb-4 ${featured ? 'line-clamp-3' : 'line-clamp-2'}`}>
           {article.snippet}
         </p>
       )}

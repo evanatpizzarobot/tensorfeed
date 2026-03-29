@@ -78,7 +78,7 @@ export default function NewsFeed({ articles }: NewsFeedProps) {
         <div className={layout === 'full' ? 'grid gap-4 grid-cols-1' : 'grid gap-3 grid-cols-1'}>
           {filteredArticles.map((article, index) => (
             <div key={article.id}>
-              <NewsCard article={article} />
+              <NewsCard article={article} featured={index % 5 === 0} />
               {(index + 1) % 10 === 0 && index < filteredArticles.length - 1 && (
                 <div className="mt-4">
                   <AdPlaceholder index={index} />

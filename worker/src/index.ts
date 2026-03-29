@@ -250,6 +250,13 @@ export default {
 
     if (path === '/api/refresh' && url.searchParams.get('key') === env.ENVIRONMENT) {
       await Promise.all([pollRSSFeeds(env), pollStatusPages(env), updateCatalog(env)]);
+
+      // Seed agent counter if not already set
+      const existing = await env.TENSORFEED_CACHE.get('agent-seed', 'json');
+      if (existing === null) {
+        await env.TENSORFEED_CACHE.put('agent-seed', JSON.stringify(300));
+      }
+
       return jsonResponse({ ok: true, message: 'Refreshed all feeds, status, and catalog' });
     }
 
