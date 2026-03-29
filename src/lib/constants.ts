@@ -10,10 +10,10 @@ export const NAV_LINKS = [
   { href: '/today', label: 'Today' },
   { href: '/models', label: 'Models' },
   { href: '/compare', label: 'Compare' },
+  { href: '/benchmarks', label: 'Benchmarks' },
   { href: '/agents', label: 'Agents' },
   { href: '/status', label: 'Status' },
   { href: '/live', label: 'Live' },
-  { href: '/originals', label: 'Originals' },
 ] as const;
 
 export const CATEGORIES = [

@@ -15,6 +15,11 @@ const GUIDE_LINKS = [
   { href: '/ai-api-pricing-guide', label: 'AI API Pricing Guide' },
   { href: '/what-are-ai-agents', label: 'What are AI Agents?' },
   { href: '/best-open-source-llms', label: 'Best Open Source LLMs' },
+  { href: '/tools/cost-calculator', label: 'AI Cost Calculator' },
+  { href: '/alerts', label: 'Outage Alerts' },
+  { href: '/incidents', label: 'Incident History' },
+  { href: '/timeline', label: 'AI Timeline' },
+  { href: '/developers', label: 'API Docs' },
 ];
 
 export default function Navbar() {
