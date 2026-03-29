@@ -1,0 +1,31 @@
+{
+  "name": "@tensorfeed/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for TensorFeed.ai - AI news, status, and model data for AI agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "tensorfeed-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": ["mcp", "ai", "news", "tensorfeed", "model-context-protocol", "claude", "agents"],
+  "author": "Pizza Robot Studios LLC",
+  "license": "MIT",
+  "homepage": "https://tensorfeed.ai/developers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evanatpizzarobot/tensorfeed"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  }
+}
