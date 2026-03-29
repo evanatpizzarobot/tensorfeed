@@ -25,7 +25,6 @@ function setCookie(name: string, value: string) {
 function resolveTheme(): Theme {
   const stored = getCookie('theme');
   if (stored === 'light' || stored === 'dark') return stored;
-  if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
   return 'dark';
 }
 
