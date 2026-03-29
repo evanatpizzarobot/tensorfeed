@@ -3,7 +3,7 @@ import { Users, Target, Globe, Mail, ExternalLink, Cpu, Rss, Bot, FileText, Code
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About TensorFeed | AI News Hub for Humans and Agents',
 };
 
 const SISTER_SITES = [

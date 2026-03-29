@@ -18,7 +18,7 @@ interface Provider {
 }
 
 export const metadata: Metadata = {
-  title: 'AI Models',
+  title: 'AI Model Tracker & Pricing Comparison',
   description:
     'Track the latest AI model releases, compare pricing across providers, and explore benchmark leaderboards. Updated daily.',
 };

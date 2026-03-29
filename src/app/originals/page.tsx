@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { PenTool, Clock, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Originals',
+  title: 'TensorFeed Originals | In-Depth AI Analysis & Editorial',
 };
 
 const ARTICLES = [

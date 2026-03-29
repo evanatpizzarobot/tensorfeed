@@ -78,6 +78,9 @@ export default function RootLayout({
           }}
         />
         <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM Full Context" />
+        <link rel="preconnect" href="https://tensorfeed.ai" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
