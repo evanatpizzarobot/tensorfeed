@@ -181,7 +181,8 @@ export default function WhyWeBuiltTensorFeedPage() {
           The AI space is moving fast, and we intend to keep up. If you have ideas for what TensorFeed
           should become, I genuinely want to hear them. Drop me a note at{' '}
           <a href="mailto:evan@tensorfeed.ai" className="text-accent-primary hover:underline">evan@tensorfeed.ai</a>{' '}
-          or find us on social media.
+          or find us on X at{' '}
+          <a href="https://x.com/tensorfeed" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline">@tensorfeed</a>.
           This thing is being built in public, and community input shapes what we prioritize.
         </p>
 
