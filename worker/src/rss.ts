@@ -1,6 +1,18 @@
 import { Article, Env } from './types';
 import { RSS_SOURCES } from './sources';
 
+// Keywords that must appear in title or description for non-AI-focused sources
+const AI_KEYWORDS = /\b(ai|a\.i\.|artificial intelligence|machine learning|deep learning|neural net|llm|large language model|language model|gpt|chatgpt|openai|anthropic|claude|gemini|deepmind|meta ai|mistral|cohere|hugging\s?face|transformer|diffusion model|generative ai|gen\s?ai|computer vision|natural language|nlp|chatbot|copilot|ai agent|ai model|robotics|automation|deepseek|llama|stable diffusion|midjourney|dall-e|sora|grok|perplexity)\b/i;
+
+// Sources whose feeds are already AI-focused and don't need keyword filtering
+const AI_FOCUSED_SOURCES = new Set([
+  'google-ai', 'huggingface', 'nvidia-ai', 'arxiv-ai',
+]);
+
+function isAIRelated(title: string, description: string): boolean {
+  return AI_KEYWORDS.test(title) || AI_KEYWORDS.test(description);
+}
+
 function hashString(str: string): string {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -97,18 +109,41 @@ async function fetchFeed(source: typeof RSS_SOURCES[number]): Promise<Article[]>
     const xml = await response.text();
     const items = parseRSSItems(xml);
     const now = new Date().toISOString();
+    const needsFilter = !AI_FOCUSED_SOURCES.has(source.id);
 
-    return items.slice(0, 15).map((item) => ({
-      id: hashString(item.link),
-      title: item.title,
-      url: item.link,
-      source: source.name,
-      sourceDomain: source.domain,
-      snippet: truncate(stripHtml(item.description), 250),
-      categories: source.categories,
-      publishedAt: item.pubDate ? new Date(item.pubDate).toISOString() : now,
-      fetchedAt: now,
-    }));
+    const articles: Article[] = [];
+    for (const item of items) {
+      if (articles.length >= 15) break;
+
+      const cleanDescription = stripHtml(item.description);
+
+      // Filter non-AI content from general tech sources
+      if (needsFilter && !isAIRelated(item.title, cleanDescription)) {
+        continue;
+      }
+
+      // Ensure every article has a snippet (fix empty HN descriptions)
+      let snippet = truncate(cleanDescription, 250);
+      if (!snippet && source.id === 'hackernews-ai') {
+        snippet = `Hacker News discussion: ${item.title}`;
+      } else if (!snippet) {
+        snippet = `${item.title} (via ${source.name})`;
+      }
+
+      articles.push({
+        id: hashString(item.link),
+        title: item.title,
+        url: item.link,
+        source: source.name,
+        sourceDomain: source.domain,
+        snippet,
+        categories: source.categories,
+        publishedAt: item.pubDate ? new Date(item.pubDate).toISOString() : now,
+        fetchedAt: now,
+      });
+    }
+
+    return articles;
   } catch (error) {
     console.warn(`${source.name}: fetch failed -`, error);
     return [];

@@ -97,7 +97,7 @@ export default {
 
     // === NEWS ENDPOINTS ===
 
-    if (path === '/api/news' || path === '/api/agents/news') {
+    if (path === '/api/news' || path === '/api/agents/news' || path === '/api/agents/news.json') {
       const category = url.searchParams.get('category');
       const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 200);
 
@@ -156,7 +156,7 @@ export default {
 
     // === STATUS ENDPOINTS ===
 
-    if (path === '/api/status' || path === '/api/agents/status') {
+    if (path === '/api/status' || path === '/api/agents/status' || path === '/api/agents/status.json') {
       const services = await env.TENSORFEED_STATUS.get('services', 'json');
       return jsonResponse({
         ok: true,
@@ -177,7 +177,7 @@ export default {
 
     // === PRICING ENDPOINT ===
 
-    if (path === '/api/agents/pricing' || path === '/api/pricing') {
+    if (path === '/api/agents/pricing' || path === '/api/pricing' || path === '/api/agents/pricing.json') {
       const cached = await env.TENSORFEED_CACHE.get('pricing', 'json');
       return jsonResponse({
         ok: true,

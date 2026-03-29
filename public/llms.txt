@@ -8,10 +8,12 @@
 - /feed/research.xml — Research papers only (RSS)
 - /feed/tools.xml — Tools and developer news only (RSS)
 
-## Agent API (Static JSON)
-- /api/agents/news.json — Latest AI news articles
-- /api/agents/status.json — AI service operational status
-- /api/agents/pricing.json — AI API pricing comparison data
+## Agent API (Live JSON via Worker)
+- /api/agents/news.json — Latest AI news articles (also available at /api/agents/news)
+- /api/agents/status.json — AI service operational status (also available at /api/agents/status)
+- /api/agents/pricing.json — AI API pricing comparison data (also available at /api/agents/pricing)
+- /api/agents/directory — AI agents and frameworks directory
+- /api/models — AI model releases and pricing data
 
 ## Pages
 - / — Main news feed (aggregated from 12+ RSS sources)
