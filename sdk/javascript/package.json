@@ -1,0 +1,23 @@
+{
+  "name": "tensorfeed",
+  "version": "1.0.0",
+  "description": "JavaScript/TypeScript SDK for the TensorFeed.ai API - AI news, status, and model data",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["tensorfeed", "ai", "news", "llm", "api", "status", "models", "agents"],
+  "author": "Pizza Robot Studios LLC",
+  "license": "MIT",
+  "homepage": "https://tensorfeed.ai/developers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evanatpizzarobot/tensorfeed"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
