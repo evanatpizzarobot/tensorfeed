@@ -7,9 +7,10 @@ export const PRESS_EMAIL = 'press@tensorfeed.ai';
 
 export const NAV_LINKS = [
   { href: '/', label: 'Feed' },
+  { href: '/today', label: 'Today' },
   { href: '/models', label: 'Models' },
+  { href: '/compare', label: 'Compare' },
   { href: '/agents', label: 'Agents' },
-  { href: '/research', label: 'Research' },
   { href: '/status', label: 'Status' },
   { href: '/live', label: 'Live' },
   { href: '/originals', label: 'Originals' },
