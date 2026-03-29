@@ -37,8 +37,11 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Agents Directory](https://tensorfeed.ai/agents): Curated directory of AI agents, tools, and frameworks
 - [Research](https://tensorfeed.ai/research): arXiv papers, benchmarks, and research news
 - [Status Dashboard](https://tensorfeed.ai/status): Real-time AI service status monitoring
-- [Live Data](https://tensorfeed.ai/live): Real-time data feeds (Hacker News AI, GitHub trending, arXiv, pricing)
+- [Is Claude Down?](https://tensorfeed.ai/is-claude-down): Live Claude API status monitor
+- [Is ChatGPT Down?](https://tensorfeed.ai/is-chatgpt-down): Live OpenAI/ChatGPT API status monitor
+- [Live Data](https://tensorfeed.ai/live): Real-time data feeds (GitHub trending, predictions, cyber threats, pricing)
 - [Originals](https://tensorfeed.ai/originals): Original editorial articles by TensorFeed
+- [Developer Docs](https://tensorfeed.ai/developers): Full API documentation with code examples
 
 ## About
 TensorFeed.ai is operated by Pizza Robot Studios LLC (Los Angeles, CA).
