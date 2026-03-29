@@ -58,7 +58,9 @@
       "Bash(node:*)",
       "Bash(gh run:*)",
       "Bash(mkdir -p /c/projects/tensorfeed/mcp-server)",
-      "Bash(npm init:*)"
+      "Bash(npm init:*)",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "Bash(git check-ignore:*)"
     ]
   }
 }
