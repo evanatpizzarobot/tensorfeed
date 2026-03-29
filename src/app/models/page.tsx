@@ -1,6 +1,20 @@
 import { Metadata } from 'next';
 import { Cpu, ExternalLink } from 'lucide-react';
-import pricingData from '@/../data/pricing.json';
+import fallbackPricingData from '@/../data/pricing.json';
+
+interface ModelRow {
+  id: string;
+  name: string;
+  inputPrice: number;
+  outputPrice: number;
+  contextWindow: number;
+  provider: string;
+}
+
+interface Provider {
+  name: string;
+  models: Omit<ModelRow, 'provider'>[];
+}
 
 export const metadata: Metadata = {
   title: 'AI Models',
@@ -90,9 +104,22 @@ function formatContext(ctx: number): string {
   return `${(ctx / 1000).toFixed(0)}K`;
 }
 
-export default function ModelsPage() {
+async function fetchPricingData() {
+  try {
+    const res = await fetch('https://tensorfeed.ai/api/models', { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.ok && data.providers?.length) return data;
+    }
+  } catch {}
+  return fallbackPricingData;
+}
+
+export default async function ModelsPage() {
+  const pricingData = await fetchPricingData();
+
   // Flatten all models with provider info for the pricing table
-  const allModels = pricingData.providers.flatMap((provider) =>
+  const allModels: ModelRow[] = pricingData.providers.flatMap((provider: Provider) =>
     provider.models.map((model) => ({
       provider: provider.name,
       ...model,
@@ -100,9 +127,9 @@ export default function ModelsPage() {
   );
 
   // Find cheapest input and output prices (excluding free / open-source)
-  const paidModels = allModels.filter((m) => m.inputPrice > 0);
-  const cheapestInput = paidModels.length > 0 ? Math.min(...paidModels.map((m) => m.inputPrice)) : 0;
-  const cheapestOutput = paidModels.length > 0 ? Math.min(...paidModels.map((m) => m.outputPrice)) : 0;
+  const paidModels = allModels.filter((m: ModelRow) => m.inputPrice > 0);
+  const cheapestInput = paidModels.length > 0 ? Math.min(...paidModels.map((m: ModelRow) => m.inputPrice)) : 0;
+  const cheapestOutput = paidModels.length > 0 ? Math.min(...paidModels.map((m: ModelRow) => m.outputPrice)) : 0;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bot, Wrench, Palette, Search, Code, ExternalLink } from 'lucide-react';
-import agentsData from '@/../data/agents-directory.json';
+import fallbackAgentsData from '@/../data/agents-directory.json';
 
 // Metadata must be in a separate file for client components, but we keep
 // the page as 'use client' for the interactive filter. Next.js will still
@@ -52,6 +52,18 @@ const filterTabs = [
 
 export default function AgentsPage() {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [agentsData, setAgentsData] = useState(fallbackAgentsData);
+
+  useEffect(() => {
+    fetch('https://tensorfeed.ai/api/agents/directory')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data?.ok && data.agents?.length) {
+          setAgentsData({ categories: data.categories, agents: data.agents, lastUpdated: data.lastUpdated });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const filteredAgents =
     activeCategory === 'all'

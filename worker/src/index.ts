@@ -1,6 +1,7 @@
 import { Env, Article } from './types';
 import { pollRSSFeeds } from './rss';
 import { pollStatusPages } from './status';
+import { updateCatalog } from './catalog';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -186,6 +187,28 @@ export default {
       });
     }
 
+    // === MODELS ENDPOINT ===
+
+    if (path === '/api/models') {
+      const cached = await env.TENSORFEED_CACHE.get('pricing', 'json');
+      return jsonResponse({
+        ok: true,
+        source: 'tensorfeed.ai',
+        ...(cached || {}),
+      });
+    }
+
+    // === AGENTS DIRECTORY ENDPOINT ===
+
+    if (path === '/api/agents/directory') {
+      const cached = await env.TENSORFEED_CACHE.get('agents-directory', 'json');
+      return jsonResponse({
+        ok: true,
+        source: 'tensorfeed.ai',
+        ...(cached || {}),
+      });
+    }
+
     // === META ENDPOINT ===
 
     if (path === '/api/meta') {
@@ -204,6 +227,8 @@ export default {
           news: '/api/agents/news',
           status: '/api/agents/status',
           pricing: '/api/agents/pricing',
+          models: '/api/models',
+          agentsDirectory: '/api/agents/directory',
           health: '/api/health',
         },
         news: newsMeta,
@@ -213,8 +238,8 @@ export default {
     // === FORCE REFRESH (protected) ===
 
     if (path === '/api/refresh' && url.searchParams.get('key') === env.ENVIRONMENT) {
-      await Promise.all([pollRSSFeeds(env), pollStatusPages(env)]);
-      return jsonResponse({ ok: true, message: 'Refreshed all feeds and status' });
+      await Promise.all([pollRSSFeeds(env), pollStatusPages(env), updateCatalog(env)]);
+      return jsonResponse({ ok: true, message: 'Refreshed all feeds, status, and catalog' });
     }
 
     return jsonResponse({ error: 'Not found', endpoints: ['/api/health', '/api/news', '/api/status', '/api/feed.xml', '/api/feed.json', '/api/meta'] }, 404);
@@ -231,6 +256,9 @@ export default {
       // Hourly: refresh all
       await pollRSSFeeds(env);
       await pollStatusPages(env);
+    } else if (cron === '0 6 * * 1') {
+      // Weekly (Monday 6 AM UTC): update models & agents catalog
+      await updateCatalog(env);
     }
   },
 };
