@@ -23,9 +23,13 @@ function hashString(str: string): string {
   return Math.abs(hash).toString(36);
 }
 
-function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, '')
+function decodeEntities(text: string): string {
+  return text
+    // Numeric decimal entities (&#8217; etc)
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)))
+    // Numeric hex entities (&#x2019; etc)
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCharCode(parseInt(code, 16)))
+    // Named entities
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
@@ -34,6 +38,19 @@ function stripHtml(html: string): string {
     .replace(/&#39;/g, "'")
     .replace(/&#x27;/g, "'")
     .replace(/&apos;/g, "'")
+    .replace(/&mdash;/g, ' - ')
+    .replace(/&ndash;/g, '-')
+    .replace(/&hellip;/g, '...')
+    .replace(/&lsquo;/g, "'")
+    .replace(/&rsquo;/g, "'")
+    .replace(/&ldquo;/g, '"')
+    .replace(/&rdquo;/g, '"');
+}
+
+function stripHtml(html: string): string {
+  return decodeEntities(
+    html.replace(/<[^>]*>/g, '')
+  )
     .replace(/\s+/g, ' ')
     .trim();
 }
