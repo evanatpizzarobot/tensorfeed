@@ -64,9 +64,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="google-adsense-account" content="ca-pub-7224757913262984" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7224757913262984"
+          crossOrigin="anonymous"
+        />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var m=document.cookie.match(/(^| )theme=([^;]+)/);var t=m?m[2]:window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t)})()`,
+            __html: `(function(){var m=document.cookie.match(/(^| )theme=([^;]+)/);var t=m?m[2]:'dark';document.documentElement.setAttribute('data-theme',t)})()`,
           }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
