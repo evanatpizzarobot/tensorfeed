@@ -1,10 +1,10 @@
 import { Env, PodcastEpisode, PodcastSource } from './types';
 
 const PODCAST_SOURCES: PodcastSource[] = [
-  { id: 'ai-daily-brief', name: 'AI Daily Brief', feedUrl: 'https://anchor.fm/s/d2e54928/podcast/rss', active: true },
+  { id: 'ai-daily-brief', name: 'AI Daily Brief', feedUrl: 'https://anchor.fm/s/f7cac464/podcast/rss', active: true },
   { id: 'practical-ai', name: 'Practical AI', feedUrl: 'https://changelog.com/practicalai/feed', active: true },
   { id: 'latent-space', name: 'Latent Space', feedUrl: 'https://api.substack.com/feed/podcast/1084089.rss', active: true },
-  { id: 'last-week-in-ai', name: 'Last Week in AI', feedUrl: 'https://feeds.buzzsprout.com/2021966.rss', active: true },
+  { id: 'last-week-in-ai', name: 'Last Week in AI', feedUrl: 'https://rss.art19.com/last-week-in-ai', active: true },
 ];
 
 function hashString(str: string): string {
@@ -105,7 +105,7 @@ async function fetchPodcastFeed(source: PodcastSource, channelXmlCache: Map<stri
   try {
     const response = await fetch(source.feedUrl, {
       headers: { 'User-Agent': 'TensorFeed/1.0 (https://tensorfeed.ai)' },
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(30000),
     });
 
     if (!response.ok) {
