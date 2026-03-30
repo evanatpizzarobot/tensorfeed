@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import NewsFeed from '@/components/news/NewsFeed';
+import HomeFeed from '@/components/HomeFeed';
 import Sidebar from '@/components/layout/Sidebar';
 import fallbackArticlesData from '../../data/articles.json';
 import { STATUS_DOTS } from '@/lib/constants';
@@ -201,7 +201,7 @@ export default async function HomePage() {
       <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1 min-w-0">
-            <NewsFeed articles={articles} />
+            <HomeFeed articles={articles} />
           </div>
           <aside className="w-full lg:w-80 shrink-0">
             <Sidebar />
