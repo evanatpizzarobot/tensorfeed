@@ -4,6 +4,7 @@ import { pollStatusPages } from './status';
 import { updateCatalog } from './catalog';
 import { trackAgentActivity, getAgentActivity } from './activity';
 import { postTopStories } from './twitter';
+import { pollPodcastFeeds } from './podcasts';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -289,6 +290,20 @@ export default {
       }, 200, 300);
     }
 
+    // === PODCASTS ENDPOINT (cached 300s) ===
+
+    if (path === '/api/podcasts') {
+      const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 100);
+      const episodes = await cachedKVGet(request, env.TENSORFEED_CACHE, 'podcasts', 300) as unknown[] | null;
+      return jsonResponse({
+        ok: true,
+        source: 'tensorfeed.ai',
+        updated: new Date().toISOString(),
+        count: Math.min((episodes || []).length, limit),
+        episodes: (episodes || []).slice(0, limit),
+      }, 200, 300);
+    }
+
     // === META ENDPOINT (cached 60s) ===
 
     if (path === '/api/meta') {
@@ -310,6 +325,7 @@ export default {
           models: '/api/models',
           agentsDirectory: '/api/agents/directory',
           agentActivity: '/api/agents/activity',
+          podcasts: '/api/podcasts',
           health: '/api/health',
         },
         news: newsMeta,
@@ -319,7 +335,7 @@ export default {
     // === FORCE REFRESH (protected) ===
 
     if (path === '/api/refresh' && url.searchParams.get('key') === env.ENVIRONMENT) {
-      await Promise.all([pollRSSFeeds(env), pollStatusPages(env), updateCatalog(env)]);
+      await Promise.all([pollRSSFeeds(env), pollStatusPages(env), updateCatalog(env), pollPodcastFeeds(env)]);
 
       // Seed agent counter if not already set
       const existing = await env.TENSORFEED_CACHE.get('agent-seed', 'json');
@@ -397,7 +413,7 @@ export default {
       return jsonResponse({ ok: true, message: 'Posted top stories to X' });
     }
 
-    return jsonResponse({ error: 'Not found', endpoints: ['/api/health', '/api/news', '/api/status', '/api/feed.xml', '/api/feed.json', '/api/meta'] }, 404);
+    return jsonResponse({ error: 'Not found', endpoints: ['/api/health', '/api/news', '/api/status', '/api/podcasts', '/api/feed.xml', '/api/feed.json', '/api/meta'] }, 404);
   },
 
   async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
@@ -411,6 +427,7 @@ export default {
       // Hourly: refresh all
       await pollRSSFeeds(env);
       await pollStatusPages(env);
+      await pollPodcastFeeds(env);
     } else if (cron === '0 6 * * 1') {
       // Weekly (Monday 6 AM UTC): update models & agents catalog
       await updateCatalog(env);

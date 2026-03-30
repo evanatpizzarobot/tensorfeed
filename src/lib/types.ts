@@ -68,5 +68,18 @@ export interface RSSSource {
   active: boolean;
 }
 
+export interface PodcastEpisode {
+  id: string;
+  podcastName: string;
+  podcastImage: string;
+  title: string;
+  description: string;
+  url: string;
+  audioUrl: string;
+  duration: string;
+  publishedAt: string;
+  fetchedAt: string;
+}
+
 export type FeedLayout = 'full' | 'compact';
 export type StatusType = 'operational' | 'degraded' | 'down' | 'unknown';

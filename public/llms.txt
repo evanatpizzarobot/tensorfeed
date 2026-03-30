@@ -20,6 +20,7 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Pricing JSON](https://tensorfeed.ai/api/agents/pricing.json): AI API pricing comparison (alias)
 - [Agents Directory](https://tensorfeed.ai/api/agents/directory): AI agents and frameworks directory
 - [Agent Activity](https://tensorfeed.ai/api/agents/activity): Live agent traffic metrics
+- [Podcasts API](https://tensorfeed.ai/api/podcasts): AI podcast episodes with audio URLs (?limit=)
 - [Health Check](https://tensorfeed.ai/api/health): Worker health and last update timestamps
 - [Endpoint Discovery](https://tensorfeed.ai/api/meta): Full endpoint map for automated integration
 
@@ -39,6 +40,7 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [AI Timeline](https://tensorfeed.ai/timeline): Chronological timeline of AI milestones and model releases
 - [Agents Directory](https://tensorfeed.ai/agents): Curated directory of AI agents, tools, and frameworks
 - [Research](https://tensorfeed.ai/research): arXiv papers, benchmarks, and research news
+- [AI Podcasts](https://tensorfeed.ai/podcasts): Stream AI podcast episodes from top shows
 - [Status Dashboard](https://tensorfeed.ai/status): Real-time AI service status monitoring
 - [Live Data](https://tensorfeed.ai/live): Real-time data feeds (GitHub trending, predictions, cyber threats, pricing)
 - [Originals](https://tensorfeed.ai/originals): Original editorial articles by TensorFeed

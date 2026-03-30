@@ -46,3 +46,23 @@ export interface StatusPageResponse {
   status: { indicator: string; description: string };
   components?: { name: string; status: string }[];
 }
+
+export interface PodcastEpisode {
+  id: string;
+  podcastName: string;
+  podcastImage: string;
+  title: string;
+  description: string;
+  url: string;
+  audioUrl: string;
+  duration: string;
+  publishedAt: string;
+  fetchedAt: string;
+}
+
+export interface PodcastSource {
+  id: string;
+  name: string;
+  feedUrl: string;
+  active: boolean;
+}

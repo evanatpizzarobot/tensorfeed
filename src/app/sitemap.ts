@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/models`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/agents`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/research`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${baseUrl}/podcasts`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
 
     // "Is X Down" status pages (high-traffic search queries)
     { url: `${baseUrl}/is-claude-down`, lastModified: now, changeFrequency: 'always', priority: 0.9 },

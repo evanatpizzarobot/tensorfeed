@@ -3,6 +3,7 @@ import { SISTER_SITES, STATUS_DOTS } from '@/lib/constants';
 import { Activity, Rss, TrendingUp, Globe } from 'lucide-react';
 import AgentActivity from '@/components/AgentActivity';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import LatestPodcasts from '@/components/podcasts/LatestPodcasts';
 
 const TRENDING_TOPICS = [
   '#Claude4',
@@ -71,6 +72,9 @@ export default async function Sidebar() {
 
       {/* Agent Activity Widget */}
       <AgentActivity />
+
+      {/* Latest AI Podcasts Widget */}
+      <LatestPodcasts />
 
       {/* Sources Widget */}
       <div className="bg-bg-secondary rounded-lg border border-border p-4">
