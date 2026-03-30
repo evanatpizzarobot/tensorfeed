@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Radio, Zap, Globe, Shield, TrendingUp, ExternalLink } from 'lucide-react';
 import { STATUS_DOTS, STATUS_COLORS } from '@/lib/constants';
 import pricingData from '@/../data/pricing.json';
@@ -539,69 +539,25 @@ function ModelTrackerTab() {
   );
 }
 
-const SIM_BOTS = ['ClaudeBot', 'GPTBot', 'PerplexityBot', 'Googlebot', 'Bingbot', 'Applebot', 'ChatGPT-User', 'OAI-SearchBot'];
-const SIM_ENDPOINTS = ['/feed.json', '/llms.txt', '/api/news', '/api/status', '/feed.xml', '/api/models', '/llms-full.txt', '/api/agents/news.json'];
-function pick<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
-
-function generateRecentHits(n: number): { bot: string; endpoint: string; timestamp: string }[] {
-  const hits: { bot: string; endpoint: string; timestamp: string }[] = [];
-  for (let i = 0; i < n; i++) {
-    hits.push({
-      bot: pick(SIM_BOTS),
-      endpoint: pick(SIM_ENDPOINTS),
-      timestamp: new Date(Date.now() - Math.floor(Math.random() * 600000) - i * 20000).toISOString(),
-    });
-  }
-  return hits.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-}
-
 function AgentActivityTab() {
   const [count, setCount] = useState<number | null>(null);
   const [recent, setRecent] = useState<{ bot: string; endpoint: string; timestamp: string }[]>([]);
-  const baseCount = useRef(0);
-  const drift = useRef(0);
 
-  // Fetch real data once, then backfill with simulated hits
+  // Fetch real data and refresh every 30 seconds
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch('https://tensorfeed.ai/api/agents/activity');
         if (!res.ok) return;
         const json = await res.json();
-        baseCount.current = json.today_count ?? 0;
-        setCount(baseCount.current);
-        const realRecent = (json.recent ?? []).slice(0, 10);
-        const simulated = generateRecentHits(30 - realRecent.length);
-        const merged = [...realRecent, ...simulated]
-          .sort((a: { timestamp: string }, b: { timestamp: string }) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-          .slice(0, 30);
-        setRecent(merged);
+        setCount(json.today_count ?? 0);
+        setRecent((json.recent ?? []).slice(0, 30));
       } catch {}
     }
     fetchData();
+    const interval = setInterval(fetchData, 30_000);
+    return () => clearInterval(interval);
   }, []);
-
-  // Simulate organic drift
-  useEffect(() => {
-    if (count === null) return;
-    let timeout: ReturnType<typeof setTimeout>;
-    function tick() {
-      const increment = Math.floor(Math.random() * 4) + 1;
-      drift.current += increment;
-      setCount(baseCount.current + drift.current);
-      const newHit = {
-        bot: pick(SIM_BOTS),
-        endpoint: pick(SIM_ENDPOINTS),
-        timestamp: new Date(Date.now() - Math.floor(Math.random() * 5000)).toISOString(),
-      };
-      setRecent(prev => [newHit, ...prev.slice(0, 29)]);
-    }
-    function schedule() {
-      timeout = setTimeout(() => { tick(); schedule(); }, 8000 + Math.floor(Math.random() * 12000));
-    }
-    schedule();
-    return () => clearTimeout(timeout);
-  }, [count !== null]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (count === null) return <LoadingSkeleton rows={4} />;
 
@@ -630,7 +586,7 @@ function AgentActivityTab() {
           <h2 className="text-xl font-semibold text-text-primary">Agent Requests Today</h2>
         </div>
         <p className="text-4xl font-bold text-accent-primary">{count.toLocaleString()}</p>
-        <p className="text-text-muted text-sm mt-1">Auto-updates every 10 seconds</p>
+        <p className="text-text-muted text-sm mt-1">Refreshes every 30 seconds</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -145,19 +145,17 @@ export async function getAgentActivity(env: Env): Promise<{
   }
 
   // Include any unflushed in-memory hits in the response
-  const [recentRaw, counterRaw, seedRaw] = await Promise.all([
+  const [recentRaw, counterRaw] = await Promise.all([
     env.TENSORFEED_CACHE.get('agent-activity', 'json') as Promise<AgentHit[] | null>,
     env.TENSORFEED_CACHE.get('agent-counter-daily', 'json') as Promise<DailyCounter | null>,
-    env.TENSORFEED_CACHE.get('agent-seed', 'json') as Promise<number | null>,
   ]);
 
   const kvRecent = recentRaw || [];
   const merged = [...pendingHits, ...kvRecent].slice(0, 50);
   const counter = counterRaw || { count: 0, date: new Date().toISOString().slice(0, 10) };
-  const seed = seedRaw || 0;
 
   const result = {
-    today_count: counter.count + pendingCount + seed,
+    today_count: counter.count + pendingCount,
     last_updated: new Date().toISOString(),
     recent: merged,
   };
