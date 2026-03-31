@@ -31,6 +31,7 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [AI API Pricing Guide](https://tensorfeed.ai/ai-api-pricing-guide): Every major AI API provider's pricing
 - [What Are AI Agents?](https://tensorfeed.ai/what-are-ai-agents): Guide to AI agents and frameworks
 - [Best Open Source LLMs](https://tensorfeed.ai/best-open-source-llms): 9 open source models reviewed
+- [CLAUDE.md Guide](https://tensorfeed.ai/claude-md-guide): Complete guide to writing CLAUDE.md files for Claude Code
 
 ## Content Hubs
 - [News Feed](https://tensorfeed.ai/): Aggregated AI news from 15+ sources, categorized and timestamped
