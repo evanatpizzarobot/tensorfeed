@@ -26,8 +26,36 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [guidesOpen, setGuidesOpen] = useState(false);
+  const [overallStatus, setOverallStatus] = useState<'operational' | 'degraded' | 'down' | 'unknown'>('unknown');
   const guidesRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
+
+  // Fetch overall status for the nav indicator
+  useEffect(() => {
+    async function fetchStatus() {
+      try {
+        const res = await fetch('https://tensorfeed.ai/api/status/summary');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.ok && data.services?.length) {
+          const hasDown = data.services.some((s: { status: string }) => s.status === 'down');
+          const hasDegraded = data.services.some((s: { status: string }) => s.status === 'degraded');
+          setOverallStatus(hasDown ? 'down' : hasDegraded ? 'degraded' : 'operational');
+        }
+      } catch {}
+    }
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const statusColor = overallStatus === 'down' ? 'text-accent-red'
+    : overallStatus === 'degraded' ? 'text-accent-amber'
+    : 'text-accent-green';
+
+  const statusDotClass = overallStatus === 'down' ? 'bg-accent-red'
+    : overallStatus === 'degraded' ? 'bg-accent-amber'
+    : 'bg-accent-green';
 
   // Close guides dropdown when clicking outside
   useEffect(() => {
@@ -68,32 +96,30 @@ export default function Navbar() {
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1">
-            <Link
-              href="/status"
-              className="flex items-center justify-center w-7 h-7 rounded hover:bg-bg-secondary transition-colors mr-0.5"
-              aria-label="Status"
-              title="All systems operational"
-            >
-              <span className="live-dot" />
-            </Link>
             {NAV_LINKS.map((link) => {
               const isActive =
                 link.href === '/'
                   ? pathname === '/'
                   : pathname.startsWith(link.href);
+              const isStatus = link.href === '/status';
 
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={`relative px-3 py-1.5 rounded text-sm transition-colors ${
-                    isActive
-                      ? 'text-accent-primary'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-bg-secondary'
+                    isStatus
+                      ? `${statusColor} hover:brightness-110`
+                      : isActive
+                        ? 'text-accent-primary'
+                        : 'text-text-secondary hover:text-text-primary hover:bg-bg-secondary'
                   }`}
                 >
-                  {link.label}
-                  {isActive && (
+                  <span className="flex items-center gap-1.5">
+                    {isStatus && <span className={`w-2 h-2 rounded-full shrink-0 ${statusDotClass}`} />}
+                    {link.label}
+                  </span>
+                  {isActive && !isStatus && (
                     <span className="absolute bottom-0 left-1 right-1 h-0.5 rounded-full bg-gradient-to-r from-accent-primary to-accent-cyan" />
                   )}
                 </Link>
@@ -186,19 +212,12 @@ export default function Navbar() {
         }`}
       >
         <div className="px-4 py-3 space-y-1">
-          <Link
-            href="/status"
-            onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-2 px-3 py-2 rounded text-sm text-text-secondary hover:text-text-primary hover:bg-bg-secondary transition-colors"
-          >
-            <span className="live-dot" />
-            <span>System Status</span>
-          </Link>
           {NAV_LINKS.map((link) => {
             const isActive =
               link.href === '/'
                 ? pathname === '/'
                 : pathname.startsWith(link.href);
+            const isStatus = link.href === '/status';
 
             return (
               <Link
@@ -206,13 +225,18 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className={`relative block px-3 py-2 rounded text-sm transition-colors ${
-                  isActive
-                    ? 'text-accent-primary'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-secondary'
+                  isStatus
+                    ? `${statusColor} hover:brightness-110`
+                    : isActive
+                      ? 'text-accent-primary'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-bg-secondary'
                 }`}
               >
-                {link.label}
-                {isActive && (
+                <span className="flex items-center gap-1.5">
+                  {isStatus && <span className={`w-2 h-2 rounded-full shrink-0 ${statusDotClass}`} />}
+                  {link.label}
+                </span>
+                {isActive && !isStatus && (
                   <span className="absolute left-0 top-1 bottom-1 w-0.5 rounded-full bg-gradient-to-b from-accent-primary to-accent-cyan" />
                 )}
               </Link>

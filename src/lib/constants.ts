@@ -6,6 +6,7 @@ export const CONTACT_EMAIL = 'feedback@tensorfeed.ai';
 export const PRESS_EMAIL = 'press@tensorfeed.ai';
 
 export const NAV_LINKS = [
+  { href: '/status', label: 'Status' },
   { href: '/', label: 'Feed' },
   { href: '/today', label: 'Today' },
   { href: '/models', label: 'Models' },
@@ -13,7 +14,6 @@ export const NAV_LINKS = [
   { href: '/benchmarks', label: 'Benchmarks' },
   { href: '/agents', label: 'Agents' },
   { href: '/podcasts', label: 'Podcasts' },
-  { href: '/status', label: 'Status' },
   { href: '/live', label: 'Live' },
 ] as const;
 
