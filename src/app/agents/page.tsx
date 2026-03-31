@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Bot, Wrench, Palette, Search, Code, ExternalLink } from 'lucide-react';
 import fallbackAgentsData from '@/../data/agents-directory.json';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 // Metadata must be in a separate file for client components, but we keep
 // the page as 'use client' for the interactive filter. Next.js will still
@@ -155,6 +156,8 @@ export default function AgentsPage() {
           })}
         </div>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Build an Agent Resources */}
       <section className="mb-10">

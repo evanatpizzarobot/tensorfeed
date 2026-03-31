@@ -38,13 +38,7 @@ function balanceSources(articles: NewsArticle[]): NewsArticle[] {
   return balanced;
 }
 
-function AdPlaceholder({ index }: { index: number }) {
-  return (
-    <div className="rounded-lg border border-dashed border-border bg-bg-secondary/50 px-5 py-4 flex items-center justify-center">
-      <span className="text-xs text-text-muted font-mono">Ad Space Reserved for Google AdSense</span>
-    </div>
-  );
-}
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export default function NewsFeed({ articles: initialArticles }: NewsFeedProps) {
   const [articles, setArticles] = useState<NewsArticle[]>(initialArticles);
@@ -127,7 +121,7 @@ export default function NewsFeed({ articles: initialArticles }: NewsFeedProps) {
               <NewsCard article={article} featured={index % 5 === 0} />
               {(index + 1) % 10 === 0 && index < filteredArticles.length - 1 && (
                 <div className="mt-4">
-                  <AdPlaceholder index={index} />
+                  <AdPlaceholder />
                 </div>
               )}
             </div>

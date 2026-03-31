@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArticleJsonLd, FAQPageJsonLd } from '@/components/seo/JsonLd';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: 'What Are AI Agents? Everything You Need to Know (2026) | TensorFeed',
@@ -151,6 +152,8 @@ export default function WhatAreAIAgentsPage() {
         </p>
       </section>
 
+      <AdPlaceholder className="my-8" />
+
       {/* Types */}
       <section id="types" className="mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Types of AI Agents</h2>
@@ -259,6 +262,8 @@ export default function WhatAreAIAgentsPage() {
           just generate text but actually accomplish tasks.
         </p>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Frameworks */}
       <section id="frameworks" className="mb-12">
@@ -398,6 +403,8 @@ export default function WhatAreAIAgentsPage() {
           ))}
         </div>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Challenges */}
       <section id="challenges" className="mb-12">

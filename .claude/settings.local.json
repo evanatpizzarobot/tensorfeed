@@ -69,7 +69,26 @@
       "Bash(grep -r \"today_count\\\\|recent\" /c/projects/tensorfeed/src --include=*.ts --include=*.tsx)",
       "Bash(xargs grep:*)",
       "Bash(grep -r import.*AgentActivity /c/projects/tensorfeed/src --include=*.tsx --include=*.ts)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(gh auth:*)",
+      "WebSearch",
+      "WebFetch(domain:x.com)",
+      "WebFetch(domain:dash.cloudflare.com)",
+      "Read(//c/Users/rippe/**)",
+      "Read(//c/Users/rippe/.wrangler/**)",
+      "Read(//c/projects/tensorfeed/$APPDATA/.wrangler/config/**)",
+      "Bash(find /c/Users/rippe -name default.toml -path *wrangler*)",
+      "Bash(grep -r \"AI Daily Brief\\\\|Practical AI\\\\|Latent Space\\\\|Last Week in AI\" /c/projects/tensorfeed --include=*.ts --include=*.js --include=*.json)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://anchor.fm/s/d2e54928/podcast/rss\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://api.substack.com/feed/podcast/1084089.rss\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://feeds.buzzsprout.com/2021966.rss\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://changelog.com/practicalai/feed\")",
+      "Bash(curl:*)",
+      "WebFetch(domain:podnews.net)",
+      "Bash(timeout 15 head -50)",
+      "WebFetch(domain:status.huggingface.co)",
+      "WebFetch(domain:status.mistral.ai)",
+      "Bash(find /c/projects/tensorfeed/src -type f \\\\\\(-name *.tsx -o -name *.ts \\\\\\))"
     ]
   }
 }

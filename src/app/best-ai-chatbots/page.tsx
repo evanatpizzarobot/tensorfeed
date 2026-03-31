@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArticleJsonLd, FAQPageJsonLd } from '@/components/seo/JsonLd';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: 'Best AI Chatbots Compared (2026): ChatGPT vs Claude vs Gemini | TensorFeed',
@@ -271,6 +272,8 @@ export default function BestAIChatbotsPage() {
         </div>
       </section>
 
+      <AdPlaceholder className="my-8" />
+
       {/* Use Case Winners */}
       <section id="use-case-winners" className="mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Best Chatbot by Use Case</h2>
@@ -363,6 +366,8 @@ export default function BestAIChatbotsPage() {
         </div>
       </section>
 
+      <AdPlaceholder className="my-8" />
+
       {/* Pricing Breakdown */}
       <section id="pricing-breakdown" className="mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Pricing Breakdown</h2>
@@ -447,6 +452,8 @@ export default function BestAIChatbotsPage() {
           </p>
         </div>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* FAQ */}
       <section id="faq" className="mb-12">

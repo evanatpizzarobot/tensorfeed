@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArticleJsonLd, FAQPageJsonLd } from '@/components/seo/JsonLd';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: 'What is Artificial Intelligence? A Complete Guide for 2026',
@@ -87,6 +88,8 @@ export default function WhatIsAIPage() {
           But AI encompasses much more than chatbots.
         </p>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* History */}
       <section id="history" className="mb-12">
@@ -232,6 +235,8 @@ export default function WhatIsAIPage() {
           of speculation.
         </p>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* ML vs DL */}
       <section id="ml-vs-dl" className="mb-12">
@@ -470,6 +475,8 @@ export default function WhatIsAIPage() {
           ))}
         </div>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* FAQ */}
       <section id="faq" className="mb-12">

@@ -5,8 +5,138 @@
     <link>https://tensorfeed.ai</link>
     <description>AI research papers, breakthroughs, and academic findings.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 22:30:59 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 20:17:36 GMT</lastBuildDate>
     <atom:link href="https://tensorfeed.ai/feed/research.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>There are more AI health tools than ever—but how well do they work?</title>
+      <link>https://www.technologyreview.com/2026/03/30/1134795/there-are-more-ai-health-tools-than-ever-but-how-well-do-they-work/</link>
+      <description>Earlier this month, Microsoft launched Copilot Health, a new space within its Copilot app where users will be able to connect their medical records and ask specific questions about their health. A couple of days earlier, Amazon had announced that...</description>
+      <pubDate>Mon, 30 Mar 2026 16:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/30/1134795/there-are-more-ai-health-tools-than-ever-but-how-well-do-they-work/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>The Pentagon’s culture war tactic against Anthropic has backfired</title>
+      <link>https://www.technologyreview.com/2026/03/30/1134881/the-pentagons-culture-war-tactic-against-anthropic-has-backfired/</link>
+      <description>This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. Last Thursday, a California judge temporarily blocked the Pentagon from labeling Anthropic a supply chain risk...</description>
+      <pubDate>Mon, 30 Mar 2026 15:42:50 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/30/1134881/the-pentagons-culture-war-tactic-against-anthropic-has-backfired/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>The Download: brainless human clones and the first uterus kept alive outside a body</title>
+      <link>https://www.technologyreview.com/2026/03/30/1134836/the-download-brainless-human-clones-first-uterus-kept-alive-outside-body/</link>
+      <description>This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Inside the stealthy startup that pitched brainless human clones After operating in secrecy for years, R3 Bio, a...</description>
+      <pubDate>Mon, 30 Mar 2026 12:10:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/30/1134836/the-download-brainless-human-clones-first-uterus-kept-alive-outside-body/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>Inside the stealthy startup that pitched brainless human clones</title>
+      <link>https://www.technologyreview.com/2026/03/30/1134780/r3-bio-brainless-human-clones-full-body-replacement-john-schloendorn-aging-longevity/</link>
+      <description>After operating in secrecy for years, a startup company called R3 Bio, in Richmond, California, suddenly shared details about its work last week—saying it had raised money to create nonsentient monkey “organ sacks” as an alternative to animal...</description>
+      <pubDate>Mon, 30 Mar 2026 09:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/30/1134780/r3-bio-brainless-human-clones-full-body-replacement-john-schloendorn-aging-longevity/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>BeSafe-Bench: Unveiling Behavioral Safety Risks of Situated Agents in Functional Environments</title>
+      <link>https://arxiv.org/abs/2603.25747</link>
+      <description>arXiv:2603.25747v1 Announce Type: new Abstract: The rapid evolution of Large Multimodal Models (LMMs) has enabled agents to perform complex digital and physical tasks, yet their deployment as autonomous decision-makers introduces substantial...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.25747</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>AutoB2G: A Large Language Model-Driven Agentic Framework For Automated Building-Grid Co-Simulation</title>
+      <link>https://arxiv.org/abs/2603.26005</link>
+      <description>arXiv:2603.26005v1 Announce Type: new Abstract: The growing availability of building operational data motivates the use of reinforcement learning (RL), which can learn control policies directly from data and cope with the complexity and uncertainty...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26005</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Semi-Automated Knowledge Engineering and Process Mapping for Total Airport Management</title>
+      <link>https://arxiv.org/abs/2603.26076</link>
+      <description>arXiv:2603.26076v1 Announce Type: new Abstract: Documentation of airport operations is inherently complex due to extensive technical terminology, rigorous regulations, proprietary regional information, and fragmented communication across multiple...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26076</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>GUIDE: Resolving Domain Bias in GUI Agents through Real-Time Web Video Retrieval and Plug-and-Play Annotation</title>
+      <link>https://arxiv.org/abs/2603.26266</link>
+      <description>arXiv:2603.26266v1 Announce Type: new Abstract: Large vision-language models have endowed GUI agents with strong general capabilities for interface understanding and interaction. However, due to insufficient exposure to domain-specific software...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26266</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>AIRA_2: Overcoming Bottlenecks in AI Research Agents</title>
+      <link>https://arxiv.org/abs/2603.26499</link>
+      <description>arXiv:2603.26499v1 Announce Type: new Abstract: Existing research has identified three structural performance bottlenecks in AI research agents: (1) synchronous single-GPU execution constrains sample throughput, limiting the benefit of search; (2) a...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26499</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>CADSmith: Multi-Agent CAD Generation with Programmatic Geometric Validation</title>
+      <link>https://arxiv.org/abs/2603.26512</link>
+      <description>arXiv:2603.26512v1 Announce Type: new Abstract: Existing methods for text-to-CAD generation either operate in a single pass with no geometric verification or rely on lossy visual feedback that cannot resolve dimensional errors. We present CADSmith,...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26512</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Stabilizing Rubric Integration Training via Decoupled Advantage Normalization</title>
+      <link>https://arxiv.org/abs/2603.26535</link>
+      <description>arXiv:2603.26535v1 Announce Type: new Abstract: We propose Process-Aware Policy Optimization (PAPO), a method that integrates process-level evaluation into Group Relative Policy Optimization (GRPO) through decoupled advantage normalization, to...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26535</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>DesignWeaver: Dimensional Scaffolding for Text-to-Image Product Design</title>
+      <link>https://arxiv.org/abs/2502.09867</link>
+      <description>arXiv:2502.09867v2 Announce Type: cross Abstract: Generative AI has enabled novice designers to quickly create professional-looking visual representations for product concepts. However, novices have limited domain knowledge that could constrain...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2502.09867</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>A Lightweight, Transferable, and Self-Adaptive Framework for Intelligent DC Arc-Fault Detection in Photovoltaic Systems</title>
+      <link>https://arxiv.org/abs/2603.25749</link>
+      <description>arXiv:2603.25749v1 Announce Type: cross Abstract: Arc-fault circuit interrupters (AFCIs) are essential for mitigating fire hazards in residential photovoltaic (PV) systems, yet achieving reliable DC arc-fault detection under real-world conditions...</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.25749</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Sommelier: Scalable Open Multi-turn Audio Pre-processing for Full-duplex Speech Language Models</title>
+      <link>https://arxiv.org/abs/2603.25750</link>
+      <description>arXiv:2603.25750v1 Announce Type: cross Abstract: As the paradigm of AI shifts from text-based LLMs to Speech Language Models (SLMs), there is a growing demand for full-duplex systems capable of real-time, natural human-computer interaction....</description>
+      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.25750</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
     <item>
       <title>A woman’s uterus has been kept alive outside the body for the first time</title>
       <link>https://www.technologyreview.com/2026/03/28/1134766/womans-uterus-kept-alive-outside-the-body-first/</link>
@@ -63,46 +193,6 @@
       <description>I live in a dense city with plentiful public transportation options and limited parking, so I don’t own a car. I’m often utterly clueless about the current price of gasoline. But as the conflict in Iran has escalated, fossil-fuel prices have been on...</description>
       <pubDate>Thu, 26 Mar 2026 10:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://www.technologyreview.com/2026/03/26/1134677/gas-prices-electric-vehicles/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
-    </item>
-    <item>
-      <title>Roundtables: The Next Era of Space Exploration</title>
-      <link>https://www.technologyreview.com/2026/03/25/1134664/roundtables-the-next-era-of-space-exploration/</link>
-      <description>Listen to the session or watch below Whether it’s the race to find life on Mars, the campaign to outsmart killer asteroids, or the quest to make the moon a permanent home to astronauts, scientists’ efforts in space can tell us more about where...</description>
-      <pubDate>Wed, 25 Mar 2026 17:26:26 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/25/1134664/roundtables-the-next-era-of-space-exploration/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
-    </item>
-    <item>
-      <title>Why this battery company is pivoting to AI</title>
-      <link>https://www.technologyreview.com/2026/03/25/1134657/battery-company-ai-pivot-ses/</link>
-      <description>Qichao Hu doesn’t mince words about how he sees the state of the battery industry. “Almost every Western battery company has either died or is going to die. It’s kind of the reality,” he says. Hu is the CEO of SES AI, a Massachusetts-based battery...</description>
-      <pubDate>Wed, 25 Mar 2026 15:02:50 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/25/1134657/battery-company-ai-pivot-ses/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
-    </item>
-    <item>
-      <title>This startup wants to change how mathematicians do math</title>
-      <link>https://www.technologyreview.com/2026/03/25/1134642/this-startup-wants-to-change-how-mathematicians-do-math/</link>
-      <description>Axiom Math, a startup based in Palo Alto, California, has released a free new AI tool for mathematicians, designed to discover mathematical patterns that could unlock solutions to long-standing problems. The tool, called Axplorer, is a redesign of...</description>
-      <pubDate>Wed, 25 Mar 2026 13:59:17 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/25/1134642/this-startup-wants-to-change-how-mathematicians-do-math/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
-    </item>
-    <item>
-      <title>The Download: reawakening frozen brains, and the AI Hype Index returns</title>
-      <link>https://www.technologyreview.com/2026/03/25/1134636/the-download-reawakening-frozen-brains-and-the-ai-hype-index-returns/</link>
-      <description>This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. This scientist rewarmed and studied pieces of his friend’s cryopreserved brain L. Stephen Coles’s brain sits in...</description>
-      <pubDate>Wed, 25 Mar 2026 12:47:44 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/25/1134636/the-download-reawakening-frozen-brains-and-the-ai-hype-index-returns/</guid>
       <source url="https://technologyreview.com">MIT Technology Review</source>
         <category>Research</category>
         <category>Policy &amp; Safety</category>

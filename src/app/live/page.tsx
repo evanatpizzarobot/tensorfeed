@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Radio, Zap, Globe, Shield, TrendingUp, ExternalLink } from 'lucide-react';
+import AdPlaceholder from '@/components/AdPlaceholder';
 import { STATUS_DOTS, STATUS_COLORS } from '@/lib/constants';
 import pricingData from '@/../data/pricing.json';
 import {
@@ -761,6 +762,8 @@ export default function LivePage() {
 
       {/* Tab Content */}
       <div>{renderTabContent()}</div>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Economic Widget */}
       <EconomicWidget />

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { Activity } from 'lucide-react';
+import AdPlaceholder from '@/components/AdPlaceholder';
 import { STATUS_DOTS, STATUS_COLORS } from '@/lib/constants';
 import { WebApplicationJsonLd } from '@/components/seo/JsonLd';
 
@@ -144,6 +145,8 @@ export default async function StatusPage() {
           </span>
         </div>
       </div>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Status Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

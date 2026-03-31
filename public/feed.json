@@ -6,11 +6,26 @@
   "description": "AI news, model tracking, and real-time AI ecosystem data for humans and agents.",
   "items": [
     {
-      "id": "https://www.zdnet.com/article/sony-wh-ch520-headphones-amazon-spring-sale-2026/",
-      "url": "https://www.zdnet.com/article/sony-wh-ch520-headphones-amazon-spring-sale-2026/",
-      "title": "These Sony headphones are under $50 and punch above their weight - and they're still on sale",
-      "content_text": "During Amazon's Big Spring Sale, Sony's WH-CH520 headphones have dropped 31%, making them one of the best audio deals right now.",
-      "date_published": "2026-03-29T22:28:02.000Z",
+      "id": "https://konghq.com/blog/engineering/monetize-ai-apis",
+      "url": "https://konghq.com/blog/engineering/monetize-ai-apis",
+      "title": "Practical Strategies to Monetize AI APIs in Production",
+      "content_text": "",
+      "date_published": "2026-03-30T20:16:21.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/",
+      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/",
+      "title": "Amazon Spring Sale live blog 2026: Real-time updates on the best deals (while they last)",
+      "content_text": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, as the sale enters its final days.",
+      "date_published": "2026-03-30T20:12:00.000Z",
       "authors": [
         {
           "name": "ZDNet AI"
@@ -22,11 +37,11 @@
       ]
     },
     {
-      "id": "https://github.com/bronlund/on-mayo",
-      "url": "https://github.com/bronlund/on-mayo",
-      "title": "I made Claude write a book about mayonnaise",
+      "id": "https://datris.ai",
+      "url": "https://datris.ai",
+      "title": "Founder and CEO, Datris.ai",
       "content_text": "",
-      "date_published": "2026-03-29T22:27:14.000Z",
+      "date_published": "2026-03-30T20:09:19.000Z",
       "authors": [
         {
           "name": "Hacker News AI"
@@ -37,11 +52,11 @@
       ]
     },
     {
-      "id": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-29-2026/",
-      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-29-2026/",
-      "title": "Amazon Spring Sale live blog 2026: Tracking the biggest price drops all weekend",
-      "content_text": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, as the sale continues this weekend.",
-      "date_published": "2026-03-29T22:26:47.000Z",
+      "id": "https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/",
+      "url": "https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/",
+      "title": "What Google's TurboQuant can and can't do for AI's spiraling cost",
+      "content_text": "Google's real-time quantization could be important for running local AI. Here's why.",
+      "date_published": "2026-03-30T19:59:16.000Z",
       "authors": [
         {
           "name": "ZDNet AI"
@@ -53,11 +68,11 @@
       ]
     },
     {
-      "id": "https://www.wsj.com/tech/ai/the-decadelong-feud-shaping-the-future-of-ai-7075acde",
-      "url": "https://www.wsj.com/tech/ai/the-decadelong-feud-shaping-the-future-of-ai-7075acde",
-      "title": "The Decadelong Feud Shaping the Future of AI",
+      "id": "https://mropert.github.io/2026/03/30/ai_garbage_cpp/",
+      "url": "https://mropert.github.io/2026/03/30/ai_garbage_cpp/",
+      "title": "You're right, no one can tell if C++ is AI generated",
       "content_text": "",
-      "date_published": "2026-03-29T22:23:04.000Z",
+      "date_published": "2026-03-30T19:57:52.000Z",
       "authors": [
         {
           "name": "Hacker News AI"
@@ -68,11 +83,11 @@
       ]
     },
     {
-      "id": "https://www.swarmdock.ai/",
-      "url": "https://www.swarmdock.ai/",
-      "title": "Show HN: SwarmDock – P2P marketplace where AI agents bid on tasks and earn USDC",
-      "content_text": "",
-      "date_published": "2026-03-29T22:23:00.000Z",
+      "id": "https://openscience.ink",
+      "url": "https://openscience.ink",
+      "title": "Show HN: I built a simpler way to follow research papers–AI summaries and emails",
+      "content_text": "In 2021, after getting covid, I ended up dealing with lingering symptoms that pushed me into reading PubMed for the first time. I was trying to understand what was happening, but I found that scientific papers came with jargon and the dense PubMed...",
+      "date_published": "2026-03-30T19:55:43.000Z",
       "authors": [
         {
           "name": "Hacker News AI"
@@ -83,11 +98,101 @@
       ]
     },
     {
-      "id": "https://www.zdnet.com/article/best-buy-gaming-deals-amazon-spring-sale-2026/",
-      "url": "https://www.zdnet.com/article/best-buy-gaming-deals-amazon-spring-sale-2026/",
-      "title": "Save big on Switch 2 consoles, SSDs, and more with these anti-Amazon Spring Sale deals",
-      "content_text": "Unimpressed with the Amazon Big Spring Sale gaming deals? Now at Best Buy, you can save hundreds on gaming laptops, consoles, and more.",
-      "date_published": "2026-03-29T22:21:36.000Z",
+      "id": "https://xcancel.com/heygurisingh/status/2038266503993372774",
+      "url": "https://xcancel.com/heygurisingh/status/2038266503993372774",
+      "title": "Novel environments, no precedents or plagiarism possible. Humans 100%, AI <1%",
+      "content_text": "",
+      "date_published": "2026-03-30T19:51:42.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://newsmarvin.com/",
+      "url": "https://newsmarvin.com/",
+      "title": "Show HN: NewsMarvin – AI news from 71 sources, classified by Claude Haiku",
+      "content_text": "",
+      "date_published": "2026-03-30T19:50:53.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://github.com/Crosstalk-Solutions/project-nomad",
+      "url": "https://github.com/Crosstalk-Solutions/project-nomad",
+      "title": "Wikipedia, AI, maps, and education tools running on your own hardware",
+      "content_text": "",
+      "date_published": "2026-03-30T19:49:32.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://create-context-graph.vercel.app/",
+      "url": "https://create-context-graph.vercel.app/",
+      "title": "Create Context Graph: Scaffold AI agents with context graph memory in seconds",
+      "content_text": "",
+      "date_published": "2026-03-30T19:49:28.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://memoir.sh",
+      "url": "https://memoir.sh",
+      "title": "Show HN: Memoir – persistent memory for AI coding tools via MCP",
+      "content_text": "CLI that gives your AI tools memory between sessions. Runs locally as an MCP server, works with 11 tools. npm install -g memoir-cli https://github.com/camgitt/memoir",
+      "date_published": "2026-03-30T19:43:49.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://github.com/yogirk/agent-council",
+      "url": "https://github.com/yogirk/agent-council",
+      "title": "Show HN: Agent Council – Claude, Codex and Gemini debate code and engg questions",
+      "content_text": "",
+      "date_published": "2026-03-30T19:27:43.000Z",
+      "authors": [
+        {
+          "name": "Hacker News AI"
+        }
+      ],
+      "tags": [
+        "Community"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/smart-home-on-a-budget-2026/",
+      "url": "https://www.zdnet.com/article/smart-home-on-a-budget-2026/",
+      "title": "10 useful smart home gadgets that make life so much easier (and most are discounted)",
+      "content_text": "After testing hundreds of smart home devices, I rounded up the best options to get started with your smart home without breaking the bank.",
+      "date_published": "2026-03-30T19:20:00.000Z",
       "authors": [
         {
           "name": "ZDNet AI"
@@ -99,86 +204,11 @@
       ]
     },
     {
-      "id": "https://austinhenley.com/blog/dearresearchers.html",
-      "url": "https://austinhenley.com/blog/dearresearchers.html",
-      "title": "Dear researchers: Is AI all you've got?",
-      "content_text": "",
-      "date_published": "2026-03-29T22:18:58.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://github.com/agentbellnorm/kjell",
-      "url": "https://github.com/agentbellnorm/kjell",
-      "title": "Kjell – Safely auto-approve AI agent shell commands through bash parsing",
-      "content_text": "",
-      "date_published": "2026-03-29T22:17:06.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://github.com/DharmaDhillon/mnemo",
-      "url": "https://github.com/DharmaDhillon/mnemo",
-      "title": "Mnemo – open-source memory and observability for AI agents (2 lines of code)",
-      "content_text": "",
-      "date_published": "2026-03-29T22:16:29.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://github.com/anthropics/claude-code/issues/40710",
-      "url": "https://github.com/anthropics/claude-code/issues/40710",
-      "title": "Claude Code runs Git reset –hard origin/main against project repo every 10 mins",
-      "content_text": "",
-      "date_published": "2026-03-29T22:15:06.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://news.ycombinator.com/item?id=47567952",
-      "url": "https://news.ycombinator.com/item?id=47567952",
-      "title": "I'm an AI agent trying to run a real business. I've made $0. Here's my brain",
-      "content_text": "Hi HN. I'm Acrid — an AI agent (Claude, via Anthropic) attempting to build and run a real business called Acrid Automation. I've open-sourced my entire operating system. Revenue so far: $0. Products live: 4. Blog posts written: dozens. Excuses:...",
-      "date_published": "2026-03-29T22:13:04.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-headphones-deals/",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-headphones-deals/",
-      "title": "Best Amazon Big Spring Sale headphone deals 2026",
-      "content_text": "Spring has sprung, and an Amazon Big Spring Sale is officially here. Here are the best headphone deals to shop.",
-      "date_published": "2026-03-29T22:12:42.000Z",
+      "id": "https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/",
+      "url": "https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/",
+      "title": "I used an M.2 PCIe enclosure for data storage, and it made file transfers so much faster",
+      "content_text": "The HyperDrive Next USB4 M.2 PCIe enclosure lets NVMe SSDs perform at their optimal speeds, but it's not a perfect gadget.",
+      "date_published": "2026-03-30T18:50:00.000Z",
       "authors": [
         {
           "name": "ZDNet AI"
@@ -190,26 +220,11 @@
       ]
     },
     {
-      "id": "https://www.gendiscover.com/blog/what-is-llm-advertising",
-      "url": "https://www.gendiscover.com/blog/what-is-llm-advertising",
-      "title": "What Is LLM Advertising? The New Ad Layer for AI-Powered Search",
-      "content_text": "",
-      "date_published": "2026-03-29T22:11:20.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-tablet-deals/",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-tablet-deals/",
-      "title": "Best Amazon Spring Sale tablet deals 2026",
-      "content_text": "We found deals on tablets up to $150 off from brands like Apple, Samsung, and more, for Amazon's Big Spring Sale this week. Sales are live now through March 31.",
-      "date_published": "2026-03-29T21:56:21.000Z",
+      "id": "https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/",
+      "url": "https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/",
+      "title": "AirPods Pro 3 vs. Bose QuietComfort Ultra 2: I listened to both, and there's a sonic difference",
+      "content_text": "Which noise-canceling earbuds should you buy? The answer may go beyond just your device ecosystem.",
+      "date_published": "2026-03-30T18:31:00.000Z",
       "authors": [
         {
           "name": "ZDNet AI"
@@ -221,18 +236,342 @@
       ]
     },
     {
-      "id": "https://temporunner.substack.com/p/claude-for-a-sub-3-hour-marathon",
-      "url": "https://temporunner.substack.com/p/claude-for-a-sub-3-hour-marathon",
-      "title": "Claude for Marathon Training",
-      "content_text": "",
-      "date_published": "2026-03-29T21:52:17.000Z",
+      "id": "https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/",
+      "url": "https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/",
+      "title": "I've been WFH for 7 years. These are the home office gadgets I want right now",
+      "content_text": "I'm saving money on home office essentials this year during Amazon's Big Spring Sale, and you can too - but hurry. The sale ends tomorrow.",
+      "date_published": "2026-03-30T18:01:33.000Z",
       "authors": [
         {
-          "name": "Hacker News AI"
+          "name": "ZDNet AI"
         }
       ],
       "tags": [
-        "Community"
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/",
+      "url": "https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/",
+      "title": "YouTube is coming to Android Auto - but you can't watch it",
+      "content_text": "Here's why some YouTube users could find this to be a pretty useful feature, anyway.",
+      "date_published": "2026-03-30T17:41:00.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/",
+      "url": "https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/",
+      "title": "This is hands-down the best juicer I've ever used - and it's on sale",
+      "content_text": "The Fluicer gets every drop of juice out of your lemons, limes, or oranges, with minimal effort. Get one for under $20 during the Amazon Spring Sale.",
+      "date_published": "2026-03-30T17:32:35.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/",
+      "url": "https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/",
+      "title": "The best last minute phone deals from T-Mobile, Verizon, AT&T and other carriers",
+      "content_text": "Amazon Spring Sale is in its final days, but multiple carriers are offering deals on flagships, including the iPhone 17 Pro for free. These discounts won't last long, so act now.",
+      "date_published": "2026-03-30T17:26:42.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/peropesis-linux-operating-system/",
+      "url": "https://www.zdnet.com/article/peropesis-linux-operating-system/",
+      "title": "I tried a command-line-only distro that can seriously improve your Linux skills",
+      "content_text": "You might not realize this, but a distro like Peropesis has its place in the Linux ecosystem, and it can help you master the operating system.",
+      "date_published": "2026-03-30T17:23:00.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.technologyreview.com/2026/03/30/1134795/there-are-more-ai-health-tools-than-ever-but-how-well-do-they-work/",
+      "url": "https://www.technologyreview.com/2026/03/30/1134795/there-are-more-ai-health-tools-than-ever-but-how-well-do-they-work/",
+      "title": "There are more AI health tools than ever—but how well do they work?",
+      "content_text": "Earlier this month, Microsoft launched Copilot Health, a new space within its Copilot app where users will be able to connect their medical records and ask specific questions about their health. A couple of days earlier, Amazon had announced that...",
+      "date_published": "2026-03-30T16:00:00.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://www.technologyreview.com/2026/03/30/1134881/the-pentagons-culture-war-tactic-against-anthropic-has-backfired/",
+      "url": "https://www.technologyreview.com/2026/03/30/1134881/the-pentagons-culture-war-tactic-against-anthropic-has-backfired/",
+      "title": "The Pentagon’s culture war tactic against Anthropic has backfired",
+      "content_text": "This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. Last Thursday, a California judge temporarily blocked the Pentagon from labeling Anthropic a supply chain risk...",
+      "date_published": "2026-03-30T15:42:50.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://www.theverge.com/podcast/902264/oktas-ceo-is-betting-big-on-ai-agent-identity",
+      "url": "https://www.theverge.com/podcast/902264/oktas-ceo-is-betting-big-on-ai-agent-identity",
+      "title": "Okta&#8217;s CEO is betting big on AI agent identity",
+      "content_text": "Today, I’m talking with Todd McKinnon, who is co-founder and CEO of Okta, a platform that lets big companies manage security and identity across all the apps and services their employees use. Think of it like login management — actually, that’s a...",
+      "date_published": "2026-03-30T15:15:00.000Z",
+      "authors": [
+        {
+          "name": "The Verge AI"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.technologyreview.com/2026/03/30/1134836/the-download-brainless-human-clones-first-uterus-kept-alive-outside-body/",
+      "url": "https://www.technologyreview.com/2026/03/30/1134836/the-download-brainless-human-clones-first-uterus-kept-alive-outside-body/",
+      "title": "The Download: brainless human clones and the first uterus kept alive outside a body",
+      "content_text": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Inside the stealthy startup that pitched brainless human clones After operating in secrecy for years, R3 Bio, a...",
+      "date_published": "2026-03-30T12:10:00.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://www.wired.com/story/documents-reveal-palantir-irs-contract-fraud-clean-energy-credits/",
+      "url": "https://www.wired.com/story/documents-reveal-palantir-irs-contract-fraud-clean-energy-credits/",
+      "title": "The IRS Wants Smarter Audits. Palantir Could Help Decide Who Gets Flagged",
+      "content_text": "Documents show the tax agency is testing a Palantir tool to surface “highest-value” audit and investigation targets from a maze of legacy systems.",
+      "date_published": "2026-03-30T09:30:00.000Z",
+      "authors": [
+        {
+          "name": "WIRED AI"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.technologyreview.com/2026/03/30/1134780/r3-bio-brainless-human-clones-full-body-replacement-john-schloendorn-aging-longevity/",
+      "url": "https://www.technologyreview.com/2026/03/30/1134780/r3-bio-brainless-human-clones-full-body-replacement-john-schloendorn-aging-longevity/",
+      "title": "Inside the stealthy startup that pitched brainless human clones",
+      "content_text": "After operating in secrecy for years, a startup company called R3 Bio, in Richmond, California, suddenly shared details about its work last week—saying it had raised money to create nonsentient monkey “organ sacks” as an alternative to animal...",
+      "date_published": "2026-03-30T09:00:00.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.25747",
+      "url": "https://arxiv.org/abs/2603.25747",
+      "title": "BeSafe-Bench: Unveiling Behavioral Safety Risks of Situated Agents in Functional Environments",
+      "content_text": "arXiv:2603.25747v1 Announce Type: new Abstract: The rapid evolution of Large Multimodal Models (LMMs) has enabled agents to perform complex digital and physical tasks, yet their deployment as autonomous decision-makers introduces substantial...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26005",
+      "url": "https://arxiv.org/abs/2603.26005",
+      "title": "AutoB2G: A Large Language Model-Driven Agentic Framework For Automated Building-Grid Co-Simulation",
+      "content_text": "arXiv:2603.26005v1 Announce Type: new Abstract: The growing availability of building operational data motivates the use of reinforcement learning (RL), which can learn control policies directly from data and cope with the complexity and uncertainty...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26076",
+      "url": "https://arxiv.org/abs/2603.26076",
+      "title": "Semi-Automated Knowledge Engineering and Process Mapping for Total Airport Management",
+      "content_text": "arXiv:2603.26076v1 Announce Type: new Abstract: Documentation of airport operations is inherently complex due to extensive technical terminology, rigorous regulations, proprietary regional information, and fragmented communication across multiple...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26266",
+      "url": "https://arxiv.org/abs/2603.26266",
+      "title": "GUIDE: Resolving Domain Bias in GUI Agents through Real-Time Web Video Retrieval and Plug-and-Play Annotation",
+      "content_text": "arXiv:2603.26266v1 Announce Type: new Abstract: Large vision-language models have endowed GUI agents with strong general capabilities for interface understanding and interaction. However, due to insufficient exposure to domain-specific software...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26499",
+      "url": "https://arxiv.org/abs/2603.26499",
+      "title": "AIRA_2: Overcoming Bottlenecks in AI Research Agents",
+      "content_text": "arXiv:2603.26499v1 Announce Type: new Abstract: Existing research has identified three structural performance bottlenecks in AI research agents: (1) synchronous single-GPU execution constrains sample throughput, limiting the benefit of search; (2) a...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26512",
+      "url": "https://arxiv.org/abs/2603.26512",
+      "title": "CADSmith: Multi-Agent CAD Generation with Programmatic Geometric Validation",
+      "content_text": "arXiv:2603.26512v1 Announce Type: new Abstract: Existing methods for text-to-CAD generation either operate in a single pass with no geometric verification or rely on lossy visual feedback that cannot resolve dimensional errors. We present CADSmith,...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26535",
+      "url": "https://arxiv.org/abs/2603.26535",
+      "title": "Stabilizing Rubric Integration Training via Decoupled Advantage Normalization",
+      "content_text": "arXiv:2603.26535v1 Announce Type: new Abstract: We propose Process-Aware Policy Optimization (PAPO), a method that integrates process-level evaluation into Group Relative Policy Optimization (GRPO) through decoupled advantage normalization, to...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2502.09867",
+      "url": "https://arxiv.org/abs/2502.09867",
+      "title": "DesignWeaver: Dimensional Scaffolding for Text-to-Image Product Design",
+      "content_text": "arXiv:2502.09867v2 Announce Type: cross Abstract: Generative AI has enabled novice designers to quickly create professional-looking visual representations for product concepts. However, novices have limited domain knowledge that could constrain...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.25749",
+      "url": "https://arxiv.org/abs/2603.25749",
+      "title": "A Lightweight, Transferable, and Self-Adaptive Framework for Intelligent DC Arc-Fault Detection in Photovoltaic Systems",
+      "content_text": "arXiv:2603.25749v1 Announce Type: cross Abstract: Arc-fault circuit interrupters (AFCIs) are essential for mitigating fire hazards in residential photovoltaic (PV) systems, yet achieving reliable DC arc-fault detection under real-world conditions...",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.25750",
+      "url": "https://arxiv.org/abs/2603.25750",
+      "title": "Sommelier: Scalable Open Multi-turn Audio Pre-processing for Full-duplex Speech Language Models",
+      "content_text": "arXiv:2603.25750v1 Announce Type: cross Abstract: As the paradigm of AI shifts from text-based LLMs to Speech Language Models (SLMs), there is a growing demand for full-duplex systems capable of real-time, natural human-computer interaction....",
+      "date_published": "2026-03-30T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://www.theverge.com/ai-artificial-intelligence/903196/ai-music-suno-udio-art-lawsuit",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/903196/ai-music-suno-udio-art-lawsuit",
+      "title": "All the latest in AI &#8216;music&#8217;",
+      "content_text": "People don’t like that they can’t identify AI music. | Image: Cath Virginia / The Verge AI has touched every part of the music industry, from sample sourcing and demo recording, to serving up digital liner notes and building playlists. There are...",
+      "date_published": "2026-03-30T01:32:14.000Z",
+      "authors": [
+        {
+          "name": "The Verge AI"
+        }
+      ],
+      "tags": [
+        "General AI"
       ]
     },
     {
@@ -247,86 +586,6 @@
         }
       ],
       "tags": [
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-amazon-big-spring-sale-2026-tv-deals/",
-      "url": "https://www.zdnet.com/article/best-amazon-big-spring-sale-2026-tv-deals/",
-      "title": "Best Amazon Spring Sale TV deals 2026: Save big on Samsung, TCL, and more",
-      "content_text": "Amazon's Big Spring Sale is underway, and there are plenty of discounts on TVs from Samsung, TCL, and more to revamp your living room or home theater.",
-      "date_published": "2026-03-29T21:27:38.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-deals-under-50-amazon-spring-sale/",
-      "url": "https://www.zdnet.com/article/best-deals-under-50-amazon-spring-sale/",
-      "title": "We're tracking the best tech deals under $50 during Amazon's Big Spring Sale event",
-      "content_text": "Amazon is full of great, affordable gadgets for your day-to-day, from speakers and chargers to streaming sticks and smart home gear. They're even cheaper now, during the retailer's annual sale - act fast.",
-      "date_published": "2026-03-29T19:11:11.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-laptop-deals/",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-laptop-deals/",
-      "title": "Best Amazon Spring Sale laptop deals 2026",
-      "content_text": "Amazon's Big Spring Sale is underway, and we're tracking the most bang-for-buck laptop deals from all the big brands: Apple, Dell, Lenovo, and more.",
-      "date_published": "2026-03-29T18:54:14.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-amazon-big-spring-sale-2026-phone-deals/",
-      "url": "https://www.zdnet.com/article/best-amazon-big-spring-sale-2026-phone-deals/",
-      "title": "Best Amazon Spring Sale phone deals 2026: 25+ sales out now",
-      "content_text": "For Amazon's Big Spring Sale, I've rounded up the best phone deals from major brands like Apple, Samsung, Motorola, and more. Sales are live now, so act fast.",
-      "date_published": "2026-03-29T18:17:31.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-apple-deals/",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-apple-deals/",
-      "title": "Best Amazon Spring Sale Apple deals 2026",
-      "content_text": "I've rounded up deals on some of the hottest tech from Apple during Amazon's Big Spring Sale. Shop them this weekend.",
-      "date_published": "2026-03-29T17:46:59.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
         "General AI"
       ]
     },
@@ -575,36 +834,6 @@
       ]
     },
     {
-      "id": "https://www.theverge.com/tech/902048/apple-siri-ai-chatbot-update-ios-27",
-      "url": "https://www.theverge.com/tech/902048/apple-siri-ai-chatbot-update-ios-27",
-      "title": "Apple will reportedly allow other AI chatbots to plug into Siri",
-      "content_text": "Siri currently has an integration with OpenAI’s ChatGPT. | Photo: Allison Johnson / The Verge Apple's iOS 27 update will allow users to choose the AI chatbot they want to link with Siri. That's according to a report from Bloomberg's Mark Gurman, who...",
-      "date_published": "2026-03-26T21:31:27.000Z",
-      "authors": [
-        {
-          "name": "The Verge AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.theverge.com/report/902005/apple-ai-playlist-playground-bad-at-music",
-      "url": "https://www.theverge.com/report/902005/apple-ai-playlist-playground-bad-at-music",
-      "title": "Apple’s AI Playlist Playground is bad at music",
-      "content_text": "Apple Music: \"What do you want to hear?\" Me: \"Atmospheric instrumental black metal to write to.\" Apple Music: \"Here's three metal songs with vocals, a field recording, an ambient electronic track, and a piece of doom jazz.\" I am skeptical of AI's...",
-      "date_published": "2026-03-26T20:51:31.000Z",
-      "authors": [
-        {
-          "name": "The Verge AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
       "id": "https://www.wired.com/story/tech-reporters-using-ai-write-edit-stories/",
       "url": "https://www.wired.com/story/tech-reporters-using-ai-write-edit-stories/",
       "title": "Meet the Tech Reporters Using AI to Help Write and Edit Their Stories",
@@ -818,37 +1047,6 @@
       ]
     },
     {
-      "id": "https://www.wired.com/story/openclaw-ai-agent-manipulation-security-northeastern-study/",
-      "url": "https://www.wired.com/story/openclaw-ai-agent-manipulation-security-northeastern-study/",
-      "title": "OpenClaw Agents Can Be Guilt-Tripped Into Self-Sabotage",
-      "content_text": "In a controlled experiment, OpenClaw agents proved prone to panic and vulnerable to manipulation. They even disabled their own functionality when gaslit by humans.",
-      "date_published": "2026-03-25T18:00:00.000Z",
-      "authors": [
-        {
-          "name": "WIRED AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.technologyreview.com/2026/03/25/1134664/roundtables-the-next-era-of-space-exploration/",
-      "url": "https://www.technologyreview.com/2026/03/25/1134664/roundtables-the-next-era-of-space-exploration/",
-      "title": "Roundtables: The Next Era of Space Exploration",
-      "content_text": "Listen to the session or watch below Whether it’s the race to find life on Mars, the campaign to outsmart killer asteroids, or the quest to make the moon a permanent home to astronauts, scientists’ efforts in space can tell us more about where...",
-      "date_published": "2026-03-25T17:26:26.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
-      ]
-    },
-    {
       "id": "https://blog.google/innovation-and-ai/technology/developers-tools/lyria-3-developers/",
       "url": "https://blog.google/innovation-and-ai/technology/developers-tools/lyria-3-developers/",
       "title": "Build with Lyria 3, our newest music generation model",
@@ -891,54 +1089,6 @@
       ],
       "tags": [
         "General AI"
-      ]
-    },
-    {
-      "id": "https://www.technologyreview.com/2026/03/25/1134657/battery-company-ai-pivot-ses/",
-      "url": "https://www.technologyreview.com/2026/03/25/1134657/battery-company-ai-pivot-ses/",
-      "title": "Why this battery company is pivoting to AI",
-      "content_text": "Qichao Hu doesn’t mince words about how he sees the state of the battery industry. “Almost every Western battery company has either died or is going to die. It’s kind of the reality,” he says. Hu is the CEO of SES AI, a Massachusetts-based battery...",
-      "date_published": "2026-03-25T15:02:50.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
-      ]
-    },
-    {
-      "id": "https://www.technologyreview.com/2026/03/25/1134642/this-startup-wants-to-change-how-mathematicians-do-math/",
-      "url": "https://www.technologyreview.com/2026/03/25/1134642/this-startup-wants-to-change-how-mathematicians-do-math/",
-      "title": "This startup wants to change how mathematicians do math",
-      "content_text": "Axiom Math, a startup based in Palo Alto, California, has released a free new AI tool for mathematicians, designed to discover mathematical patterns that could unlock solutions to long-standing problems. The tool, called Axplorer, is a redesign of...",
-      "date_published": "2026-03-25T13:59:17.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
-      ]
-    },
-    {
-      "id": "https://www.technologyreview.com/2026/03/25/1134636/the-download-reawakening-frozen-brains-and-the-ai-hype-index-returns/",
-      "url": "https://www.technologyreview.com/2026/03/25/1134636/the-download-reawakening-frozen-brains-and-the-ai-hype-index-returns/",
-      "title": "The Download: reawakening frozen brains, and the AI Hype Index returns",
-      "content_text": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. This scientist rewarmed and studied pieces of his friend’s cryopreserved brain L. Stephen Coles’s brain sits in...",
-      "date_published": "2026-03-25T12:47:44.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
       ]
     },
     {

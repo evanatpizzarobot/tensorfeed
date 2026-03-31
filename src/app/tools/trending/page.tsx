@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { GitBranch, Star, ExternalLink, GitFork } from 'lucide-react';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 interface TrendingRepo {
   name: string;
@@ -83,6 +84,8 @@ export default function TrendingReposPage() {
             </button>
           ))}
         </div>
+
+        <AdPlaceholder className="my-8" />
 
         {loading && (
           <div className="space-y-3">

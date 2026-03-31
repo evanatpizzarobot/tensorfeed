@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 interface Incident {
   id: string;
@@ -118,6 +119,8 @@ export default function IncidentsPage() {
           <p className="text-2xl font-bold text-text-primary truncate">{loading ? '...' : stats.mostAffected}</p>
         </div>
       </div>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Provider Filter */}
       <div className="flex flex-wrap gap-2 mb-8">

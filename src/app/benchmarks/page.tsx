@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { BarChart3 } from 'lucide-react';
 import benchmarkData from '@/../data/benchmarks.json';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 interface BenchmarkDef {
   id: string;
@@ -142,6 +143,8 @@ export default function BenchmarksPage() {
           Max score: {activeDef.maxScore}.
         </p>
       </div>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Table */}
       <div className="overflow-x-auto">

@@ -1,24 +1,123 @@
 {
   "articles": [
     {
-      "id": "wi4qfr",
-      "title": "These Sony headphones are under $50 and punch above their weight - and they're still on sale",
-      "url": "https://www.zdnet.com/article/sony-wh-ch520-headphones-amazon-spring-sale-2026/",
+      "id": "7nirkc",
+      "title": "Practical Strategies to Monetize AI APIs in Production",
+      "url": "https://konghq.com/blog/engineering/monetize-ai-apis",
+      "source": "Hacker News AI",
+      "sourceIcon": "/images/sources/hackernews.png",
+      "sourceDomain": "konghq.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-03-30T20:16:21.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
+    },
+    {
+      "id": "1f9x6y",
+      "title": "Amazon Spring Sale live blog 2026: Real-time updates on the best deals (while they last)",
+      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/",
       "source": "ZDNet AI",
       "sourceIcon": "/images/sources/zdnet.png",
       "sourceDomain": "zdnet.com",
-      "snippet": "During Amazon's Big Spring Sale, Sony's WH-CH520 headphones have dropped 31%, making them one of the best audio deals right now.",
+      "snippet": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, as the sale enters its final days.",
       "categories": [
         "Enterprise",
         "General AI"
       ],
-      "publishedAt": "2026-03-29T22:28:02.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
+      "publishedAt": "2026-03-30T20:12:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
     },
     {
-      "id": "bl0rpd",
-      "title": "I made Claude write a book about mayonnaise",
-      "url": "https://github.com/bronlund/on-mayo",
+      "id": "r6kg9q",
+      "title": "Founder and CEO, Datris.ai",
+      "url": "https://datris.ai",
+      "source": "Hacker News AI",
+      "sourceIcon": "/images/sources/hackernews.png",
+      "sourceDomain": "datris.ai",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-03-30T20:09:19.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
+    },
+    {
+      "id": "z6lz4",
+      "title": "What Google's TurboQuant can and can't do for AI's spiraling cost",
+      "url": "https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "Google's real-time quantization could be important for running local AI. Here's why.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T19:59:16.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "c6fywk",
+      "title": "You're right, no one can tell if C++ is AI generated",
+      "url": "https://mropert.github.io/2026/03/30/ai_garbage_cpp/",
+      "source": "Hacker News AI",
+      "sourceIcon": "/images/sources/hackernews.png",
+      "sourceDomain": "mropert.github.io",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-03-30T19:57:52.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
+    },
+    {
+      "id": "2tjw2r",
+      "title": "Show HN: I built a simpler way to follow research papers–AI summaries and emails",
+      "url": "https://openscience.ink",
+      "source": "Hacker News AI",
+      "sourceIcon": "/images/sources/hackernews.png",
+      "sourceDomain": "openscience.ink",
+      "snippet": "In 2021, after getting covid, I ended up dealing with lingering symptoms that pushed me into reading PubMed for the first time. I was trying to understand what was happening, but I found that scientific papers came with jargon and the dense PubMed...",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-03-30T19:55:43.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
+    },
+    {
+      "id": "23q7ip",
+      "title": "Novel environments, no precedents or plagiarism possible. Humans 100%, AI <1%",
+      "url": "https://xcancel.com/heygurisingh/status/2038266503993372774",
+      "source": "Hacker News AI",
+      "sourceIcon": "/images/sources/hackernews.png",
+      "sourceDomain": "xcancel.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-03-30T19:51:42.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
+    },
+    {
+      "id": "p6p1s3",
+      "title": "Show HN: NewsMarvin – AI news from 71 sources, classified by Claude Haiku",
+      "url": "https://newsmarvin.com/",
+      "source": "Hacker News AI",
+      "sourceIcon": "/images/sources/hackernews.png",
+      "sourceDomain": "newsmarvin.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-03-30T19:50:53.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
+    },
+    {
+      "id": "13ailh",
+      "title": "Wikipedia, AI, maps, and education tools running on your own hardware",
+      "url": "https://github.com/Crosstalk-Solutions/project-nomad",
       "source": "Hacker News AI",
       "sourceIcon": "/images/sources/hackernews.png",
       "sourceDomain": "github.com",
@@ -26,85 +125,41 @@
       "categories": [
         "Community"
       ],
-      "publishedAt": "2026-03-29T22:27:14.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
+      "publishedAt": "2026-03-30T19:49:32.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
     },
     {
-      "id": "utk3s0",
-      "title": "Amazon Spring Sale live blog 2026: Tracking the biggest price drops all weekend",
-      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-29-2026/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, as the sale continues this weekend.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T22:26:47.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
-    },
-    {
-      "id": "yfrld0",
-      "title": "The Decadelong Feud Shaping the Future of AI",
-      "url": "https://www.wsj.com/tech/ai/the-decadelong-feud-shaping-the-future-of-ai-7075acde",
+      "id": "ocg8ad",
+      "title": "Create Context Graph: Scaffold AI agents with context graph memory in seconds",
+      "url": "https://create-context-graph.vercel.app/",
       "source": "Hacker News AI",
       "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "wsj.com",
+      "sourceDomain": "create-context-graph.vercel.app",
       "snippet": "",
       "categories": [
         "Community"
       ],
-      "publishedAt": "2026-03-29T22:23:04.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
+      "publishedAt": "2026-03-30T19:49:28.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
     },
     {
-      "id": "ln3yny",
-      "title": "Show HN: SwarmDock – P2P marketplace where AI agents bid on tasks and earn USDC",
-      "url": "https://www.swarmdock.ai/",
+      "id": "yk0j3",
+      "title": "Show HN: Memoir – persistent memory for AI coding tools via MCP",
+      "url": "https://memoir.sh",
       "source": "Hacker News AI",
       "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "swarmdock.ai",
-      "snippet": "",
+      "sourceDomain": "memoir.sh",
+      "snippet": "CLI that gives your AI tools memory between sessions. Runs locally as an MCP server, works with 11 tools. npm install -g memoir-cli https://github.com/camgitt/memoir",
       "categories": [
         "Community"
       ],
-      "publishedAt": "2026-03-29T22:23:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
+      "publishedAt": "2026-03-30T19:43:49.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
     },
     {
-      "id": "qyfui",
-      "title": "Save big on Switch 2 consoles, SSDs, and more with these anti-Amazon Spring Sale deals",
-      "url": "https://www.zdnet.com/article/best-buy-gaming-deals-amazon-spring-sale-2026/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Unimpressed with the Amazon Big Spring Sale gaming deals? Now at Best Buy, you can save hundreds on gaming laptops, consoles, and more.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T22:21:36.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
-    },
-    {
-      "id": "kuup13",
-      "title": "Dear researchers: Is AI all you've got?",
-      "url": "https://austinhenley.com/blog/dearresearchers.html",
-      "source": "Hacker News AI",
-      "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "austinhenley.com",
-      "snippet": "",
-      "categories": [
-        "Community"
-      ],
-      "publishedAt": "2026-03-29T22:18:58.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
-    },
-    {
-      "id": "nksd67",
-      "title": "Kjell – Safely auto-approve AI agent shell commands through bash parsing",
-      "url": "https://github.com/agentbellnorm/kjell",
+      "id": "46ls8r",
+      "title": "Show HN: Agent Council – Claude, Codex and Gemini debate code and engg questions",
+      "url": "https://github.com/yogirk/agent-council",
       "source": "Hacker News AI",
       "sourceIcon": "/images/sources/hackernews.png",
       "sourceDomain": "github.com",
@@ -112,108 +167,370 @@
       "categories": [
         "Community"
       ],
-      "publishedAt": "2026-03-29T22:17:06.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
+      "publishedAt": "2026-03-30T19:27:43.000Z",
+      "fetchedAt": "2026-03-30T20:17:36.727Z"
     },
     {
-      "id": "eibdfc",
-      "title": "Mnemo – open-source memory and observability for AI agents (2 lines of code)",
-      "url": "https://github.com/DharmaDhillon/mnemo",
-      "source": "Hacker News AI",
-      "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "github.com",
-      "snippet": "",
-      "categories": [
-        "Community"
-      ],
-      "publishedAt": "2026-03-29T22:16:29.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
-    },
-    {
-      "id": "a5ntva",
-      "title": "Claude Code runs Git reset –hard origin/main against project repo every 10 mins",
-      "url": "https://github.com/anthropics/claude-code/issues/40710",
-      "source": "Hacker News AI",
-      "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "github.com",
-      "snippet": "",
-      "categories": [
-        "Community"
-      ],
-      "publishedAt": "2026-03-29T22:15:06.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
-    },
-    {
-      "id": "jmhrd8",
-      "title": "I'm an AI agent trying to run a real business. I've made $0. Here's my brain",
-      "url": "https://news.ycombinator.com/item?id=47567952",
-      "source": "Hacker News AI",
-      "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "news.ycombinator.com",
-      "snippet": "Hi HN. I'm Acrid — an AI agent (Claude, via Anthropic) attempting to build and run a real business called Acrid Automation. I've open-sourced my entire operating system. Revenue so far: $0. Products live: 4. Blog posts written: dozens. Excuses:...",
-      "categories": [
-        "Community"
-      ],
-      "publishedAt": "2026-03-29T22:13:04.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
-    },
-    {
-      "id": "lbt4nn",
-      "title": "Best Amazon Big Spring Sale headphone deals 2026",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-headphones-deals/",
+      "id": "754ner",
+      "title": "10 useful smart home gadgets that make life so much easier (and most are discounted)",
+      "url": "https://www.zdnet.com/article/smart-home-on-a-budget-2026/",
       "source": "ZDNet AI",
       "sourceIcon": "/images/sources/zdnet.png",
       "sourceDomain": "zdnet.com",
-      "snippet": "Spring has sprung, and an Amazon Big Spring Sale is officially here. Here are the best headphone deals to shop.",
+      "snippet": "After testing hundreds of smart home devices, I rounded up the best options to get started with your smart home without breaking the bank.",
       "categories": [
         "Enterprise",
         "General AI"
       ],
-      "publishedAt": "2026-03-29T22:12:42.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
+      "publishedAt": "2026-03-30T19:20:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
     },
     {
-      "id": "25fw5i",
-      "title": "What Is LLM Advertising? The New Ad Layer for AI-Powered Search",
-      "url": "https://www.gendiscover.com/blog/what-is-llm-advertising",
-      "source": "Hacker News AI",
-      "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "gendiscover.com",
-      "snippet": "",
-      "categories": [
-        "Community"
-      ],
-      "publishedAt": "2026-03-29T22:11:20.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
-    },
-    {
-      "id": "4r6opa",
-      "title": "Best Amazon Spring Sale tablet deals 2026",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-tablet-deals/",
+      "id": "b5l3zf",
+      "title": "I used an M.2 PCIe enclosure for data storage, and it made file transfers so much faster",
+      "url": "https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/",
       "source": "ZDNet AI",
       "sourceIcon": "/images/sources/zdnet.png",
       "sourceDomain": "zdnet.com",
-      "snippet": "We found deals on tablets up to $150 off from brands like Apple, Samsung, and more, for Amazon's Big Spring Sale this week. Sales are live now through March 31.",
+      "snippet": "The HyperDrive Next USB4 M.2 PCIe enclosure lets NVMe SSDs perform at their optimal speeds, but it's not a perfect gadget.",
       "categories": [
         "Enterprise",
         "General AI"
       ],
-      "publishedAt": "2026-03-29T21:56:21.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
+      "publishedAt": "2026-03-30T18:50:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
     },
     {
-      "id": "awbv7q",
-      "title": "Claude for Marathon Training",
-      "url": "https://temporunner.substack.com/p/claude-for-a-sub-3-hour-marathon",
-      "source": "Hacker News AI",
-      "sourceIcon": "/images/sources/hackernews.png",
-      "sourceDomain": "temporunner.substack.com",
-      "snippet": "",
+      "id": "95niow",
+      "title": "AirPods Pro 3 vs. Bose QuietComfort Ultra 2: I listened to both, and there's a sonic difference",
+      "url": "https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "Which noise-canceling earbuds should you buy? The answer may go beyond just your device ecosystem.",
       "categories": [
-        "Community"
+        "Enterprise",
+        "General AI"
       ],
-      "publishedAt": "2026-03-29T21:52:17.000Z",
-      "fetchedAt": "2026-03-29T22:30:59.443Z"
+      "publishedAt": "2026-03-30T18:31:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "71cdg1",
+      "title": "I've been WFH for 7 years. These are the home office gadgets I want right now",
+      "url": "https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "I'm saving money on home office essentials this year during Amazon's Big Spring Sale, and you can too - but hurry. The sale ends tomorrow.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T18:01:33.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "d2gdi8",
+      "title": "YouTube is coming to Android Auto - but you can't watch it",
+      "url": "https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "Here's why some YouTube users could find this to be a pretty useful feature, anyway.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T17:41:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "2hweb8",
+      "title": "This is hands-down the best juicer I've ever used - and it's on sale",
+      "url": "https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "The Fluicer gets every drop of juice out of your lemons, limes, or oranges, with minimal effort. Get one for under $20 during the Amazon Spring Sale.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T17:32:35.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "2sixpl",
+      "title": "The best last minute phone deals from T-Mobile, Verizon, AT&T and other carriers",
+      "url": "https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "Amazon Spring Sale is in its final days, but multiple carriers are offering deals on flagships, including the iPhone 17 Pro for free. These discounts won't last long, so act now.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T17:26:42.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "3ue2vw",
+      "title": "I tried a command-line-only distro that can seriously improve your Linux skills",
+      "url": "https://www.zdnet.com/article/peropesis-linux-operating-system/",
+      "source": "ZDNet AI",
+      "sourceIcon": "/images/sources/zdnet.png",
+      "sourceDomain": "zdnet.com",
+      "snippet": "You might not realize this, but a distro like Peropesis has its place in the Linux ecosystem, and it can help you master the operating system.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T17:23:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.204Z"
+    },
+    {
+      "id": "wlchcu",
+      "title": "There are more AI health tools than ever—but how well do they work?",
+      "url": "https://www.technologyreview.com/2026/03/30/1134795/there-are-more-ai-health-tools-than-ever-but-how-well-do-they-work/",
+      "source": "MIT Technology Review",
+      "sourceIcon": "/images/sources/mit.png",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "Earlier this month, Microsoft launched Copilot Health, a new space within its Copilot app where users will be able to connect their medical records and ask specific questions about their health. A couple of days earlier, Amazon had announced that...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-03-30T16:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
+    },
+    {
+      "id": "aiz7z7",
+      "title": "The Pentagon’s culture war tactic against Anthropic has backfired",
+      "url": "https://www.technologyreview.com/2026/03/30/1134881/the-pentagons-culture-war-tactic-against-anthropic-has-backfired/",
+      "source": "MIT Technology Review",
+      "sourceIcon": "/images/sources/mit.png",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. Last Thursday, a California judge temporarily blocked the Pentagon from labeling Anthropic a supply chain risk...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-03-30T15:42:50.000Z",
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
+    },
+    {
+      "id": "5k83u9",
+      "title": "Okta&#8217;s CEO is betting big on AI agent identity",
+      "url": "https://www.theverge.com/podcast/902264/oktas-ceo-is-betting-big-on-ai-agent-identity",
+      "source": "The Verge AI",
+      "sourceIcon": "/images/sources/verge.png",
+      "sourceDomain": "theverge.com",
+      "snippet": "Today, I’m talking with Todd McKinnon, who is co-founder and CEO of Okta, a platform that lets big companies manage security and identity across all the apps and services their employees use. Think of it like login management — actually, that’s a...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T15:15:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
+    },
+    {
+      "id": "hpwlxm",
+      "title": "The Download: brainless human clones and the first uterus kept alive outside a body",
+      "url": "https://www.technologyreview.com/2026/03/30/1134836/the-download-brainless-human-clones-first-uterus-kept-alive-outside-body/",
+      "source": "MIT Technology Review",
+      "sourceIcon": "/images/sources/mit.png",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Inside the stealthy startup that pitched brainless human clones After operating in secrecy for years, R3 Bio, a...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-03-30T12:10:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
+    },
+    {
+      "id": "1d8e9t",
+      "title": "The IRS Wants Smarter Audits. Palantir Could Help Decide Who Gets Flagged",
+      "url": "https://www.wired.com/story/documents-reveal-palantir-irs-contract-fraud-clean-energy-credits/",
+      "source": "WIRED AI",
+      "sourceIcon": "/images/sources/wired.png",
+      "sourceDomain": "wired.com",
+      "snippet": "Documents show the tax agency is testing a Palantir tool to surface “highest-value” audit and investigation targets from a maze of legacy systems.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T09:30:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
+    },
+    {
+      "id": "qvxpin",
+      "title": "Inside the stealthy startup that pitched brainless human clones",
+      "url": "https://www.technologyreview.com/2026/03/30/1134780/r3-bio-brainless-human-clones-full-body-replacement-john-schloendorn-aging-longevity/",
+      "source": "MIT Technology Review",
+      "sourceIcon": "/images/sources/mit.png",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "After operating in secrecy for years, a startup company called R3 Bio, in Richmond, California, suddenly shared details about its work last week—saying it had raised money to create nonsentient monkey “organ sacks” as an alternative to animal...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-03-30T09:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
+    },
+    {
+      "id": "bqnqqn",
+      "title": "BeSafe-Bench: Unveiling Behavioral Safety Risks of Situated Agents in Functional Environments",
+      "url": "https://arxiv.org/abs/2603.25747",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.25747v1 Announce Type: new Abstract: The rapid evolution of Large Multimodal Models (LMMs) has enabled agents to perform complex digital and physical tasks, yet their deployment as autonomous decision-makers introduces substantial...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqn91h",
+      "title": "AutoB2G: A Large Language Model-Driven Agentic Framework For Automated Building-Grid Co-Simulation",
+      "url": "https://arxiv.org/abs/2603.26005",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.26005v1 Announce Type: new Abstract: The growing availability of building operational data motivates the use of reinforcement learning (RL), which can learn control policies directly from data and cope with the complexity and uncertainty...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqn8vf",
+      "title": "Semi-Automated Knowledge Engineering and Process Mapping for Total Airport Management",
+      "url": "https://arxiv.org/abs/2603.26076",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.26076v1 Announce Type: new Abstract: Documentation of airport operations is inherently complex due to extensive technical terminology, rigorous regulations, proprietary regional information, and fragmented communication across multiple...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqn7ew",
+      "title": "GUIDE: Resolving Domain Bias in GUI Agents through Real-Time Web Video Retrieval and Plug-and-Play Annotation",
+      "url": "https://arxiv.org/abs/2603.26266",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.26266v1 Announce Type: new Abstract: Large vision-language models have endowed GUI agents with strong general capabilities for interface understanding and interaction. However, due to insufficient exposure to domain-specific software...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqn5uu",
+      "title": "AIRA_2: Overcoming Bottlenecks in AI Research Agents",
+      "url": "https://arxiv.org/abs/2603.26499",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.26499v1 Announce Type: new Abstract: Existing research has identified three structural performance bottlenecks in AI research agents: (1) synchronous single-GPU execution constrains sample throughput, limiting the benefit of search; (2) a...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqn5b8",
+      "title": "CADSmith: Multi-Agent CAD Generation with Programmatic Geometric Validation",
+      "url": "https://arxiv.org/abs/2603.26512",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.26512v1 Announce Type: new Abstract: Existing methods for text-to-CAD generation either operate in a single pass with no geometric verification or rely on lossy visual feedback that cannot resolve dimensional errors. We present CADSmith,...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqn59f",
+      "title": "Stabilizing Rubric Integration Training via Decoupled Advantage Normalization",
+      "url": "https://arxiv.org/abs/2603.26535",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.26535v1 Announce Type: new Abstract: We propose Process-Aware Policy Optimization (PAPO), a method that integrates process-level evaluation into Group Relative Policy Optimization (GRPO) through decoupled advantage normalization, to...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "3g0zdk",
+      "title": "DesignWeaver: Dimensional Scaffolding for Text-to-Image Product Design",
+      "url": "https://arxiv.org/abs/2502.09867",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2502.09867v2 Announce Type: cross Abstract: Generative AI has enabled novice designers to quickly create professional-looking visual representations for product concepts. However, novices have limited domain knowledge that could constrain...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqnqql",
+      "title": "A Lightweight, Transferable, and Self-Adaptive Framework for Intelligent DC Arc-Fault Detection in Photovoltaic Systems",
+      "url": "https://arxiv.org/abs/2603.25749",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.25749v1 Announce Type: cross Abstract: Arc-fault circuit interrupters (AFCIs) are essential for mitigating fire hazards in residential photovoltaic (PV) systems, yet achieving reliable DC arc-fault detection under real-world conditions...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "bqnqpz",
+      "title": "Sommelier: Scalable Open Multi-turn Audio Pre-processing for Full-duplex Speech Language Models",
+      "url": "https://arxiv.org/abs/2603.25750",
+      "source": "arXiv cs.AI",
+      "sourceIcon": "/images/sources/arxiv.png",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2603.25750v1 Announce Type: cross Abstract: As the paradigm of AI shifts from text-based LLMs to Speech Language Models (SLMs), there is a growing demand for full-duplex systems capable of real-time, natural human-computer interaction....",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-03-30T04:00:00.000Z",
+      "fetchedAt": "2026-03-30T20:17:28.025Z"
+    },
+    {
+      "id": "ky317v",
+      "title": "All the latest in AI &#8216;music&#8217;",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/903196/ai-music-suno-udio-art-lawsuit",
+      "source": "The Verge AI",
+      "sourceIcon": "/images/sources/verge.png",
+      "sourceDomain": "theverge.com",
+      "snippet": "People don’t like that they can’t identify AI music. | Image: Cath Virginia / The Verge AI has touched every part of the music industry, from sample sourcing and demo recording, to serving up digital liner notes and building playlists. There are...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-03-30T01:32:14.000Z",
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "y4x601",
@@ -227,82 +544,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-29T21:44:41.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
-    },
-    {
-      "id": "3aquyr",
-      "title": "Best Amazon Spring Sale TV deals 2026: Save big on Samsung, TCL, and more",
-      "url": "https://www.zdnet.com/article/best-amazon-big-spring-sale-2026-tv-deals/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Amazon's Big Spring Sale is underway, and there are plenty of discounts on TVs from Samsung, TCL, and more to revamp your living room or home theater.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T21:27:38.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
-    },
-    {
-      "id": "qnmwjp",
-      "title": "We're tracking the best tech deals under $50 during Amazon's Big Spring Sale event",
-      "url": "https://www.zdnet.com/article/best-deals-under-50-amazon-spring-sale/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Amazon is full of great, affordable gadgets for your day-to-day, from speakers and chargers to streaming sticks and smart home gear. They're even cheaper now, during the retailer's annual sale - act fast.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T19:11:11.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
-    },
-    {
-      "id": "u60mm6",
-      "title": "Best Amazon Spring Sale laptop deals 2026",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-laptop-deals/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Amazon's Big Spring Sale is underway, and we're tracking the most bang-for-buck laptop deals from all the big brands: Apple, Dell, Lenovo, and more.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T18:54:14.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
-    },
-    {
-      "id": "97wnnb",
-      "title": "Best Amazon Spring Sale phone deals 2026: 25+ sales out now",
-      "url": "https://www.zdnet.com/article/best-amazon-big-spring-sale-2026-phone-deals/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "For Amazon's Big Spring Sale, I've rounded up the best phone deals from major brands like Apple, Samsung, Motorola, and more. Sales are live now, so act fast.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T18:17:31.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
-    },
-    {
-      "id": "emopy0",
-      "title": "Best Amazon Spring Sale Apple deals 2026",
-      "url": "https://www.zdnet.com/article/best-amazon-spring-sale-2026-apple-deals/",
-      "source": "ZDNet AI",
-      "sourceIcon": "/images/sources/zdnet.png",
-      "sourceDomain": "zdnet.com",
-      "snippet": "I've rounded up deals on some of the hottest tech from Apple during Amazon's Big Spring Sale. Shop them this weekend.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T17:46:59.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.344Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "ai4k99",
@@ -316,7 +558,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-28T18:33:10.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "d376p3",
@@ -330,7 +572,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-28T14:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "nps7ew",
@@ -344,7 +586,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-28T12:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "lqkozz",
@@ -359,7 +601,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-28T09:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
     },
     {
       "id": "ku68ui",
@@ -373,7 +615,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-27T21:46:39.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "8hmauv",
@@ -387,7 +629,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-27T18:35:53.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "xf1gc",
@@ -401,7 +643,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-27T15:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "sxpi6w",
@@ -416,7 +658,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-27T12:32:54.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
     },
     {
       "id": "clhim5",
@@ -430,7 +672,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-27T11:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "ruwb0c",
@@ -444,7 +686,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-27T10:30:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "u94n2j",
@@ -459,7 +701,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-27T09:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
     },
     {
       "id": "i6lsvf",
@@ -473,7 +715,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-27T00:33:44.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "8fov1x",
@@ -488,7 +730,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-27T00:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "lxhh6r",
@@ -502,7 +744,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-26T23:40:22.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "t0ogtq",
@@ -516,7 +758,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-26T23:33:05.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "qtg2w",
@@ -530,35 +772,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-26T21:44:37.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
-    },
-    {
-      "id": "z0ssq8",
-      "title": "Apple will reportedly allow other AI chatbots to plug into Siri",
-      "url": "https://www.theverge.com/tech/902048/apple-siri-ai-chatbot-update-ios-27",
-      "source": "The Verge AI",
-      "sourceIcon": "/images/sources/verge.png",
-      "sourceDomain": "theverge.com",
-      "snippet": "Siri currently has an integration with OpenAI’s ChatGPT. | Photo: Allison Johnson / The Verge Apple's iOS 27 update will allow users to choose the AI chatbot they want to link with Siri. That's according to a report from Bloomberg's Mark Gurman, who...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-26T21:31:27.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
-    },
-    {
-      "id": "plw3k4",
-      "title": "Apple’s AI Playlist Playground is bad at music",
-      "url": "https://www.theverge.com/report/902005/apple-ai-playlist-playground-bad-at-music",
-      "source": "The Verge AI",
-      "sourceIcon": "/images/sources/verge.png",
-      "sourceDomain": "theverge.com",
-      "snippet": "Apple Music: \"What do you want to hear?\" Me: \"Atmospheric instrumental black metal to write to.\" Apple Music: \"Here's three metal songs with vocals, a field recording, an ambient electronic track, and a piece of doom jazz.\" I am skeptical of AI's...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-26T20:51:31.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.975Z"
+      "fetchedAt": "2026-03-30T20:17:27.835Z"
     },
     {
       "id": "xmy0ve",
@@ -572,7 +786,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-26T18:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "5q9pys",
@@ -586,7 +800,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T17:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "rprcfg",
@@ -600,7 +814,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T16:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "aq77fm",
@@ -614,7 +828,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T15:21:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "sp909r",
@@ -628,7 +842,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-26T15:00:56.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "ba4j03",
@@ -642,7 +856,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T15:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "dwlb3l",
@@ -656,7 +870,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-26T13:00:47.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "b29w5p",
@@ -671,7 +885,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-26T12:42:53.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.894Z"
     },
     {
       "id": "llipo5",
@@ -685,7 +899,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-26T12:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "wkbz7y",
@@ -699,7 +913,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-26T10:30:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "o55fqv",
@@ -714,7 +928,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-26T10:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.895Z"
     },
     {
       "id": "8234wd",
@@ -729,7 +943,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-26T10:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.895Z"
     },
     {
       "id": "cok2yc",
@@ -743,7 +957,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-25T19:00:04.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "oikwi2",
@@ -757,36 +971,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-25T18:49:40.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
-    },
-    {
-      "id": "8etkb3",
-      "title": "OpenClaw Agents Can Be Guilt-Tripped Into Self-Sabotage",
-      "url": "https://www.wired.com/story/openclaw-ai-agent-manipulation-security-northeastern-study/",
-      "source": "WIRED AI",
-      "sourceIcon": "/images/sources/wired.png",
-      "sourceDomain": "wired.com",
-      "snippet": "In a controlled experiment, OpenClaw agents proved prone to panic and vulnerable to manipulation. They even disabled their own functionality when gaslit by humans.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-25T18:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.017Z"
-    },
-    {
-      "id": "81jq7x",
-      "title": "Roundtables: The Next Era of Space Exploration",
-      "url": "https://www.technologyreview.com/2026/03/25/1134664/roundtables-the-next-era-of-space-exploration/",
-      "source": "MIT Technology Review",
-      "sourceIcon": "/images/sources/mit.png",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "Listen to the session or watch below Whether it’s the race to find life on Mars, the campaign to outsmart killer asteroids, or the quest to make the moon a permanent home to astronauts, scientists’ efforts in space can tell us more about where...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-25T17:26:26.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:28.039Z"
     },
     {
       "id": "tkl9wb",
@@ -800,7 +985,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-25T16:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "52b5o2",
@@ -814,7 +999,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-25T16:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "jzyw3u",
@@ -828,52 +1013,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-25T15:49:17.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
-    },
-    {
-      "id": "dzf8zp",
-      "title": "Why this battery company is pivoting to AI",
-      "url": "https://www.technologyreview.com/2026/03/25/1134657/battery-company-ai-pivot-ses/",
-      "source": "MIT Technology Review",
-      "sourceIcon": "/images/sources/mit.png",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "Qichao Hu doesn’t mince words about how he sees the state of the battery industry. “Almost every Western battery company has either died or is going to die. It’s kind of the reality,” he says. Hu is the CEO of SES AI, a Massachusetts-based battery...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-25T15:02:50.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
-    },
-    {
-      "id": "qdiuqq",
-      "title": "This startup wants to change how mathematicians do math",
-      "url": "https://www.technologyreview.com/2026/03/25/1134642/this-startup-wants-to-change-how-mathematicians-do-math/",
-      "source": "MIT Technology Review",
-      "sourceIcon": "/images/sources/mit.png",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "Axiom Math, a startup based in Palo Alto, California, has released a free new AI tool for mathematicians, designed to discover mathematical patterns that could unlock solutions to long-standing problems. The tool, called Axplorer, is a redesign of...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-25T13:59:17.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
-    },
-    {
-      "id": "epe6p0",
-      "title": "The Download: reawakening frozen brains, and the AI Hype Index returns",
-      "url": "https://www.technologyreview.com/2026/03/25/1134636/the-download-reawakening-frozen-brains-and-the-ai-hype-index-returns/",
-      "source": "MIT Technology Review",
-      "sourceIcon": "/images/sources/mit.png",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. This scientist rewarmed and studied pieces of his friend’s cryopreserved brain L. Stephen Coles’s brain sits in...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-25T12:47:44.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.987Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "i4dkxg",
@@ -887,7 +1027,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-25T11:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "smh9ny",
@@ -901,7 +1041,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-24T12:38:09.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "418cy3",
@@ -915,7 +1055,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-24T08:00:12.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "ghuazk",
@@ -930,7 +1070,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-24T02:01:52.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "2usf7i",
@@ -944,7 +1084,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-23T15:00:03.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "o1qrld",
@@ -958,7 +1098,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-20T20:50:46.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "lwbysn",
@@ -973,7 +1113,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-20T19:38:16.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "z4ts0j",
@@ -988,7 +1128,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-20T14:14:46.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "a1rbc0",
@@ -1002,7 +1142,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-20T00:15:17.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "gvi2ba",
@@ -1016,7 +1156,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-19T21:29:53.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "xy2akj",
@@ -1030,7 +1170,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-19T13:00:09.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "pfy3tz",
@@ -1044,7 +1184,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-18T17:36:40.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "22yufh",
@@ -1058,7 +1198,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-18T13:00:13.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "94atx1",
@@ -1072,7 +1212,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-17T17:07:12.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "mt85b8",
@@ -1086,7 +1226,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-17T17:00:58.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.256Z"
+      "fetchedAt": "2026-03-30T20:17:28.135Z"
     },
     {
       "id": "1bvl3g",
@@ -1101,7 +1241,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-17T16:37:55.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "a87jgi",
@@ -1115,7 +1255,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-17T16:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "kqd2xl",
@@ -1129,7 +1269,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-17T16:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "txg8n4",
@@ -1144,7 +1284,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-17T12:33:39.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "4y3pov",
@@ -1158,7 +1298,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-13T20:18:08.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "wfcua8",
@@ -1172,7 +1312,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-12T22:18:11.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "g9fv6y",
@@ -1186,7 +1326,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-12T15:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "hrw6jz",
@@ -1200,7 +1340,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-11T21:27:16.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "gkwhmz",
@@ -1214,7 +1354,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-10T13:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.197Z"
+      "fetchedAt": "2026-03-30T20:17:28.249Z"
     },
     {
       "id": "39w9u",
@@ -1229,7 +1369,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-10T00:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "pukzxn",
@@ -1244,7 +1384,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-10T00:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "y72wlt",
@@ -1259,7 +1399,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-09T00:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.935Z"
     },
     {
       "id": "k6ccms",
@@ -1274,7 +1414,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-09T00:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.049Z"
+      "fetchedAt": "2026-03-30T20:17:27.936Z"
     },
     {
       "id": "5ztbzh",
@@ -1288,7 +1428,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-06T19:41:33.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.972Z"
+      "fetchedAt": "2026-03-30T20:17:27.841Z"
     },
     {
       "id": "lt1nhr",
@@ -1303,7 +1443,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-22T14:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.241Z"
+      "fetchedAt": "2026-03-30T20:17:28.102Z"
     },
     {
       "id": "pw82ni",
@@ -1318,7 +1458,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-19T14:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.241Z"
+      "fetchedAt": "2026-03-30T20:17:28.102Z"
     },
     {
       "id": "2stlo5",
@@ -1333,7 +1473,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-16T14:01:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.241Z"
+      "fetchedAt": "2026-03-30T20:17:28.103Z"
     },
     {
       "id": "wkanl4",
@@ -1348,7 +1488,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-13T13:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.241Z"
+      "fetchedAt": "2026-03-30T20:17:28.103Z"
     },
     {
       "id": "3qldyo",
@@ -1362,7 +1502,7 @@
         "General AI"
       ],
       "publishedAt": "2026-01-13T11:30:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "69xvr0",
@@ -1377,7 +1517,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-12T11:30:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.242Z"
+      "fetchedAt": "2026-03-30T20:17:28.103Z"
     },
     {
       "id": "o3ucts",
@@ -1392,7 +1532,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-07T20:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.242Z"
+      "fetchedAt": "2026-03-30T20:17:28.103Z"
     },
     {
       "id": "k9er74",
@@ -1407,7 +1547,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-05T07:45:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:52.242Z"
+      "fetchedAt": "2026-03-30T20:17:28.103Z"
     },
     {
       "id": "e9o9yk",
@@ -1421,7 +1561,7 @@
         "General AI"
       ],
       "publishedAt": "2025-10-31T19:26:30.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "1wsfir",
@@ -1435,7 +1575,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-26T15:21:19.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "tm47qk",
@@ -1449,7 +1589,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-20T16:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "27akb2",
@@ -1463,7 +1603,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-20T15:56:53.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "tj3u0t",
@@ -1477,7 +1617,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-04T15:41:39.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "6xwg8b",
@@ -1491,7 +1631,7 @@
         "General AI"
       ],
       "publishedAt": "2025-06-04T14:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "yt0ltc",
@@ -1505,7 +1645,7 @@
         "General AI"
       ],
       "publishedAt": "2025-06-02T18:07:05.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "jrrt6d",
@@ -1519,7 +1659,7 @@
         "General AI"
       ],
       "publishedAt": "2025-05-27T12:00:00.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     },
     {
       "id": "sfwrni",
@@ -1533,8 +1673,8 @@
         "General AI"
       ],
       "publishedAt": "2025-05-22T16:49:53.000Z",
-      "fetchedAt": "2026-03-29T22:30:51.885Z"
+      "fetchedAt": "2026-03-30T20:17:27.803Z"
     }
   ],
-  "fetchedAt": "2026-03-29T22:30:59.444Z"
+  "fetchedAt": "2026-03-30T20:17:36.728Z"
 }

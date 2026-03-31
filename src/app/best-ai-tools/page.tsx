@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArticleJsonLd, FAQPageJsonLd } from '@/components/seo/JsonLd';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: 'Best AI Tools in 2026: The Definitive Guide | TensorFeed',
@@ -337,6 +338,8 @@ export default function BestAIToolsPage() {
         </div>
       </section>
 
+      <AdPlaceholder className="my-8" />
+
       {/* Table of Contents */}
       <nav className="bg-bg-secondary border border-border rounded-lg p-6 mb-10">
         <h2 className="text-lg font-semibold text-text-primary mb-4">Jump to Category</h2>
@@ -395,6 +398,8 @@ export default function BestAIToolsPage() {
         </section>
       ))}
 
+      <AdPlaceholder className="my-8" />
+
       {/* How to Choose */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">How to Choose the Right AI Tools</h2>
@@ -440,6 +445,8 @@ export default function BestAIToolsPage() {
           </div>
         </div>
       </section>
+
+      <AdPlaceholder className="my-8" />
 
       {/* FAQ */}
       <section id="faq" className="mb-12">

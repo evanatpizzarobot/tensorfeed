@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Calendar, TrendingUp, AlertTriangle, ExternalLink, Cpu } from 'lucide-react';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 interface Article {
   id: string;
@@ -132,6 +133,8 @@ export default function TodayPage() {
           <p className="text-xs text-text-muted">Incidents</p>
         </div>
       </div>
+
+      <AdPlaceholder className="my-8" />
 
       {/* Status Incidents */}
       {incidents.length > 0 && (
