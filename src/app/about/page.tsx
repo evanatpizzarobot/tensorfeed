@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-import { Users, Target, Globe, Mail, ExternalLink, Cpu, Rss, Bot, FileText, Code, Zap } from 'lucide-react';
-import Link from 'next/link';
+import { Users, Target, Globe, Mail, Cpu, Rss, Bot, FileText, Code, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About TensorFeed | AI News Hub for Humans and Agents',
@@ -31,10 +30,9 @@ export default function AboutPage() {
         <h2 className="text-xl font-semibold text-text-primary mb-4">About TensorFeed.ai</h2>
         <div className="space-y-4 text-text-secondary leading-relaxed">
           <p>
-            Built by <span className="text-text-primary font-medium">Ripper</span>. TensorFeed
-            exists because tracking the AI space meant jumping between a dozen sources every morning:
-            Twitter, arXiv, Discord servers, company blogs, status pages. So we built the thing we
-            wanted to use, and here we are.
+            TensorFeed exists because tracking the AI space meant jumping between a dozen sources
+            every morning: Twitter, arXiv, Discord servers, company blogs, status pages. So we built
+            the thing we wanted to use, and here we are.
           </p>
           <p>
             TensorFeed.ai aggregates AI news from 15+ sources, monitors service status in real time,
@@ -191,17 +189,6 @@ export default function AboutPage() {
               className="text-accent-primary hover:underline text-sm"
             >
               feedback@tensorfeed.ai
-            </a>
-          </div>
-          <div className="flex items-center gap-3">
-            <ExternalLink className="w-4 h-4 text-text-muted" />
-            <a
-              href="https://github.com/evanatpizzarobot/tensorfeed"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent-primary hover:underline text-sm"
-            >
-              github.com/evanatpizzarobot/tensorfeed
             </a>
           </div>
         </div>
