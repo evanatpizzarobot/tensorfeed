@@ -613,9 +613,9 @@ Many teams use a hybrid approach: proprietary APIs for the most demanding tasks 
 
 ## About TensorFeed.ai
 
-Hi, I am Evan. I built TensorFeed because I was tired of piecing together AI news from a dozen different sources every morning. I wanted one place where I could see new model releases, API status updates, research papers, and benchmark results without jumping between Twitter, arXiv, and a handful of Discord servers. So I built the thing I wanted to use, and here we are.
+Built by Ripper. TensorFeed exists because tracking the AI space meant jumping between a dozen sources every morning: Twitter, arXiv, Discord servers, company blogs, status pages. So we built the thing we wanted to use, and here we are.
 
-TensorFeed.ai is a project from Pizza Robot Studios LLC, the same team behind VR.org and TerminalFeed.io. We have a thing for building fast, useful data feeds. If you have been to any of our other sites, you will feel right at home here. We care about speed, clean design, and giving people the information they need without the noise.
+TensorFeed.ai aggregates AI news from 15+ sources, monitors service status in real time, tracks model releases and API pricing, and publishes original editorial analysis. Every data feed is structured for both human readers and AI agents. Fast, clean, no noise.
 
 ### Our Mission
 
@@ -637,11 +637,9 @@ Available endpoints: /feed.xml (RSS), /feed.json (JSON Feed), /api/agents/news.j
 
 No CAPTCHAs, no bot detection. Agents are welcome here.
 
-### Sister Sites
+### Sister Site
 
 **TerminalFeed.io** - Real-time financial data and market news aggregation for traders and developers. Live tickers, economic calendars, and API access for building trading tools.
-
-**VR.org** - The community hub for virtual reality enthusiasts, covering headset reviews, game releases, and the latest in spatial computing and immersive technology.
 
 ### Contact
 

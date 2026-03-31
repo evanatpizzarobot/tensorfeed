@@ -33,7 +33,7 @@ export default function WhyWeBuiltTensorFeedPage() {
           Why We Built TensorFeed.ai
         </h1>
         <div className="flex items-center gap-2 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Evan Marcus</span>
+          <span className="text-text-secondary font-medium">Ripper</span>
           <span>&middot;</span>
           <time dateTime="2026-03-28">March 28, 2026</time>
         </div>
@@ -148,11 +148,10 @@ export default function WhyWeBuiltTensorFeedPage() {
         <h2 className="text-2xl font-semibold text-text-primary pt-4">Part of a Bigger Picture</h2>
 
         <p>
-          TensorFeed isn&apos;t a standalone project. It&apos;s part of a family of sites that I&apos;m building
-          under Pizza Robot Studios. <a href="https://vr.org" className="text-accent-primary hover:underline">VR.org</a> covers
-          the virtual reality and spatial computing space with the same aggregation approach.{' '}
+          TensorFeed isn&apos;t a standalone project. It&apos;s part of a family of sites built with the same
+          philosophy.{' '}
           <a href="https://terminalfeed.io" className="text-accent-primary hover:underline">TerminalFeed.io</a> is
-          focused on developer tools, CLI workflows, and terminal productivity.
+          our sister site focused on real-time financial data and market news for traders and developers.
         </p>
 
         <p>
@@ -179,8 +178,8 @@ export default function WhyWeBuiltTensorFeedPage() {
 
         <p>
           The AI space is moving fast, and we intend to keep up. If you have ideas for what TensorFeed
-          should become, I genuinely want to hear them. Drop me a note at{' '}
-          <a href="mailto:evan@tensorfeed.ai" className="text-accent-primary hover:underline">evan@tensorfeed.ai</a>{' '}
+          should become, we genuinely want to hear them. Drop a note at{' '}
+          <a href="mailto:feedback@tensorfeed.ai" className="text-accent-primary hover:underline">feedback@tensorfeed.ai</a>{' '}
           or find us on X at{' '}
           <a href="https://x.com/tensorfeed" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline">@tensorfeed</a>.
           This thing is being built in public, and community input shapes what we prioritize.

@@ -66,4 +66,4 @@ console.log(`${health.news.totalArticles} articles from ${health.news.sourcesSuc
 
 ## License
 
-MIT - [Pizza Robot Studios](https://tensorfeed.ai/about)
+MIT - [TensorFeed.ai](https://tensorfeed.ai/about)

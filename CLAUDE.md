@@ -1,7 +1,7 @@
 # TensorFeed.ai - Project CLAUDE.md
 
 ## Project Overview
-TensorFeed.ai is an AI news aggregator and real-time data hub built for humans and AI agents. It combines VR.org's editorial RSS news system with TerminalFeed.io's live data feed architecture.
+TensorFeed.ai is an AI news aggregator and real-time data hub built for humans and AI agents. It combines editorial RSS news aggregation with TerminalFeed.io's live data feed architecture.
 
 ## Stack
 - Framework: Next.js 14 (App Router, static export via `output: 'export'`)
@@ -101,7 +101,6 @@ Guides: /what-is-ai, /best-ai-tools, /best-ai-chatbots, /ai-api-pricing-guide, /
 Meta: /about, /privacy, /developers, /changelog
 
 ## Email Addresses
-- evan@tensorfeed.ai
 - support@tensorfeed.ai
 - press@tensorfeed.ai (set up in Google Workspace)
 - feedback@tensorfeed.ai
@@ -112,9 +111,8 @@ Meta: /about, /privacy, /developers, /changelog
 - X/Twitter: @tensorfeed
 - GitHub: github.com/evanatpizzarobot/tensorfeed
 
-## Sister Sites
+## Sister Site
 - TerminalFeed.io: Real-time data dashboard (free API at terminalfeed.io/api/*)
-- VR.org: VR/AR news aggregator
 
 ## Content Rules
 - NO em dashes or double hyphens anywhere on the entire site

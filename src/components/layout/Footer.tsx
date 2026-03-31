@@ -10,14 +10,13 @@ export default function Footer() {
           {/* Left: Publisher info */}
           <div>
             <p className="text-sm text-text-secondary">
-              A{' '}
+              Built by{' '}
               <span className="text-text-primary font-medium">
-                Pizza Robot Studios
-              </span>{' '}
-              Project
+                Ripper
+              </span>
             </p>
             <p className="text-xs text-text-muted mt-1">
-              &copy; 2026 Pizza Robot Studios LLC. All rights reserved.
+              &copy; 2026 TensorFeed.ai. All rights reserved.
             </p>
           </div>
 

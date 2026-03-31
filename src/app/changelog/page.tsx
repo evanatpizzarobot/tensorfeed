@@ -43,7 +43,7 @@ export default function ChangelogPage() {
           <h1 className="text-3xl font-bold text-text-primary">Changelog</h1>
         </div>
         <p className="text-text-secondary text-lg">
-          Everything we ship, documented in real time. Built in public by Pizza Robot Studios.
+          Everything we ship, documented in real time. Built in public by Ripper.
         </p>
       </div>
 

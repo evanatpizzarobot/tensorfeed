@@ -5,197 +5,319 @@
     <link>https://tensorfeed.ai</link>
     <description>AI news, model tracking, and real-time AI ecosystem data for humans and agents.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 20:17:36 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 22:20:27 GMT</lastBuildDate>
     <atom:link href="https://tensorfeed.ai/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Practical Strategies to Monetize AI APIs in Production</title>
-      <link>https://konghq.com/blog/engineering/monetize-ai-apis</link>
+      <title>These 5 Amazon Spring Sale deals are worth a second glance before they&apos;re gone soon</title>
+      <link>https://www.zdnet.com/article/dyson-amazon-spring-sale-2026-deals-still-live/</link>
+      <description>It&apos;s the last day of Amazon&apos;s Big Spring Sale, but there&apos;s still last chance savings on top gear from Dyson (including vacuums, hair tools, and more).</description>
+      <pubDate>Tue, 31 Mar 2026 22:19:07 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/dyson-amazon-spring-sale-2026-deals-still-live/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>Amazon Spring Sale live blog 2026: Last day to score top Amazon deals</title>
+      <link>https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-31-2026/</link>
+      <description>We&apos;re live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, during the final hours of the sale. Buy them before they&apos;re gone.</description>
+      <pubDate>Tue, 31 Mar 2026 22:02:47 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-31-2026/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>This minimalist smartwatch by one of my favorite tech companies is under $100 right now</title>
+      <link>https://www.zdnet.com/article/this-minimalist-smartwatch-by-one-of-my-favorite-tech-companies-is-under-100-right-now/</link>
+      <description>On the final day of Amazon&apos;s Spring Sale, grab the CMF by Nothing Watch Pro 3 for $69.</description>
+      <pubDate>Tue, 31 Mar 2026 21:43:02 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/this-minimalist-smartwatch-by-one-of-my-favorite-tech-companies-is-under-100-right-now/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>You can now use ChatGPT with Apple’s CarPlay</title>
+      <link>https://www.theverge.com/ai-artificial-intelligence/904676/apple-carplay-openai-chatgpt</link>
+      <description>ChatGPT is now accessible from your CarPlay dashboard if you have iOS 26.4 or newer and the latest version of the ChatGPT app, 9to5Mac reports. Apple&apos;s recently-launched iOS 26.4 update added support for &quot;voice-based conversational apps&quot; in CarPlay,...</description>
+      <pubDate>Tue, 31 Mar 2026 21:03:18 GMT</pubDate>
+      <guid isPermaLink="true">https://www.theverge.com/ai-artificial-intelligence/904676/apple-carplay-openai-chatgpt</guid>
+      <source url="https://theverge.com">The Verge AI</source>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>I found the 3 best last minute tech deals under $100 during Amazon&apos;s Spring Sale</title>
+      <link>https://www.zdnet.com/article/best-deals-under-100-amazon-spring-sale/</link>
+      <description>Improve your personal life with these great sub-$100 deals I&apos;ve found during Amazon&apos;s Spring Sale. Act fast because the event ends soon.</description>
+      <pubDate>Tue, 31 Mar 2026 21:00:53 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/best-deals-under-100-amazon-spring-sale/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>The Apple Pencil alternative I use daily is on sale for $28 - but not for long</title>
+      <link>https://www.zdnet.com/article/esr-geo-pencil-apple-pencil-amazon-spring-sale-deal/</link>
+      <description>ESR&apos;s Geo Digital Pencil is on sale for under $30, but today&apos;s the last day to shop Amazon&apos;s Big Spring Sale.</description>
+      <pubDate>Tue, 31 Mar 2026 19:45:48 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/esr-geo-pencil-apple-pencil-amazon-spring-sale-deal/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>The 5 most surprising things our readers bought on Amazon this week  (No. 1 is weird)</title>
+      <link>https://www.zdnet.com/article/weird-top-sellers-amazon-spring-sale-2026/</link>
+      <description>ZDNET readers love random gadgets - and during Amazon&apos;s Spring Sale this past week, they picked up some interesting niche items that are still on sale.</description>
+      <pubDate>Tue, 31 Mar 2026 19:01:24 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/weird-top-sellers-amazon-spring-sale-2026/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>Quantum computers need vastly fewer resources than thought to break vital encryption</title>
+      <link>https://arstechnica.com/security/2026/03/new-quantum-computing-advances-heighten-threat-to-elliptic-curve-cryptosystems/</link>
+      <description>No, the sky isn&apos;t falling, but Q Day is coming, and it won&apos;t be as expensive as thought.</description>
+      <pubDate>Tue, 31 Mar 2026 18:25:33 GMT</pubDate>
+      <guid isPermaLink="true">https://arstechnica.com/security/2026/03/new-quantum-computing-advances-heighten-threat-to-elliptic-curve-cryptosystems/</guid>
+      <source url="https://arstechnica.com">Ars Technica</source>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>The Galaxy S26’s photo app can sloppify your memories</title>
+      <link>https://www.theverge.com/tech/904176/samsung-galaxy-s26-ai-photo-assist-slop</link>
+      <description>Love to see the BACKSST BOYS at the Sphere. The Google Pixel 9 walked so that the Samsung Galaxy S26 could run. Google introduced AI editing tools to Photos slowly. It started with changes to the background - make the sky more blue, or remove crowds...</description>
+      <pubDate>Tue, 31 Mar 2026 18:15:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.theverge.com/tech/904176/samsung-galaxy-s26-ai-photo-assist-slop</guid>
+      <source url="https://theverge.com">The Verge AI</source>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>7 WFH gadgets that improved my home office - Last chance for sale prices</title>
+      <link>https://www.zdnet.com/article/wfh-gadgets-amazon-spring-sale-2026/</link>
+      <description>As a remote worker, I&apos;d recommend these WFH essentials even if they weren&apos;t marked down for Amazon&apos;s Spring Sale. Here&apos;s your last chance for discounts.</description>
+      <pubDate>Tue, 31 Mar 2026 18:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/wfh-gadgets-amazon-spring-sale-2026/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>We&apos;re tracking the best last-minute tech deals under $50 during Amazon&apos;s Big Spring Sale</title>
+      <link>https://www.zdnet.com/article/best-deals-under-50-last-minute-amazon-spring-sale/</link>
+      <description>Amazon is full of great, affordable gadgets for your day-to-day, from speakers and chargers to streaming sticks and smart home gear. They&apos;re even cheaper now, during the retailer&apos;s annual sale - act fast.</description>
+      <pubDate>Tue, 31 Mar 2026 17:54:49 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/best-deals-under-50-last-minute-amazon-spring-sale/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>The most popular Amazon Spring Sale deals may surprise you - and there&apos;s still time to shop</title>
+      <link>https://www.zdnet.com/article/reader-favorites-amazon-spring-sale-2026/</link>
+      <description>Amazon&apos;s Spring Sale ends today, but we&apos;ve got the scoop on the top products ZDNET readers bought the most, from SSDs to flagship headphones.</description>
+      <pubDate>Tue, 31 Mar 2026 17:46:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/reader-favorites-amazon-spring-sale-2026/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>This HP gaming laptop just dropped under $1,000 - a rarity during the RAM-pocalypse</title>
+      <link>https://www.zdnet.com/article/hp-victus-15-deal-amazon-spring-sale-2026/</link>
+      <description>The price of gaming laptops is through the roof, but right now at HP, you can snag the Victus 15 at a big discount.</description>
+      <pubDate>Tue, 31 Mar 2026 17:10:56 GMT</pubDate>
+      <guid isPermaLink="true">https://www.zdnet.com/article/hp-victus-15-deal-amazon-spring-sale-2026/</guid>
+      <source url="https://zdnet.com">ZDNet AI</source>
+        <category>Enterprise</category>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>Build with Veo 3.1 Lite, our most cost-effective video generation model</title>
+      <link>https://blog.google/innovation-and-ai/technology/ai/veo-3-1-lite/</link>
+      <description>Veo 3.1 Lite is now available in paid preview through the Gemini API and for testing in Google AI Studio.</description>
+      <pubDate>Tue, 31 Mar 2026 16:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://blog.google/innovation-and-ai/technology/ai/veo-3-1-lite/</guid>
+      <source url="https://blog.google">Google AI Blog</source>
+        <category>Google/Gemini</category>
+    </item>
+    <item>
+      <title>Granite 4.0 3B Vision: Compact Multimodal Intelligence for Enterprise Documents</title>
+      <link>https://huggingface.co/blog/ibm-granite/granite-4-vision</link>
       <description></description>
-      <pubDate>Mon, 30 Mar 2026 20:16:21 GMT</pubDate>
-      <guid isPermaLink="true">https://konghq.com/blog/engineering/monetize-ai-apis</guid>
-      <source url="https://konghq.com">Hacker News AI</source>
-        <category>Community</category>
+      <pubDate>Tue, 31 Mar 2026 15:10:41 GMT</pubDate>
+      <guid isPermaLink="true">https://huggingface.co/blog/ibm-granite/granite-4-vision</guid>
+      <source url="https://huggingface.co">Hugging Face Blog</source>
+        <category>Open Source</category>
+        <category>Models</category>
     </item>
     <item>
-      <title>Amazon Spring Sale live blog 2026: Real-time updates on the best deals (while they last)</title>
-      <link>https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/</link>
-      <description>We&apos;re live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, as the sale enters its final days.</description>
-      <pubDate>Mon, 30 Mar 2026 20:12:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
+      <title>Efficiency at Scale: NVIDIA, Energy Leaders Accelerating Power‑Flexible AI Factories to Fortify the Grid</title>
+      <link>https://blogs.nvidia.com/blog/energy-efficiency-ai-factories-grid/</link>
+      <description>CERAWeek — dubbed the Davos of energy — is where policymakers, producers, technologists and financiers gather to discuss how the world powers itself next. NVIDIA and Emerald AI unveiled at the conference last week a new way forward — treating AI...</description>
+      <pubDate>Tue, 31 Mar 2026 15:00:51 GMT</pubDate>
+      <guid isPermaLink="true">https://blogs.nvidia.com/blog/energy-efficiency-ai-factories-grid/</guid>
+      <source url="https://blogs.nvidia.com">NVIDIA AI Blog</source>
+        <category>Hardware/Chips</category>
+    </item>
+    <item>
+      <title>Art schools are being torn apart by AI</title>
+      <link>https://www.theverge.com/tech/903954/art-schools-generative-ai-education-creative-jobs</link>
+      <description>The curriculum at creative institutions is evolving to handle gen AI tools, and a lot of people aren’t happy about it. | Image by Cath Virginia / The Verge When my baby brother, a 3D modelling and animation student, talks to me about his projects...</description>
+      <pubDate>Tue, 31 Mar 2026 15:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.theverge.com/tech/903954/art-schools-generative-ai-education-creative-jobs</guid>
+      <source url="https://theverge.com">The Verge AI</source>
         <category>General AI</category>
     </item>
     <item>
-      <title>Founder and CEO, Datris.ai</title>
-      <link>https://datris.ai</link>
+      <title>Shifting to AI model customization is an architectural imperative</title>
+      <link>https://www.technologyreview.com/2026/03/31/1134762/shifting-to-ai-model-customization-is-an-architectural-imperative/</link>
+      <description>In the early days of large language models (LLMs), we grew accustomed to massive 10x jumps in reasoning and coding capability with every new model iteration. Today, those jumps have flattened into incremental gains. The exception is...</description>
+      <pubDate>Tue, 31 Mar 2026 14:12:50 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/31/1134762/shifting-to-ai-model-customization-is-an-architectural-imperative/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>You can order Grubhub and Uber Eats ‘conversationally’ with Alexa Plus</title>
+      <link>https://www.theverge.com/ai-artificial-intelligence/903938/alexa-plus-order-food-grubhub-uber-eats</link>
+      <description>Amazon is giving you a new way to order food through Grubhub and Uber Eats with Alexa without having to endure an awkward exchange just to add fries. Amazon said the entire process is meant to be conversational, building your order in a similar...</description>
+      <pubDate>Tue, 31 Mar 2026 13:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.theverge.com/ai-artificial-intelligence/903938/alexa-plus-order-food-grubhub-uber-eats</guid>
+      <source url="https://theverge.com">The Verge AI</source>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>AI Has Flooded All the Weather Apps</title>
+      <link>https://www.wired.com/story/ai-has-flooded-all-the-weather-apps/</link>
+      <description>Weather forecasting has gotten a big boost from machine learning. How that translates into what users see can vary.</description>
+      <pubDate>Tue, 31 Mar 2026 13:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.wired.com/story/ai-has-flooded-all-the-weather-apps/</guid>
+      <source url="https://wired.com">WIRED AI</source>
+        <category>General AI</category>
+    </item>
+    <item>
+      <title>The Download: AI health tools and the Pentagon’s Anthropic culture war</title>
+      <link>https://www.technologyreview.com/2026/03/31/1134934/the-download-testing-ai-health-tools-pentagon-anthropic-culture-war-backfires/</link>
+      <description>This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. There are more AI health tools than ever—but how well do they work? In the last few months alone, Microsoft,...</description>
+      <pubDate>Tue, 31 Mar 2026 12:10:00 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/31/1134934/the-download-testing-ai-health-tools-pentagon-anthropic-culture-war-backfires/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>AI benchmarks are broken. Here’s what we need instead.</title>
+      <link>https://www.technologyreview.com/2026/03/31/1134833/ai-benchmarks-are-broken-heres-what-we-need-instead/</link>
+      <description>For decades, artificial intelligence has been evaluated through the question of whether machines outperform humans. From chess to advanced math, from coding to essay writing, the performance of AI models and applications is tested against that of...</description>
+      <pubDate>Tue, 31 Mar 2026 12:01:08 GMT</pubDate>
+      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/31/1134833/ai-benchmarks-are-broken-heres-what-we-need-instead/</guid>
+      <source url="https://technologyreview.com">MIT Technology Review</source>
+        <category>Research</category>
+        <category>Policy &amp; Safety</category>
+    </item>
+    <item>
+      <title>Bitboard version of Tetris AI</title>
+      <link>https://arxiv.org/abs/2603.26765</link>
+      <description>arXiv:2603.26765v1 Announce Type: new Abstract: The efficiency of game engines and policy optimization algorithms is crucial for training reinforcement learning (RL) agents in complex sequential decision-making tasks, such as Tetris. Existing Tetris...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26765</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Multiverse: Language-Conditioned Multi-Game Level Blending via Shared Representation</title>
+      <link>https://arxiv.org/abs/2603.26782</link>
+      <description>arXiv:2603.26782v1 Announce Type: new Abstract: Text-to-level generation aims to translate natural language descriptions into structured game levels, enabling intuitive control over procedural content generation. While prior text-to-level generators...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26782</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Concerning Uncertainty -- A Systematic Survey of Uncertainty-Aware XAI</title>
+      <link>https://arxiv.org/abs/2603.26838</link>
+      <description>arXiv:2603.26838v1 Announce Type: new Abstract: This paper surveys uncertainty-aware explainable artificial intelligence (UAXAI), examining how uncertainty is incorporated into explanatory pipelines and how such methods are evaluated. Across the...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26838</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Neuro-Symbolic Learning for Predictive Process Monitoring via Two-Stage Logic Tensor Networks with Rule Pruning</title>
+      <link>https://arxiv.org/abs/2603.26944</link>
+      <description>arXiv:2603.26944v1 Announce Type: new Abstract: Predictive modeling on sequential event data is critical for fraud detection and healthcare monitoring. Existing data-driven approaches learn correlations from historical data but fail to incorporate...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26944</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Compliance-Aware Predictive Process Monitoring: A Neuro-Symbolic Approach</title>
+      <link>https://arxiv.org/abs/2603.26948</link>
+      <description>arXiv:2603.26948v1 Announce Type: new Abstract: Existing approaches for predictive process monitoring are sub-symbolic, meaning that they learn correlations between descriptive features and a target feature fully based on data, e.g., predicting the...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26948</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>Transparency as Architecture: Structural Compliance Gaps in EU AI Act Article 50 II</title>
+      <link>https://arxiv.org/abs/2603.26983</link>
+      <description>arXiv:2603.26983v1 Announce Type: new Abstract: Art. 50 II of the EU Artificial Intelligence Act mandates dual transparency for AI-generated content: outputs must be labeled in both human-understandable and machine-readable form for automated...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26983</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>FormalProofBench: Can Models Write Graduate Level Math Proofs That Are Formally Verified?</title>
+      <link>https://arxiv.org/abs/2603.26996</link>
+      <description>arXiv:2603.26996v1 Announce Type: new Abstract: We present FormalProofBench, a private benchmark designed to evaluate whether AI models can produce formally verified mathematical proofs at the graduate level. Each task pairs a natural-language...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.26996</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>When Verification Hurts: Asymmetric Effects of Multi-Agent Feedback in Logic Proof Tutoring</title>
+      <link>https://arxiv.org/abs/2603.27076</link>
+      <description>arXiv:2603.27076v1 Announce Type: new Abstract: Large language models (LLMs) are increasingly used for automated tutoring, but their reliability in structured symbolic domains remains unclear. We study step-level feedback for propositional logic...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.27076</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>The Price of Meaning: Why Every Semantic Memory System Forgets</title>
+      <link>https://arxiv.org/abs/2603.27116</link>
+      <description>arXiv:2603.27116v1 Announce Type: new Abstract: Every major AI memory system in production today organises information by meaning. That organisation enables generalisation, analogy, and conceptual retrieval -- but it comes at a price. We prove that...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.27116</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>MediHive: A Decentralized Agent Collective for Medical Reasoning</title>
+      <link>https://arxiv.org/abs/2603.27150</link>
+      <description>arXiv:2603.27150v1 Announce Type: new Abstract: Large language models (LLMs) have revolutionized medical reasoning tasks, yet single-agent systems often falter on complex, interdisciplinary problems requiring robust handling of uncertainty and...</description>
+      <pubDate>Tue, 31 Mar 2026 04:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://arxiv.org/abs/2603.27150</guid>
+      <source url="https://arxiv.org">arXiv cs.AI</source>
+        <category>Research</category>
+    </item>
+    <item>
+      <title>TRL v1.0: Post-Training Library Built to Move with the Field</title>
+      <link>https://huggingface.co/blog/trl-v1</link>
       <description></description>
-      <pubDate>Mon, 30 Mar 2026 20:09:19 GMT</pubDate>
-      <guid isPermaLink="true">https://datris.ai</guid>
-      <source url="https://datris.ai">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>What Google&apos;s TurboQuant can and can&apos;t do for AI&apos;s spiraling cost</title>
-      <link>https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/</link>
-      <description>Google&apos;s real-time quantization could be important for running local AI. Here&apos;s why.</description>
-      <pubDate>Mon, 30 Mar 2026 19:59:16 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>You&apos;re right, no one can tell if C++ is AI generated</title>
-      <link>https://mropert.github.io/2026/03/30/ai_garbage_cpp/</link>
-      <description></description>
-      <pubDate>Mon, 30 Mar 2026 19:57:52 GMT</pubDate>
-      <guid isPermaLink="true">https://mropert.github.io/2026/03/30/ai_garbage_cpp/</guid>
-      <source url="https://mropert.github.io">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Show HN: I built a simpler way to follow research papers–AI summaries and emails</title>
-      <link>https://openscience.ink</link>
-      <description>In 2021, after getting covid, I ended up dealing with lingering symptoms that pushed me into reading PubMed for the first time. I was trying to understand what was happening, but I found that scientific papers came with jargon and the dense PubMed...</description>
-      <pubDate>Mon, 30 Mar 2026 19:55:43 GMT</pubDate>
-      <guid isPermaLink="true">https://openscience.ink</guid>
-      <source url="https://openscience.ink">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Novel environments, no precedents or plagiarism possible. Humans 100%, AI &lt;1%</title>
-      <link>https://xcancel.com/heygurisingh/status/2038266503993372774</link>
-      <description></description>
-      <pubDate>Mon, 30 Mar 2026 19:51:42 GMT</pubDate>
-      <guid isPermaLink="true">https://xcancel.com/heygurisingh/status/2038266503993372774</guid>
-      <source url="https://xcancel.com">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Show HN: NewsMarvin – AI news from 71 sources, classified by Claude Haiku</title>
-      <link>https://newsmarvin.com/</link>
-      <description></description>
-      <pubDate>Mon, 30 Mar 2026 19:50:53 GMT</pubDate>
-      <guid isPermaLink="true">https://newsmarvin.com/</guid>
-      <source url="https://newsmarvin.com">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Wikipedia, AI, maps, and education tools running on your own hardware</title>
-      <link>https://github.com/Crosstalk-Solutions/project-nomad</link>
-      <description></description>
-      <pubDate>Mon, 30 Mar 2026 19:49:32 GMT</pubDate>
-      <guid isPermaLink="true">https://github.com/Crosstalk-Solutions/project-nomad</guid>
-      <source url="https://github.com">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Create Context Graph: Scaffold AI agents with context graph memory in seconds</title>
-      <link>https://create-context-graph.vercel.app/</link>
-      <description></description>
-      <pubDate>Mon, 30 Mar 2026 19:49:28 GMT</pubDate>
-      <guid isPermaLink="true">https://create-context-graph.vercel.app/</guid>
-      <source url="https://create-context-graph.vercel.app">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Show HN: Memoir – persistent memory for AI coding tools via MCP</title>
-      <link>https://memoir.sh</link>
-      <description>CLI that gives your AI tools memory between sessions. Runs locally as an MCP server, works with 11 tools. npm install -g memoir-cli https://github.com/camgitt/memoir</description>
-      <pubDate>Mon, 30 Mar 2026 19:43:49 GMT</pubDate>
-      <guid isPermaLink="true">https://memoir.sh</guid>
-      <source url="https://memoir.sh">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>Show HN: Agent Council – Claude, Codex and Gemini debate code and engg questions</title>
-      <link>https://github.com/yogirk/agent-council</link>
-      <description></description>
-      <pubDate>Mon, 30 Mar 2026 19:27:43 GMT</pubDate>
-      <guid isPermaLink="true">https://github.com/yogirk/agent-council</guid>
-      <source url="https://github.com">Hacker News AI</source>
-        <category>Community</category>
-    </item>
-    <item>
-      <title>10 useful smart home gadgets that make life so much easier (and most are discounted)</title>
-      <link>https://www.zdnet.com/article/smart-home-on-a-budget-2026/</link>
-      <description>After testing hundreds of smart home devices, I rounded up the best options to get started with your smart home without breaking the bank.</description>
-      <pubDate>Mon, 30 Mar 2026 19:20:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/smart-home-on-a-budget-2026/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>I used an M.2 PCIe enclosure for data storage, and it made file transfers so much faster</title>
-      <link>https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/</link>
-      <description>The HyperDrive Next USB4 M.2 PCIe enclosure lets NVMe SSDs perform at their optimal speeds, but it&apos;s not a perfect gadget.</description>
-      <pubDate>Mon, 30 Mar 2026 18:50:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>AirPods Pro 3 vs. Bose QuietComfort Ultra 2: I listened to both, and there&apos;s a sonic difference</title>
-      <link>https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/</link>
-      <description>Which noise-canceling earbuds should you buy? The answer may go beyond just your device ecosystem.</description>
-      <pubDate>Mon, 30 Mar 2026 18:31:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>I&apos;ve been WFH for 7 years. These are the home office gadgets I want right now</title>
-      <link>https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/</link>
-      <description>I&apos;m saving money on home office essentials this year during Amazon&apos;s Big Spring Sale, and you can too - but hurry. The sale ends tomorrow.</description>
-      <pubDate>Mon, 30 Mar 2026 18:01:33 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>YouTube is coming to Android Auto - but you can&apos;t watch it</title>
-      <link>https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/</link>
-      <description>Here&apos;s why some YouTube users could find this to be a pretty useful feature, anyway.</description>
-      <pubDate>Mon, 30 Mar 2026 17:41:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>This is hands-down the best juicer I&apos;ve ever used - and it&apos;s on sale</title>
-      <link>https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/</link>
-      <description>The Fluicer gets every drop of juice out of your lemons, limes, or oranges, with minimal effort. Get one for under $20 during the Amazon Spring Sale.</description>
-      <pubDate>Mon, 30 Mar 2026 17:32:35 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>The best last minute phone deals from T-Mobile, Verizon, AT&amp;T and other carriers</title>
-      <link>https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/</link>
-      <description>Amazon Spring Sale is in its final days, but multiple carriers are offering deals on flagships, including the iPhone 17 Pro for free. These discounts won&apos;t last long, so act now.</description>
-      <pubDate>Mon, 30 Mar 2026 17:26:42 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>I tried a command-line-only distro that can seriously improve your Linux skills</title>
-      <link>https://www.zdnet.com/article/peropesis-linux-operating-system/</link>
-      <description>You might not realize this, but a distro like Peropesis has its place in the Linux ecosystem, and it can help you master the operating system.</description>
-      <pubDate>Mon, 30 Mar 2026 17:23:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.zdnet.com/article/peropesis-linux-operating-system/</guid>
-      <source url="https://zdnet.com">ZDNet AI</source>
-        <category>Enterprise</category>
-        <category>General AI</category>
+      <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://huggingface.co/blog/trl-v1</guid>
+      <source url="https://huggingface.co">Hugging Face Blog</source>
+        <category>Open Source</category>
+        <category>Models</category>
     </item>
     <item>
       <title>There are more AI health tools than ever—but how well do they work?</title>
@@ -254,96 +376,6 @@
       <source url="https://technologyreview.com">MIT Technology Review</source>
         <category>Research</category>
         <category>Policy &amp; Safety</category>
-    </item>
-    <item>
-      <title>BeSafe-Bench: Unveiling Behavioral Safety Risks of Situated Agents in Functional Environments</title>
-      <link>https://arxiv.org/abs/2603.25747</link>
-      <description>arXiv:2603.25747v1 Announce Type: new Abstract: The rapid evolution of Large Multimodal Models (LMMs) has enabled agents to perform complex digital and physical tasks, yet their deployment as autonomous decision-makers introduces substantial...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.25747</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>AutoB2G: A Large Language Model-Driven Agentic Framework For Automated Building-Grid Co-Simulation</title>
-      <link>https://arxiv.org/abs/2603.26005</link>
-      <description>arXiv:2603.26005v1 Announce Type: new Abstract: The growing availability of building operational data motivates the use of reinforcement learning (RL), which can learn control policies directly from data and cope with the complexity and uncertainty...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.26005</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>Semi-Automated Knowledge Engineering and Process Mapping for Total Airport Management</title>
-      <link>https://arxiv.org/abs/2603.26076</link>
-      <description>arXiv:2603.26076v1 Announce Type: new Abstract: Documentation of airport operations is inherently complex due to extensive technical terminology, rigorous regulations, proprietary regional information, and fragmented communication across multiple...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.26076</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>GUIDE: Resolving Domain Bias in GUI Agents through Real-Time Web Video Retrieval and Plug-and-Play Annotation</title>
-      <link>https://arxiv.org/abs/2603.26266</link>
-      <description>arXiv:2603.26266v1 Announce Type: new Abstract: Large vision-language models have endowed GUI agents with strong general capabilities for interface understanding and interaction. However, due to insufficient exposure to domain-specific software...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.26266</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>AIRA_2: Overcoming Bottlenecks in AI Research Agents</title>
-      <link>https://arxiv.org/abs/2603.26499</link>
-      <description>arXiv:2603.26499v1 Announce Type: new Abstract: Existing research has identified three structural performance bottlenecks in AI research agents: (1) synchronous single-GPU execution constrains sample throughput, limiting the benefit of search; (2) a...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.26499</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>CADSmith: Multi-Agent CAD Generation with Programmatic Geometric Validation</title>
-      <link>https://arxiv.org/abs/2603.26512</link>
-      <description>arXiv:2603.26512v1 Announce Type: new Abstract: Existing methods for text-to-CAD generation either operate in a single pass with no geometric verification or rely on lossy visual feedback that cannot resolve dimensional errors. We present CADSmith,...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.26512</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>Stabilizing Rubric Integration Training via Decoupled Advantage Normalization</title>
-      <link>https://arxiv.org/abs/2603.26535</link>
-      <description>arXiv:2603.26535v1 Announce Type: new Abstract: We propose Process-Aware Policy Optimization (PAPO), a method that integrates process-level evaluation into Group Relative Policy Optimization (GRPO) through decoupled advantage normalization, to...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.26535</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>DesignWeaver: Dimensional Scaffolding for Text-to-Image Product Design</title>
-      <link>https://arxiv.org/abs/2502.09867</link>
-      <description>arXiv:2502.09867v2 Announce Type: cross Abstract: Generative AI has enabled novice designers to quickly create professional-looking visual representations for product concepts. However, novices have limited domain knowledge that could constrain...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2502.09867</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>A Lightweight, Transferable, and Self-Adaptive Framework for Intelligent DC Arc-Fault Detection in Photovoltaic Systems</title>
-      <link>https://arxiv.org/abs/2603.25749</link>
-      <description>arXiv:2603.25749v1 Announce Type: cross Abstract: Arc-fault circuit interrupters (AFCIs) are essential for mitigating fire hazards in residential photovoltaic (PV) systems, yet achieving reliable DC arc-fault detection under real-world conditions...</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.25749</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
-    </item>
-    <item>
-      <title>Sommelier: Scalable Open Multi-turn Audio Pre-processing for Full-duplex Speech Language Models</title>
-      <link>https://arxiv.org/abs/2603.25750</link>
-      <description>arXiv:2603.25750v1 Announce Type: cross Abstract: As the paradigm of AI shifts from text-based LLMs to Speech Language Models (SLMs), there is a growing demand for full-duplex systems capable of real-time, natural human-computer interaction....</description>
-      <pubDate>Mon, 30 Mar 2026 04:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://arxiv.org/abs/2603.25750</guid>
-      <source url="https://arxiv.org">arXiv cs.AI</source>
-        <category>Research</category>
     </item>
     <item>
       <title>All the latest in AI &amp;#8216;music&amp;#8217;</title>
@@ -410,15 +442,6 @@
         <category>General AI</category>
     </item>
     <item>
-      <title>The latest in data centers, AI, and energy</title>
-      <link>https://www.theverge.com/ai-artificial-intelligence/902546/data-centers-ai-energy-power-grids-controversy</link>
-      <description>Massive new data centers are the physical foundation for tech companies’ hopes and dreams for AI. But the rush to expand warehouses full of energy-hungry servers has also kicked up fights across the world over their impact on power grids, utility...</description>
-      <pubDate>Fri, 27 Mar 2026 18:35:53 GMT</pubDate>
-      <guid isPermaLink="true">https://www.theverge.com/ai-artificial-intelligence/902546/data-centers-ai-energy-power-grids-controversy</guid>
-      <source url="https://theverge.com">The Verge AI</source>
-        <category>General AI</category>
-    </item>
-    <item>
       <title>Apple Still Plans to Sell iPhones When It Turns 100</title>
       <link>https://www.wired.com/story/apple-50-year-anniversary-artificial-intelligence-iphone/</link>
       <description>As the tech giant turns 50, WIRED spoke to executives about how they plan to win in the AI era.</description>
@@ -466,15 +489,6 @@
         <category>Policy &amp; Safety</category>
     </item>
     <item>
-      <title>Judge sides with Anthropic to temporarily block the Pentagon&amp;#8217;s ban</title>
-      <link>https://www.theverge.com/ai-artificial-intelligence/902149/anthropic-dod-pentagon-lawsuit-supply-chain-risk-injunction</link>
-      <description>After Anthropic&apos;s weeks-long standoff with the Pentagon, the company won one milestone: A judge granted Anthropic a preliminary injunction in its lawsuit, which sought to reverse its government blacklisting while the judicial process plays out. &quot;The...</description>
-      <pubDate>Fri, 27 Mar 2026 00:33:44 GMT</pubDate>
-      <guid isPermaLink="true">https://www.theverge.com/ai-artificial-intelligence/902149/anthropic-dod-pentagon-lawsuit-supply-chain-risk-injunction</guid>
-      <source url="https://theverge.com">The Verge AI</source>
-        <category>General AI</category>
-    </item>
-    <item>
       <title>Liberate your OpenClaw</title>
       <link>https://huggingface.co/blog/liberate-your-openclaw</link>
       <description></description>
@@ -485,30 +499,12 @@
         <category>Models</category>
     </item>
     <item>
-      <title>David Sacks is no longer the White House AI and Crypto Czar</title>
-      <link>https://www.theverge.com/policy/902140/david-sacks-out-ai-crypto-czar</link>
-      <description>David Sacks, the venture capitalist and tech billionaire who&apos;d become Silicon Valley&apos;s primary advocate inside the White House and a key architect of its aggressive AI policy initiatives, revealed on Thursday that he was no longer a special...</description>
-      <pubDate>Thu, 26 Mar 2026 23:40:22 GMT</pubDate>
-      <guid isPermaLink="true">https://www.theverge.com/policy/902140/david-sacks-out-ai-crypto-czar</guid>
-      <source url="https://theverge.com">The Verge AI</source>
-        <category>General AI</category>
-    </item>
-    <item>
       <title>Anthropic Supply-Chain-Risk Designation Halted by Judge</title>
       <link>https://www.wired.com/story/anthropic-supply-chain-risk-designation-injunction/</link>
       <description>A judge temporarily blocked the Trump administration’s designation, clearing the way for Anthropic to keep doing business without the label starting next week.</description>
       <pubDate>Thu, 26 Mar 2026 23:33:05 GMT</pubDate>
       <guid isPermaLink="true">https://www.wired.com/story/anthropic-supply-chain-risk-designation-injunction/</guid>
       <source url="https://wired.com">WIRED AI</source>
-        <category>General AI</category>
-    </item>
-    <item>
-      <title>Google is making it easier to import another AI’s memory into Gemini</title>
-      <link>https://www.theverge.com/ai-artificial-intelligence/902085/google-gemini-import-memory-chat-history</link>
-      <description>After Anthropic updated its tool for copying another AI&apos;s memory into Claude earlier this month, Google Gemini is rolling out new &quot;Import Memory&quot; and &quot;Import Chat History&quot; features on desktop that can help users quickly copy over everything their...</description>
-      <pubDate>Thu, 26 Mar 2026 21:44:37 GMT</pubDate>
-      <guid isPermaLink="true">https://www.theverge.com/ai-artificial-intelligence/902085/google-gemini-import-memory-chat-history</guid>
-      <source url="https://theverge.com">The Verge AI</source>
         <category>General AI</category>
     </item>
     <item>
@@ -566,23 +562,13 @@
         <category>Google/Gemini</category>
     </item>
     <item>
-      <title>Game On: Five New Titles Now Streaming on GeForce NOW</title>
+      <title>Game On: Five New Titles Now Streaming on GeForce NOW</title>
       <link>https://blogs.nvidia.com/blog/geforce-now-thursday-screamer/</link>
       <description>That gaming backlog won’t clear itself — GeForce NOW is here to help. Stream the latest titles straight from the cloud across a variety of devices. This week, five new titles are ready to play instantly in the cloud gaming platform’s library....</description>
       <pubDate>Thu, 26 Mar 2026 13:00:47 GMT</pubDate>
       <guid isPermaLink="true">https://blogs.nvidia.com/blog/geforce-now-thursday-screamer/</guid>
       <source url="https://blogs.nvidia.com">NVIDIA AI Blog</source>
         <category>Hardware/Chips</category>
-    </item>
-    <item>
-      <title>The Download: a battery pivot to AI, and rewriting math</title>
-      <link>https://www.technologyreview.com/2026/03/26/1134697/the-download-battery-ai-pivot-new-ai-tool-math/</link>
-      <description>This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Why this battery company is pivoting to AI Qichao Hu doesn’t mince words about the state of the battery...</description>
-      <pubDate>Thu, 26 Mar 2026 12:42:53 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/26/1134697/the-download-battery-ai-pivot-new-ai-tool-math/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
     </item>
     <item>
       <title>Senators Demand to Know How Much Energy Data Centers Use</title>
@@ -603,26 +589,6 @@
         <category>General AI</category>
     </item>
     <item>
-      <title>The snow gods: How a couple of ski bums built the internet’s best weather app</title>
-      <link>https://www.technologyreview.com/2026/03/26/1134470/the-snow-gods-how-a-couple-of-ski-bums-built-the-internets-best-weather-app/</link>
-      <description>The best snow-forecasting app for skiers and snowboarders isn’t from any of the federally funded weather services. Nor from any of the big-name brands. It’s an independent app startup that leverages government data, its own AI models, and decades of...</description>
-      <pubDate>Thu, 26 Mar 2026 10:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/26/1134470/the-snow-gods-how-a-couple-of-ski-bums-built-the-internets-best-weather-app/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
-    </item>
-    <item>
-      <title>Are high gas prices good news for EVs? It’s complicated.</title>
-      <link>https://www.technologyreview.com/2026/03/26/1134677/gas-prices-electric-vehicles/</link>
-      <description>I live in a dense city with plentiful public transportation options and limited parking, so I don’t own a car. I’m often utterly clueless about the current price of gasoline. But as the conflict in Iran has escalated, fossil-fuel prices have been on...</description>
-      <pubDate>Thu, 26 Mar 2026 10:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://www.technologyreview.com/2026/03/26/1134677/gas-prices-electric-vehicles/</guid>
-      <source url="https://technologyreview.com">MIT Technology Review</source>
-        <category>Research</category>
-        <category>Policy &amp; Safety</category>
-    </item>
-    <item>
       <title>The Future of AI Is Open and Proprietary</title>
       <link>https://blogs.nvidia.com/blog/ai-future-open-and-proprietary/</link>
       <description>AI is the defining technology of our time, quickly becoming core business infrastructure. It’s fueled by a diverse ecosystem of models: large and small, open and proprietary, generalist and specialist. This variety is essential for a future where...</description>
@@ -630,15 +596,6 @@
       <guid isPermaLink="true">https://blogs.nvidia.com/blog/ai-future-open-and-proprietary/</guid>
       <source url="https://blogs.nvidia.com">NVIDIA AI Blog</source>
         <category>Hardware/Chips</category>
-    </item>
-    <item>
-      <title>There’s Something Very Dark About a Lot of Those Viral AI Fruit Videos</title>
-      <link>https://www.wired.com/story/theres-something-very-dark-about-a-lot-of-those-viral-ai-fruit-videos/</link>
-      <description>With female AI fruit being fart-shamed and even sexually assaulted, there’s a misogynistic undercurrent to the fruit slop microdramas, even as they appear to be cultivating genuine fans.</description>
-      <pubDate>Wed, 25 Mar 2026 18:49:40 GMT</pubDate>
-      <guid isPermaLink="true">https://www.wired.com/story/theres-something-very-dark-about-a-lot-of-those-viral-ai-fruit-videos/</guid>
-      <source url="https://wired.com">WIRED AI</source>
-        <category>General AI</category>
     </item>
     <item>
       <title>Build with Lyria 3, our newest music generation model</title>
@@ -733,16 +690,6 @@
         <category>Models</category>
     </item>
     <item>
-      <title>What&apos;s New in Mellea 0.4.0 + Granite Libraries Release</title>
-      <link>https://huggingface.co/blog/ibm-granite/granite-libraries</link>
-      <description></description>
-      <pubDate>Fri, 20 Mar 2026 14:14:46 GMT</pubDate>
-      <guid isPermaLink="true">https://huggingface.co/blog/ibm-granite/granite-libraries</guid>
-      <source url="https://huggingface.co">Hugging Face Blog</source>
-        <category>Open Source</category>
-        <category>Models</category>
-    </item>
-    <item>
       <title>NVIDIA GTC 2026: Live Updates on What’s Next in AI</title>
       <link>https://blogs.nvidia.com/blog/gtc-2026-news/</link>
       <description>Rolling coverage from San Jose, including NVIDIA CEO Jensen Huang’s keynote, news highlights, live demos and on‑the‑ground color through March 19.</description>
@@ -795,15 +742,6 @@
       <guid isPermaLink="true">https://arstechnica.com/security/2026/03/researchers-disclose-vulnerabilities-in-ip-kvms-from-4-manufacturers/</guid>
       <source url="https://arstechnica.com">Ars Technica</source>
         <category>General AI</category>
-    </item>
-    <item>
-      <title>More Than Meets the Eye: NVIDIA RTX-Accelerated Computers Now Connect Directly to Apple Vision Pro</title>
-      <link>https://blogs.nvidia.com/blog/nvidia-cloudxr-apple-vision-pro/</link>
-      <description>NVIDIA and Apple’s collaboration brings native integration of NVIDIA CloudXR 6.0 to visionOS, securely delivering NVIDIA RTX-powered simulators and professional 3D graphics applications — like Immersive for Autodesk VRED on Innoactive’s XR streaming...</description>
-      <pubDate>Tue, 17 Mar 2026 17:00:58 GMT</pubDate>
-      <guid isPermaLink="true">https://blogs.nvidia.com/blog/nvidia-cloudxr-apple-vision-pro/</guid>
-      <source url="https://blogs.nvidia.com">NVIDIA AI Blog</source>
-        <category>Hardware/Chips</category>
     </item>
     <item>
       <title>State of Open Source on Hugging Face: Spring 2026</title>
@@ -880,15 +818,6 @@
         <category>General AI</category>
     </item>
     <item>
-      <title>Gemini in Google Sheets just achieved state-of-the-art performance.</title>
-      <link>https://blog.google/products-and-platforms/products/workspace/gemini-google-sheets-state-of-the-art/</link>
-      <description>Today we announced new beta features for Gemini in Sheets to help you create, organize and edit entire sheets, from basic tasks to complex data analysis — just describe …</description>
-      <pubDate>Tue, 10 Mar 2026 13:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://blog.google/products-and-platforms/products/workspace/gemini-google-sheets-state-of-the-art/</guid>
-      <source url="https://blog.google">Google AI Blog</source>
-        <category>Google/Gemini</category>
-    </item>
-    <item>
       <title>Introducing Storage Buckets on the Hugging Face Hub</title>
       <link>https://huggingface.co/blog/storage-buckets</link>
       <description></description>
@@ -917,25 +846,6 @@
       <source url="https://huggingface.co">Hugging Face Blog</source>
         <category>Open Source</category>
         <category>Models</category>
-    </item>
-    <item>
-      <title>LeRobot v0.5.0: Scaling Every Dimension</title>
-      <link>https://huggingface.co/blog/lerobot-release-v050</link>
-      <description></description>
-      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://huggingface.co/blog/lerobot-release-v050</guid>
-      <source url="https://huggingface.co">Hugging Face Blog</source>
-        <category>Open Source</category>
-        <category>Models</category>
-    </item>
-    <item>
-      <title>Feds take notice of iOS vulnerabilities exploited under mysterious circumstances</title>
-      <link>https://arstechnica.com/security/2026/03/cisa-adds-3-ios-flaws-to-its-catalog-of-known-exploited-vulnerabilities/</link>
-      <description>The long, strange trip of a large assembly of advanced iOS exploits.</description>
-      <pubDate>Fri, 06 Mar 2026 19:41:33 GMT</pubDate>
-      <guid isPermaLink="true">https://arstechnica.com/security/2026/03/cisa-adds-3-ios-flaws-to-its-catalog-of-known-exploited-vulnerabilities/</guid>
-      <source url="https://arstechnica.com">Ars Technica</source>
-        <category>General AI</category>
     </item>
     <item>
       <title>Railway secures $100 million to challenge AWS with AI-native cloud infrastructure</title>

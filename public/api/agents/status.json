@@ -1,7 +1,7 @@
 {
   "ok": true,
   "source": "tensorfeed.ai",
-  "checked": "2026-03-30T20:17:36.762Z",
+  "checked": "2026-03-31T22:20:26.141Z",
   "services": [
     {
       "name": "Claude API",
@@ -30,7 +30,7 @@
           "status": "operational"
         }
       ],
-      "lastChecked": "2026-03-30T20:15:23.301Z"
+      "lastChecked": "2026-03-31T22:20:11.478Z"
     },
     {
       "name": "OpenAI API",
@@ -38,10 +38,6 @@
       "status": "operational",
       "statusPageUrl": "https://status.openai.com",
       "components": [
-        {
-          "name": "Login",
-          "status": "operational"
-        },
         {
           "name": "Fine-tuning",
           "status": "operational"
@@ -61,17 +57,21 @@
         {
           "name": "Audio",
           "status": "operational"
+        },
+        {
+          "name": "Moderations",
+          "status": "operational"
         }
       ],
-      "lastChecked": "2026-03-30T20:15:23.373Z"
+      "lastChecked": "2026-03-31T22:20:11.009Z"
     },
     {
       "name": "Hugging Face",
       "provider": "Hugging Face",
-      "status": "unknown",
+      "status": "operational",
       "statusPageUrl": "https://status.huggingface.co",
       "components": [],
-      "lastChecked": "2026-03-30T20:15:24.074Z"
+      "lastChecked": "2026-03-31T22:20:12.762Z"
     },
     {
       "name": "Replicate",
@@ -104,7 +104,7 @@
           "status": "operational"
         }
       ],
-      "lastChecked": "2026-03-30T20:15:23.435Z"
+      "lastChecked": "2026-03-31T22:20:11.261Z"
     },
     {
       "name": "Cohere",
@@ -137,15 +137,15 @@
           "status": "operational"
         }
       ],
-      "lastChecked": "2026-03-30T20:15:23.847Z"
+      "lastChecked": "2026-03-31T22:20:11.109Z"
     },
     {
       "name": "Mistral",
       "provider": "Mistral AI",
-      "status": "unknown",
+      "status": "operational",
       "statusPageUrl": "https://status.mistral.ai",
       "components": [],
-      "lastChecked": "2026-03-30T20:15:23.440Z"
+      "lastChecked": "2026-03-31T22:20:11.024Z"
     }
   ]
 }

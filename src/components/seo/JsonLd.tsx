@@ -20,8 +20,8 @@ export function WebsiteJsonLd() {
     description: 'AI news, model tracking, and real-time AI ecosystem data for humans and agents.',
     publisher: {
       '@type': 'Organization',
-      name: 'Pizza Robot Studios LLC',
-      url: 'https://pizzarobotstudios.com',
+      name: 'TensorFeed.ai',
+      url: 'https://tensorfeed.ai',
     },
     potentialAction: {
       '@type': 'SearchAction',
@@ -107,7 +107,7 @@ export function ArticleJsonLd({
   description,
   datePublished,
   dateModified,
-  author = 'Evan Marcus',
+  author = 'Ripper',
 }: {
   title: string;
   description: string;

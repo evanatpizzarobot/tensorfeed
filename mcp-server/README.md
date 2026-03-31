@@ -64,4 +64,4 @@ All data comes from the [TensorFeed.ai API](https://tensorfeed.ai/developers), w
 
 ## License
 
-MIT - Built by [Pizza Robot Studios](https://tensorfeed.ai/about)
+MIT - Built by [TensorFeed.ai](https://tensorfeed.ai/about)

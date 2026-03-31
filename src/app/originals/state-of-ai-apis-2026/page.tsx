@@ -33,7 +33,7 @@ export default function StateOfAiApisPage() {
           The State of AI APIs in 2026
         </h1>
         <div className="flex items-center gap-2 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Evan Marcus</span>
+          <span className="text-text-secondary font-medium">Ripper</span>
           <span>&middot;</span>
           <time dateTime="2026-03-30">March 30, 2026</time>
         </div>

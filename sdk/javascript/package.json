@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": ["tensorfeed", "ai", "news", "llm", "api", "status", "models", "agents"],
-  "author": "Pizza Robot Studios LLC",
+  "author": "TensorFeed.ai",
   "license": "MIT",
   "homepage": "https://tensorfeed.ai/developers",
   "repository": {

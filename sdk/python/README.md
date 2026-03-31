@@ -64,4 +64,4 @@ print(f'{health["news"]["totalArticles"]} articles from {health["news"]["sources
 
 ## License
 
-MIT - [Pizza Robot Studios](https://tensorfeed.ai/about)
+MIT - [TensorFeed.ai](https://tensorfeed.ai/about)

@@ -1,7 +1,7 @@
 export const SITE_NAME = 'TensorFeed.ai';
 export const SITE_URL = 'https://tensorfeed.ai';
 export const SITE_DESCRIPTION = 'AI news, model tracking, and real-time AI ecosystem data for humans and agents.';
-export const PUBLISHER = 'Pizza Robot Studios LLC';
+export const PUBLISHER = 'TensorFeed.ai';
 export const CONTACT_EMAIL = 'feedback@tensorfeed.ai';
 export const PRESS_EMAIL = 'press@tensorfeed.ai';
 
@@ -32,7 +32,6 @@ export const CATEGORIES = [
 
 export const SISTER_SITES = [
   { name: 'TerminalFeed.io', url: 'https://terminalfeed.io', description: 'Real-Time Data Dashboard', icon: '📺' },
-  { name: 'VR.org', url: 'https://vr.org', description: 'VR & AR News', icon: '🥽' },
 ] as const;
 
 export const STATUS_COLORS: Record<string, string> = {

@@ -6,313 +6,513 @@
   "description": "AI news, model tracking, and real-time AI ecosystem data for humans and agents.",
   "items": [
     {
-      "id": "https://konghq.com/blog/engineering/monetize-ai-apis",
-      "url": "https://konghq.com/blog/engineering/monetize-ai-apis",
-      "title": "Practical Strategies to Monetize AI APIs in Production",
+      "id": "https://www.zdnet.com/article/dyson-amazon-spring-sale-2026-deals-still-live/",
+      "url": "https://www.zdnet.com/article/dyson-amazon-spring-sale-2026-deals-still-live/",
+      "title": "These 5 Amazon Spring Sale deals are worth a second glance before they're gone soon",
+      "content_text": "It's the last day of Amazon's Big Spring Sale, but there's still last chance savings on top gear from Dyson (including vacuums, hair tools, and more).",
+      "date_published": "2026-03-31T22:19:07.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-31-2026/",
+      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-31-2026/",
+      "title": "Amazon Spring Sale live blog 2026: Last day to score top Amazon deals",
+      "content_text": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, during the final hours of the sale. Buy them before they're gone.",
+      "date_published": "2026-03-31T22:02:47.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/this-minimalist-smartwatch-by-one-of-my-favorite-tech-companies-is-under-100-right-now/",
+      "url": "https://www.zdnet.com/article/this-minimalist-smartwatch-by-one-of-my-favorite-tech-companies-is-under-100-right-now/",
+      "title": "This minimalist smartwatch by one of my favorite tech companies is under $100 right now",
+      "content_text": "On the final day of Amazon's Spring Sale, grab the CMF by Nothing Watch Pro 3 for $69.",
+      "date_published": "2026-03-31T21:43:02.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.theverge.com/ai-artificial-intelligence/904676/apple-carplay-openai-chatgpt",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/904676/apple-carplay-openai-chatgpt",
+      "title": "You can now use ChatGPT with Apple’s CarPlay",
+      "content_text": "ChatGPT is now accessible from your CarPlay dashboard if you have iOS 26.4 or newer and the latest version of the ChatGPT app, 9to5Mac reports. Apple's recently-launched iOS 26.4 update added support for \"voice-based conversational apps\" in CarPlay,...",
+      "date_published": "2026-03-31T21:03:18.000Z",
+      "authors": [
+        {
+          "name": "The Verge AI"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/best-deals-under-100-amazon-spring-sale/",
+      "url": "https://www.zdnet.com/article/best-deals-under-100-amazon-spring-sale/",
+      "title": "I found the 3 best last minute tech deals under $100 during Amazon's Spring Sale",
+      "content_text": "Improve your personal life with these great sub-$100 deals I've found during Amazon's Spring Sale. Act fast because the event ends soon.",
+      "date_published": "2026-03-31T21:00:53.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/esr-geo-pencil-apple-pencil-amazon-spring-sale-deal/",
+      "url": "https://www.zdnet.com/article/esr-geo-pencil-apple-pencil-amazon-spring-sale-deal/",
+      "title": "The Apple Pencil alternative I use daily is on sale for $28 - but not for long",
+      "content_text": "ESR's Geo Digital Pencil is on sale for under $30, but today's the last day to shop Amazon's Big Spring Sale.",
+      "date_published": "2026-03-31T19:45:48.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/weird-top-sellers-amazon-spring-sale-2026/",
+      "url": "https://www.zdnet.com/article/weird-top-sellers-amazon-spring-sale-2026/",
+      "title": "The 5 most surprising things our readers bought on Amazon this week  (No. 1 is weird)",
+      "content_text": "ZDNET readers love random gadgets - and during Amazon's Spring Sale this past week, they picked up some interesting niche items that are still on sale.",
+      "date_published": "2026-03-31T19:01:24.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://arstechnica.com/security/2026/03/new-quantum-computing-advances-heighten-threat-to-elliptic-curve-cryptosystems/",
+      "url": "https://arstechnica.com/security/2026/03/new-quantum-computing-advances-heighten-threat-to-elliptic-curve-cryptosystems/",
+      "title": "Quantum computers need vastly fewer resources than thought to break vital encryption",
+      "content_text": "No, the sky isn't falling, but Q Day is coming, and it won't be as expensive as thought.",
+      "date_published": "2026-03-31T18:25:33.000Z",
+      "authors": [
+        {
+          "name": "Ars Technica"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.theverge.com/tech/904176/samsung-galaxy-s26-ai-photo-assist-slop",
+      "url": "https://www.theverge.com/tech/904176/samsung-galaxy-s26-ai-photo-assist-slop",
+      "title": "The Galaxy S26’s photo app can sloppify your memories",
+      "content_text": "Love to see the BACKSST BOYS at the Sphere. The Google Pixel 9 walked so that the Samsung Galaxy S26 could run. Google introduced AI editing tools to Photos slowly. It started with changes to the background - make the sky more blue, or remove crowds...",
+      "date_published": "2026-03-31T18:15:00.000Z",
+      "authors": [
+        {
+          "name": "The Verge AI"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/wfh-gadgets-amazon-spring-sale-2026/",
+      "url": "https://www.zdnet.com/article/wfh-gadgets-amazon-spring-sale-2026/",
+      "title": "7 WFH gadgets that improved my home office - Last chance for sale prices",
+      "content_text": "As a remote worker, I'd recommend these WFH essentials even if they weren't marked down for Amazon's Spring Sale. Here's your last chance for discounts.",
+      "date_published": "2026-03-31T18:00:00.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/best-deals-under-50-last-minute-amazon-spring-sale/",
+      "url": "https://www.zdnet.com/article/best-deals-under-50-last-minute-amazon-spring-sale/",
+      "title": "We're tracking the best last-minute tech deals under $50 during Amazon's Big Spring Sale",
+      "content_text": "Amazon is full of great, affordable gadgets for your day-to-day, from speakers and chargers to streaming sticks and smart home gear. They're even cheaper now, during the retailer's annual sale - act fast.",
+      "date_published": "2026-03-31T17:54:49.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/reader-favorites-amazon-spring-sale-2026/",
+      "url": "https://www.zdnet.com/article/reader-favorites-amazon-spring-sale-2026/",
+      "title": "The most popular Amazon Spring Sale deals may surprise you - and there's still time to shop",
+      "content_text": "Amazon's Spring Sale ends today, but we've got the scoop on the top products ZDNET readers bought the most, from SSDs to flagship headphones.",
+      "date_published": "2026-03-31T17:46:00.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.zdnet.com/article/hp-victus-15-deal-amazon-spring-sale-2026/",
+      "url": "https://www.zdnet.com/article/hp-victus-15-deal-amazon-spring-sale-2026/",
+      "title": "This HP gaming laptop just dropped under $1,000 - a rarity during the RAM-pocalypse",
+      "content_text": "The price of gaming laptops is through the roof, but right now at HP, you can snag the Victus 15 at a big discount.",
+      "date_published": "2026-03-31T17:10:56.000Z",
+      "authors": [
+        {
+          "name": "ZDNet AI"
+        }
+      ],
+      "tags": [
+        "Enterprise",
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://blog.google/innovation-and-ai/technology/ai/veo-3-1-lite/",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/veo-3-1-lite/",
+      "title": "Build with Veo 3.1 Lite, our most cost-effective video generation model",
+      "content_text": "Veo 3.1 Lite is now available in paid preview through the Gemini API and for testing in Google AI Studio.",
+      "date_published": "2026-03-31T16:00:00.000Z",
+      "authors": [
+        {
+          "name": "Google AI Blog"
+        }
+      ],
+      "tags": [
+        "Google/Gemini"
+      ]
+    },
+    {
+      "id": "https://huggingface.co/blog/ibm-granite/granite-4-vision",
+      "url": "https://huggingface.co/blog/ibm-granite/granite-4-vision",
+      "title": "Granite 4.0 3B Vision: Compact Multimodal Intelligence for Enterprise Documents",
       "content_text": "",
-      "date_published": "2026-03-30T20:16:21.000Z",
+      "date_published": "2026-03-31T15:10:41.000Z",
       "authors": [
         {
-          "name": "Hacker News AI"
+          "name": "Hugging Face Blog"
         }
       ],
       "tags": [
-        "Community"
+        "Open Source",
+        "Models"
       ]
     },
     {
-      "id": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/",
-      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-30-2026/",
-      "title": "Amazon Spring Sale live blog 2026: Real-time updates on the best deals (while they last)",
-      "content_text": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, as the sale enters its final days.",
-      "date_published": "2026-03-30T20:12:00.000Z",
+      "id": "https://blogs.nvidia.com/blog/energy-efficiency-ai-factories-grid/",
+      "url": "https://blogs.nvidia.com/blog/energy-efficiency-ai-factories-grid/",
+      "title": "Efficiency at Scale: NVIDIA, Energy Leaders Accelerating Power‑Flexible AI Factories to Fortify the Grid",
+      "content_text": "CERAWeek — dubbed the Davos of energy — is where policymakers, producers, technologists and financiers gather to discuss how the world powers itself next. NVIDIA and Emerald AI unveiled at the conference last week a new way forward — treating AI...",
+      "date_published": "2026-03-31T15:00:51.000Z",
       "authors": [
         {
-          "name": "ZDNet AI"
+          "name": "NVIDIA AI Blog"
         }
       ],
       "tags": [
-        "Enterprise",
+        "Hardware/Chips"
+      ]
+    },
+    {
+      "id": "https://www.theverge.com/tech/903954/art-schools-generative-ai-education-creative-jobs",
+      "url": "https://www.theverge.com/tech/903954/art-schools-generative-ai-education-creative-jobs",
+      "title": "Art schools are being torn apart by AI",
+      "content_text": "The curriculum at creative institutions is evolving to handle gen AI tools, and a lot of people aren’t happy about it. | Image by Cath Virginia / The Verge When my baby brother, a 3D modelling and animation student, talks to me about his projects...",
+      "date_published": "2026-03-31T15:00:00.000Z",
+      "authors": [
+        {
+          "name": "The Verge AI"
+        }
+      ],
+      "tags": [
         "General AI"
       ]
     },
     {
-      "id": "https://datris.ai",
-      "url": "https://datris.ai",
-      "title": "Founder and CEO, Datris.ai",
+      "id": "https://www.technologyreview.com/2026/03/31/1134762/shifting-to-ai-model-customization-is-an-architectural-imperative/",
+      "url": "https://www.technologyreview.com/2026/03/31/1134762/shifting-to-ai-model-customization-is-an-architectural-imperative/",
+      "title": "Shifting to AI model customization is an architectural imperative",
+      "content_text": "In the early days of large language models (LLMs), we grew accustomed to massive 10x jumps in reasoning and coding capability with every new model iteration. Today, those jumps have flattened into incremental gains. The exception is...",
+      "date_published": "2026-03-31T14:12:50.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://www.theverge.com/ai-artificial-intelligence/903938/alexa-plus-order-food-grubhub-uber-eats",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/903938/alexa-plus-order-food-grubhub-uber-eats",
+      "title": "You can order Grubhub and Uber Eats ‘conversationally’ with Alexa Plus",
+      "content_text": "Amazon is giving you a new way to order food through Grubhub and Uber Eats with Alexa without having to endure an awkward exchange just to add fries. Amazon said the entire process is meant to be conversational, building your order in a similar...",
+      "date_published": "2026-03-31T13:00:00.000Z",
+      "authors": [
+        {
+          "name": "The Verge AI"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.wired.com/story/ai-has-flooded-all-the-weather-apps/",
+      "url": "https://www.wired.com/story/ai-has-flooded-all-the-weather-apps/",
+      "title": "AI Has Flooded All the Weather Apps",
+      "content_text": "Weather forecasting has gotten a big boost from machine learning. How that translates into what users see can vary.",
+      "date_published": "2026-03-31T13:00:00.000Z",
+      "authors": [
+        {
+          "name": "WIRED AI"
+        }
+      ],
+      "tags": [
+        "General AI"
+      ]
+    },
+    {
+      "id": "https://www.technologyreview.com/2026/03/31/1134934/the-download-testing-ai-health-tools-pentagon-anthropic-culture-war-backfires/",
+      "url": "https://www.technologyreview.com/2026/03/31/1134934/the-download-testing-ai-health-tools-pentagon-anthropic-culture-war-backfires/",
+      "title": "The Download: AI health tools and the Pentagon’s Anthropic culture war",
+      "content_text": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. There are more AI health tools than ever—but how well do they work? In the last few months alone, Microsoft,...",
+      "date_published": "2026-03-31T12:10:00.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://www.technologyreview.com/2026/03/31/1134833/ai-benchmarks-are-broken-heres-what-we-need-instead/",
+      "url": "https://www.technologyreview.com/2026/03/31/1134833/ai-benchmarks-are-broken-heres-what-we-need-instead/",
+      "title": "AI benchmarks are broken. Here’s what we need instead.",
+      "content_text": "For decades, artificial intelligence has been evaluated through the question of whether machines outperform humans. From chess to advanced math, from coding to essay writing, the performance of AI models and applications is tested against that of...",
+      "date_published": "2026-03-31T12:01:08.000Z",
+      "authors": [
+        {
+          "name": "MIT Technology Review"
+        }
+      ],
+      "tags": [
+        "Research",
+        "Policy & Safety"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26765",
+      "url": "https://arxiv.org/abs/2603.26765",
+      "title": "Bitboard version of Tetris AI",
+      "content_text": "arXiv:2603.26765v1 Announce Type: new Abstract: The efficiency of game engines and policy optimization algorithms is crucial for training reinforcement learning (RL) agents in complex sequential decision-making tasks, such as Tetris. Existing Tetris...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26782",
+      "url": "https://arxiv.org/abs/2603.26782",
+      "title": "Multiverse: Language-Conditioned Multi-Game Level Blending via Shared Representation",
+      "content_text": "arXiv:2603.26782v1 Announce Type: new Abstract: Text-to-level generation aims to translate natural language descriptions into structured game levels, enabling intuitive control over procedural content generation. While prior text-to-level generators...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26838",
+      "url": "https://arxiv.org/abs/2603.26838",
+      "title": "Concerning Uncertainty -- A Systematic Survey of Uncertainty-Aware XAI",
+      "content_text": "arXiv:2603.26838v1 Announce Type: new Abstract: This paper surveys uncertainty-aware explainable artificial intelligence (UAXAI), examining how uncertainty is incorporated into explanatory pipelines and how such methods are evaluated. Across the...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26944",
+      "url": "https://arxiv.org/abs/2603.26944",
+      "title": "Neuro-Symbolic Learning for Predictive Process Monitoring via Two-Stage Logic Tensor Networks with Rule Pruning",
+      "content_text": "arXiv:2603.26944v1 Announce Type: new Abstract: Predictive modeling on sequential event data is critical for fraud detection and healthcare monitoring. Existing data-driven approaches learn correlations from historical data but fail to incorporate...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26948",
+      "url": "https://arxiv.org/abs/2603.26948",
+      "title": "Compliance-Aware Predictive Process Monitoring: A Neuro-Symbolic Approach",
+      "content_text": "arXiv:2603.26948v1 Announce Type: new Abstract: Existing approaches for predictive process monitoring are sub-symbolic, meaning that they learn correlations between descriptive features and a target feature fully based on data, e.g., predicting the...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26983",
+      "url": "https://arxiv.org/abs/2603.26983",
+      "title": "Transparency as Architecture: Structural Compliance Gaps in EU AI Act Article 50 II",
+      "content_text": "arXiv:2603.26983v1 Announce Type: new Abstract: Art. 50 II of the EU Artificial Intelligence Act mandates dual transparency for AI-generated content: outputs must be labeled in both human-understandable and machine-readable form for automated...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.26996",
+      "url": "https://arxiv.org/abs/2603.26996",
+      "title": "FormalProofBench: Can Models Write Graduate Level Math Proofs That Are Formally Verified?",
+      "content_text": "arXiv:2603.26996v1 Announce Type: new Abstract: We present FormalProofBench, a private benchmark designed to evaluate whether AI models can produce formally verified mathematical proofs at the graduate level. Each task pairs a natural-language...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.27076",
+      "url": "https://arxiv.org/abs/2603.27076",
+      "title": "When Verification Hurts: Asymmetric Effects of Multi-Agent Feedback in Logic Proof Tutoring",
+      "content_text": "arXiv:2603.27076v1 Announce Type: new Abstract: Large language models (LLMs) are increasingly used for automated tutoring, but their reliability in structured symbolic domains remains unclear. We study step-level feedback for propositional logic...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.27116",
+      "url": "https://arxiv.org/abs/2603.27116",
+      "title": "The Price of Meaning: Why Every Semantic Memory System Forgets",
+      "content_text": "arXiv:2603.27116v1 Announce Type: new Abstract: Every major AI memory system in production today organises information by meaning. That organisation enables generalisation, analogy, and conceptual retrieval -- but it comes at a price. We prove that...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://arxiv.org/abs/2603.27150",
+      "url": "https://arxiv.org/abs/2603.27150",
+      "title": "MediHive: A Decentralized Agent Collective for Medical Reasoning",
+      "content_text": "arXiv:2603.27150v1 Announce Type: new Abstract: Large language models (LLMs) have revolutionized medical reasoning tasks, yet single-agent systems often falter on complex, interdisciplinary problems requiring robust handling of uncertainty and...",
+      "date_published": "2026-03-31T04:00:00.000Z",
+      "authors": [
+        {
+          "name": "arXiv cs.AI"
+        }
+      ],
+      "tags": [
+        "Research"
+      ]
+    },
+    {
+      "id": "https://huggingface.co/blog/trl-v1",
+      "url": "https://huggingface.co/blog/trl-v1",
+      "title": "TRL v1.0: Post-Training Library Built to Move with the Field",
       "content_text": "",
-      "date_published": "2026-03-30T20:09:19.000Z",
+      "date_published": "2026-03-31T00:00:00.000Z",
       "authors": [
         {
-          "name": "Hacker News AI"
+          "name": "Hugging Face Blog"
         }
       ],
       "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/",
-      "url": "https://www.zdnet.com/article/what-googles-turboquant-can-and-cant-do-for-ais-spiraling-cost/",
-      "title": "What Google's TurboQuant can and can't do for AI's spiraling cost",
-      "content_text": "Google's real-time quantization could be important for running local AI. Here's why.",
-      "date_published": "2026-03-30T19:59:16.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://mropert.github.io/2026/03/30/ai_garbage_cpp/",
-      "url": "https://mropert.github.io/2026/03/30/ai_garbage_cpp/",
-      "title": "You're right, no one can tell if C++ is AI generated",
-      "content_text": "",
-      "date_published": "2026-03-30T19:57:52.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://openscience.ink",
-      "url": "https://openscience.ink",
-      "title": "Show HN: I built a simpler way to follow research papers–AI summaries and emails",
-      "content_text": "In 2021, after getting covid, I ended up dealing with lingering symptoms that pushed me into reading PubMed for the first time. I was trying to understand what was happening, but I found that scientific papers came with jargon and the dense PubMed...",
-      "date_published": "2026-03-30T19:55:43.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://xcancel.com/heygurisingh/status/2038266503993372774",
-      "url": "https://xcancel.com/heygurisingh/status/2038266503993372774",
-      "title": "Novel environments, no precedents or plagiarism possible. Humans 100%, AI <1%",
-      "content_text": "",
-      "date_published": "2026-03-30T19:51:42.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://newsmarvin.com/",
-      "url": "https://newsmarvin.com/",
-      "title": "Show HN: NewsMarvin – AI news from 71 sources, classified by Claude Haiku",
-      "content_text": "",
-      "date_published": "2026-03-30T19:50:53.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://github.com/Crosstalk-Solutions/project-nomad",
-      "url": "https://github.com/Crosstalk-Solutions/project-nomad",
-      "title": "Wikipedia, AI, maps, and education tools running on your own hardware",
-      "content_text": "",
-      "date_published": "2026-03-30T19:49:32.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://create-context-graph.vercel.app/",
-      "url": "https://create-context-graph.vercel.app/",
-      "title": "Create Context Graph: Scaffold AI agents with context graph memory in seconds",
-      "content_text": "",
-      "date_published": "2026-03-30T19:49:28.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://memoir.sh",
-      "url": "https://memoir.sh",
-      "title": "Show HN: Memoir – persistent memory for AI coding tools via MCP",
-      "content_text": "CLI that gives your AI tools memory between sessions. Runs locally as an MCP server, works with 11 tools. npm install -g memoir-cli https://github.com/camgitt/memoir",
-      "date_published": "2026-03-30T19:43:49.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://github.com/yogirk/agent-council",
-      "url": "https://github.com/yogirk/agent-council",
-      "title": "Show HN: Agent Council – Claude, Codex and Gemini debate code and engg questions",
-      "content_text": "",
-      "date_published": "2026-03-30T19:27:43.000Z",
-      "authors": [
-        {
-          "name": "Hacker News AI"
-        }
-      ],
-      "tags": [
-        "Community"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/smart-home-on-a-budget-2026/",
-      "url": "https://www.zdnet.com/article/smart-home-on-a-budget-2026/",
-      "title": "10 useful smart home gadgets that make life so much easier (and most are discounted)",
-      "content_text": "After testing hundreds of smart home devices, I rounded up the best options to get started with your smart home without breaking the bank.",
-      "date_published": "2026-03-30T19:20:00.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/",
-      "url": "https://www.zdnet.com/article/hyper-drive-usb4-enclosure-review/",
-      "title": "I used an M.2 PCIe enclosure for data storage, and it made file transfers so much faster",
-      "content_text": "The HyperDrive Next USB4 M.2 PCIe enclosure lets NVMe SSDs perform at their optimal speeds, but it's not a perfect gadget.",
-      "date_published": "2026-03-30T18:50:00.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/",
-      "url": "https://www.zdnet.com/article/apple-airpods-pro-3-vs-bose-quietcomfort-ultra-earbuds-2/",
-      "title": "AirPods Pro 3 vs. Bose QuietComfort Ultra 2: I listened to both, and there's a sonic difference",
-      "content_text": "Which noise-canceling earbuds should you buy? The answer may go beyond just your device ecosystem.",
-      "date_published": "2026-03-30T18:31:00.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/",
-      "url": "https://www.zdnet.com/article/home-office-gadgets-amazon-spring-sale-2026/",
-      "title": "I've been WFH for 7 years. These are the home office gadgets I want right now",
-      "content_text": "I'm saving money on home office essentials this year during Amazon's Big Spring Sale, and you can too - but hurry. The sale ends tomorrow.",
-      "date_published": "2026-03-30T18:01:33.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/",
-      "url": "https://www.zdnet.com/article/youtube-is-coming-to-android-auto-but-you-cant-watch-it/",
-      "title": "YouTube is coming to Android Auto - but you can't watch it",
-      "content_text": "Here's why some YouTube users could find this to be a pretty useful feature, anyway.",
-      "date_published": "2026-03-30T17:41:00.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/",
-      "url": "https://www.zdnet.com/article/dreamfarm-fluicer-deal-amazon-spring-sale-2026/",
-      "title": "This is hands-down the best juicer I've ever used - and it's on sale",
-      "content_text": "The Fluicer gets every drop of juice out of your lemons, limes, or oranges, with minimal effort. Get one for under $20 during the Amazon Spring Sale.",
-      "date_published": "2026-03-30T17:32:35.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/",
-      "url": "https://www.zdnet.com/article/best-phone-carrier-deals-tmobile-verizon-att-last-minute-amazon-spring-sale/",
-      "title": "The best last minute phone deals from T-Mobile, Verizon, AT&T and other carriers",
-      "content_text": "Amazon Spring Sale is in its final days, but multiple carriers are offering deals on flagships, including the iPhone 17 Pro for free. These discounts won't last long, so act now.",
-      "date_published": "2026-03-30T17:26:42.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.zdnet.com/article/peropesis-linux-operating-system/",
-      "url": "https://www.zdnet.com/article/peropesis-linux-operating-system/",
-      "title": "I tried a command-line-only distro that can seriously improve your Linux skills",
-      "content_text": "You might not realize this, but a distro like Peropesis has its place in the Linux ecosystem, and it can help you master the operating system.",
-      "date_published": "2026-03-30T17:23:00.000Z",
-      "authors": [
-        {
-          "name": "ZDNet AI"
-        }
-      ],
-      "tags": [
-        "Enterprise",
-        "General AI"
+        "Open Source",
+        "Models"
       ]
     },
     {
@@ -407,156 +607,6 @@
       "tags": [
         "Research",
         "Policy & Safety"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.25747",
-      "url": "https://arxiv.org/abs/2603.25747",
-      "title": "BeSafe-Bench: Unveiling Behavioral Safety Risks of Situated Agents in Functional Environments",
-      "content_text": "arXiv:2603.25747v1 Announce Type: new Abstract: The rapid evolution of Large Multimodal Models (LMMs) has enabled agents to perform complex digital and physical tasks, yet their deployment as autonomous decision-makers introduces substantial...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.26005",
-      "url": "https://arxiv.org/abs/2603.26005",
-      "title": "AutoB2G: A Large Language Model-Driven Agentic Framework For Automated Building-Grid Co-Simulation",
-      "content_text": "arXiv:2603.26005v1 Announce Type: new Abstract: The growing availability of building operational data motivates the use of reinforcement learning (RL), which can learn control policies directly from data and cope with the complexity and uncertainty...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.26076",
-      "url": "https://arxiv.org/abs/2603.26076",
-      "title": "Semi-Automated Knowledge Engineering and Process Mapping for Total Airport Management",
-      "content_text": "arXiv:2603.26076v1 Announce Type: new Abstract: Documentation of airport operations is inherently complex due to extensive technical terminology, rigorous regulations, proprietary regional information, and fragmented communication across multiple...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.26266",
-      "url": "https://arxiv.org/abs/2603.26266",
-      "title": "GUIDE: Resolving Domain Bias in GUI Agents through Real-Time Web Video Retrieval and Plug-and-Play Annotation",
-      "content_text": "arXiv:2603.26266v1 Announce Type: new Abstract: Large vision-language models have endowed GUI agents with strong general capabilities for interface understanding and interaction. However, due to insufficient exposure to domain-specific software...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.26499",
-      "url": "https://arxiv.org/abs/2603.26499",
-      "title": "AIRA_2: Overcoming Bottlenecks in AI Research Agents",
-      "content_text": "arXiv:2603.26499v1 Announce Type: new Abstract: Existing research has identified three structural performance bottlenecks in AI research agents: (1) synchronous single-GPU execution constrains sample throughput, limiting the benefit of search; (2) a...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.26512",
-      "url": "https://arxiv.org/abs/2603.26512",
-      "title": "CADSmith: Multi-Agent CAD Generation with Programmatic Geometric Validation",
-      "content_text": "arXiv:2603.26512v1 Announce Type: new Abstract: Existing methods for text-to-CAD generation either operate in a single pass with no geometric verification or rely on lossy visual feedback that cannot resolve dimensional errors. We present CADSmith,...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.26535",
-      "url": "https://arxiv.org/abs/2603.26535",
-      "title": "Stabilizing Rubric Integration Training via Decoupled Advantage Normalization",
-      "content_text": "arXiv:2603.26535v1 Announce Type: new Abstract: We propose Process-Aware Policy Optimization (PAPO), a method that integrates process-level evaluation into Group Relative Policy Optimization (GRPO) through decoupled advantage normalization, to...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2502.09867",
-      "url": "https://arxiv.org/abs/2502.09867",
-      "title": "DesignWeaver: Dimensional Scaffolding for Text-to-Image Product Design",
-      "content_text": "arXiv:2502.09867v2 Announce Type: cross Abstract: Generative AI has enabled novice designers to quickly create professional-looking visual representations for product concepts. However, novices have limited domain knowledge that could constrain...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.25749",
-      "url": "https://arxiv.org/abs/2603.25749",
-      "title": "A Lightweight, Transferable, and Self-Adaptive Framework for Intelligent DC Arc-Fault Detection in Photovoltaic Systems",
-      "content_text": "arXiv:2603.25749v1 Announce Type: cross Abstract: Arc-fault circuit interrupters (AFCIs) are essential for mitigating fire hazards in residential photovoltaic (PV) systems, yet achieving reliable DC arc-fault detection under real-world conditions...",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
-      ]
-    },
-    {
-      "id": "https://arxiv.org/abs/2603.25750",
-      "url": "https://arxiv.org/abs/2603.25750",
-      "title": "Sommelier: Scalable Open Multi-turn Audio Pre-processing for Full-duplex Speech Language Models",
-      "content_text": "arXiv:2603.25750v1 Announce Type: cross Abstract: As the paradigm of AI shifts from text-based LLMs to Speech Language Models (SLMs), there is a growing demand for full-duplex systems capable of real-time, natural human-computer interaction....",
-      "date_published": "2026-03-30T04:00:00.000Z",
-      "authors": [
-        {
-          "name": "arXiv cs.AI"
-        }
-      ],
-      "tags": [
-        "Research"
       ]
     },
     {
@@ -666,21 +716,6 @@
       ]
     },
     {
-      "id": "https://www.theverge.com/ai-artificial-intelligence/902546/data-centers-ai-energy-power-grids-controversy",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/902546/data-centers-ai-energy-power-grids-controversy",
-      "title": "The latest in data centers, AI, and energy",
-      "content_text": "Massive new data centers are the physical foundation for tech companies’ hopes and dreams for AI. But the rush to expand warehouses full of energy-hungry servers has also kicked up fights across the world over their impact on power grids, utility...",
-      "date_published": "2026-03-27T18:35:53.000Z",
-      "authors": [
-        {
-          "name": "The Verge AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
       "id": "https://www.wired.com/story/apple-50-year-anniversary-artificial-intelligence-iphone/",
       "url": "https://www.wired.com/story/apple-50-year-anniversary-artificial-intelligence-iphone/",
       "title": "Apple Still Plans to Sell iPhones When It Turns 100",
@@ -758,21 +793,6 @@
       ]
     },
     {
-      "id": "https://www.theverge.com/ai-artificial-intelligence/902149/anthropic-dod-pentagon-lawsuit-supply-chain-risk-injunction",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/902149/anthropic-dod-pentagon-lawsuit-supply-chain-risk-injunction",
-      "title": "Judge sides with Anthropic to temporarily block the Pentagon&#8217;s ban",
-      "content_text": "After Anthropic's weeks-long standoff with the Pentagon, the company won one milestone: A judge granted Anthropic a preliminary injunction in its lawsuit, which sought to reverse its government blacklisting while the judicial process plays out. \"The...",
-      "date_published": "2026-03-27T00:33:44.000Z",
-      "authors": [
-        {
-          "name": "The Verge AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
       "id": "https://huggingface.co/blog/liberate-your-openclaw",
       "url": "https://huggingface.co/blog/liberate-your-openclaw",
       "title": "Liberate your OpenClaw",
@@ -789,21 +809,6 @@
       ]
     },
     {
-      "id": "https://www.theverge.com/policy/902140/david-sacks-out-ai-crypto-czar",
-      "url": "https://www.theverge.com/policy/902140/david-sacks-out-ai-crypto-czar",
-      "title": "David Sacks is no longer the White House AI and Crypto Czar",
-      "content_text": "David Sacks, the venture capitalist and tech billionaire who'd become Silicon Valley's primary advocate inside the White House and a key architect of its aggressive AI policy initiatives, revealed on Thursday that he was no longer a special...",
-      "date_published": "2026-03-26T23:40:22.000Z",
-      "authors": [
-        {
-          "name": "The Verge AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
       "id": "https://www.wired.com/story/anthropic-supply-chain-risk-designation-injunction/",
       "url": "https://www.wired.com/story/anthropic-supply-chain-risk-designation-injunction/",
       "title": "Anthropic Supply-Chain-Risk Designation Halted by Judge",
@@ -812,21 +817,6 @@
       "authors": [
         {
           "name": "WIRED AI"
-        }
-      ],
-      "tags": [
-        "General AI"
-      ]
-    },
-    {
-      "id": "https://www.theverge.com/ai-artificial-intelligence/902085/google-gemini-import-memory-chat-history",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/902085/google-gemini-import-memory-chat-history",
-      "title": "Google is making it easier to import another AI’s memory into Gemini",
-      "content_text": "After Anthropic updated its tool for copying another AI's memory into Claude earlier this month, Google Gemini is rolling out new \"Import Memory\" and \"Import Chat History\" features on desktop that can help users quickly copy over everything their...",
-      "date_published": "2026-03-26T21:44:37.000Z",
-      "authors": [
-        {
-          "name": "The Verge AI"
         }
       ],
       "tags": [
@@ -926,7 +916,7 @@
     {
       "id": "https://blogs.nvidia.com/blog/geforce-now-thursday-screamer/",
       "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-screamer/",
-      "title": "Game On: Five New Titles Now Streaming on GeForce NOW",
+      "title": "Game On: Five New Titles Now Streaming on GeForce NOW",
       "content_text": "That gaming backlog won’t clear itself — GeForce NOW is here to help. Stream the latest titles straight from the cloud across a variety of devices. This week, five new titles are ready to play instantly in the cloud gaming platform’s library....",
       "date_published": "2026-03-26T13:00:47.000Z",
       "authors": [
@@ -936,22 +926,6 @@
       ],
       "tags": [
         "Hardware/Chips"
-      ]
-    },
-    {
-      "id": "https://www.technologyreview.com/2026/03/26/1134697/the-download-battery-ai-pivot-new-ai-tool-math/",
-      "url": "https://www.technologyreview.com/2026/03/26/1134697/the-download-battery-ai-pivot-new-ai-tool-math/",
-      "title": "The Download: a battery pivot to AI, and rewriting math",
-      "content_text": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Why this battery company is pivoting to AI Qichao Hu doesn’t mince words about the state of the battery...",
-      "date_published": "2026-03-26T12:42:53.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
       ]
     },
     {
@@ -985,38 +959,6 @@
       ]
     },
     {
-      "id": "https://www.technologyreview.com/2026/03/26/1134470/the-snow-gods-how-a-couple-of-ski-bums-built-the-internets-best-weather-app/",
-      "url": "https://www.technologyreview.com/2026/03/26/1134470/the-snow-gods-how-a-couple-of-ski-bums-built-the-internets-best-weather-app/",
-      "title": "The snow gods: How a couple of ski bums built the internet’s best weather app",
-      "content_text": "The best snow-forecasting app for skiers and snowboarders isn’t from any of the federally funded weather services. Nor from any of the big-name brands. It’s an independent app startup that leverages government data, its own AI models, and decades of...",
-      "date_published": "2026-03-26T10:00:00.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
-      ]
-    },
-    {
-      "id": "https://www.technologyreview.com/2026/03/26/1134677/gas-prices-electric-vehicles/",
-      "url": "https://www.technologyreview.com/2026/03/26/1134677/gas-prices-electric-vehicles/",
-      "title": "Are high gas prices good news for EVs? It’s complicated.",
-      "content_text": "I live in a dense city with plentiful public transportation options and limited parking, so I don’t own a car. I’m often utterly clueless about the current price of gasoline. But as the conflict in Iran has escalated, fossil-fuel prices have been on...",
-      "date_published": "2026-03-26T10:00:00.000Z",
-      "authors": [
-        {
-          "name": "MIT Technology Review"
-        }
-      ],
-      "tags": [
-        "Research",
-        "Policy & Safety"
-      ]
-    },
-    {
       "id": "https://blogs.nvidia.com/blog/ai-future-open-and-proprietary/",
       "url": "https://blogs.nvidia.com/blog/ai-future-open-and-proprietary/",
       "title": "The Future of AI Is Open and Proprietary",
@@ -1029,21 +971,6 @@
       ],
       "tags": [
         "Hardware/Chips"
-      ]
-    },
-    {
-      "id": "https://www.wired.com/story/theres-something-very-dark-about-a-lot-of-those-viral-ai-fruit-videos/",
-      "url": "https://www.wired.com/story/theres-something-very-dark-about-a-lot-of-those-viral-ai-fruit-videos/",
-      "title": "There’s Something Very Dark About a Lot of Those Viral AI Fruit Videos",
-      "content_text": "With female AI fruit being fart-shamed and even sexually assaulted, there’s a misogynistic undercurrent to the fruit slop microdramas, even as they appear to be cultivating genuine fans.",
-      "date_published": "2026-03-25T18:49:40.000Z",
-      "authors": [
-        {
-          "name": "WIRED AI"
-        }
-      ],
-      "tags": [
-        "General AI"
       ]
     },
     {
@@ -1199,22 +1126,6 @@
       ]
     },
     {
-      "id": "https://huggingface.co/blog/ibm-granite/granite-libraries",
-      "url": "https://huggingface.co/blog/ibm-granite/granite-libraries",
-      "title": "What's New in Mellea 0.4.0 + Granite Libraries Release",
-      "content_text": "",
-      "date_published": "2026-03-20T14:14:46.000Z",
-      "authors": [
-        {
-          "name": "Hugging Face Blog"
-        }
-      ],
-      "tags": [
-        "Open Source",
-        "Models"
-      ]
-    },
-    {
       "id": "https://blogs.nvidia.com/blog/gtc-2026-news/",
       "url": "https://blogs.nvidia.com/blog/gtc-2026-news/",
       "title": "NVIDIA GTC 2026: Live Updates on What’s Next in AI",
@@ -1302,21 +1213,6 @@
       ],
       "tags": [
         "General AI"
-      ]
-    },
-    {
-      "id": "https://blogs.nvidia.com/blog/nvidia-cloudxr-apple-vision-pro/",
-      "url": "https://blogs.nvidia.com/blog/nvidia-cloudxr-apple-vision-pro/",
-      "title": "More Than Meets the Eye: NVIDIA RTX-Accelerated Computers Now Connect Directly to Apple Vision Pro",
-      "content_text": "NVIDIA and Apple’s collaboration brings native integration of NVIDIA CloudXR 6.0 to visionOS, securely delivering NVIDIA RTX-powered simulators and professional 3D graphics applications — like Immersive for Autodesk VRED on Innoactive’s XR streaming...",
-      "date_published": "2026-03-17T17:00:58.000Z",
-      "authors": [
-        {
-          "name": "NVIDIA AI Blog"
-        }
-      ],
-      "tags": [
-        "Hardware/Chips"
       ]
     },
     {
@@ -1442,21 +1338,6 @@
       ]
     },
     {
-      "id": "https://blog.google/products-and-platforms/products/workspace/gemini-google-sheets-state-of-the-art/",
-      "url": "https://blog.google/products-and-platforms/products/workspace/gemini-google-sheets-state-of-the-art/",
-      "title": "Gemini in Google Sheets just achieved state-of-the-art performance.",
-      "content_text": "Today we announced new beta features for Gemini in Sheets to help you create, organize and edit entire sheets, from basic tasks to complex data analysis — just describe …",
-      "date_published": "2026-03-10T13:00:00.000Z",
-      "authors": [
-        {
-          "name": "Google AI Blog"
-        }
-      ],
-      "tags": [
-        "Google/Gemini"
-      ]
-    },
-    {
       "id": "https://huggingface.co/blog/storage-buckets",
       "url": "https://huggingface.co/blog/storage-buckets",
       "title": "Introducing Storage Buckets on the Hugging Face Hub",
@@ -1502,37 +1383,6 @@
       "tags": [
         "Open Source",
         "Models"
-      ]
-    },
-    {
-      "id": "https://huggingface.co/blog/lerobot-release-v050",
-      "url": "https://huggingface.co/blog/lerobot-release-v050",
-      "title": "LeRobot v0.5.0: Scaling Every Dimension",
-      "content_text": "",
-      "date_published": "2026-03-09T00:00:00.000Z",
-      "authors": [
-        {
-          "name": "Hugging Face Blog"
-        }
-      ],
-      "tags": [
-        "Open Source",
-        "Models"
-      ]
-    },
-    {
-      "id": "https://arstechnica.com/security/2026/03/cisa-adds-3-ios-flaws-to-its-catalog-of-known-exploited-vulnerabilities/",
-      "url": "https://arstechnica.com/security/2026/03/cisa-adds-3-ios-flaws-to-its-catalog-of-known-exploited-vulnerabilities/",
-      "title": "Feds take notice of iOS vulnerabilities exploited under mysterious circumstances",
-      "content_text": "The long, strange trip of a large assembly of advanced iOS exploits.",
-      "date_published": "2026-03-06T19:41:33.000Z",
-      "authors": [
-        {
-          "name": "Ars Technica"
-        }
-      ],
-      "tags": [
-        "General AI"
       ]
     },
     {

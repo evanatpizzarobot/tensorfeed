@@ -69,7 +69,7 @@ export default function OriginalsPage() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-text-muted mb-3">
                   <Clock className="w-3.5 h-3.5" />
-                  <span>Evan Marcus</span>
+                  <span>TensorFeed Editorial</span>
                   <span>&middot;</span>
                   <span>{article.date}</span>
                 </div>

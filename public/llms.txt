@@ -63,11 +63,11 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Is Cohere Down?](https://tensorfeed.ai/is-cohere-down): Live Cohere status
 
 ## About
-TensorFeed.ai is operated by Pizza Robot Studios LLC (Los Angeles, CA).
-Sister sites: [TerminalFeed.io](https://terminalfeed.io) (real-time data dashboard), [VR.org](https://vr.org) (VR/AR news)
+TensorFeed.ai is an independent project built by Ripper.
+Sister site: [TerminalFeed.io](https://terminalfeed.io) (real-time data dashboard)
 Contact: feedback@tensorfeed.ai | Press: press@tensorfeed.ai
 
 ## Optional
 - [Full Content Bundle](https://tensorfeed.ai/llms-full.txt): Complete text of all guide pages for full-context ingestion
 - [Sitemap](https://tensorfeed.ai/sitemap.xml): Full XML sitemap of all pages
-- [About](https://tensorfeed.ai/about): About TensorFeed and Pizza Robot Studios
+- [About](https://tensorfeed.ai/about): About TensorFeed

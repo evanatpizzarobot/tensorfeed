@@ -21,7 +21,7 @@ export default function PrivacyPage() {
         {/* Intro */}
         <section>
           <p>
-            TensorFeed.ai is operated by Pizza Robot Studios LLC. We believe in being straightforward
+            TensorFeed.ai is an independent project. We believe in being straightforward
             about how we handle your data. This policy explains what we collect, what we do with it,
             and your rights as a visitor.
           </p>

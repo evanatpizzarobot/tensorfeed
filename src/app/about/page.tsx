@@ -13,12 +13,6 @@ const SISTER_SITES = [
     description:
       'Real-time financial data and market news aggregation for traders and developers. Live tickers, economic calendars, and API access for building trading tools.',
   },
-  {
-    name: 'VR.org',
-    url: 'https://vr.org',
-    description:
-      'The community hub for virtual reality enthusiasts, covering headset reviews, game releases, and the latest in spatial computing and immersive technology.',
-  },
 ];
 
 export default function AboutPage() {
@@ -37,26 +31,15 @@ export default function AboutPage() {
         <h2 className="text-xl font-semibold text-text-primary mb-4">About TensorFeed.ai</h2>
         <div className="space-y-4 text-text-secondary leading-relaxed">
           <p>
-            Hi, I am Evan. I built TensorFeed because I was tired of piecing together AI news from
-            a dozen different sources every morning. I wanted one place where I could see new model
-            releases, API status updates, research papers, and benchmark results without jumping
-            between Twitter, arXiv, and a handful of Discord servers. So I built the thing I wanted
-            to use, and here we are.
+            Built by <span className="text-text-primary font-medium">Ripper</span>. TensorFeed
+            exists because tracking the AI space meant jumping between a dozen sources every morning:
+            Twitter, arXiv, Discord servers, company blogs, status pages. So we built the thing we
+            wanted to use, and here we are.
           </p>
           <p>
-            TensorFeed.ai is a project from{' '}
-            <span className="text-text-primary font-medium">Pizza Robot Studios LLC</span>, the
-            same team behind{' '}
-            <a href="https://vr.org" className="text-accent-primary hover:underline">
-              VR.org
-            </a>{' '}
-            and{' '}
-            <a href="https://terminalfeed.io" className="text-accent-primary hover:underline">
-              TerminalFeed.io
-            </a>
-            . We have a thing for building fast, useful data feeds. If you have been to any of our
-            other sites, you will feel right at home here. We care about speed, clean design, and
-            giving people the information they need without the noise.
+            TensorFeed.ai aggregates AI news from 15+ sources, monitors service status in real time,
+            tracks model releases and API pricing, and publishes original editorial analysis. Every
+            data feed is structured for both human readers and AI agents. Fast, clean, no noise.
           </p>
         </div>
       </section>
