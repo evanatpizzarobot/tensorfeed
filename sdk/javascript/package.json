@@ -15,7 +15,7 @@
   "homepage": "https://tensorfeed.ai/developers",
   "repository": {
     "type": "git",
-    "url": "https://github.com/evanatpizzarobot/tensorfeed"
+    "url": "https://github.com/RipperMercs/tensorfeed"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

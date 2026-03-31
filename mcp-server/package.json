@@ -18,7 +18,7 @@
   "homepage": "https://tensorfeed.ai/developers",
   "repository": {
     "type": "git",
-    "url": "https://github.com/evanatpizzarobot/tensorfeed"
+    "url": "https://github.com/RipperMercs/tensorfeed"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.28.0",

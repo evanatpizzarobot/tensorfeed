@@ -109,7 +109,7 @@ Meta: /about, /privacy, /developers, /changelog
 
 ## Social
 - X/Twitter: @tensorfeed
-- GitHub: github.com/evanatpizzarobot/tensorfeed
+- GitHub: github.com/RipperMercs/tensorfeed
 
 ## Sister Site
 - TerminalFeed.io: Real-time data dashboard (free API at terminalfeed.io/api/*)

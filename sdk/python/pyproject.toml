@@ -22,4 +22,4 @@ classifiers = [
 [project.urls]
 Homepage = "https://tensorfeed.ai"
 Documentation = "https://tensorfeed.ai/developers"
-Repository = "https://github.com/evanatpizzarobot/tensorfeed"
+Repository = "https://github.com/RipperMercs/tensorfeed"

@@ -644,4 +644,4 @@ No CAPTCHAs, no bot detection. Agents are welcome here.
 ### Contact
 
 - Email: feedback@tensorfeed.ai
-- GitHub: github.com/evanatpizzarobot/tensorfeed
+- GitHub: github.com/RipperMercs/tensorfeed
