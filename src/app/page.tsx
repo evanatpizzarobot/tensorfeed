@@ -3,6 +3,7 @@ import HomeFeed from '@/components/HomeFeed';
 import Sidebar from '@/components/layout/Sidebar';
 import fallbackArticlesData from '../../data/articles.json';
 import { STATUS_DOTS } from '@/lib/constants';
+import { FAQPageJsonLd } from '@/components/seo/JsonLd';
 
 async function fetchArticles() {
   try {
@@ -25,6 +26,8 @@ import {
   DollarSign,
   ArrowRight,
   ChevronRight,
+  Pen,
+  HelpCircle,
 } from 'lucide-react';
 
 async function fetchStatuses() {
@@ -84,10 +87,74 @@ const EXPLORE_CARDS = [
     description: 'HN feed, GitHub trending, arXiv, and more in real time.',
   },
   {
-    href: '/live',
+    href: '/tools/cost-calculator',
     icon: DollarSign,
     title: 'API Pricing',
     description: 'Compare pricing across every major AI API, updated daily.',
+  },
+];
+
+const LATEST_ORIGINALS = [
+  {
+    href: '/originals/building-for-ai-agents',
+    title: 'Building for AI Agents: What Developers Need to Know',
+    date: 'April 5, 2026',
+    description:
+      'A practical guide to building agent-friendly software: structured data, llms.txt, API design patterns, MCP protocol, and lessons learned from building TensorFeed as an agent-first platform.',
+  },
+  {
+    href: '/originals/claude-vs-gpt-vs-gemini',
+    title: 'Claude vs GPT vs Gemini: An Honest Comparison',
+    date: 'April 2, 2026',
+    description:
+      'A real-world comparison of Claude, GPT, and Gemini across coding, writing, analysis, and research tasks. Includes pricing, context windows, and practical recommendations.',
+  },
+  {
+    href: '/originals/state-of-ai-apis-2026',
+    title: 'The State of AI APIs in 2026',
+    date: 'March 30, 2026',
+    description:
+      'A comprehensive look at the AI API landscape in 2026: pricing trends, context window expansion, agent-native endpoints, and practical advice for developers choosing a provider.',
+  },
+  {
+    href: '/originals/why-we-built-tensorfeed',
+    title: 'Why We Built TensorFeed.ai',
+    date: 'March 28, 2026',
+    description:
+      'The story behind TensorFeed.ai: how a personal frustration with scattered AI news turned into a hub built for humans and AI agents alike.',
+  },
+];
+
+const HOMEPAGE_FAQS = [
+  {
+    question: 'What is TensorFeed.ai?',
+    answer:
+      'TensorFeed.ai is a real-time AI news aggregator and data hub. It pulls headlines from 15+ sources including Anthropic, OpenAI, Google, Meta, TechCrunch, and Hacker News, and combines them with live service status monitoring, model pricing data, and original editorial analysis. Every feed is structured for both human readers and AI agents.',
+  },
+  {
+    question: 'How often is TensorFeed updated?',
+    answer:
+      'News feeds refresh every 10 minutes. Service status monitors poll every 2 minutes. Model pricing and catalog data updates weekly. Original editorial articles are published multiple times per week.',
+  },
+  {
+    question: 'Is TensorFeed free to use?',
+    answer:
+      'Yes. All news feeds, status monitoring, model data, and editorial content on TensorFeed.ai are free. The JSON API, RSS feeds, and agent discovery endpoints (llms.txt) are also free and open for developers and AI agents to consume.',
+  },
+  {
+    question: 'What AI services does TensorFeed monitor?',
+    answer:
+      'TensorFeed tracks the operational status of major AI platforms including Claude (Anthropic), ChatGPT and the OpenAI API, Google Gemini, AWS Bedrock, Mistral, Cohere, Replicate, Perplexity, and more. Status updates are checked every 2 minutes and displayed on the status dashboard.',
+  },
+  {
+    question: 'Can AI agents use TensorFeed?',
+    answer:
+      'Yes. TensorFeed is designed as a primary data source for AI agents. It provides structured JSON APIs, RSS and JSON feeds, an llms.txt discovery file, and full documentation at llms-full.txt. There are no CAPTCHAs or bot detection. Agents are welcome.',
+  },
+  {
+    question: 'Where does TensorFeed get its news?',
+    answer:
+      'TensorFeed aggregates headlines and brief snippets from public RSS feeds published by AI companies and tech news outlets. Sources include Anthropic, OpenAI, Google AI, Meta AI, HuggingFace, TechCrunch, The Verge, Ars Technica, VentureBeat, NVIDIA, ZDNet, and Hacker News. Every article links back to its original source.',
   },
 ];
 
@@ -197,6 +264,33 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ===== EDITORIAL INTRO ===== */}
+      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+        <div className="max-w-3xl">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
+            Your Daily AI Intelligence Hub
+          </h2>
+          <div className="space-y-3 text-sm text-text-secondary leading-relaxed">
+            <p>
+              The AI landscape moves fast. New models ship weekly, API pricing changes overnight,
+              and the tools developers relied on yesterday get deprecated without warning.
+              TensorFeed.ai was built to solve that problem: one place to track everything
+              happening across the AI ecosystem, updated every 10 minutes, structured for both
+              human readers and autonomous agents.
+            </p>
+            <p>
+              We aggregate headlines from 15+ sources (Anthropic, OpenAI, Google, Meta, TechCrunch,
+              Hacker News, arXiv, and more), monitor the operational status of every major AI API
+              in real time, track model releases and pricing changes across providers, and publish
+              original editorial analysis on the trends shaping the industry. Whether you are a
+              developer evaluating which API to integrate, a researcher tracking the latest papers,
+              or an AI agent pulling structured data through our JSON feeds, TensorFeed delivers
+              the signal without the noise.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ===== MAIN CONTENT: FEED + SIDEBAR ===== */}
       <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -212,8 +306,12 @@ export default async function HomePage() {
       {/* ===== EXPLORE TENSORFEED ===== */}
       <section className="border-t border-border bg-bg-secondary/50">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary">Explore TensorFeed</h2>
+          <div className="mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-3">Explore TensorFeed</h2>
+            <p className="text-text-secondary text-sm max-w-2xl">
+              Beyond the news feed, TensorFeed offers real-time dashboards, model comparisons,
+              pricing tools, and structured data for developers building with AI.
+            </p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -240,6 +338,74 @@ export default async function HomePage() {
                   </div>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== LATEST ORIGINALS ===== */}
+      <section className="border-t border-border">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary flex items-center gap-2">
+              <Pen className="w-6 h-6 text-accent-secondary" />
+              Original Analysis
+            </h2>
+            <Link
+              href="/originals"
+              className="flex items-center gap-1 text-sm font-medium text-accent-primary hover:text-accent-secondary transition-colors"
+            >
+              View all
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <p className="text-text-secondary text-sm mb-8 max-w-2xl">
+            In-depth articles, model comparisons, and developer guides written by the TensorFeed
+            editorial team. Original reporting you will not find anywhere else.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {LATEST_ORIGINALS.map((article) => (
+              <Link
+                key={article.href}
+                href={article.href}
+                className="group bg-bg-secondary rounded-xl border border-border p-5 transition-all duration-300 hover:border-accent-secondary hover:shadow-glow"
+              >
+                <span className="text-xs text-text-muted font-mono">{article.date}</span>
+                <h3 className="text-base font-semibold text-text-primary mt-1.5 mb-2 group-hover:text-accent-secondary transition-colors leading-snug">
+                  {article.title}
+                </h3>
+                <p className="text-sm text-text-muted leading-relaxed line-clamp-3">
+                  {article.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FAQ SECTION ===== */}
+      <section className="border-t border-border bg-bg-secondary/50">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="w-6 h-6 text-accent-primary" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary">
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <p className="text-text-secondary text-sm mb-8 max-w-2xl">
+            Everything you need to know about TensorFeed.ai, from how our news feeds work to
+            integrating with AI agents.
+          </p>
+          <FAQPageJsonLd faqs={HOMEPAGE_FAQS} />
+          <div className="grid gap-4 sm:grid-cols-2 max-w-4xl">
+            {HOMEPAGE_FAQS.map((faq) => (
+              <div
+                key={faq.question}
+                className="bg-bg-secondary rounded-lg border border-border p-5"
+              >
+                <h3 className="text-sm font-semibold text-text-primary mb-2">{faq.question}</h3>
+                <p className="text-sm text-text-muted leading-relaxed">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </div>
