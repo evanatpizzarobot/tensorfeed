@@ -35,6 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/what-are-ai-agents`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/best-open-source-llms`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/claude-md-guide`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/claude-md-examples`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/claude-md-generator`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
     // Tools & features
     { url: `${baseUrl}/compare`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
