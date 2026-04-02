@@ -1,48 +1,816 @@
 {
   "ok": true,
-  "count": 107,
+  "count": 117,
   "articles": [
     {
-      "id": "vkxu04",
-      "title": "These 5 Amazon Spring Sale deals are worth a second glance before they're gone soon",
-      "url": "https://www.zdnet.com/article/dyson-amazon-spring-sale-2026-deals-still-live/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "It's the last day of Amazon's Big Spring Sale, but there's still last chance savings on top gear from Dyson (including vacuums, hair tools, and more).",
+      "id": "ohx9et",
+      "title": "Show HN: SharpSkill – AI writes your code. We teach you to understand it",
+      "url": "https://sharpskill.dev/en",
+      "source": "Hacker News AI",
+      "sourceDomain": "sharpskill.dev",
+      "snippet": "Gx HN, AI makes it easy to generate code, but much harder to truly understand it especially under pressure. SharpSkill simulates real technical interviews : solve problems live, explain your thinking, handle interruptions. The focus isn’t just...",
       "categories": [
-        "Enterprise",
-        "General AI"
+        "Community"
       ],
-      "publishedAt": "2026-03-31T22:19:07.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
+      "publishedAt": "2026-04-02T21:30:29.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
     },
     {
-      "id": "d94d13",
-      "title": "Amazon Spring Sale live blog 2026: Last day to score top Amazon deals",
-      "url": "https://www.zdnet.com/article/amazon-spring-sale-live-blog-03-31-2026/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "We're live-tracking the best Amazon Spring Sale deals over 60% off on home, tech, and more, during the final hours of the sale. Buy them before they're gone.",
+      "id": "lkc5zh",
+      "title": "LegionGo gamepad as a Claude Code controller (Konami code activates voice mode)",
+      "url": "https://github.com/pinkpwningclub/legion-claude",
+      "source": "Hacker News AI",
+      "sourceDomain": "github.com",
+      "snippet": "",
       "categories": [
-        "Enterprise",
-        "General AI"
+        "Community"
       ],
-      "publishedAt": "2026-03-31T22:02:47.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
+      "publishedAt": "2026-04-02T21:27:56.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
     },
     {
-      "id": "bvnkfc",
-      "title": "This minimalist smartwatch by one of my favorite tech companies is under $100 right now",
-      "url": "https://www.zdnet.com/article/this-minimalist-smartwatch-by-one-of-my-favorite-tech-companies-is-under-100-right-now/",
+      "id": "oguz8f",
+      "title": "Are you still copy/pasting in GPT to correct your text?",
+      "url": "https://rewritecmd.com/",
+      "source": "Hacker News AI",
+      "sourceDomain": "rewritecmd.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T21:19:02.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "gavrp5",
+      "title": "ON1 Restore AI Turns Old Family Photos into Grotesque Nightmare Fuel",
+      "url": "https://petapixel.com/2026/03/25/on1-restore-ai-turns-old-family-photos-into-grotesque-nightmare-fuel/",
+      "source": "Hacker News AI",
+      "sourceDomain": "petapixel.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T21:18:57.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "b0l8q0",
+      "title": "Show HN: Run Claude Code, Codex, and more with auto-approval in a Container",
+      "url": "https://github.com/VibePod/vibepod-cli",
+      "source": "Hacker News AI",
+      "sourceDomain": "github.com",
+      "snippet": "VibePod now has an `--ikwid` option with `vp` to append each agent's auto-approval/permission-skip flag when supported. Example: vp run claude --ikwid vp run codex --ikwid pip install vibepod brew tap vibepod/vibepod brew install vibepod",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T21:18:27.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "wfpepl",
+      "title": "Show HN: Claude Code leak forced this early – Dojo dual agents vs. Claude/Codex",
+      "url": "https://ehaye.io",
+      "source": "Hacker News AI",
+      "sourceDomain": "ehaye.io",
+      "snippet": "Claude Code leak pushed me to finally ship something I’ve been building quietly: a local-first agent environment called ehAye Engine (with built-in Dojo Agents). It’s now available for download. I’m updating the demo video and docs next....",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T21:06:53.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "4mzgwf",
+      "title": "‘Uncanny Valley’: Iran’s Threats on US Tech, Trump’s Plans for Midterms, and Polymarket’s Pop-up Flop",
+      "url": "https://www.wired.com/story/uncanny-valley-podcast-iran-targets-us-tech-polymarket-pop-up-trump-midterms/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "In this episode, we discuss Iran’s threats to target US tech firms, gear up for the midterm elections, and get a scene report from the Polymarket pop-up bar in DC.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T21:04:22.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "clqny1",
+      "title": "Marc Andreessen Is Right That AI Isn't Killing Jobs. Interest Rate Hikes Are",
+      "url": "https://www.governance.fyi/p/marc-andreessen-is-right-that-ai",
+      "source": "Hacker News AI",
+      "sourceDomain": "governance.fyi",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T21:03:15.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "7trmby",
+      "title": "Show HN: AI tax filing – upload W-2s and 1099s, get completed IRS forms back",
+      "url": "https://autocook.io",
+      "source": "Hacker News AI",
+      "sourceDomain": "autocook.io",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T20:59:09.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "5v7e9f",
+      "title": "Reporting potholes with an ESP32, LoRA, and AI",
+      "url": "https://thingswemake.com/pothole-in-one/",
+      "source": "Hacker News AI",
+      "sourceDomain": "thingswemake.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T20:53:44.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "lmr7xb",
+      "title": "Orallexa – AI Trading System",
+      "url": "https://github.com/alex-jb/orallexa-ai-trading-agent",
+      "source": "Hacker News AI",
+      "sourceDomain": "github.com",
+      "snippet": "",
+      "categories": [
+        "Community"
+      ],
+      "publishedAt": "2026-04-02T20:47:36.000Z",
+      "fetchedAt": "2026-04-02T21:47:12.145Z"
+    },
+    {
+      "id": "ukyxyo",
+      "title": "OpenAI Acquires Tech Talk Show ‘TBPN’—and Buys Itself Some Positive News",
+      "url": "https://www.wired.com/story/openai-acquires-tbpn-buys-positive-news-coverage/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "OpenAI is acquiring TBPN, a business talk show that’s popular among Silicon Valley elites, as it continues to battle its negative public image.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T19:29:48.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "cbiht3",
+      "title": "How to switch from ChatGPT to Gemini - without starting from scratch",
+      "url": "https://www.zdnet.com/article/how-to-switch-from-chatgpt-to-gemini-without-starting-from-scratch/",
       "source": "ZDNet AI",
       "sourceDomain": "zdnet.com",
-      "snippet": "On the final day of Amazon's Spring Sale, grab the CMF by Nothing Watch Pro 3 for $69.",
+      "snippet": "Gemini will now let you transfer your memories, chat history, and preferences from another AI so you don't have to start over. Here's how it works.",
       "categories": [
         "Enterprise",
         "General AI"
       ],
-      "publishedAt": "2026-03-31T21:43:02.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
+      "publishedAt": "2026-04-02T19:08:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "77m77y",
+      "title": "I highly recommend this car charger for quick charging on the go - and it's cheap",
+      "url": "https://www.zdnet.com/article/lisen-retractable-car-charger-amazon-spring-sale-2026/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "The Lisen Retractable Car Charger lets you recharge multiple devices at once. It's also under $20 right now.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T19:05:25.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "rr2ezv",
+      "title": "A New Google-Funded Data Center Will Be Powered by a Massive Gas Plant",
+      "url": "https://www.wired.com/story/a-new-google-funded-data-center-will-be-powered-by-a-massive-gas-plant/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "Documents show that one of Google’s new data centers would be powered by a natural gas plant that emits millions of tons of emissions each year—an increasingly common trend in the industry.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T18:27:29.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "oqvl79",
+      "title": "Elon Musk is about to be a very busy boy!",
+      "url": "https://www.theverge.com/tech/906027/elon-musk-lawsuit-ipo-spacex-tesla",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "To be honest, I thought Elon Musk would confidentially file for SpaceX's IPO on the 20th of this month, rather than the 1st. But maybe that just means he's moved on to other numbers, and we should all mark our calendars for June 7th as an IPO date...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T18:15:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "8618y5",
+      "title": "OpenAI just bought TBPN",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/906022/openai-buys-tbpn",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "OpenAI has purchased TBPN, an online talk show that often interviews AI executives and other tech leaders. The show goes live every weekday at 2PM PT, often for a three-hour duration, counting OpenAI CEO Sam Altman, as well as executives from Meta,...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T17:40:07.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "33ecwk",
+      "title": "Android's emergency alerts just got a major map upgrade - but change this setting first",
+      "url": "https://www.zdnet.com/article/android-emergency-alerts-adding-maps-view/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "The new map view shows your location relative to the affected area, which is especially crucial headed into the US storm season.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T17:00:19.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "8fizty",
+      "title": "New Rowhammer attacks give complete control of machines running Nvidia GPUs",
+      "url": "https://arstechnica.com/security/2026/04/new-rowhammer-attacks-give-complete-control-of-machines-running-nvidia-gpus/",
+      "source": "Ars Technica",
+      "sourceDomain": "arstechnica.com",
+      "snippet": "Both GDDRHammer and GeForge hammer GPU memory in ways that compromise the CPU.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T17:00:11.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
+    },
+    {
+      "id": "h1ly4n",
+      "title": "Cursor Launches a New AI Agent Experience to Take On Claude Code and Codex",
+      "url": "https://www.wired.com/story/cusor-launches-coding-agent-openai-anthropic/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "As Cursor launches the next generation of its product, the AI coding startup has to compete with OpenAI and Anthropic more directly than ever.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T17:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "nxff3e",
+      "title": "How I pay less for gas: 5 apps I use to find the cheapest stations nearby",
+      "url": "https://www.zdnet.com/article/high-gas-prices-mobile-apps-cheapest-stations/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "With gas prices climbing ever higher, these apps help me find the cheapest fuel based on my location.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T16:55:01.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "ei5ih",
+      "title": "From RTX to Spark: NVIDIA Accelerates Gemma 4 for Local Agentic AI",
+      "url": "https://blogs.nvidia.com/blog/rtx-ai-garage-open-models-google-gemma-4/",
+      "source": "NVIDIA AI Blog",
+      "sourceDomain": "blogs.nvidia.com",
+      "snippet": "Open models are driving a new wave of on-device AI, extending innovation beyond the cloud to everyday devices. As these models advance, their value increasingly depends on access to local, real-time context that can turn meaningful insights into...",
+      "categories": [
+        "Hardware/Chips"
+      ],
+      "publishedAt": "2026-04-02T16:15:58.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
+    },
+    {
+      "id": "nkv6s1",
+      "title": "Google's Gemma 4 model goes fully open-source and unlocks powerful local AI - even on phones",
+      "url": "https://www.zdnet.com/article/google-gemma-4-fully-open-source-powerful-local-ai/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "Now open-source under Apache 2.0, Gemma 4 brings offline, multimodal AI to servers, phones, and Raspberry Pi - giving developers total local control over edge and on-premises deployments.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T16:00:28.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "o7t0d",
+      "title": "New ways to balance cost and reliability in the Gemini API",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-flex-and-priority-inference/",
+      "source": "Google AI Blog",
+      "sourceDomain": "blog.google",
+      "snippet": "Google is introducing two new inference tiers to the Gemini API, Flex and Priority, to balance cost and latency.",
+      "categories": [
+        "Google/Gemini"
+      ],
+      "publishedAt": "2026-04-02T16:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
+    },
+    {
+      "id": "7cq53d",
+      "title": "Create, edit and share videos at no cost in Google Vids",
+      "url": "https://blog.google/products-and-platforms/products/workspace/google-vids-updates-lyria-veo/",
+      "source": "Google AI Blog",
+      "sourceDomain": "blog.google",
+      "snippet": "New AI capabilities are coming to Google Vids, powered by Lyria 3 and Veo 3.1, like high-quality video generation at no cost and more.",
+      "categories": [
+        "Google/Gemini"
+      ],
+      "publishedAt": "2026-04-02T16:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
+    },
+    {
+      "id": "ee5q9a",
+      "title": "Anthropic Says That Claude Contains Its Own Kind of Emotions",
+      "url": "https://www.wired.com/story/anthropic-claude-research-functional-emotions/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "Researchers at the company found representations inside of Claude that perform functions similar to human feelings.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T16:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "dug0s2",
+      "title": "New MIT jobs report: Why AI's work impact will roll in like a rising tide, not a crashing wave",
+      "url": "https://www.zdnet.com/article/new-mit-jobs-work-report-ai-impacts-2026/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "AI may be 'minimally sufficient' at most of your text work tasks by 2029, according to new MIT research. Here's why that's good news.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T16:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "r7o6sa",
+      "title": "It’s not easy to get depression-detecting AI through the FDA",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/905864/depression-detecting-ai-kintsugi-clinical-ai-startup-shut-down",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "For the past seven years, the California-based startup Kintsugi has been developing AI designed to detect signs of depression and anxiety from a person's speech. But after failing to secure FDA clearance in time, the company is shutting down and...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T15:33:23.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "k84fg1",
+      "title": "New out-of-band Windows 11 update fixes March's installation errors - how to get it",
+      "url": "https://www.zdnet.com/article/windows-11-emergency-update/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "Windows 11 users who tried to install March's broken preview update will want to grab the new replacement.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T15:26:43.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "tzvzf7",
+      "title": "Oneisall Ease S1 review: Finally, a smart litter box that doesn't cost an arm and a paw",
+      "url": "https://www.zdnet.com/article/oneisall-ease-s1-review/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "The Oneisall Ease S1 litter robot saves you from scooping and is a lot more affordable than competitors.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T14:45:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "258bm2",
+      "title": "Microsoft’s new ‘superintelligence’ game plan is all about business",
+      "url": "https://www.theverge.com/report/905791/mustafa-suleyman-microsoft-ai-transcription-model",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "Mustafa Suleyman has been preparing for his new job description for a long time. Suleyman is Microsoft's inaugural CEO of AI, but after the company underwent a large-scale restructuring in mid-March, he's handed off some duties and shifted focus to...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T14:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "urjw6l",
+      "title": "I built two apps with just my voice and a mouse - are IDEs already obsolete?",
+      "url": "https://www.zdnet.com/article/building-apps-with-ai-and-no-ide/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "With one hand holding my dog and no keyboard, I advanced two serious development projects using AI prompting, proving that the traditional coding setup may no longer be required.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T13:55:32.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "xaiiix",
+      "title": "Google Home’s latest update makes Gemini better at understanding your commands",
+      "url": "https://www.theverge.com/tech/905805/google-home-gemini-temperature-controls-lighting",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "Google is launching another update to its Home app, which is supposed to make controlling your smart home with its Gemini AI assistant \"more natural and reliable,\" according to this week's release notes. With the update, you can describe the type of...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T13:30:12.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "vh43bu",
+      "title": "My two Raspberry Pi boards cost as much as a laptop now - and AI is to blame",
+      "url": "https://www.zdnet.com/article/raspberry-pi-price-increase-blame-ai-ram/",
+      "source": "ZDNet AI",
+      "sourceDomain": "zdnet.com",
+      "snippet": "We live in a time when two 16GB Raspberry Pi 5 boards cost the same as a MacBook Neo. Here's why - and how to save.",
+      "categories": [
+        "Enterprise",
+        "General AI"
+      ],
+      "publishedAt": "2026-04-02T13:16:16.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.930Z"
+    },
+    {
+      "id": "emeuqt",
+      "title": "Press Start on April: GeForce NOW Brings 10 Games to the Cloud",
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-april-2026-games-list/",
+      "source": "NVIDIA AI Blog",
+      "sourceDomain": "blogs.nvidia.com",
+      "snippet": "No joke — GFN Thursday is skipping the tricks and heading straight into the games. April kicks off with ten new titles, bringing fresh adventures to GeForce NOW, including the launch of Capcom’s highly anticipated PRAGMATA. A dozen new games are...",
+      "categories": [
+        "Hardware/Chips"
+      ],
+      "publishedAt": "2026-04-02T13:00:09.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
+    },
+    {
+      "id": "fp6ll7",
+      "title": "The Download: plastic’s problem with fuel prices, and SpaceX’s blockbuster IPO",
+      "url": "https://www.technologyreview.com/2026/04/02/1135049/the-download-plastic-problem-fuel-prices-spacex-ipo/",
+      "source": "MIT Technology Review",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Fuel prices are soaring. Plastic could be next. As the war in Iran continues, one of the most visible global...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-04-02T12:10:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
+    },
+    {
+      "id": "1ym3xh",
+      "title": "Fuel prices are soaring. Plastic could be next.",
+      "url": "https://www.technologyreview.com/2026/04/02/1135045/plastic-economic-effects/",
+      "source": "MIT Technology Review",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "As the war in Iran continues to engulf the Middle East and the Strait of Hormuz stays closed, one of the most visible global economic ripple effects has been fossil-fuel prices. In particular, you can’t get away from news about the price of...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-04-02T10:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
+    },
+    {
+      "id": "2wjm2o",
+      "title": "How Emotion Shapes the Behavior of LLMs and Agents: A Mechanistic Study",
+      "url": "https://arxiv.org/abs/2604.00005",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00005v1 Announce Type: new Abstract: Emotion plays an important role in human cognition and performance. Motivated by this, we investigate whether analogous emotional signals can shape the behavior of large language models (LLMs) and...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjm9k",
+      "title": "One Panel Does Not Fit All: Case-Adaptive Multi-Agent Deliberation for Clinical Prediction",
+      "url": "https://arxiv.org/abs/2604.00085",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00085v1 Announce Type: new Abstract: Large language models applied to clinical prediction exhibit case-level heterogeneity: simple cases yield consistent outputs, while complex cases produce divergent predictions under minor prompt...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjmw0",
+      "title": "Open, Reliable, and Collective: A Community-Driven Framework for Tool-Using AI Agents",
+      "url": "https://arxiv.org/abs/2604.00137",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00137v1 Announce Type: new Abstract: Tool-integrated LLMs can retrieve, compute, and take real-world actions via external tools, but reliability remains a key bottleneck. We argue that failures stem from both tool-use accuracy (how well...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjnnm",
+      "title": "A Safety-Aware Role-Orchestrated Multi-Agent LLM Framework for Behavioral Health Communication Simulation",
+      "url": "https://arxiv.org/abs/2604.00249",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00249v1 Announce Type: new Abstract: Single-agent large language model (LLM) systems struggle to simultaneously support diverse conversational functions and maintain safety in behavioral health communication. We propose a safety-aware,...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjnqu",
+      "title": "Human-in-the-Loop Control of Objective Drift in LLM-Assisted Computer Science Education",
+      "url": "https://arxiv.org/abs/2604.00281",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00281v1 Announce Type: new Abstract: Large language models (LLMs) are increasingly embedded in computer science education through AI-assisted programming tools, yet such workflows often exhibit objective drift, in which locally plausible...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjnqx",
+      "title": "Improvisational Games as a Benchmark for Social Intelligence of AI Agents: The Case of Connections",
+      "url": "https://arxiv.org/abs/2604.00284",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00284v1 Announce Type: new Abstract: We formally introduce a improvisational wordplay game called Connections to explore reasoning capabilities of AI agents. Playing Connections combines skills in knowledge retrieval, summarization and...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjobq",
+      "title": "Collaborative AI Agents and Critics for Fault Detection and Cause Analysis in Network Telemetry",
+      "url": "https://arxiv.org/abs/2604.00319",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00319v1 Announce Type: new Abstract: We develop algorithms for collaborative control of AI agents and critics in a multi-actor, multi-critic federated multi-agent system. Each AI agent and critic has access to classical machine learning...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjof3",
+      "title": "Signals: Trajectory Sampling and Triage for Agentic Interactions",
+      "url": "https://arxiv.org/abs/2604.00356",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00356v1 Announce Type: new Abstract: Agentic applications based on large language models increasingly rely on multi-step interaction loops involving planning, action execution, and environment feedback. While such systems are now deployed...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjofu",
+      "title": "In harmony with gpt-oss",
+      "url": "https://arxiv.org/abs/2604.00362",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00362v1 Announce Type: new Abstract: No one has independently reproduced OpenAI's published scores for gpt-oss-20b with tools, because the original paper discloses neither the tools nor the agent harness. We reverse-engineered the model's...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "2wjp2a",
+      "title": "Decision-Centric Design for LLM Systems",
+      "url": "https://arxiv.org/abs/2604.00414",
+      "source": "arXiv cs.AI",
+      "sourceDomain": "arxiv.org",
+      "snippet": "arXiv:2604.00414v1 Announce Type: new Abstract: LLM systems must make control decisions in addition to generating outputs: whether to answer, clarify, retrieve, call tools, repair, or escalate. In many current architectures, these decisions remain...",
+      "categories": [
+        "Research"
+      ],
+      "publishedAt": "2026-04-02T04:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.800Z"
+    },
+    {
+      "id": "dzzriy",
+      "title": "Welcome Gemma 4: Frontier multimodal intelligence on device",
+      "url": "https://huggingface.co/blog/gemma4",
+      "source": "Hugging Face Blog",
+      "sourceDomain": "huggingface.co",
+      "snippet": "",
+      "categories": [
+        "Open Source",
+        "Models"
+      ],
+      "publishedAt": "2026-04-02T00:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
+    },
+    {
+      "id": "4doy78",
+      "title": "AI Models Lie, Cheat, and Steal to Protect Other Models From Being Deleted",
+      "url": "https://www.wired.com/story/ai-models-lie-cheat-steal-protect-other-models-research/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "A new study from researchers at UC Berkeley and UC Santa Cruz suggests models will disobey human commands to protect their own kind.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-01T18:30:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "pr7ai8",
+      "title": "‘Thank You for Generating With Us!’ Hollywood's AI Acolytes Stay on the Hype Train",
+      "url": "https://www.wired.com/story/thank-you-for-generating-with-us-hollywoods-ai-acolytes-stay-on-the-hype-train/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "Star Wars producer Kathleen Kennedy was one of the few skeptics at the Runway AI Summit, where AI was compared to fire and the printing press just a week after Sora’s death.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-01T18:13:34.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "b110zg",
+      "title": "Holo3: Breaking the Computer Use Frontier",
+      "url": "https://huggingface.co/blog/Hcompany/holo3",
+      "source": "Hugging Face Blog",
+      "sourceDomain": "huggingface.co",
+      "snippet": "",
+      "categories": [
+        "Open Source",
+        "Models"
+      ],
+      "publishedAt": "2026-04-01T16:36:15.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
+    },
+    {
+      "id": "4fpkur",
+      "title": "We’re creating a new satellite imagery map to help protect Brazil’s forests.",
+      "url": "https://blog.google/products-and-platforms/products/earth/satellite-imagery-brazilian-deforestation/",
+      "source": "Google AI Blog",
+      "sourceDomain": "blog.google",
+      "snippet": "Google partnered with the Brazilian government on a satellite imagery map to help protect the country’s forests.",
+      "categories": [
+        "Google/Gemini"
+      ],
+      "publishedAt": "2026-04-01T13:30:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
+    },
+    {
+      "id": "p3rxtj",
+      "title": "The latest AI news we announced in March 2026",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-march-2026/",
+      "source": "Google AI Blog",
+      "sourceDomain": "blog.google",
+      "snippet": "Here are Google’s latest AI updates from March 2026",
+      "categories": [
+        "Google/Gemini"
+      ],
+      "publishedAt": "2026-04-01T13:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
+    },
+    {
+      "id": "fz5wmy",
+      "title": "AI can push your Stream Deck buttons for you",
+      "url": "https://www.theverge.com/tech/905021/elgato-stream-deck-mcp-ai-agent-update",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "If you're tired of controlling Stream Deck devices by manually pushing buttons, then good news: Elgato will now let you delegate that task to a chatbot instead. The Stream Deck 7.4 software update released today introduces Model Context Protocol...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-01T12:38:58.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "hw340b",
+      "title": "The Download: gig workers training humanoids, and better AI benchmarks",
+      "url": "https://www.technologyreview.com/2026/04/01/1134993/the-download-gig-workers-training-humanoids-better-ai-benchmarks/",
+      "source": "MIT Technology Review",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. The gig workers who are training humanoid robots at home When Zeus, a medical student in Nigeria, returns to...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-04-01T12:10:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
+    },
+    {
+      "id": "avweyx",
+      "title": "The gig workers who are training humanoid robots at home",
+      "url": "https://www.technologyreview.com/2026/04/01/1134863/humanoid-data-training-gig-economy-2026-breakthrough-technology/",
+      "source": "MIT Technology Review",
+      "sourceDomain": "technologyreview.com",
+      "snippet": "When Zeus, a medical student living in a hilltop city in central Nigeria, returns to his studio apartment from a long day at the hospital, he turns on his ring light, straps his iPhone to his forehead, and starts recording himself. He raises his...",
+      "categories": [
+        "Research",
+        "Policy & Safety"
+      ],
+      "publishedAt": "2026-04-01T11:00:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
+    },
+    {
+      "id": "rdt82i",
+      "title": "Baidu’s robotaxis froze in traffic, creating chaos",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/905012/baidu-apollo-robotaxi-freeze-china",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "A Baidu Apollo robotaxi in Wuhan, China. | Image: Bloomberg via Getty Images Numerous robotaxis operated by Chinese tech giant Baidu froze in a major city on Tuesday, reportedly trapping passengers inside, stranding them on highways, and causing at...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-01T10:39:52.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
+    },
+    {
+      "id": "ui2obw",
+      "title": "I Watched a 7.5-Hour Movie in Theaters to Confront My Dwindling Attention Span",
+      "url": "https://www.wired.com/story/watching-a-75-hour-movie-in-theaters-made-me-more-hopeful-about-our-collective-brainrot/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "Sátántango is considered a holy rite for hardcore cinephiles. In a packed screening with no cellphones in sight, it also offered a salve for brain rot.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-01T10:30:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "uubae",
+      "title": "I Asked ChatGPT What WIRED’s Reviewers Recommend. Its Answers Were All Wrong",
+      "url": "https://www.wired.com/story/i-asked-chatgpt-what-wired-reviewers-recommend-its-answers-were-all-wrong/",
+      "source": "WIRED AI",
+      "sourceDomain": "wired.com",
+      "snippet": "Want to know what our reviewers have actually tested and picked as the best TVs, headphones, and laptops? Ask ChatGPT, and it'll give you the wrong answers.",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-04-01T09:30:00.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
+    },
+    {
+      "id": "4st81g",
+      "title": "Falcon Perception",
+      "url": "https://huggingface.co/blog/tiiuae/falcon-perception",
+      "source": "Hugging Face Blog",
+      "sourceDomain": "huggingface.co",
+      "snippet": "",
+      "categories": [
+        "Open Source",
+        "Models"
+      ],
+      "publishedAt": "2026-04-01T07:13:20.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
+    },
+    {
+      "id": "p5cu79",
+      "title": "Claude Code leak exposes a Tamagotchi-style ‘pet’ and an always-on agent",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/904776/anthropic-claude-source-code-leak",
+      "source": "The Verge AI",
+      "sourceDomain": "theverge.com",
+      "snippet": "After Anthropic released Claude Code's 2.1.88 update, users quickly discovered that it contained a package with a source map file containing its TypeScript codebase, with one person on X calling attention to the leak and posting a file containing...",
+      "categories": [
+        "General AI"
+      ],
+      "publishedAt": "2026-03-31T22:24:19.000Z",
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
     },
     {
       "id": "qe51kb",
@@ -50,54 +818,12 @@
       "url": "https://www.theverge.com/ai-artificial-intelligence/904676/apple-carplay-openai-chatgpt",
       "source": "The Verge AI",
       "sourceDomain": "theverge.com",
-      "snippet": "ChatGPT is now accessible from your CarPlay dashboard if you have iOS 26.4 or newer and the latest version of the ChatGPT app, 9to5Mac reports. Apple's recently-launched iOS 26.4 update added support for \"voice-based conversational apps\" in CarPlay,...",
+      "snippet": "ChatGPT is now accessible from your CarPlay dashboard if you have iOS 26.4 or newer and the latest version of the ChatGPT app, 9to5Mac reports. Apple's recently launched iOS 26.4 update added support for \"voice-based conversational apps\" in CarPlay,...",
       "categories": [
         "General AI"
       ],
       "publishedAt": "2026-03-31T21:03:18.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.573Z"
-    },
-    {
-      "id": "b583kp",
-      "title": "I found the 3 best last minute tech deals under $100 during Amazon's Spring Sale",
-      "url": "https://www.zdnet.com/article/best-deals-under-100-amazon-spring-sale/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Improve your personal life with these great sub-$100 deals I've found during Amazon's Spring Sale. Act fast because the event ends soon.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T21:00:53.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
-    },
-    {
-      "id": "f793pq",
-      "title": "The Apple Pencil alternative I use daily is on sale for $28 - but not for long",
-      "url": "https://www.zdnet.com/article/esr-geo-pencil-apple-pencil-amazon-spring-sale-deal/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "ESR's Geo Digital Pencil is on sale for under $30, but today's the last day to shop Amazon's Big Spring Sale.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T19:45:48.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
-    },
-    {
-      "id": "ju7hef",
-      "title": "The 5 most surprising things our readers bought on Amazon this week  (No. 1 is weird)",
-      "url": "https://www.zdnet.com/article/weird-top-sellers-amazon-spring-sale-2026/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "ZDNET readers love random gadgets - and during Amazon's Spring Sale this past week, they picked up some interesting niche items that are still on sale.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T19:01:24.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
     },
     {
       "id": "gtdeqx",
@@ -110,7 +836,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-31T18:25:33.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "344cln",
@@ -123,63 +849,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-31T18:15:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.573Z"
-    },
-    {
-      "id": "406yww",
-      "title": "7 WFH gadgets that improved my home office - Last chance for sale prices",
-      "url": "https://www.zdnet.com/article/wfh-gadgets-amazon-spring-sale-2026/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "As a remote worker, I'd recommend these WFH essentials even if they weren't marked down for Amazon's Spring Sale. Here's your last chance for discounts.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T18:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
-    },
-    {
-      "id": "gn62ah",
-      "title": "We're tracking the best last-minute tech deals under $50 during Amazon's Big Spring Sale",
-      "url": "https://www.zdnet.com/article/best-deals-under-50-last-minute-amazon-spring-sale/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Amazon is full of great, affordable gadgets for your day-to-day, from speakers and chargers to streaming sticks and smart home gear. They're even cheaper now, during the retailer's annual sale - act fast.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T17:54:49.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.135Z"
-    },
-    {
-      "id": "k49r9m",
-      "title": "The most popular Amazon Spring Sale deals may surprise you - and there's still time to shop",
-      "url": "https://www.zdnet.com/article/reader-favorites-amazon-spring-sale-2026/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "Amazon's Spring Sale ends today, but we've got the scoop on the top products ZDNET readers bought the most, from SSDs to flagship headphones.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T17:46:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.136Z"
-    },
-    {
-      "id": "v7w804",
-      "title": "This HP gaming laptop just dropped under $1,000 - a rarity during the RAM-pocalypse",
-      "url": "https://www.zdnet.com/article/hp-victus-15-deal-amazon-spring-sale-2026/",
-      "source": "ZDNet AI",
-      "sourceDomain": "zdnet.com",
-      "snippet": "The price of gaming laptops is through the roof, but right now at HP, you can snag the Victus 15 at a big discount.",
-      "categories": [
-        "Enterprise",
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T17:10:56.000Z",
-      "fetchedAt": "2026-03-31T22:20:27.136Z"
+      "fetchedAt": "2026-04-02T21:47:08.663Z"
     },
     {
       "id": "97hcbs",
@@ -192,7 +862,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-31T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
     },
     {
       "id": "l3mpzt",
@@ -206,7 +876,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-31T15:10:41.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "byy962",
@@ -219,20 +889,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-31T15:00:51.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
-    },
-    {
-      "id": "fcirbr",
-      "title": "Art schools are being torn apart by AI",
-      "url": "https://www.theverge.com/tech/903954/art-schools-generative-ai-education-creative-jobs",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "The curriculum at creative institutions is evolving to handle gen AI tools, and a lot of people aren’t happy about it. | Image by Cath Virginia / The Verge When my baby brother, a 3D modelling and animation student, talks to me about his projects...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T15:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.573Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "xmzb7v",
@@ -246,20 +903,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-31T14:12:50.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "dpxcqi",
-      "title": "You can order Grubhub and Uber Eats ‘conversationally’ with Alexa Plus",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/903938/alexa-plus-order-food-grubhub-uber-eats",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "Amazon is giving you a new way to order food through Grubhub and Uber Eats with Alexa without having to endure an awkward exchange just to add fries. Amazon said the entire process is meant to be conversational, building your order in a similar...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-31T13:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.573Z"
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
     },
     {
       "id": "edhzsf",
@@ -272,7 +916,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-31T13:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
+      "fetchedAt": "2026-04-02T21:47:08.717Z"
     },
     {
       "id": "n244bh",
@@ -286,7 +930,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-31T12:10:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
     },
     {
       "id": "uar1ap",
@@ -300,137 +944,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-31T12:01:08.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "bqn3pg",
-      "title": "Bitboard version of Tetris AI",
-      "url": "https://arxiv.org/abs/2603.26765",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26765v1 Announce Type: new Abstract: The efficiency of game engines and policy optimization algorithms is crucial for training reinforcement learning (RL) agents in complex sequential decision-making tasks, such as Tetris. Existing Tetris...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqn3nt",
-      "title": "Multiverse: Language-Conditioned Multi-Game Level Blending via Shared Representation",
-      "url": "https://arxiv.org/abs/2603.26782",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26782v1 Announce Type: new Abstract: Text-to-level generation aims to translate natural language descriptions into structured game levels, enabling intuitive control over procedural content generation. While prior text-to-level generators...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqn319",
-      "title": "Concerning Uncertainty -- A Systematic Survey of Uncertainty-Aware XAI",
-      "url": "https://arxiv.org/abs/2603.26838",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26838v1 Announce Type: new Abstract: This paper surveys uncertainty-aware explainable artificial intelligence (UAXAI), examining how uncertainty is incorporated into explanatory pipelines and how such methods are evaluated. Across the...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqn29t",
-      "title": "Neuro-Symbolic Learning for Predictive Process Monitoring via Two-Stage Logic Tensor Networks with Rule Pruning",
-      "url": "https://arxiv.org/abs/2603.26944",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26944v1 Announce Type: new Abstract: Predictive modeling on sequential event data is critical for fraud detection and healthcare monitoring. Existing data-driven approaches learn correlations from historical data but fail to incorporate...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqn29p",
-      "title": "Compliance-Aware Predictive Process Monitoring: A Neuro-Symbolic Approach",
-      "url": "https://arxiv.org/abs/2603.26948",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26948v1 Announce Type: new Abstract: Existing approaches for predictive process monitoring are sub-symbolic, meaning that they learn correlations between descriptive features and a target feature fully based on data, e.g., predicting the...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqn26e",
-      "title": "Transparency as Architecture: Structural Compliance Gaps in EU AI Act Article 50 II",
-      "url": "https://arxiv.org/abs/2603.26983",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26983v1 Announce Type: new Abstract: Art. 50 II of the EU Artificial Intelligence Act mandates dual transparency for AI-generated content: outputs must be labeled in both human-understandable and machine-readable form for automated...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqn25g",
-      "title": "FormalProofBench: Can Models Write Graduate Level Math Proofs That Are Formally Verified?",
-      "url": "https://arxiv.org/abs/2603.26996",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.26996v1 Announce Type: new Abstract: We present FormalProofBench, a private benchmark designed to evaluate whether AI models can produce formally verified mathematical proofs at the graduate level. Each task pairs a natural-language...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqmlvw",
-      "title": "When Verification Hurts: Asymmetric Effects of Multi-Agent Feedback in Logic Proof Tutoring",
-      "url": "https://arxiv.org/abs/2603.27076",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.27076v1 Announce Type: new Abstract: Large language models (LLMs) are increasingly used for automated tutoring, but their reliability in structured symbolic domains remains unclear. We study step-level feedback for propositional logic...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqmlad",
-      "title": "The Price of Meaning: Why Every Semantic Memory System Forgets",
-      "url": "https://arxiv.org/abs/2603.27116",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.27116v1 Announce Type: new Abstract: Every major AI memory system in production today organises information by meaning. That organisation enables generalisation, analogy, and conceptual retrieval -- but it comes at a price. We prove that...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
-    },
-    {
-      "id": "bqml73",
-      "title": "MediHive: A Decentralized Agent Collective for Medical Reasoning",
-      "url": "https://arxiv.org/abs/2603.27150",
-      "source": "arXiv cs.AI",
-      "sourceDomain": "arxiv.org",
-      "snippet": "arXiv:2603.27150v1 Announce Type: new Abstract: Large language models (LLMs) have revolutionized medical reasoning tasks, yet single-agent systems often falter on complex, interdisciplinary problems requiring robust handling of uncertainty and...",
-      "categories": [
-        "Research"
-      ],
-      "publishedAt": "2026-03-31T04:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.752Z"
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
     },
     {
       "id": "7nbamp",
@@ -444,7 +958,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-31T00:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "wlchcu",
@@ -458,7 +972,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-30T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
     },
     {
       "id": "aiz7z7",
@@ -472,20 +986,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-30T15:42:50.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "5k83u9",
-      "title": "Okta&#8217;s CEO is betting big on AI agent identity",
-      "url": "https://www.theverge.com/podcast/902264/oktas-ceo-is-betting-big-on-ai-agent-identity",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "Today, I’m talking with Todd McKinnon, who is co-founder and CEO of Okta, a platform that lets big companies manage security and identity across all the apps and services their employees use. Think of it like login management — actually, that’s a...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-30T15:15:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.574Z"
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
     },
     {
       "id": "hpwlxm",
@@ -499,193 +1000,7 @@
         "Policy & Safety"
       ],
       "publishedAt": "2026-03-30T12:10:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "1d8e9t",
-      "title": "The IRS Wants Smarter Audits. Palantir Could Help Decide Who Gets Flagged",
-      "url": "https://www.wired.com/story/documents-reveal-palantir-irs-contract-fraud-clean-energy-credits/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "Documents show the tax agency is testing a Palantir tool to surface “highest-value” audit and investigation targets from a maze of legacy systems.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-30T09:30:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "qvxpin",
-      "title": "Inside the stealthy startup that pitched brainless human clones",
-      "url": "https://www.technologyreview.com/2026/03/30/1134780/r3-bio-brainless-human-clones-full-body-replacement-john-schloendorn-aging-longevity/",
-      "source": "MIT Technology Review",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "After operating in secrecy for years, a startup company called R3 Bio, in Richmond, California, suddenly shared details about its work last week—saying it had raised money to create nonsentient monkey “organ sacks” as an alternative to animal...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-30T09:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "ky317v",
-      "title": "All the latest in AI &#8216;music&#8217;",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/903196/ai-music-suno-udio-art-lawsuit",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "People don’t like that they can’t identify AI music. | Image: Cath Virginia / The Verge AI has touched every part of the music industry, from sample sourcing and demo recording, to serving up digital liner notes and building playlists. There are...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-30T01:32:14.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.574Z"
-    },
-    {
-      "id": "y4x601",
-      "title": "Bluesky’s new app is an AI for customizing your feed",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/903190/bluesky-attie-ai-custom-feeds",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "The latest app from the team behind Bluesky is Attie, an AI assistant that lets you build your own algorithm. At the Atmosphere conference, Bluesky's former CEO, Jay Graber, and CTO Paul Frazee, unveiled Attie, which is powered by Anthropic's Claude...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-29T21:44:41.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.574Z"
-    },
-    {
-      "id": "ai4k99",
-      "title": "Suno leans into customization with v5.5",
-      "url": "https://www.theverge.com/entertainment/903056/suno-ai-music-v5-5-model",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "Slop yourself. | Image: Suno Suno just released one of its biggest updates yet with v5.5 of its AI music model. Where previous updates focused mostly on improving fidelity and creating more natural vocals, v5.5 is about giving users more control. It...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-28T18:33:10.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.574Z"
-    },
-    {
-      "id": "d376p3",
-      "title": "Why can’t TikTok identify AI generated ads when I can?",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/900400/tiktok-ai-ads-labels-samsung-disclosure",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "Samsung, like many companies using generative AI in their advertising, hasn’t placed an AI label on several videos shared through its TikTok accounts, and the fine print doesn’t always contain the answers. | Image by Samsung I've been struggling to...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-28T14:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.574Z"
-    },
-    {
-      "id": "nps7ew",
-      "title": "Why OpenAI killed Sora",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/902368/openai-sora-dead-ai-video-generation-competition",
-      "source": "The Verge AI",
-      "sourceDomain": "theverge.com",
-      "snippet": "On Tuesday morning, everything was business as usual at OpenAI. By the end of the day, the company had announced that it would scrap its video-generation app, Sora, and reverse plans for video generation inside ChatGPT; it would wind down a $1...",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-28T12:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.574Z"
-    },
-    {
-      "id": "lqkozz",
-      "title": "A woman’s uterus has been kept alive outside the body for the first time",
-      "url": "https://www.technologyreview.com/2026/03/28/1134766/womans-uterus-kept-alive-outside-the-body-first/",
-      "source": "MIT Technology Review",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "“Think of this as a human body,” says Javier González. In front of me is essentially a metal box on wheels. Standing at around a meter in height, it reminds me of a stainless-steel counter in a restaurant kitchen. It is covered in flexible plastic...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-28T09:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "ku68ui",
-      "title": "AI Research Is Getting Harder to Separate From Geopolitics",
-      "url": "https://www.wired.com/story/made-in-china-ai-research-is-starting-to-split-along-geopolitical-lines/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "A policy change announced by NeurIPS, the world’s leading AI research conference, drew widespread backlash from Chinese researchers this week and then was quickly reversed.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-27T21:46:39.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "xf1gc",
-      "title": "Apple Still Plans to Sell iPhones When It Turns 100",
-      "url": "https://www.wired.com/story/apple-50-year-anniversary-artificial-intelligence-iphone/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "As the tech giant turns 50, WIRED spoke to executives about how they plan to win in the AI era.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-27T15:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "sxpi6w",
-      "title": "The Download: the internet’s best weather app, and why people freeze their brains",
-      "url": "https://www.technologyreview.com/2026/03/27/1134755/the-download-best-weather-forecasting-app-why-people-freeze-brains/",
-      "source": "MIT Technology Review",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. How a couple of ski bums built the internet’s best weather app The best snow-forecasting app for skiers isn’t a...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-27T12:32:54.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
-    },
-    {
-      "id": "clhim5",
-      "title": "The Latest AI Documentary Asks: Just How Scared Should We Be?",
-      "url": "https://www.wired.com/story/a-new-ai-documentary-puts-ceos-in-the-hot-seat-but-goes-too-easy-on-them/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "The AI Doc: Or How I Became an Apocaloptimist seeks the middle ground on a polarizing technology—and ends up letting tech execs like Sam Altman off the hook.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-27T11:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "ruwb0c",
-      "title": "I Asked ChatGPT 500 Questions. Here Are the Ads I Saw Most Often",
-      "url": "https://www.wired.com/story/i-asked-chatgpt-500-questions-here-are-the-ads-i-saw-most-often/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "Ads are rolling out across the US on ChatGPT’s free tier. I asked OpenAI's bot 500 questions to see what these ads were like and how they related to my prompts.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-27T10:30:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "u94n2j",
-      "title": "Here’s why some people choose cryonics to store their bodies and brains after death",
-      "url": "https://www.technologyreview.com/2026/03/27/1134705/cryonics-store-bodies-brains-after-death/",
-      "source": "MIT Technology Review",
-      "sourceDomain": "technologyreview.com",
-      "snippet": "This week I reported on some rather unusual research that focuses on the brain of L. Stephen Coles. Coles was a gerontologist who died from pancreatic cancer in 2014. He had spent the latter part of his career specializing in human longevity. And...",
-      "categories": [
-        "Research",
-        "Policy & Safety"
-      ],
-      "publishedAt": "2026-03-27T09:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.626Z"
+      "fetchedAt": "2026-04-02T21:47:08.701Z"
     },
     {
       "id": "8fov1x",
@@ -699,33 +1014,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-27T00:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
-    },
-    {
-      "id": "t0ogtq",
-      "title": "Anthropic Supply-Chain-Risk Designation Halted by Judge",
-      "url": "https://www.wired.com/story/anthropic-supply-chain-risk-designation-injunction/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "A judge temporarily blocked the Trump administration’s designation, clearing the way for Anthropic to keep doing business without the label starting next week.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-26T23:33:05.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "xmy0ve",
-      "title": "Meet the Tech Reporters Using AI to Help Write and Edit Their Stories",
-      "url": "https://www.wired.com/story/tech-reporters-using-ai-write-edit-stories/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "Independent writers are using AI agents all throughout their reporting process. What’s the value of a human journalist, anyway?",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-26T18:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "5q9pys",
@@ -738,7 +1027,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T17:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
     },
     {
       "id": "rprcfg",
@@ -751,7 +1040,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
     },
     {
       "id": "aq77fm",
@@ -764,7 +1053,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T15:21:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
     },
     {
       "id": "sp909r",
@@ -777,7 +1066,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-26T15:00:56.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "ba4j03",
@@ -790,7 +1079,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-26T15:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
     },
     {
       "id": "dwlb3l",
@@ -803,33 +1092,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-26T13:00:47.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
-    },
-    {
-      "id": "llipo5",
-      "title": "Senators Demand to Know How Much Energy Data Centers Use",
-      "url": "https://www.wired.com/story/senators-demand-to-know-how-much-energy-data-centers-use/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "In a letter sent Thursday morning, Elizabeth Warren and Josh Hawley press the Energy Information Agency to mandate annual electricity disclosure for data centers.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-26T12:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
-    },
-    {
-      "id": "wkbz7y",
-      "title": "‘She’s Never Going to Age’: Porn Stars Are Embracing AI Clones to Stay Forever Young",
-      "url": "https://www.wired.com/story/shes-never-going-to-age-porn-stars-are-embracing-ai-clones-to-stay-forever-young/",
-      "source": "WIRED AI",
-      "sourceDomain": "wired.com",
-      "snippet": "AI companion platforms like OhChat and SinfulX are offering adult creators digital twins, who are always at their peak and stay monetizing.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-26T10:30:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.645Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "cok2yc",
@@ -842,7 +1105,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-25T19:00:04.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "tkl9wb",
@@ -855,20 +1118,7 @@
         "Google/Gemini"
       ],
       "publishedAt": "2026-03-25T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
-    },
-    {
-      "id": "52b5o2",
-      "title": "Lyria 3 Pro: Create longer tracks in more Google products",
-      "url": "https://blog.google/innovation-and-ai/technology/ai/lyria-3-pro/",
-      "source": "Google AI Blog",
-      "sourceDomain": "blog.google",
-      "snippet": "We are bringing Lyria 3 to the tools where professionals work and create every day.",
-      "categories": [
-        "Google/Gemini"
-      ],
-      "publishedAt": "2026-03-25T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
+      "fetchedAt": "2026-04-02T21:47:08.849Z"
     },
     {
       "id": "jzyw3u",
@@ -881,7 +1131,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-25T15:49:17.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "i4dkxg",
@@ -894,7 +1144,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-25T11:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "smh9ny",
@@ -907,7 +1157,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-24T12:38:09.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "418cy3",
@@ -920,7 +1170,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-24T08:00:12.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "ghuazk",
@@ -934,7 +1184,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-24T02:01:52.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "2usf7i",
@@ -947,7 +1197,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-23T15:00:03.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "o1qrld",
@@ -960,7 +1210,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-20T20:50:46.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "lwbysn",
@@ -974,7 +1224,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-20T19:38:16.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "a1rbc0",
@@ -987,7 +1237,7 @@
         "Hardware/Chips"
       ],
       "publishedAt": "2026-03-20T00:15:17.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.806Z"
     },
     {
       "id": "gvi2ba",
@@ -1000,20 +1250,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-19T21:29:53.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
-    },
-    {
-      "id": "xy2akj",
-      "title": "Smooth Moves: 90 Frames-Per-Second Virtual Reality Arrives on GeForce NOW",
-      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-virtual-reality-update/",
-      "source": "NVIDIA AI Blog",
-      "sourceDomain": "blogs.nvidia.com",
-      "snippet": "It’s a double feature on GFN Thursday. This week, GeForce NOW offers smoother sights in virtual reality (VR) and a sprawling new land to conquer. Streaming at 90 frames per second (fps) comes to supported VR headsets. And Crimson Desert, which...",
-      "categories": [
-        "Hardware/Chips"
-      ],
-      "publishedAt": "2026-03-19T13:00:09.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "pfy3tz",
@@ -1026,20 +1263,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-18T17:36:40.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
-    },
-    {
-      "id": "22yufh",
-      "title": "From Simulation to Production: How to Build Robots With AI",
-      "url": "https://blogs.nvidia.com/blog/build-robots-with-ai/",
-      "source": "NVIDIA AI Blog",
-      "sourceDomain": "blogs.nvidia.com",
-      "snippet": "The latest open models and frameworks from NVIDIA bring together simulation, robot learning and embedded compute to accelerate cloud-to-robot workflows.",
-      "categories": [
-        "Hardware/Chips"
-      ],
-      "publishedAt": "2026-03-18T13:00:13.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.912Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "94atx1",
@@ -1052,7 +1276,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-17T17:07:12.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "1bvl3g",
@@ -1066,33 +1290,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-17T16:37:55.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
-    },
-    {
-      "id": "a87jgi",
-      "title": "Bringing the power of Personal Intelligence to more people",
-      "url": "https://blog.google/products-and-platforms/products/search/personal-intelligence-expansion/",
-      "source": "Google AI Blog",
-      "sourceDomain": "blog.google",
-      "snippet": "We're expanding Personal Intelligence across AI Mode in Search, the Gemini app and Gemini in Chrome.",
-      "categories": [
-        "Google/Gemini"
-      ],
-      "publishedAt": "2026-03-17T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.755Z"
-    },
-    {
-      "id": "kqd2xl",
-      "title": "Our latest investment in open source security for the AI era",
-      "url": "https://blog.google/innovation-and-ai/technology/safety-security/ai-powered-open-source-security/",
-      "source": "Google AI Blog",
-      "sourceDomain": "blog.google",
-      "snippet": "Google is making new investments, building new tools and developing code security to improve open source security.",
-      "categories": [
-        "Google/Gemini"
-      ],
-      "publishedAt": "2026-03-17T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.756Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "txg8n4",
@@ -1106,7 +1304,7 @@
         "Models"
       ],
       "publishedAt": "2026-03-17T12:33:39.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
+      "fetchedAt": "2026-04-02T21:47:08.820Z"
     },
     {
       "id": "4y3pov",
@@ -1119,7 +1317,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-13T20:18:08.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "wfcua8",
@@ -1132,75 +1330,7 @@
         "General AI"
       ],
       "publishedAt": "2026-03-12T22:18:11.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
-    },
-    {
-      "id": "g9fv6y",
-      "title": "How AI is helping improve heart health in rural Australia",
-      "url": "https://blog.google/innovation-and-ai/technology/health/google-ai-heart-health-australia/",
-      "source": "Google AI Blog",
-      "sourceDomain": "blog.google",
-      "snippet": "A new Google AI initiative aims to improve heart health outcomes for people living in remote Australian communities.",
-      "categories": [
-        "Google/Gemini"
-      ],
-      "publishedAt": "2026-03-12T15:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.756Z"
-    },
-    {
-      "id": "hrw6jz",
-      "title": "14,000 routers are infected by malware that's highly resistant to takedowns",
-      "url": "https://arstechnica.com/security/2026/03/14000-routers-are-infected-by-malware-thats-highly-resistant-to-takedowns/",
-      "source": "Ars Technica",
-      "sourceDomain": "arstechnica.com",
-      "snippet": "Most of the devices are made by Asus and are located in the US.",
-      "categories": [
-        "General AI"
-      ],
-      "publishedAt": "2026-03-11T21:27:16.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.782Z"
-    },
-    {
-      "id": "39w9u",
-      "title": "Introducing Storage Buckets on the Hugging Face Hub",
-      "url": "https://huggingface.co/blog/storage-buckets",
-      "source": "Hugging Face Blog",
-      "sourceDomain": "huggingface.co",
-      "snippet": "",
-      "categories": [
-        "Open Source",
-        "Models"
-      ],
-      "publishedAt": "2026-03-10T00:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
-    },
-    {
-      "id": "pukzxn",
-      "title": "Keep the Tokens Flowing: Lessons from 16 Open-Source RL Libraries",
-      "url": "https://huggingface.co/blog/async-rl-training-landscape",
-      "source": "Hugging Face Blog",
-      "sourceDomain": "huggingface.co",
-      "snippet": "",
-      "categories": [
-        "Open Source",
-        "Models"
-      ],
-      "publishedAt": "2026-03-10T00:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
-    },
-    {
-      "id": "y72wlt",
-      "title": "Ulysses Sequence Parallelism: Training with Million-Token Contexts",
-      "url": "https://huggingface.co/blog/ulysses-sp",
-      "source": "Hugging Face Blog",
-      "sourceDomain": "huggingface.co",
-      "snippet": "",
-      "categories": [
-        "Open Source",
-        "Models"
-      ],
-      "publishedAt": "2026-03-09T00:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.777Z"
+      "fetchedAt": "2026-04-02T21:47:08.895Z"
     },
     {
       "id": "lt1nhr",
@@ -1214,7 +1344,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-22T14:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.698Z"
+      "fetchedAt": "2026-04-02T21:47:08.829Z"
     },
     {
       "id": "pw82ni",
@@ -1228,7 +1358,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-19T14:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.698Z"
+      "fetchedAt": "2026-04-02T21:47:08.829Z"
     },
     {
       "id": "2stlo5",
@@ -1242,7 +1372,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-16T14:01:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.698Z"
+      "fetchedAt": "2026-04-02T21:47:08.829Z"
     },
     {
       "id": "wkanl4",
@@ -1256,7 +1386,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-13T13:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.699Z"
+      "fetchedAt": "2026-04-02T21:47:08.830Z"
     },
     {
       "id": "3qldyo",
@@ -1269,7 +1399,7 @@
         "General AI"
       ],
       "publishedAt": "2026-01-13T11:30:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.559Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "69xvr0",
@@ -1283,7 +1413,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-12T11:30:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.699Z"
+      "fetchedAt": "2026-04-02T21:47:08.830Z"
     },
     {
       "id": "o3ucts",
@@ -1297,7 +1427,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-07T20:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.699Z"
+      "fetchedAt": "2026-04-02T21:47:08.830Z"
     },
     {
       "id": "k9er74",
@@ -1311,7 +1441,7 @@
         "Enterprise"
       ],
       "publishedAt": "2026-01-05T07:45:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.699Z"
+      "fetchedAt": "2026-04-02T21:47:08.830Z"
     },
     {
       "id": "e9o9yk",
@@ -1324,7 +1454,7 @@
         "General AI"
       ],
       "publishedAt": "2025-10-31T19:26:30.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "1wsfir",
@@ -1337,7 +1467,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-26T15:21:19.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "tm47qk",
@@ -1350,7 +1480,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-20T16:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "27akb2",
@@ -1363,7 +1493,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-20T15:56:53.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "tj3u0t",
@@ -1376,7 +1506,7 @@
         "General AI"
       ],
       "publishedAt": "2025-08-04T15:41:39.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "6xwg8b",
@@ -1389,7 +1519,7 @@
         "General AI"
       ],
       "publishedAt": "2025-06-04T14:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "yt0ltc",
@@ -1402,7 +1532,7 @@
         "General AI"
       ],
       "publishedAt": "2025-06-02T18:07:05.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "jrrt6d",
@@ -1415,7 +1545,7 @@
         "General AI"
       ],
       "publishedAt": "2025-05-27T12:00:00.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     },
     {
       "id": "sfwrni",
@@ -1428,8 +1558,8 @@
         "General AI"
       ],
       "publishedAt": "2025-05-22T16:49:53.000Z",
-      "fetchedAt": "2026-03-31T22:20:26.560Z"
+      "fetchedAt": "2026-04-02T21:47:08.656Z"
     }
   ],
-  "fetchedAt": "2026-03-31T22:20:27.141Z"
+  "fetchedAt": "2026-04-02T21:47:12.150Z"
 }
