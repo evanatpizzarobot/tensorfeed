@@ -111,6 +111,17 @@ Meta: /about, /privacy, /developers, /changelog
 - X/Twitter: @tensorfeed
 - GitHub: github.com/RipperMercs/tensorfeed
 
+## X/Twitter Posting (CURRENTLY DISABLED)
+Account was flagged as spam on 2026-04-04 from posting 5x/day via automated cron.
+Auto-posting and manual /api/tweet endpoint are both disabled until the flag is lifted.
+
+Safe posting limits for re-enabling:
+- Month 1: 1 post/day max (cron: "30 14 * * *")
+- After 30 days with no flags: 2 posts/day (cron: "30 8,17 * * *")
+- After 60+ days: can push to 3-4/day max, never exceed that
+- Never exceed 5 posts/day on any account under 6 months old
+- 10+/day is spam territory for any account
+
 ## Sister Site
 - TerminalFeed.io: Real-time data dashboard (free API at terminalfeed.io/api/*)
 

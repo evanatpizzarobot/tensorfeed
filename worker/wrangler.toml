@@ -13,8 +13,10 @@ crons = [
   "*/5 * * * *",
   "0 * * * *",
   "0 6 * * 1",
-  "0 8,11,14,17,20 * * *",
   "30 8 * * *",
+  # X/Twitter auto-posting DISABLED (account flagged as spam, 2026-04-04)
+  # When re-enabling, start with 1 post/day: "30 14 * * *"
+  # After 30 days with no flags, increase to 2/day: "30 8,17 * * *"
 ]
 
 [[kv_namespaces]]

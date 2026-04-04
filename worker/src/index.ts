@@ -417,7 +417,9 @@ export default {
       }
     }
 
-    // Manual tweet trigger (protected) - DISABLED: X account limited, re-enable after appeal
+    // Manual tweet trigger (protected)
+    // DISABLED 2026-04-04: X account flagged as spam from 5x/day posting.
+    // When re-enabling, limit to 1-2 posts/day max. See wrangler.toml for schedule notes.
     // if (path === '/api/tweet' && url.searchParams.get('key') === env.ENVIRONMENT) {
     //   await postTopStories(env);
     //   return jsonResponse({ ok: true, message: 'Posted top stories to X' });
@@ -441,8 +443,10 @@ export default {
     } else if (cron === '0 6 * * 1') {
       // Weekly (Monday 6 AM UTC): update models & agents catalog
       await updateCatalog(env);
-    // DISABLED: X account limited, re-enable after appeal
-    // } else if (cron === '0 8,11,14,17,20 * * *') {
+    // X/Twitter auto-posting DISABLED 2026-04-04 (account flagged as spam).
+    // Safe limits for new accounts: 1-2 posts/day for first month, then 3-4/day max.
+    // Re-enable with "30 14 * * *" (1/day) in wrangler.toml first.
+    // } else if (cron === '30 14 * * *') {
     //   await postTopStories(env);
     } else if (cron === '30 8 * * *') {
       // Daily 8:30 AM UTC: refresh trending AI repos from GitHub
