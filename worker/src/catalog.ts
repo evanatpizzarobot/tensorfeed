@@ -1,16 +1,18 @@
 import { Env } from './types';
 
 /**
- * Weekly catalog updater for AI models/pricing and agents directory.
+ * Daily data updater for AI models/pricing, benchmarks, and agents directory.
  *
- * Data flow:
+ * Runs once per day at 7 AM UTC. Data flow:
  *   1. On first run, seeds KV from BASELINE data (mirrors data/*.json)
- *   2. Weekly cron fetches public sources and merges new models/pricing
- *   3. API endpoints serve from KV
+ *   2. Daily cron fetches public sources and merges new models/pricing/benchmarks
+ *   3. API endpoints serve from KV via Cache API layer
  *
  * Public data sources:
  *   - LiteLLM community-maintained model pricing (GitHub)
- *   - Provider model list endpoints where available
+ *   - HuggingFace Open LLM Leaderboard (for benchmark scores)
+ *
+ * KV optimization: one read to check current data, one write only if changed.
  */
 
 // ── Types ───────────────────────────────────────────────────────────
@@ -46,6 +48,26 @@ interface PricingData {
   };
 }
 
+interface BenchmarkDef {
+  id: string;
+  name: string;
+  description: string;
+  maxScore: number;
+}
+
+interface BenchmarkModelEntry {
+  model: string;
+  provider: string;
+  released: string;
+  scores: Record<string, number>;
+}
+
+interface BenchmarksData {
+  lastUpdated: string;
+  benchmarks: BenchmarkDef[];
+  models: BenchmarkModelEntry[];
+}
+
 interface AgentEntry {
   id: string;
   name: string;
@@ -63,9 +85,16 @@ interface AgentsData {
   agents: AgentEntry[];
 }
 
+interface DailyUpdateResult {
+  modelsChanged: boolean;
+  benchmarksChanged: boolean;
+  modelCount: number;
+  benchmarkModelCount: number;
+  agentCount: number;
+}
+
 // ── LiteLLM pricing source mapping ─────────────────────────────────
 
-// Maps LiteLLM model keys to our provider IDs
 const LITELLM_PROVIDER_MAP: Record<string, string> = {
   'claude-': 'anthropic',
   'gpt-': 'openai',
@@ -77,7 +106,6 @@ const LITELLM_PROVIDER_MAP: Record<string, string> = {
   'command-': 'cohere',
 };
 
-// Models we track -- LiteLLM key prefix -> our model ID
 const TRACKED_MODELS: Record<string, { providerId: string; ourId: string; name: string }> = {
   'claude-opus-4-6': { providerId: 'anthropic', ourId: 'claude-opus-4-6', name: 'Claude Opus 4.6' },
   'claude-sonnet-4-6': { providerId: 'anthropic', ourId: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6' },
@@ -97,7 +125,21 @@ const TRACKED_MODELS: Record<string, { providerId: string; ourId: string; name: 
 const LITELLM_URL =
   'https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json';
 
-// ── Fetch and merge pricing ─────────────────────────────────────────
+// HuggingFace Open LLM Leaderboard API
+const HF_LEADERBOARD_URL =
+  'https://huggingface.co/api/spaces/open-llm-leaderboard/open_llm_leaderboard';
+
+// Map HF model names to our provider/model names for matching
+const HF_MODEL_MAP: Record<string, { model: string; provider: string }> = {
+  'anthropic/claude': { model: 'Claude', provider: 'Anthropic' },
+  'openai/gpt': { model: 'GPT', provider: 'OpenAI' },
+  'google/gemini': { model: 'Gemini', provider: 'Google' },
+  'meta-llama': { model: 'Llama', provider: 'Meta' },
+  'mistralai': { model: 'Mistral', provider: 'Mistral' },
+  'deepseek': { model: 'DeepSeek', provider: 'DeepSeek' },
+};
+
+// ── Fetch helpers ──────────────────────────────────────────────────
 
 async function fetchLiteLLMPricing(): Promise<Record<string, unknown> | null> {
   try {
@@ -113,8 +155,33 @@ async function fetchLiteLLMPricing(): Promise<Record<string, unknown> | null> {
   }
 }
 
-function mergePricing(current: PricingData, litellm: Record<string, unknown>): PricingData {
-  let updated = false;
+async function fetchHFLeaderboard(): Promise<unknown[] | null> {
+  try {
+    const res = await fetch(HF_LEADERBOARD_URL, {
+      headers: { 'User-Agent': 'TensorFeed/1.0 (https://tensorfeed.ai)' },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) {
+      console.warn(`HF leaderboard returned ${res.status}`);
+      return null;
+    }
+    const data = await res.json();
+    // The API may return an array directly or an object with a data field
+    if (Array.isArray(data)) return data;
+    if (data && typeof data === 'object' && Array.isArray((data as Record<string, unknown>).data)) {
+      return (data as Record<string, unknown>).data as unknown[];
+    }
+    return null;
+  } catch (e) {
+    console.warn('Failed to fetch HF leaderboard:', e);
+    return null;
+  }
+}
+
+// ── Merge logic ────────────────────────────────────────────────────
+
+function mergePricing(current: PricingData, litellm: Record<string, unknown>): { data: PricingData; changed: boolean } {
+  let changed = false;
 
   for (const [litellmKey, tracked] of Object.entries(TRACKED_MODELS)) {
     const entry = litellm[litellmKey] as Record<string, unknown> | undefined;
@@ -126,7 +193,6 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): P
     const model = provider.models.find(m => m.id === tracked.ourId);
     if (!model) continue;
 
-    // LiteLLM stores prices per token; we store per 1M tokens
     const inputPerToken = entry['input_cost_per_token'] as number | undefined;
     const outputPerToken = entry['output_cost_per_token'] as number | undefined;
     const maxTokens = entry['max_input_tokens'] as number | undefined;
@@ -136,7 +202,7 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): P
       if (newInput !== model.inputPrice && newInput > 0) {
         console.log(`Price update: ${model.name} input $${model.inputPrice} -> $${newInput}`);
         model.inputPrice = newInput;
-        updated = true;
+        changed = true;
       }
     }
 
@@ -145,26 +211,24 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): P
       if (newOutput !== model.outputPrice && newOutput > 0) {
         console.log(`Price update: ${model.name} output $${model.outputPrice} -> $${newOutput}`);
         model.outputPrice = newOutput;
-        updated = true;
+        changed = true;
       }
     }
 
     if (maxTokens !== undefined && maxTokens !== model.contextWindow && maxTokens > 0) {
       console.log(`Context update: ${model.name} ${model.contextWindow} -> ${maxTokens}`);
       model.contextWindow = maxTokens;
-      updated = true;
+      changed = true;
     }
   }
 
-  // Check for new models from tracked providers that we don't have yet
+  // Check for new models from tracked providers
   for (const [key, value] of Object.entries(litellm)) {
     if (typeof value !== 'object' || value === null) continue;
     const entry = value as Record<string, unknown>;
 
-    // Skip if we already track this exact key
     if (TRACKED_MODELS[key]) continue;
 
-    // Check if this model belongs to a provider we track
     let providerId: string | null = null;
     for (const [prefix, pid] of Object.entries(LITELLM_PROVIDER_MAP)) {
       if (key.startsWith(prefix)) {
@@ -177,7 +241,6 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): P
     const provider = current.providers.find(p => p.id === providerId);
     if (!provider) continue;
 
-    // Only add models released recently (have a litellm_provider field)
     const litellmProvider = entry['litellm_provider'] as string | undefined;
     if (!litellmProvider) continue;
 
@@ -185,38 +248,137 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): P
     const outputPerToken = entry['output_cost_per_token'] as number | undefined;
     const maxTokens = (entry['max_input_tokens'] || entry['max_tokens']) as number | undefined;
 
-    // Skip if no pricing info or it's a variant/alias (contains ":")
     if (key.includes(':') || key.includes('/latest')) continue;
     if (inputPerToken === undefined || outputPerToken === undefined) continue;
 
-    // Check we don't already have a model with a similar name
     const cleanKey = key.replace('gemini/', '').replace('mistral/', '');
     const alreadyHave = provider.models.some(
       m => m.id === cleanKey || m.name.toLowerCase().includes(cleanKey.toLowerCase())
     );
     if (alreadyHave) continue;
 
-    // Add the new model
     const newModel: ModelEntry = {
       id: cleanKey,
       name: cleanKey,
       inputPrice: parseFloat((inputPerToken * 1_000_000).toFixed(2)),
       outputPrice: parseFloat((outputPerToken * 1_000_000).toFixed(2)),
       contextWindow: maxTokens || 128000,
-      released: new Date().toISOString().slice(0, 7), // YYYY-MM
+      released: new Date().toISOString().slice(0, 7),
       capabilities: ['text'],
     };
 
     console.log(`New model detected: ${provider.name} / ${newModel.name}`);
     provider.models.push(newModel);
-    updated = true;
+    changed = true;
   }
 
-  if (updated) {
+  if (changed) {
     current.lastUpdated = new Date().toISOString().slice(0, 10);
   }
 
-  return current;
+  return { data: current, changed };
+}
+
+function mergeBenchmarks(current: BenchmarksData, hfData: unknown[]): { data: BenchmarksData; changed: boolean } {
+  let changed = false;
+
+  // The HF leaderboard API structure can vary. We look for model entries with
+  // scores that match our tracked providers. Only merge top-performing models
+  // that we don't already track.
+  for (const raw of hfData) {
+    if (typeof raw !== 'object' || raw === null) continue;
+    const entry = raw as Record<string, unknown>;
+
+    const modelName = (entry['model_name'] || entry['model'] || entry['Model']) as string | undefined;
+    if (!modelName) continue;
+
+    // Try to match to a tracked provider
+    let matchedProvider: string | null = null;
+    for (const [prefix, info] of Object.entries(HF_MODEL_MAP)) {
+      if (modelName.toLowerCase().includes(prefix.toLowerCase())) {
+        matchedProvider = info.provider;
+        break;
+      }
+    }
+    if (!matchedProvider) continue;
+
+    // Check if we already have this exact model
+    const alreadyTracked = current.models.some(
+      m => m.model.toLowerCase() === modelName.toLowerCase() ||
+           modelName.toLowerCase().includes(m.model.toLowerCase())
+    );
+    if (alreadyTracked) continue;
+
+    // Extract scores from known benchmark fields
+    const scores: Record<string, number> = {};
+    const scoreMap: Record<string, string[]> = {
+      mmlu_pro: ['mmlu_pro', 'MMLU-Pro', 'mmlu'],
+      human_eval: ['humaneval', 'HumanEval', 'human_eval', 'coding'],
+      gpqa_diamond: ['gpqa', 'GPQA', 'gpqa_diamond'],
+      math: ['math', 'MATH', 'math_hard'],
+      swe_bench: ['swe_bench', 'SWE-bench', 'swe'],
+    };
+
+    for (const [benchId, keys] of Object.entries(scoreMap)) {
+      for (const key of keys) {
+        const val = entry[key] as number | undefined;
+        if (val !== undefined && typeof val === 'number' && val > 0 && val <= 100) {
+          scores[benchId] = parseFloat(val.toFixed(1));
+          break;
+        }
+      }
+    }
+
+    // Only add if we got at least 2 benchmark scores and model is competitive
+    const scoreValues = Object.values(scores);
+    if (scoreValues.length < 2) continue;
+    const avgScore = scoreValues.reduce((a, b) => a + b, 0) / scoreValues.length;
+    if (avgScore < 70) continue; // Only top-performing models
+
+    const newEntry: BenchmarkModelEntry = {
+      model: modelName,
+      provider: matchedProvider,
+      released: new Date().toISOString().slice(0, 7),
+      scores,
+    };
+
+    console.log(`New benchmark model: ${modelName} (${matchedProvider}, avg ${avgScore.toFixed(1)})`);
+    current.models.push(newEntry);
+    changed = true;
+  }
+
+  if (changed) {
+    current.lastUpdated = new Date().toISOString().slice(0, 10);
+  }
+
+  return { data: current, changed };
+}
+
+// ── IndexNow ping ──────────────────────────────────────────────────
+
+async function pingIndexNow(env: Env): Promise<void> {
+  if (!env.INDEXNOW_KEY) return;
+  try {
+    await fetch('https://api.indexnow.org/indexnow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        host: 'tensorfeed.ai',
+        key: env.INDEXNOW_KEY,
+        keyLocation: `https://tensorfeed.ai/${env.INDEXNOW_KEY}.txt`,
+        urlList: [
+          'https://tensorfeed.ai/models',
+          'https://tensorfeed.ai/benchmarks',
+          'https://tensorfeed.ai/ai-api-pricing-guide',
+          'https://tensorfeed.ai/compare',
+        ],
+      }),
+      signal: AbortSignal.timeout(5000),
+    });
+    console.log('IndexNow pinged for models/benchmarks pages');
+  } catch (e) {
+    console.warn('IndexNow ping failed:', e);
+  }
 }
 
 // ── Baseline data (mirrors data/*.json for first-run seeding) ───────
@@ -278,6 +440,33 @@ const BASELINE_PRICING: PricingData = {
   },
 };
 
+const BASELINE_BENCHMARKS: BenchmarksData = {
+  lastUpdated: '2026-03-29',
+  benchmarks: [
+    { id: 'mmlu_pro', name: 'MMLU-Pro', description: 'General knowledge and reasoning across 57 subjects', maxScore: 100 },
+    { id: 'human_eval', name: 'HumanEval', description: 'Python code generation and problem solving', maxScore: 100 },
+    { id: 'gpqa_diamond', name: 'GPQA Diamond', description: 'Graduate-level science questions verified by domain experts', maxScore: 100 },
+    { id: 'math', name: 'MATH', description: 'Competition-level mathematics problems', maxScore: 100 },
+    { id: 'swe_bench', name: 'SWE-bench', description: 'Real-world software engineering tasks from GitHub issues', maxScore: 100 },
+  ],
+  models: [
+    { model: 'Claude Opus 4.6', provider: 'Anthropic', released: '2026-03', scores: { mmlu_pro: 92.4, human_eval: 95.1, gpqa_diamond: 74.2, math: 91.8, swe_bench: 62.3 } },
+    { model: 'Claude Sonnet 4.6', provider: 'Anthropic', released: '2026-02', scores: { mmlu_pro: 88.7, human_eval: 92.0, gpqa_diamond: 65.8, math: 85.4, swe_bench: 55.7 } },
+    { model: 'Claude Haiku 4.5', provider: 'Anthropic', released: '2026-01', scores: { mmlu_pro: 82.1, human_eval: 86.3, gpqa_diamond: 52.4, math: 74.6, swe_bench: 41.2 } },
+    { model: 'GPT-4o', provider: 'OpenAI', released: '2025-05', scores: { mmlu_pro: 87.2, human_eval: 90.2, gpqa_diamond: 59.1, math: 81.3, swe_bench: 48.5 } },
+    { model: 'GPT-4.5', provider: 'OpenAI', released: '2025-12', scores: { mmlu_pro: 90.1, human_eval: 93.4, gpqa_diamond: 68.7, math: 88.2, swe_bench: 56.1 } },
+    { model: 'o1', provider: 'OpenAI', released: '2025-09', scores: { mmlu_pro: 91.8, human_eval: 94.2, gpqa_diamond: 72.5, math: 94.6, swe_bench: 58.9 } },
+    { model: 'o3-mini', provider: 'OpenAI', released: '2025-11', scores: { mmlu_pro: 86.3, human_eval: 89.7, gpqa_diamond: 60.3, math: 87.1, swe_bench: 49.3 } },
+    { model: 'Gemini 2.5 Pro', provider: 'Google', released: '2026-01', scores: { mmlu_pro: 91.2, human_eval: 93.8, gpqa_diamond: 71.9, math: 90.5, swe_bench: 59.4 } },
+    { model: 'Gemini 2.0 Flash', provider: 'Google', released: '2025-10', scores: { mmlu_pro: 84.5, human_eval: 87.6, gpqa_diamond: 54.8, math: 77.2, swe_bench: 43.1 } },
+    { model: 'Llama 4 Scout', provider: 'Meta', released: '2026-02', scores: { mmlu_pro: 85.9, human_eval: 88.4, gpqa_diamond: 56.2, math: 79.8, swe_bench: 44.6 } },
+    { model: 'Llama 4 Maverick', provider: 'Meta', released: '2026-03', scores: { mmlu_pro: 89.3, human_eval: 91.7, gpqa_diamond: 64.1, math: 86.7, swe_bench: 52.8 } },
+    { model: 'Mistral Large', provider: 'Mistral', released: '2025-11', scores: { mmlu_pro: 86.8, human_eval: 89.1, gpqa_diamond: 57.3, math: 80.4, swe_bench: 46.2 } },
+    { model: 'Mistral Small', provider: 'Mistral', released: '2025-09', scores: { mmlu_pro: 78.4, human_eval: 82.5, gpqa_diamond: 44.6, math: 68.9, swe_bench: 34.7 } },
+    { model: 'DeepSeek V3', provider: 'DeepSeek', released: '2025-12', scores: { mmlu_pro: 88.1, human_eval: 91.2, gpqa_diamond: 63.5, math: 85.9, swe_bench: 51.4 } },
+  ],
+};
+
 const BASELINE_AGENTS: AgentsData = {
   lastUpdated: '2026-03-28',
   categories: [
@@ -309,13 +498,25 @@ const BASELINE_AGENTS: AgentsData = {
   ],
 };
 
-// ── Main update function ────────────────────────────────────────────
+// ── Main daily update function ─────────────────────────────────────
 
-export async function updateCatalog(env: Env): Promise<void> {
-  console.log('Catalog update starting...');
+export async function updateDailyData(env: Env): Promise<DailyUpdateResult> {
+  console.log('Daily data update starting...');
 
-  // --- Pricing / Models ---
-  let pricing = await env.TENSORFEED_CACHE.get('pricing', 'json') as PricingData | null;
+  const result: DailyUpdateResult = {
+    modelsChanged: false,
+    benchmarksChanged: false,
+    modelCount: 0,
+    benchmarkModelCount: 0,
+    agentCount: 0,
+  };
+
+  // --- 1. Models / Pricing ---
+  let pricing = await env.TENSORFEED_CACHE.get('models', 'json') as PricingData | null;
+  // Migration: check old key if new key is empty
+  if (!pricing) {
+    pricing = await env.TENSORFEED_CACHE.get('pricing', 'json') as PricingData | null;
+  }
   if (!pricing) {
     console.log('Seeding pricing data from baseline');
     pricing = BASELINE_PRICING;
@@ -323,28 +524,95 @@ export async function updateCatalog(env: Env): Promise<void> {
 
   const litellm = await fetchLiteLLMPricing();
   if (litellm) {
-    pricing = mergePricing(pricing, litellm);
-    console.log('Merged LiteLLM pricing data');
+    const merged = mergePricing(pricing, litellm);
+    pricing = merged.data;
+    result.modelsChanged = merged.changed;
+    console.log(`LiteLLM merge: ${merged.changed ? 'changes detected' : 'no changes'}`);
   } else {
     console.log('LiteLLM fetch failed, keeping existing pricing');
   }
 
-  await env.TENSORFEED_CACHE.put('pricing', JSON.stringify(pricing), {
-    metadata: { updatedAt: new Date().toISOString() },
-  });
+  result.modelCount = pricing.providers.reduce((n, p) => n + p.models.length, 0);
 
-  // --- Agents Directory ---
+  // Write to KV only if data changed or first seed
+  if (result.modelsChanged || !await env.TENSORFEED_CACHE.get('models')) {
+    await env.TENSORFEED_CACHE.put('models', JSON.stringify(pricing), {
+      metadata: { updatedAt: new Date().toISOString() },
+    });
+    // Keep old key in sync for backwards compatibility during migration
+    await env.TENSORFEED_CACHE.put('pricing', JSON.stringify(pricing), {
+      metadata: { updatedAt: new Date().toISOString() },
+    });
+    console.log('Models KV updated');
+  }
+
+  // --- 2. Benchmarks ---
+  let benchmarks = await env.TENSORFEED_CACHE.get('benchmarks', 'json') as BenchmarksData | null;
+  if (!benchmarks) {
+    console.log('Seeding benchmarks from baseline');
+    benchmarks = BASELINE_BENCHMARKS;
+  }
+
+  const hfData = await fetchHFLeaderboard();
+  if (hfData && hfData.length > 0) {
+    const merged = mergeBenchmarks(benchmarks, hfData);
+    benchmarks = merged.data;
+    result.benchmarksChanged = merged.changed;
+    console.log(`HF leaderboard merge: ${merged.changed ? 'changes detected' : 'no changes'}`);
+  } else {
+    console.log('HF leaderboard fetch returned no data, keeping existing benchmarks');
+  }
+
+  result.benchmarkModelCount = benchmarks.models.length;
+
+  // Write only if changed or first seed
+  if (result.benchmarksChanged || !await env.TENSORFEED_CACHE.get('benchmarks')) {
+    await env.TENSORFEED_CACHE.put('benchmarks', JSON.stringify(benchmarks), {
+      metadata: { updatedAt: new Date().toISOString() },
+    });
+    console.log('Benchmarks KV updated');
+  }
+
+  // --- 3. Agents directory: seed if needed, set staleness timestamp ---
   let agents = await env.TENSORFEED_CACHE.get('agents-directory', 'json') as AgentsData | null;
   if (!agents) {
     console.log('Seeding agents directory from baseline');
     agents = BASELINE_AGENTS;
+    await env.TENSORFEED_CACHE.put('agents-directory', JSON.stringify(agents), {
+      metadata: { updatedAt: new Date().toISOString() },
+    });
+  }
+  result.agentCount = agents.agents.length;
+
+  // Set agents-updated timestamp so /api/health can track staleness
+  await env.TENSORFEED_CACHE.put('agents-updated', JSON.stringify({
+    lastChecked: new Date().toISOString(),
+    lastManualUpdate: agents.lastUpdated,
+    agentCount: agents.agents.length,
+  }));
+
+  // --- 4. Log what changed for /api/health ---
+  await env.TENSORFEED_CACHE.put('daily-update-log', JSON.stringify({
+    timestamp: new Date().toISOString(),
+    modelsChanged: result.modelsChanged,
+    benchmarksChanged: result.benchmarksChanged,
+    modelCount: result.modelCount,
+    benchmarkModelCount: result.benchmarkModelCount,
+    agentCount: result.agentCount,
+  }));
+
+  // --- 5. Ping IndexNow if any data changed ---
+  if (result.modelsChanged || result.benchmarksChanged) {
+    await pingIndexNow(env);
   }
 
-  await env.TENSORFEED_CACHE.put('agents-directory', JSON.stringify(agents), {
-    metadata: { updatedAt: new Date().toISOString() },
-  });
-
   console.log(
-    `Catalog update complete - ${pricing.providers.reduce((n, p) => n + p.models.length, 0)} models, ${agents.agents.length} agents`
+    `Daily update complete: ${result.modelCount} models, ${result.benchmarkModelCount} benchmark entries, ${result.agentCount} agents` +
+    ` | models ${result.modelsChanged ? 'UPDATED' : 'unchanged'}, benchmarks ${result.benchmarksChanged ? 'UPDATED' : 'unchanged'}`
   );
+
+  return result;
 }
+
+// Keep the old export name for backwards compat with /api/refresh
+export { updateDailyData as updateCatalog };

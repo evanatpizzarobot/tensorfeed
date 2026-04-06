@@ -1,7 +1,7 @@
 import { Env, Article } from './types';
 import { pollRSSFeeds } from './rss';
 import { pollStatusPages } from './status';
-import { updateCatalog } from './catalog';
+import { updateDailyData, updateCatalog } from './catalog';
 import { trackAgentActivity, getAgentActivity } from './activity';
 import { postTopStories } from './twitter';
 import { pollPodcastFeeds } from './podcasts';
@@ -156,12 +156,45 @@ export default {
     }
 
     if (path === '/api/health') {
-      const newsMeta = await cachedKVGet(request, env.TENSORFEED_NEWS, 'meta', 60);
-      const lastCron = await cachedKVGet(request, env.TENSORFEED_CACHE, 'last-cron-run', 30);
+      const [newsMeta, lastCron, modelsData, benchmarksData, agentsUpdated, trendingRepos, podcasts, incidents, dailyLog] = await Promise.all([
+        cachedKVGet(request, env.TENSORFEED_NEWS, 'meta', 60),
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'last-cron-run', 30),
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'models', 120) as Promise<{ lastUpdated?: string; providers?: { models: unknown[] }[] } | null>,
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'benchmarks', 120) as Promise<{ lastUpdated?: string; models?: unknown[] } | null>,
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'agents-updated', 120) as Promise<{ lastChecked?: string; lastManualUpdate?: string; agentCount?: number } | null>,
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'trending-repos', 120) as Promise<unknown[] | null>,
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'podcasts', 120) as Promise<unknown[] | null>,
+        cachedKVGet(request, env.TENSORFEED_STATUS, 'incidents', 120) as Promise<unknown[] | null>,
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'daily-update-log', 60),
+      ]);
+
+      const modelCount = modelsData?.providers?.reduce((n: number, p: { models: unknown[] }) => n + p.models.length, 0) ?? 0;
+
+      // Agents staleness warning: flag if last manual update is older than 30 days
+      let agentsStale = false;
+      if (agentsUpdated?.lastManualUpdate) {
+        const lastUpdate = new Date(agentsUpdated.lastManualUpdate);
+        const daysSince = (Date.now() - lastUpdate.getTime()) / (1000 * 60 * 60 * 24);
+        agentsStale = daysSince > 30;
+      }
+
       return jsonResponse({
         ok: true,
         timestamp: new Date().toISOString(),
         news: newsMeta || { totalArticles: 0, lastUpdated: 'never' },
+        models: { lastUpdated: modelsData?.lastUpdated || 'never', count: modelCount },
+        benchmarks: { lastUpdated: benchmarksData?.lastUpdated || 'never', count: benchmarksData?.models?.length ?? 0 },
+        agents: {
+          lastManualUpdate: agentsUpdated?.lastManualUpdate || 'never',
+          lastChecked: agentsUpdated?.lastChecked || 'never',
+          count: agentsUpdated?.agentCount ?? 0,
+          stale: agentsStale,
+          ...(agentsStale ? { warning: 'Agents directory has not been manually updated in over 30 days' } : {}),
+        },
+        trending: { lastUpdated: (trendingRepos as unknown[])?.length ? 'active' : 'never', count: (trendingRepos as unknown[])?.length ?? 0 },
+        podcasts: { lastUpdated: (podcasts as unknown[])?.length ? 'active' : 'never', count: (podcasts as unknown[])?.length ?? 0 },
+        incidents: { count: (incidents as unknown[])?.length ?? 0 },
+        lastDailyUpdate: dailyLog || null,
         lastCronRun: lastCron || null,
       });
     }
@@ -272,7 +305,20 @@ export default {
     // === MODELS ENDPOINT (cached 300s) ===
 
     if (path === '/api/models') {
-      const cached = await cachedKVGet(request, env.TENSORFEED_CACHE, 'pricing', 300);
+      // Try new 'models' key first, fall back to legacy 'pricing' key
+      let cached = await cachedKVGet(request, env.TENSORFEED_CACHE, 'models', 300);
+      if (!cached) cached = await cachedKVGet(request, env.TENSORFEED_CACHE, 'pricing', 300);
+      return jsonResponse({
+        ok: true,
+        source: 'tensorfeed.ai',
+        ...(cached as Record<string, unknown> || {}),
+      }, 200, 300);
+    }
+
+    // === BENCHMARKS ENDPOINT (cached 300s) ===
+
+    if (path === '/api/benchmarks') {
+      const cached = await cachedKVGet(request, env.TENSORFEED_CACHE, 'benchmarks', 300);
       return jsonResponse({
         ok: true,
         source: 'tensorfeed.ai',
@@ -338,6 +384,7 @@ export default {
           status: '/api/agents/status',
           pricing: '/api/agents/pricing',
           models: '/api/models',
+          benchmarks: '/api/benchmarks',
           agentsDirectory: '/api/agents/directory',
           agentActivity: '/api/agents/activity',
           podcasts: '/api/podcasts',
@@ -425,7 +472,7 @@ export default {
     //   return jsonResponse({ ok: true, message: 'Posted top stories to X' });
     // }
 
-    return jsonResponse({ error: 'Not found', endpoints: ['/api/health', '/api/news', '/api/status', '/api/podcasts', '/api/trending-repos', '/api/feed.xml', '/api/feed.json', '/api/meta'] }, 404);
+    return jsonResponse({ error: 'Not found', endpoints: ['/api/health', '/api/news', '/api/status', '/api/models', '/api/benchmarks', '/api/podcasts', '/api/trending-repos', '/api/feed.xml', '/api/feed.json', '/api/meta'] }, 404);
   },
 
   async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
@@ -440,9 +487,9 @@ export default {
       await pollRSSFeeds(env);
       await pollStatusPages(env);
       await pollPodcastFeeds(env);
-    } else if (cron === '0 6 * * *') {
-      // Daily (6 AM UTC): update models & agents catalog
-      await updateCatalog(env);
+    } else if (cron === '0 7 * * *') {
+      // Daily (7 AM UTC): update models, benchmarks, agents staleness
+      await updateDailyData(env);
     // X/Twitter auto-posting DISABLED 2026-04-04 (account flagged as spam).
     // Safe limits for new accounts: 1-2 posts/day for first month, then 3-4/day max.
     // Re-enable with "30 14 * * *" (1/day) in wrangler.toml first.

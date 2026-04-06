@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { BarChart3 } from 'lucide-react';
-import benchmarkData from '@/../data/benchmarks.json';
+import fallbackData from '@/../data/benchmarks.json';
+
 interface BenchmarkDef {
   id: string;
   name: string;
@@ -15,6 +16,12 @@ interface ModelEntry {
   provider: string;
   released: string;
   scores: Record<string, number>;
+}
+
+interface BenchmarksData {
+  lastUpdated: string;
+  benchmarks: BenchmarkDef[];
+  models: ModelEntry[];
 }
 
 const PROVIDER_COLORS: Record<string, string> = {
@@ -42,8 +49,28 @@ type SortKey = 'rank' | 'model' | 'provider' | 'score' | 'released';
 type SortDir = 'asc' | 'desc';
 
 export default function BenchmarksPage() {
-  const benchmarks = benchmarkData.benchmarks as BenchmarkDef[];
-  const models = benchmarkData.models as ModelEntry[];
+  const [data, setData] = useState<BenchmarksData>(fallbackData as BenchmarksData);
+
+  useEffect(() => {
+    fetch('https://tensorfeed.ai/api/benchmarks')
+      .then(res => {
+        if (!res.ok) throw new Error('API error');
+        return res.json();
+      })
+      .then((apiData: { ok?: boolean; benchmarks?: BenchmarkDef[]; models?: ModelEntry[]; lastUpdated?: string }) => {
+        if (apiData.ok && apiData.benchmarks?.length && apiData.models?.length) {
+          setData({
+            lastUpdated: apiData.lastUpdated || data.lastUpdated,
+            benchmarks: apiData.benchmarks,
+            models: apiData.models,
+          });
+        }
+      })
+      .catch(() => { /* keep fallback */ });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const benchmarks = data.benchmarks as BenchmarkDef[];
+  const models = data.models as ModelEntry[];
 
   const [activeBenchmark, setActiveBenchmark] = useState(benchmarks[0].id);
   const [sortKey, setSortKey] = useState<SortKey>('score');
@@ -60,7 +87,6 @@ export default function BenchmarksPage() {
       .sort((a, b) => b.score - a.score)
       .map((m, i) => ({ ...m, rank: i + 1 }));
 
-    // Apply user sort
     const sorted = [...withScore].sort((a, b) => {
       let cmp = 0;
       switch (sortKey) {
@@ -109,7 +135,7 @@ export default function BenchmarksPage() {
           <h1 className="text-3xl sm:text-4xl font-bold text-text-primary">AI Benchmarks</h1>
         </div>
         <p className="text-text-secondary text-lg max-w-2xl">
-          Compare leading AI models across standardized benchmarks. Last updated {benchmarkData.lastUpdated}.
+          Compare leading AI models across standardized benchmarks. Last updated {data.lastUpdated}.
         </p>
       </div>
 

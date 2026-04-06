@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArticleJsonLd, FAQPageJsonLd } from '@/components/seo/JsonLd';
-import pricingData from '@/../data/pricing.json';
+import { PricingOverviewTable, ProviderDetailsTables } from '@/components/LivePricingTables';
 export const metadata: Metadata = {
   title: 'AI API Pricing Guide 2026: Every Provider Compared | TensorFeed',
   description:
@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 };
 
 export default function AIAPIPricingGuidePage() {
-  const { providers, pricingNotes } = pricingData;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -70,90 +69,14 @@ export default function AIAPIPricingGuidePage() {
           4-5 full-length novels.
         </p>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border border-border rounded-lg overflow-hidden text-sm">
-            <thead className="bg-bg-tertiary">
-              <tr>
-                <th className="text-left p-3 text-text-primary font-semibold">Provider</th>
-                <th className="text-left p-3 text-text-primary font-semibold">Model</th>
-                <th className="text-right p-3 text-text-primary font-semibold">Input $/1M</th>
-                <th className="text-right p-3 text-text-primary font-semibold">Output $/1M</th>
-                <th className="text-right p-3 text-text-primary font-semibold">Context</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {providers.flatMap((provider) =>
-                provider.models.map((model) => (
-                  <tr key={model.id} className="bg-bg-secondary">
-                    <td className="p-3 text-text-primary font-medium">{provider.name}</td>
-                    <td className="p-3 text-text-secondary">{model.name}</td>
-                    <td className="p-3 text-right text-text-secondary">
-                      {model.inputPrice === 0 ? 'Free*' : `$${model.inputPrice.toFixed(2)}`}
-                    </td>
-                    <td className="p-3 text-right text-text-secondary">
-                      {model.outputPrice === 0 ? 'Free*' : `$${model.outputPrice.toFixed(2)}`}
-                    </td>
-                    <td className="p-3 text-right text-text-muted">
-                      {model.contextWindow >= 1000000
-                        ? `${(model.contextWindow / 1000000).toFixed(0)}M`
-                        : `${(model.contextWindow / 1000).toFixed(0)}K`}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        <p className="text-text-muted text-sm mt-3">
-          * Open source models are free to self-host. Hosted API pricing varies by provider
-          (e.g., Together, Fireworks, Groq). {pricingNotes.disclaimer}
-        </p>
+        <PricingOverviewTable />
       </section>
 
       {/* Provider Details */}
       <section id="provider-details" className="mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-6">Pricing by Provider</h2>
 
-        {providers.map((provider) => (
-          <div key={provider.id} className="bg-bg-secondary border border-border rounded-lg p-5 mb-4">
-            <h3 className="text-xl font-semibold text-text-primary mb-3">{provider.name}</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-2 text-text-primary font-medium">Model</th>
-                    <th className="text-right py-2 text-text-primary font-medium">Input</th>
-                    <th className="text-right py-2 text-text-primary font-medium">Output</th>
-                    <th className="text-right py-2 text-text-primary font-medium">Context</th>
-                    <th className="text-left py-2 pl-4 text-text-primary font-medium">Capabilities</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/50">
-                  {provider.models.map((model) => (
-                    <tr key={model.id}>
-                      <td className="py-2 text-text-secondary">{model.name}</td>
-                      <td className="py-2 text-right text-text-secondary">
-                        {model.inputPrice === 0 ? 'Free*' : `$${model.inputPrice.toFixed(2)}`}
-                      </td>
-                      <td className="py-2 text-right text-text-secondary">
-                        {model.outputPrice === 0 ? 'Free*' : `$${model.outputPrice.toFixed(2)}`}
-                      </td>
-                      <td className="py-2 text-right text-text-muted">
-                        {model.contextWindow >= 1000000
-                          ? `${(model.contextWindow / 1000000).toFixed(0)}M`
-                          : `${(model.contextWindow / 1000).toFixed(0)}K`}
-                      </td>
-                      <td className="py-2 pl-4 text-text-muted">
-                        {model.capabilities.join(', ')}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
+        <ProviderDetailsTables />
       </section>
 
       {/* Cost Calculator */}

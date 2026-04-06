@@ -21,10 +21,11 @@ TensorFeed.ai is an AI news aggregator and real-time data hub built for humans a
 - TENSORFEED_CACHE: 4de30d8becd24b3bba9556b98bad8e69
 
 ## Worker Cron Schedule
-- Every 2 min: Status page polling
+- Every 5 min: Status page polling
 - Every 10 min: RSS feed fetching from all sources
-- Every hour: Full refresh
-- Daily 6am UTC: Model catalog and pricing update from LiteLLM
+- Every hour: Full refresh (RSS + status + podcasts)
+- Daily 7am UTC: Models, benchmarks, and agents staleness update (LiteLLM + HuggingFace)
+- Daily 8:30am UTC: Trending AI repos refresh
 
 ## KV Operation Limits (CRITICAL)
 Cloudflare free tier has 100,000 KV operations/day. To stay within limits:
@@ -88,6 +89,7 @@ Source color coding (left border on article cards):
 - /api/agents/activity: Agent traffic metrics
 - /api/health: Worker health check
 - /api/meta: Endpoint discovery
+- /api/benchmarks: AI model benchmark scores
 - /api/ask: Ask TensorFeed (Claude Haiku powered)
 - /api/alerts/subscribe: Outage alert signup
 - /api/refresh?key=production: Manual data refresh
