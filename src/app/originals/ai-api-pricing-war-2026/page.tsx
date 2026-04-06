@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'GPT-5.4, Claude Opus 4.6, and Gemini 3.1 Pro pricing compared. How API costs dropped dramatically in 12 months.',
     type: 'article',
     publishedTime: '2026-03-29T12:00:00Z',
-    authors: ['Ripper'],
+    authors: ['Marcus Chen'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,6 +28,7 @@ export default function AIAPIPricingWarPage() {
         title="The AI API Pricing War: Who's Winning in 2026?"
         description="GPT-5.4, Claude Opus 4.6, and Gemini 3.1 Pro pricing compared. How API costs dropped dramatically in 12 months and what this means for developers."
         datePublished="2026-03-29"
+        author="Marcus Chen"
       />
 
       {/* Back link */}
@@ -45,7 +46,7 @@ export default function AIAPIPricingWarPage() {
           The AI API Pricing War: Who&apos;s Winning in 2026?
         </h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Ripper</span>
+          <span className="text-text-secondary font-medium">Marcus Chen</span>
           <span>&middot;</span>
           <time dateTime="2026-03-29">March 29, 2026</time>
           <span>&middot;</span>

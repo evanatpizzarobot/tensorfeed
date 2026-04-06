@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Sora burned $15M per day in compute and made $2.1M in total lifetime revenue. What this tells us about AI product economics.',
     type: 'article',
     publishedTime: '2026-03-20T12:00:00Z',
-    authors: ['Ripper'],
+    authors: ['Marcus Chen'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,6 +28,7 @@ export default function OpenAIKilledSoraPage() {
         title="OpenAI Killed Sora. Here's What That Tells Us About AI Economics."
         description="Sora burned $15M per day in compute and made $2.1M in total lifetime revenue. What this means for AI video generation and frontier AI product economics."
         datePublished="2026-03-20"
+        author="Marcus Chen"
       />
 
       {/* Back link */}
@@ -45,7 +46,7 @@ export default function OpenAIKilledSoraPage() {
           OpenAI Killed Sora. Here&apos;s What That Tells Us About AI Economics.
         </h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Ripper</span>
+          <span className="text-text-secondary font-medium">Marcus Chen</span>
           <span>&middot;</span>
           <time dateTime="2026-03-20">March 20, 2026</time>
           <span>&middot;</span>

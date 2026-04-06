@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: '40% of enterprise apps will have AI agents by end of 2026. What separates a chatbot from an agent and why it matters.',
     type: 'article',
     publishedTime: '2026-04-04T12:00:00Z',
-    authors: ['Ripper'],
+    authors: ['Kira Nolan'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,6 +28,7 @@ export default function RiseOfAgenticAIPage() {
         title="The Rise of Agentic AI: From Chatbots to Autonomous Workers"
         description="40% of enterprise apps will have AI agents by end of 2026. What separates a chatbot from an agent and why it matters for developers and businesses."
         datePublished="2026-04-04"
+        author="Kira Nolan"
       />
 
       {/* Back link */}
@@ -45,7 +46,7 @@ export default function RiseOfAgenticAIPage() {
           The Rise of Agentic AI: From Chatbots to Autonomous Workers
         </h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Ripper</span>
+          <span className="text-text-secondary font-medium">Kira Nolan</span>
           <span>&middot;</span>
           <time dateTime="2026-04-04">April 4, 2026</time>
           <span>&middot;</span>

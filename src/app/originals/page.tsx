@@ -10,6 +10,7 @@ const ARTICLES = [
   {
     slug: 'building-for-ai-agents',
     title: 'Building for AI Agents: What Developers Need to Know',
+    author: 'Ripper',
     date: 'Apr 5, 2026',
     readTime: '6 min read',
     description:
@@ -18,6 +19,7 @@ const ARTICLES = [
   {
     slug: 'rise-of-agentic-ai',
     title: 'The Rise of Agentic AI: From Chatbots to Autonomous Workers',
+    author: 'Kira Nolan',
     date: 'Apr 4, 2026',
     readTime: '5 min read',
     description:
@@ -26,6 +28,7 @@ const ARTICLES = [
   {
     slug: 'claude-vs-gpt-vs-gemini',
     title: 'Claude vs GPT vs Gemini: An Honest Comparison',
+    author: 'Ripper',
     date: 'Apr 2, 2026',
     readTime: '6 min read',
     description:
@@ -34,6 +37,7 @@ const ARTICLES = [
   {
     slug: 'open-source-llms-closing-gap',
     title: 'Open Source LLMs Are Closing the Gap Faster Than Anyone Expected',
+    author: 'Kira Nolan',
     date: 'Apr 1, 2026',
     readTime: '5 min read',
     description:
@@ -42,6 +46,7 @@ const ARTICLES = [
   {
     slug: 'state-of-ai-apis-2026',
     title: 'The State of AI APIs in 2026',
+    author: 'Marcus Chen',
     date: 'Mar 30, 2026',
     readTime: '5 min read',
     description:
@@ -50,6 +55,7 @@ const ARTICLES = [
   {
     slug: 'ai-api-pricing-war-2026',
     title: 'The AI API Pricing War: Who\'s Winning in 2026?',
+    author: 'Marcus Chen',
     date: 'Mar 29, 2026',
     readTime: '6 min read',
     description:
@@ -58,6 +64,7 @@ const ARTICLES = [
   {
     slug: 'ai-service-outages-month',
     title: 'I Tracked AI Service Outages for a Month. Here\'s What I Found.',
+    author: 'Ripper',
     date: 'Mar 27, 2026',
     readTime: '4 min read',
     description:
@@ -66,6 +73,7 @@ const ARTICLES = [
   {
     slug: 'claude-code-leak',
     title: 'The Claude Code Leak: What 512,000 Lines of Source Code Revealed',
+    author: 'Ripper',
     date: 'Mar 25, 2026',
     readTime: '5 min read',
     description:
@@ -74,6 +82,7 @@ const ARTICLES = [
   {
     slug: 'mcp-97-million-installs',
     title: 'MCP Just Hit 97 Million Installs. The Agent Era Is Here.',
+    author: 'Kira Nolan',
     date: 'Mar 23, 2026',
     readTime: '4 min read',
     description:
@@ -82,6 +91,7 @@ const ARTICLES = [
   {
     slug: 'openai-killed-sora',
     title: 'OpenAI Killed Sora. Here\'s What That Tells Us About AI Economics.',
+    author: 'Marcus Chen',
     date: 'Mar 20, 2026',
     readTime: '5 min read',
     description:
@@ -90,6 +100,7 @@ const ARTICLES = [
   {
     slug: 'why-we-built-tensorfeed',
     title: 'Why We Built TensorFeed.ai',
+    author: 'Ripper',
     date: 'Mar 18, 2026',
     readTime: '5 min read',
     description:
@@ -129,7 +140,7 @@ export default function OriginalsPage() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-text-muted mb-3">
                   <Clock className="w-3.5 h-3.5" />
-                  <span>TensorFeed Editorial</span>
+                  <span>{article.author}</span>
                   <span>&middot;</span>
                   <span>{article.date}</span>
                   <span>&middot;</span>

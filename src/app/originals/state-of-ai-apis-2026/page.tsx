@@ -16,6 +16,7 @@ export default function StateOfAiApisPage() {
         title="The State of AI APIs in 2026"
         description="A comprehensive look at the AI API landscape in 2026: pricing wars, context window expansion, agent-native endpoints, MCP protocol, and practical advice for developers."
         datePublished="2026-03-30"
+        author="Marcus Chen"
       />
 
       {/* Back link */}
@@ -33,7 +34,7 @@ export default function StateOfAiApisPage() {
           The State of AI APIs in 2026
         </h1>
         <div className="flex items-center gap-2 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Ripper</span>
+          <span className="text-text-secondary font-medium">Marcus Chen</span>
           <span>&middot;</span>
           <time dateTime="2026-03-30">March 30, 2026</time>
         </div>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Anthropic\'s Model Context Protocol went from experimental to foundational infrastructure. Every major AI provider now ships MCP support.',
     type: 'article',
     publishedTime: '2026-03-23T12:00:00Z',
-    authors: ['Ripper'],
+    authors: ['Kira Nolan'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,6 +28,7 @@ export default function MCPInstallsPage() {
         title="MCP Just Hit 97 Million Installs. The Agent Era Is Here."
         description="Anthropic's Model Context Protocol went from experimental to foundational infrastructure. Every major AI provider now ships MCP support. What this means for developers."
         datePublished="2026-03-23"
+        author="Kira Nolan"
       />
 
       {/* Back link */}
@@ -45,7 +46,7 @@ export default function MCPInstallsPage() {
           MCP Just Hit 97 Million Installs. The Agent Era Is Here.
         </h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Ripper</span>
+          <span className="text-text-secondary font-medium">Kira Nolan</span>
           <span>&middot;</span>
           <time dateTime="2026-03-23">March 23, 2026</time>
           <span>&middot;</span>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Qwen 3.5 9B beats GPT-OSS-120B on GPQA Diamond. Open source models are matching frontier performance at a fraction of the cost.',
     type: 'article',
     publishedTime: '2026-04-01T12:00:00Z',
-    authors: ['Ripper'],
+    authors: ['Kira Nolan'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,6 +28,7 @@ export default function OpenSourceLLMsPage() {
         title="Open Source LLMs Are Closing the Gap Faster Than Anyone Expected"
         description="Qwen 3.5 9B beats GPT-OSS-120B on GPQA Diamond. Gemma 4 runs on phones. Apache 2.0 licensing is making frontier performance free."
         datePublished="2026-04-01"
+        author="Kira Nolan"
       />
 
       {/* Back link */}
@@ -45,7 +46,7 @@ export default function OpenSourceLLMsPage() {
           Open Source LLMs Are Closing the Gap Faster Than Anyone Expected
         </h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
-          <span className="text-text-secondary font-medium">Ripper</span>
+          <span className="text-text-secondary font-medium">Kira Nolan</span>
           <span>&middot;</span>
           <time dateTime="2026-04-01">April 1, 2026</time>
           <span>&middot;</span>
