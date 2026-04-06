@@ -99,29 +99,25 @@ const LATEST_ORIGINALS = [
     href: '/originals/building-for-ai-agents',
     title: 'Building for AI Agents: What Developers Need to Know',
     date: 'April 5, 2026',
+    readTime: '6 min read',
     description:
       'A practical guide to building agent-friendly software: structured data, llms.txt, API design patterns, MCP protocol, and lessons learned from building TensorFeed as an agent-first platform.',
+  },
+  {
+    href: '/originals/rise-of-agentic-ai',
+    title: 'The Rise of Agentic AI: From Chatbots to Autonomous Workers',
+    date: 'April 4, 2026',
+    readTime: '5 min read',
+    description:
+      'Gartner says 40% of enterprise apps will have AI agents by end of 2026. OpenClaw went viral. NVIDIA shipped Agent Toolkit at GTC. What separates a chatbot from an agent and why it matters.',
   },
   {
     href: '/originals/claude-vs-gpt-vs-gemini',
     title: 'Claude vs GPT vs Gemini: An Honest Comparison',
     date: 'April 2, 2026',
+    readTime: '6 min read',
     description:
       'A real-world comparison of Claude, GPT, and Gemini across coding, writing, analysis, and research tasks. Includes pricing, context windows, and practical recommendations.',
-  },
-  {
-    href: '/originals/state-of-ai-apis-2026',
-    title: 'The State of AI APIs in 2026',
-    date: 'March 30, 2026',
-    description:
-      'A comprehensive look at the AI API landscape in 2026: pricing trends, context window expansion, agent-native endpoints, and practical advice for developers choosing a provider.',
-  },
-  {
-    href: '/originals/why-we-built-tensorfeed',
-    title: 'Why We Built TensorFeed.ai',
-    date: 'March 28, 2026',
-    description:
-      'The story behind TensorFeed.ai: how a personal frustration with scattered AI news turned into a hub built for humans and AI agents alike.',
   },
 ];
 
@@ -349,7 +345,7 @@ export default async function HomePage() {
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-2xl sm:text-3xl font-bold text-text-primary flex items-center gap-2">
               <Pen className="w-6 h-6 text-accent-secondary" />
-              Original Analysis
+              Latest from TensorFeed
             </h2>
             <Link
               href="/originals"
@@ -370,7 +366,11 @@ export default async function HomePage() {
                 href={article.href}
                 className="group bg-bg-secondary rounded-xl border border-border p-5 transition-all duration-300 hover:border-accent-secondary hover:shadow-glow"
               >
-                <span className="text-xs text-text-muted font-mono">{article.date}</span>
+                <div className="flex items-center gap-2 text-xs text-text-muted font-mono">
+                  <span>{article.date}</span>
+                  <span>&middot;</span>
+                  <span>{article.readTime}</span>
+                </div>
                 <h3 className="text-base font-semibold text-text-primary mt-1.5 mb-2 group-hover:text-accent-secondary transition-colors leading-snug">
                   {article.title}
                 </h3>

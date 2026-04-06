@@ -8,32 +8,92 @@ export const metadata: Metadata = {
 
 const ARTICLES = [
   {
-    slug: 'why-we-built-tensorfeed',
-    title: 'Why We Built TensorFeed.ai',
-    date: 'Mar 28, 2026',
+    slug: 'building-for-ai-agents',
+    title: 'Building for AI Agents: What Developers Need to Know',
+    date: 'Apr 5, 2026',
+    readTime: '6 min read',
     description:
-      'Every morning I found myself opening a dozen tabs to check AI news, model releases, and API status pages. TensorFeed started as a personal frustration and grew into an aggregated hub built for humans and AI agents alike.',
+      'AI agents are moving from demos to production, and the software they need looks different from traditional web apps. Structured data, llms.txt, MCP servers, and agent-friendly API design patterns that actually work.',
   },
   {
-    slug: 'state-of-ai-apis-2026',
-    title: 'The State of AI APIs in 2026',
-    date: 'Mar 30, 2026',
+    slug: 'rise-of-agentic-ai',
+    title: 'The Rise of Agentic AI: From Chatbots to Autonomous Workers',
+    date: 'Apr 4, 2026',
+    readTime: '5 min read',
     description:
-      'The API landscape shifted dramatically over the past year. Pricing wars, the context window race, agent-native endpoints, MCP protocol adoption, and structured outputs all reshaped how developers build on AI. We break down what matters.',
+      'Gartner says 40% of enterprise apps will have AI agents by end of 2026. OpenClaw went viral. NVIDIA shipped Agent Toolkit at GTC. What separates a chatbot from an agent and why it matters.',
   },
   {
     slug: 'claude-vs-gpt-vs-gemini',
     title: 'Claude vs GPT vs Gemini: An Honest Comparison',
     date: 'Apr 2, 2026',
+    readTime: '6 min read',
     description:
       'Benchmarks only tell part of the story. We ran all three frontier models through real-world coding, writing, analysis, and research tasks. Here is what we found, including a task-by-task scorecard and pricing comparison.',
   },
   {
-    slug: 'building-for-ai-agents',
-    title: 'Building for AI Agents: What Developers Need to Know',
-    date: 'Apr 5, 2026',
+    slug: 'open-source-llms-closing-gap',
+    title: 'Open Source LLMs Are Closing the Gap Faster Than Anyone Expected',
+    date: 'Apr 1, 2026',
+    readTime: '5 min read',
     description:
-      'AI agents are moving from demos to production, and the software they need looks different from traditional web apps. Structured data, llms.txt, MCP servers, and agent-friendly API design patterns that actually work.',
+      'Qwen 3.5 9B beat GPT-OSS-120B on GPQA Diamond. Gemma 4 runs on phones. Bonsai ships 1-bit models. Apache 2.0 licensing is making frontier performance free. What this means for the industry.',
+  },
+  {
+    slug: 'state-of-ai-apis-2026',
+    title: 'The State of AI APIs in 2026',
+    date: 'Mar 30, 2026',
+    readTime: '5 min read',
+    description:
+      'The API landscape shifted dramatically over the past year. Pricing wars, the context window race, agent-native endpoints, MCP protocol adoption, and structured outputs all reshaped how developers build on AI. We break down what matters.',
+  },
+  {
+    slug: 'ai-api-pricing-war-2026',
+    title: 'The AI API Pricing War: Who\'s Winning in 2026?',
+    date: 'Mar 29, 2026',
+    readTime: '6 min read',
+    description:
+      'GPT-5.4, Claude Opus 4.6, and Gemini 3.1 Pro pricing compared. How API costs dropped 70% to 90% in twelve months, and what open source models mean for developers choosing a provider.',
+  },
+  {
+    slug: 'ai-service-outages-month',
+    title: 'I Tracked AI Service Outages for a Month. Here\'s What I Found.',
+    date: 'Mar 27, 2026',
+    readTime: '4 min read',
+    description:
+      'Real data from our incident database. Which services went down most, average resolution times, when outages cluster on Tuesdays and Wednesdays, and what developers should plan for.',
+  },
+  {
+    slug: 'claude-code-leak',
+    title: 'The Claude Code Leak: What 512,000 Lines of Source Code Revealed',
+    date: 'Mar 25, 2026',
+    readTime: '5 min read',
+    description:
+      'An accidental .map file exposure revealed Claude Code\'s full source. 187 spinner verbs, curse word filters, a memory architecture, and a 35-module structure. What it tells us about modern AI tools.',
+  },
+  {
+    slug: 'mcp-97-million-installs',
+    title: 'MCP Just Hit 97 Million Installs. The Agent Era Is Here.',
+    date: 'Mar 23, 2026',
+    readTime: '4 min read',
+    description:
+      'Anthropic\'s Model Context Protocol went from experimental to foundational infrastructure. Every major AI provider now ships MCP support. What this means for developers building AI agents.',
+  },
+  {
+    slug: 'openai-killed-sora',
+    title: 'OpenAI Killed Sora. Here\'s What That Tells Us About AI Economics.',
+    date: 'Mar 20, 2026',
+    readTime: '5 min read',
+    description:
+      'Sora burned $15M per day in compute and made $2.1M in total lifetime revenue. The Disney deal collapsed. What this means for AI video generation and the economics of frontier AI products.',
+  },
+  {
+    slug: 'why-we-built-tensorfeed',
+    title: 'Why We Built TensorFeed.ai',
+    date: 'Mar 18, 2026',
+    readTime: '5 min read',
+    description:
+      'The origin story. Why existing AI news sources fell short, the decision to build for AI agents as a first-class audience, and what makes TensorFeed different from every other aggregator.',
   },
 ];
 
@@ -72,6 +132,8 @@ export default function OriginalsPage() {
                   <span>TensorFeed Editorial</span>
                   <span>&middot;</span>
                   <span>{article.date}</span>
+                  <span>&middot;</span>
+                  <span>{article.readTime}</span>
                 </div>
                 <p className="text-text-secondary text-sm leading-relaxed mb-3">
                   {article.description}
