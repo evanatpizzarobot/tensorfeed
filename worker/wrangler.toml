@@ -35,3 +35,6 @@ id = "4de30d8becd24b3bba9556b98bad8e69"
 ENVIRONMENT = "production"
 SITE_URL = "https://tensorfeed.ai"
 INDEXNOW_KEY = "5903913788b6a62e3d10e63e3319020a"
+ALERT_EMAIL_TO = "evan@tensorfeed.ai"
+ALERT_EMAIL_FROM = "alerts@tensorfeed.ai"
+# RESEND_API_KEY is a secret. Set with: wrangler secret put RESEND_API_KEY

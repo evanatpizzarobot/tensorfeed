@@ -10,6 +10,9 @@ export interface Env {
   X_ACCESS_TOKEN: string;
   X_ACCESS_SECRET: string;
   GITHUB_TOKEN: string;
+  RESEND_API_KEY: string;
+  ALERT_EMAIL_TO: string;
+  ALERT_EMAIL_FROM: string;
 }
 
 export interface Article {

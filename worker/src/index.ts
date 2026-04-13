@@ -1,11 +1,13 @@
 import { Env, Article } from './types';
-import { pollRSSFeeds } from './rss';
+import { pollRSSFeeds, RSSPollResult } from './rss';
 import { pollStatusPages } from './status';
 import { updateDailyData, updateCatalog } from './catalog';
 import { trackAgentActivity, getAgentActivity } from './activity';
 import { postTopStories } from './twitter';
 import { pollPodcastFeeds } from './podcasts';
 import { pollTrendingRepos } from './trending';
+import { captureAllSnapshots, getSnapshotSummary, restoreFromSnapshot, getLatestSnapshot } from './snapshots';
+import { recordPollRun, checkNewsStaleness, alertStaleNews, sendDailySummary, getAlertsStatus } from './alerts';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -395,6 +397,33 @@ export default {
       }, 200, 60);
     }
 
+    // === CRON DEBUG LOG ===
+
+    if (path === '/api/cron-status') {
+      const [cronLog, lastCron, newsMeta] = await Promise.all([
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'CRON_LOG', 30),
+        cachedKVGet(request, env.TENSORFEED_CACHE, 'last-cron-run', 30),
+        cachedKVGet(request, env.TENSORFEED_NEWS, 'meta', 30),
+      ]);
+      return jsonResponse({
+        ok: true,
+        now: new Date().toISOString(),
+        lastCronRun: lastCron || null,
+        newsMeta: newsMeta || null,
+        cronLog: cronLog || null,
+      }, 200, 30);
+    }
+
+    if (path === '/api/snapshots') {
+      const summary = await getSnapshotSummary(env);
+      return jsonResponse({ ok: true, now: new Date().toISOString(), snapshots: summary }, 200, 60);
+    }
+
+    if (path === '/api/alerts-status') {
+      const status = await getAlertsStatus(env);
+      return jsonResponse({ ok: true, now: new Date().toISOString(), ...status }, 200, 60);
+    }
+
     // === FORCE REFRESH (protected) ===
 
     if (path === '/api/refresh' && url.searchParams.get('key') === env.ENVIRONMENT) {
@@ -477,33 +506,116 @@ export default {
 
   async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
     const cron = event.cron;
+    const startedAt = new Date().toISOString();
+    const start = Date.now();
+
+    const actions: Array<{
+      name: string;
+      status: 'ok' | 'error';
+      error?: string;
+      details?: unknown;
+    }> = [];
+    let rssResult: RSSPollResult | null = null;
+
+    async function run<T>(name: string, fn: () => Promise<T>): Promise<T | null> {
+      try {
+        const result = await fn();
+        actions.push({ name, status: 'ok', details: result ?? undefined });
+        return result;
+      } catch (err) {
+        const msg = err instanceof Error ? `${err.message}\n${err.stack ?? ''}` : String(err);
+        console.error(`Cron action '${name}' failed:`, msg);
+        actions.push({ name, status: 'error', error: msg });
+        return null;
+      }
+    }
 
     if (cron === '*/10 * * * *') {
-      await pollRSSFeeds(env);
+      rssResult = await run('pollRSSFeeds', () => pollRSSFeeds(env));
     } else if (cron === '*/5 * * * *') {
-      await pollStatusPages(env);
+      await run('pollStatusPages', () => pollStatusPages(env));
     } else if (cron === '0 * * * *') {
-      // Hourly: refresh all
-      await pollRSSFeeds(env);
-      await pollStatusPages(env);
-      await pollPodcastFeeds(env);
+      // Hourly: refresh all + hourly rolling snapshot
+      rssResult = await run('pollRSSFeeds', () => pollRSSFeeds(env));
+      await run('pollStatusPages', () => pollStatusPages(env));
+      await run('pollPodcastFeeds', () => pollPodcastFeeds(env));
+      await run('captureAllSnapshots', () => captureAllSnapshots(env));
     } else if (cron === '0 7 * * *') {
       // Daily (7 AM UTC): update models, benchmarks, agents staleness
-      await updateDailyData(env);
+      await run('updateDailyData', () => updateDailyData(env));
     // X/Twitter auto-posting DISABLED 2026-04-04 (account flagged as spam).
     // Safe limits for new accounts: 1-2 posts/day for first month, then 3-4/day max.
     // Re-enable with "30 14 * * *" (1/day) in wrangler.toml first.
     // } else if (cron === '30 14 * * *') {
-    //   await postTopStories(env);
+    //   await run('postTopStories', () => postTopStories(env));
     } else if (cron === '30 8 * * *') {
-      // Daily 8:30 AM UTC: refresh trending AI repos from GitHub
-      await pollTrendingRepos(env);
+      // Daily 8:30 AM UTC: refresh trending AI repos + send daily summary email
+      await run('pollTrendingRepos', () => pollTrendingRepos(env));
+      await run('sendDailySummary', () => sendDailySummary(env));
     }
 
+    // Record RSS poll history for the daily summary digest
+    if (rssResult) {
+      await run('recordPollRun', () => recordPollRun(env, cron, rssResult!));
+    }
+
+    // Watchdog: if news is stale past threshold, try to restore from the
+    // latest snapshot and send a throttled alert email. This runs after
+    // every cron tick so transient failures get caught quickly.
+    const staleness = await run('checkNewsStaleness', () => checkNewsStaleness(env));
+    if (staleness?.stale) {
+      const latestSnap = await run('getLatestSnapshot', () => getLatestSnapshot(env, 'news'));
+      let restored = false;
+      if (latestSnap) {
+        const result = await run('restoreFromSnapshot', () => restoreFromSnapshot(env, 'news'));
+        restored = result === true;
+      }
+      await run('alertStaleNews', () =>
+        alertStaleNews(env, {
+          ageMinutes: staleness.ageMinutes,
+          lastUpdated: staleness.lastUpdated,
+          restored,
+          snapshotTimestamp: latestSnap?.timestamp ?? null,
+        }),
+      );
+    }
+
+    const durationMs = Date.now() - start;
+    const hadError = actions.some(a => a.status === 'error');
+
     // Track last cron execution for debugging
-    await env.TENSORFEED_CACHE.put('last-cron-run', JSON.stringify({
-      cron,
-      timestamp: new Date().toISOString(),
-    }));
+    try {
+      await env.TENSORFEED_CACHE.put('last-cron-run', JSON.stringify({
+        cron,
+        timestamp: new Date().toISOString(),
+      }));
+    } catch (err) {
+      console.error('last-cron-run put failed:', err);
+    }
+
+    // Single-write cron log (overwrites, not appends)
+    try {
+      await env.TENSORFEED_CACHE.put(
+        'CRON_LOG',
+        JSON.stringify({
+          cron,
+          startedAt,
+          finishedAt: new Date().toISOString(),
+          durationMs,
+          ok: !hadError,
+          actions,
+          rss: rssResult
+            ? {
+                articlesTotal: rssResult.articlesTotal,
+                sourcesPolled: rssResult.sourcesPolled,
+                sourcesSucceeded: rssResult.sourcesSucceeded,
+                sources: rssResult.sourceResults,
+              }
+            : null,
+        }),
+      );
+    } catch (err) {
+      console.error('CRON_LOG put failed:', err);
+    }
   },
 };

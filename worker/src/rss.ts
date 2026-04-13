@@ -172,19 +172,45 @@ async function fetchFeed(source: typeof RSS_SOURCES[number]): Promise<Article[]>
   }
 }
 
-export async function pollRSSFeeds(env: Env): Promise<void> {
-  console.log(`RSS poll starting - ${RSS_SOURCES.filter(s => s.active).length} sources`);
+export interface RSSPollResult {
+  articlesTotal: number;
+  sourcesPolled: number;
+  sourcesSucceeded: number;
+  sourceResults: Array<{
+    id: string;
+    name: string;
+    status: 'ok' | 'empty' | 'error';
+    articles: number;
+    error?: string;
+  }>;
+}
 
+export async function pollRSSFeeds(env: Env): Promise<RSSPollResult> {
   const activeSources = RSS_SOURCES.filter(s => s.active);
+  console.log(`RSS poll starting - ${activeSources.length} sources`);
+
+  const sourceResults: RSSPollResult['sourceResults'] = [];
   const results = await Promise.allSettled(activeSources.map(fetchFeed));
 
   const allArticles: Article[] = [];
   let successCount = 0;
 
-  for (const result of results) {
-    if (result.status === 'fulfilled' && result.value.length > 0) {
-      allArticles.push(...result.value);
-      successCount++;
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
+    const src = activeSources[i];
+    if (result.status === 'fulfilled') {
+      const count = result.value.length;
+      if (count > 0) {
+        allArticles.push(...result.value);
+        successCount++;
+        sourceResults.push({ id: src.id, name: src.name, status: 'ok', articles: count });
+      } else {
+        sourceResults.push({ id: src.id, name: src.name, status: 'empty', articles: 0 });
+      }
+    } else {
+      const err = result.reason instanceof Error ? result.reason.message : String(result.reason);
+      console.error(`RSS source ${src.name} rejected:`, err);
+      sourceResults.push({ id: src.id, name: src.name, status: 'error', articles: 0, error: err });
     }
   }
 
@@ -203,9 +229,11 @@ export async function pollRSSFeeds(env: Env): Promise<void> {
   const final = deduped.slice(0, 200);
 
   // Store in KV
+  console.log(`RSS poll: writing ${final.length} articles to KV (TENSORFEED_NEWS/articles)`);
   await env.TENSORFEED_NEWS.put('articles', JSON.stringify(final), {
     metadata: { count: final.length, sources: successCount, updatedAt: new Date().toISOString() },
   });
+  console.log(`RSS poll: KV put(articles) completed`);
 
   // Also store a lightweight "latest" version with just the 50 most recent
   await env.TENSORFEED_NEWS.put('articles:latest', JSON.stringify(final.slice(0, 50)));
@@ -217,6 +245,7 @@ export async function pollRSSFeeds(env: Env): Promise<void> {
     sourcesSucceeded: successCount,
     lastUpdated: new Date().toISOString(),
   }));
+  console.log(`RSS poll: KV put(meta) completed`);
 
   // Ping IndexNow if we got new articles (notify search engines of fresh content)
   if (final.length > 0 && env.INDEXNOW_KEY) {
@@ -243,4 +272,11 @@ export async function pollRSSFeeds(env: Env): Promise<void> {
   }
 
   console.log(`RSS poll complete - ${final.length} articles from ${successCount}/${activeSources.length} sources`);
+
+  return {
+    articlesTotal: final.length,
+    sourcesPolled: activeSources.length,
+    sourcesSucceeded: successCount,
+    sourceResults,
+  };
 }
