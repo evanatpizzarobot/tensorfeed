@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI API Cost Calculator | TensorFeed.ai',
+  title: 'AI API Cost Calculator',
   description:
     'Calculate your monthly AI API costs across all providers. Compare Claude, GPT-4o, Gemini, Llama, and Mistral pricing based on your usage.',
   openGraph: {
     type: 'website',
     url: 'https://tensorfeed.ai/tools/cost-calculator',
-    title: 'AI API Cost Calculator | TensorFeed.ai',
+    title: 'AI API Cost Calculator',
     description:
       'Calculate your monthly AI API costs across all providers. Compare Claude, GPT-4o, Gemini, Llama, and Mistral pricing based on your usage.',
     siteName: 'TensorFeed.ai',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'AI API Cost Calculator | TensorFeed.ai',
+    title: 'AI API Cost Calculator',
     description:
       'Calculate your monthly AI API costs across all providers. Compare Claude, GPT-4o, Gemini, Llama, and Mistral pricing based on your usage.',
   },

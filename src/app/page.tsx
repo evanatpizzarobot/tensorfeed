@@ -5,6 +5,7 @@ import fallbackArticlesData from '../../data/articles.json';
 import { STATUS_DOTS } from '@/lib/constants';
 import { FAQPageJsonLd } from '@/components/seo/JsonLd';
 import { getLatestOriginals } from '@/lib/originals-directory';
+import NeuralNetworkBg from '@/components/NeuralNetworkBg';
 
 async function fetchArticles() {
   try {
@@ -162,7 +163,9 @@ export default async function HomePage() {
     <div className="min-h-screen">
       {/* ===== HERO SECTION ===== */}
       <section className="relative overflow-hidden">
-        {/* Background glow effects */}
+        {/* Neural network data flow animation */}
+        <NeuralNetworkBg />
+        {/* Background glow effects (layered over network) */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-primary/10 rounded-full blur-3xl" />
           <div className="absolute top-12 right-1/4 w-72 h-72 bg-accent-secondary/10 rounded-full blur-3xl" />

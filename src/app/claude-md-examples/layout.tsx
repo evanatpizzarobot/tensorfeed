@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'CLAUDE.md Examples: Ready-to-Use Templates for Every Stack | TensorFeed.ai',
+  title: 'CLAUDE.md Examples: Ready-to-Use Templates for Every Stack',
   description:
     'Copy-paste CLAUDE.md examples for Next.js, Python, React Native, Cloudflare Workers, and more. Real-world templates you can use today.',
   openGraph: {
-    title: 'CLAUDE.md Examples: Ready-to-Use Templates for Every Stack | TensorFeed.ai',
+    title: 'CLAUDE.md Examples: Ready-to-Use Templates for Every Stack',
     description:
       'Copy-paste CLAUDE.md examples for Next.js, Python, React Native, Cloudflare Workers, and more. Real-world templates you can use today.',
     url: 'https://tensorfeed.ai/claude-md-examples',

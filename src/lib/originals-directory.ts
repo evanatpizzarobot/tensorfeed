@@ -17,6 +17,24 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'ai-adoption-faster-than-internet',
+    title: "AI Adoption Is Outpacing the Internet. Stanford Has the Numbers to Prove It.",
+    author: 'Ripper',
+    date: 'Apr 15, 2026',
+    readTime: '6 min read',
+    description:
+      "Stanford's 2026 AI Index shows people are adopting AI faster than they adopted the PC or the internet. Top models score above 50% on Humanity's Last Exam. Anthropic leads, with Chinese labs closing fast.",
+  },
+  {
+    slug: '4chan-discovered-chain-of-thought',
+    title: '4chan Users Discovered Chain-of-Thought Reasoning Before Google Did',
+    author: 'Kira Nolan',
+    date: 'Apr 15, 2026',
+    readTime: '5 min read',
+    description:
+      "In 2022, 4chan users playing AI Dungeon found that asking AI to solve problems step by step dramatically improved results. Google published its chain-of-thought paper over a year later. What this tells us about innovation.",
+  },
+  {
     slug: 'frontier-model-forum-vs-china',
     title: 'OpenAI, Anthropic, and Google Just Teamed Up Against Chinese AI Theft',
     author: 'Ripper',

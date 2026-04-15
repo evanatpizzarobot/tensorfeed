@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Frontier AI Model Wars: Tracking the Race Between Claude, GPT, Gemini, and More | TensorFeed.ai',
+  title: 'Frontier AI Model Wars: Tracking the Race Between Claude, GPT, Gemini, and More',
   description:
     'Real-time tracking of the frontier AI model race between Anthropic, OpenAI, Google, xAI, Meta, and every lab pushing the edge. Live leaderboard, 90 day release timeline, and category winners across coding, reasoning, math, and long context.',
   openGraph: {

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'The Complete Guide to CLAUDE.md: Best Practices, Examples & Templates | TensorFeed.ai',
+  title: 'The Complete Guide to CLAUDE.md: Best Practices, Examples & Templates',
   description:
     'Learn how to write the perfect CLAUDE.md file. Complete guide with examples, templates, best practices, and an interactive generator for Claude Code.',
   openGraph: {

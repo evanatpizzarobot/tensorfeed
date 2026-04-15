@@ -73,6 +73,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/originals/rise-of-agentic-ai`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/claude-mythos-not-afraid`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/building-for-ai-agents`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/originals/ai-adoption-faster-than-internet`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/originals/4chan-discovered-chain-of-thought`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/frontier-model-forum-vs-china`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/claude-mythos-ai-security`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/google-notebooklm-gemini`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },

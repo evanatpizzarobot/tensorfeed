@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Compare AI Models Side by Side | TensorFeed.ai',
+  title: 'Compare AI Models Side by Side',
   description:
     'Compare Claude vs ChatGPT, GPT-4o vs Gemini, and more. Side-by-side pricing, context windows, and capabilities for all major AI models.',
   openGraph: {
     type: 'website',
     url: 'https://tensorfeed.ai/compare',
-    title: 'Compare AI Models Side by Side | TensorFeed.ai',
+    title: 'Compare AI Models Side by Side',
     description:
       'Compare Claude vs ChatGPT, GPT-4o vs Gemini, and more. Side-by-side pricing, context windows, and capabilities for all major AI models.',
     siteName: 'TensorFeed.ai',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Compare AI Models Side by Side | TensorFeed.ai',
+    title: 'Compare AI Models Side by Side',
     description:
       'Compare Claude vs ChatGPT, GPT-4o vs Gemini, and more. Side-by-side pricing, context windows, and capabilities for all major AI models.',
   },

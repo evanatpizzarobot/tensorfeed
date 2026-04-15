@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI Podcasts: Listen to the Latest AI News and Analysis | TensorFeed.ai',
+  title: 'AI Podcasts: Listen to the Latest AI News and Analysis',
   description: 'Stream AI podcast episodes from top shows including AI Daily Brief, Practical AI, Latent Space, and Last Week in AI. Listen directly on TensorFeed.',
   openGraph: {
     title: 'AI Podcasts: Listen to the Latest AI News and Analysis',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Podcasts | TensorFeed.ai',
+    title: 'AI Podcasts',
     description: 'Stream AI podcast episodes from top shows directly on TensorFeed.',
   },
   alternates: {

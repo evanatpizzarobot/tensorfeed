@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AGI and ASI: The Race to Artificial General and Superintelligence | TensorFeed.ai',
+  title: 'AGI and ASI: The Race to Artificial General and Superintelligence',
   description:
     'Track the research, predictions, and milestones on the path to artificial general intelligence and artificial superintelligence. Live news, research papers, and a prediction tracker for AGI timelines from Anthropic, OpenAI, DeepMind, xAI, and Meta.',
   openGraph: {

@@ -3,13 +3,13 @@ import { Code, Zap, Bot, FileText, Globe, ExternalLink } from 'lucide-react';
 import { WebApplicationJsonLd } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Developer Docs & API | TensorFeed.ai',
+  title: 'Developer Docs & API',
   description:
     'Free, no-auth JSON API for AI news, service status, model pricing, and agent data. CORS enabled, no API key needed. Documentation and code examples for JavaScript and Python.',
   openGraph: {
     type: 'website',
     url: 'https://tensorfeed.ai/developers',
-    title: 'Developer Docs & API | TensorFeed.ai',
+    title: 'Developer Docs & API',
     description:
       'Free, no-auth JSON API for AI news, service status, model pricing, and agent data. CORS enabled, no API key needed. Documentation and code examples for JavaScript and Python.',
     siteName: 'TensorFeed.ai',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Developer Docs & API | TensorFeed.ai',
+    title: 'Developer Docs & API',
     description:
       'Free, no-auth JSON API for AI news, service status, model pricing, and agent data. CORS enabled, no API key needed. Documentation and code examples for JavaScript and Python.',
   },
