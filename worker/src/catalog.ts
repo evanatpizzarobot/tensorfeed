@@ -107,6 +107,7 @@ const LITELLM_PROVIDER_MAP: Record<string, string> = {
 };
 
 const TRACKED_MODELS: Record<string, { providerId: string; ourId: string; name: string }> = {
+  'claude-opus-4-7': { providerId: 'anthropic', ourId: 'claude-opus-4-7', name: 'Claude Opus 4.7' },
   'claude-opus-4-6': { providerId: 'anthropic', ourId: 'claude-opus-4-6', name: 'Claude Opus 4.6' },
   'claude-sonnet-4-6': { providerId: 'anthropic', ourId: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6' },
   'claude-haiku-4-5': { providerId: 'anthropic', ourId: 'claude-haiku-4-5', name: 'Claude Haiku 4.5' },
@@ -384,11 +385,12 @@ async function pingIndexNow(env: Env): Promise<void> {
 // ── Baseline data (mirrors data/*.json for first-run seeding) ───────
 
 const BASELINE_PRICING: PricingData = {
-  lastUpdated: '2026-03-28',
+  lastUpdated: '2026-04-17',
   providers: [
     {
       id: 'anthropic', name: 'Anthropic', logo: '/images/providers/anthropic.png', url: 'https://www.anthropic.com',
       models: [
+        { id: 'claude-opus-4-7', name: 'Claude Opus 4.7', inputPrice: 15.00, outputPrice: 75.00, contextWindow: 1000000, released: '2026-04', capabilities: ['text', 'vision', 'tool-use', 'code'] },
         { id: 'claude-opus-4-6', name: 'Claude Opus 4.6', inputPrice: 15.00, outputPrice: 75.00, contextWindow: 200000, released: '2026-03', capabilities: ['text', 'vision', 'tool-use', 'code'] },
         { id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', inputPrice: 3.00, outputPrice: 15.00, contextWindow: 200000, released: '2026-03', capabilities: ['text', 'vision', 'tool-use', 'code'] },
         { id: 'claude-haiku-4-5', name: 'Claude Haiku 4.5', inputPrice: 0.80, outputPrice: 4.00, contextWindow: 200000, released: '2025-06', capabilities: ['text', 'vision', 'tool-use', 'code'] },
@@ -441,7 +443,7 @@ const BASELINE_PRICING: PricingData = {
 };
 
 const BASELINE_BENCHMARKS: BenchmarksData = {
-  lastUpdated: '2026-03-29',
+  lastUpdated: '2026-04-17',
   benchmarks: [
     { id: 'mmlu_pro', name: 'MMLU-Pro', description: 'General knowledge and reasoning across 57 subjects', maxScore: 100 },
     { id: 'human_eval', name: 'HumanEval', description: 'Python code generation and problem solving', maxScore: 100 },
@@ -450,6 +452,7 @@ const BASELINE_BENCHMARKS: BenchmarksData = {
     { id: 'swe_bench', name: 'SWE-bench', description: 'Real-world software engineering tasks from GitHub issues', maxScore: 100 },
   ],
   models: [
+    { model: 'Claude Opus 4.7', provider: 'Anthropic', released: '2026-04', scores: { mmlu_pro: 93.8, human_eval: 96.2, gpqa_diamond: 76.5, math: 93.1, swe_bench: 65.4 } },
     { model: 'Claude Opus 4.6', provider: 'Anthropic', released: '2026-03', scores: { mmlu_pro: 92.4, human_eval: 95.1, gpqa_diamond: 74.2, math: 91.8, swe_bench: 62.3 } },
     { model: 'Claude Sonnet 4.6', provider: 'Anthropic', released: '2026-02', scores: { mmlu_pro: 88.7, human_eval: 92.0, gpqa_diamond: 65.8, math: 85.4, swe_bench: 55.7 } },
     { model: 'Claude Haiku 4.5', provider: 'Anthropic', released: '2026-01', scores: { mmlu_pro: 82.1, human_eval: 86.3, gpqa_diamond: 52.4, math: 74.6, swe_bench: 41.2 } },
@@ -522,6 +525,30 @@ export async function updateDailyData(env: Env): Promise<DailyUpdateResult> {
     pricing = BASELINE_PRICING;
   }
 
+  // Backfill: add any new models present in baseline but missing from KV
+  {
+    let backfilled = false;
+    for (const baseProvider of BASELINE_PRICING.providers) {
+      const liveProvider = pricing.providers.find((p) => p.id === baseProvider.id);
+      if (!liveProvider) {
+        pricing.providers.push(baseProvider);
+        backfilled = true;
+        continue;
+      }
+      for (const baseModel of baseProvider.models) {
+        if (!liveProvider.models.find((m) => m.id === baseModel.id)) {
+          liveProvider.models.unshift(baseModel);
+          backfilled = true;
+        }
+      }
+    }
+    if (backfilled) {
+      pricing.lastUpdated = BASELINE_PRICING.lastUpdated;
+      result.modelsChanged = true;
+      console.log('Pricing baseline backfill added new models');
+    }
+  }
+
   const litellm = await fetchLiteLLMPricing();
   if (litellm) {
     const merged = mergePricing(pricing, litellm);
@@ -551,6 +578,22 @@ export async function updateDailyData(env: Env): Promise<DailyUpdateResult> {
   if (!benchmarks) {
     console.log('Seeding benchmarks from baseline');
     benchmarks = BASELINE_BENCHMARKS;
+  }
+
+  // Backfill: add any new benchmark entries present in baseline but missing from KV
+  {
+    let backfilled = false;
+    for (const baseModel of BASELINE_BENCHMARKS.models) {
+      if (!benchmarks.models.find((m) => m.model === baseModel.model)) {
+        benchmarks.models.unshift(baseModel);
+        backfilled = true;
+      }
+    }
+    if (backfilled) {
+      benchmarks.lastUpdated = BASELINE_BENCHMARKS.lastUpdated;
+      result.benchmarksChanged = true;
+      console.log('Benchmarks baseline backfill added new models');
+    }
   }
 
   const hfData = await fetchHFLeaderboard();
