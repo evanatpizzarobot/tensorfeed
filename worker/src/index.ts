@@ -68,7 +68,7 @@ function articlesToJsonFeed(articles: Article[]): object {
     version: 'https://jsonfeed.org/version/1.1',
     title: 'TensorFeed.ai',
     home_page_url: 'https://tensorfeed.ai',
-    feed_url: 'https://tensorfeed.ai/api/feed.json',
+    feed_url: 'https://tensorfeed.ai/feed.json',
     description: 'AI news, model tracking, and real-time AI ecosystem data for humans and agents.',
     items: articles.map(a => ({
       id: a.url,
@@ -240,15 +240,15 @@ export default {
       });
     }
 
-    // RSS feed (cached 300s)
-    if (path === '/api/feed.xml' || path === '/api/feed/all.xml') {
+    // RSS feed (cached 300s). Served at both /feed.xml and /api/feed.xml.
+    if (path === '/feed.xml' || path === '/api/feed.xml' || path === '/api/feed/all.xml' || path === '/feed/all.xml') {
       const articles = await cachedKVGet(request, env.TENSORFEED_NEWS, 'articles', 300) as Article[] | null;
-      return xmlResponse(articlesToRSS(articles || [], 'TensorFeed.ai', 'https://tensorfeed.ai/api/feed.xml'));
+      return xmlResponse(articlesToRSS(articles || [], 'TensorFeed.ai', 'https://tensorfeed.ai/feed.xml'));
     }
 
-    // Category RSS feeds
-    if (path.startsWith('/api/feed/') && path.endsWith('.xml')) {
-      const category = path.replace('/api/feed/', '').replace('.xml', '');
+    // Category RSS feeds. Served at both /feed/<cat>.xml and /api/feed/<cat>.xml.
+    if ((path.startsWith('/feed/') || path.startsWith('/api/feed/')) && path.endsWith('.xml')) {
+      const category = path.replace(/^\/(api\/)?feed\//, '').replace('.xml', '');
       const articles = await cachedKVGet(request, env.TENSORFEED_NEWS, 'articles', 300) as Article[] | null;
       if (!articles) return xmlResponse(articlesToRSS([], `TensorFeed.ai - ${category}`, `https://tensorfeed.ai${path}`));
 
@@ -269,8 +269,8 @@ export default {
       return xmlResponse(articlesToRSS(filtered, `TensorFeed.ai - ${category}`, `https://tensorfeed.ai${path}`));
     }
 
-    // JSON Feed (cached 60s)
-    if (path === '/api/feed.json') {
+    // JSON Feed (cached 60s). Served at both /feed.json and /api/feed.json.
+    if (path === '/feed.json' || path === '/api/feed.json') {
       const articles = await cachedKVGet(request, env.TENSORFEED_NEWS, 'articles', 60) as Article[] | null;
       return jsonResponse(articlesToJsonFeed(articles || []), 200, 60);
     }

@@ -4,7 +4,10 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 routes = [
-  { pattern = "tensorfeed.ai/api/*", zone_name = "tensorfeed.ai" }
+  { pattern = "tensorfeed.ai/api/*", zone_name = "tensorfeed.ai" },
+  { pattern = "tensorfeed.ai/feed.xml", zone_name = "tensorfeed.ai" },
+  { pattern = "tensorfeed.ai/feed.json", zone_name = "tensorfeed.ai" },
+  { pattern = "tensorfeed.ai/feed/*", zone_name = "tensorfeed.ai" }
 ]
 
 [triggers]

@@ -20,110 +20,6 @@ interface Article {
 }
 
 // ---------------------------------------------------------------------------
-// XML helpers
-// ---------------------------------------------------------------------------
-
-function escapeXml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
-function toRfc2822(iso: string): string {
-  return new Date(iso).toUTCString();
-}
-
-// ---------------------------------------------------------------------------
-// RSS 2.0 generation
-// ---------------------------------------------------------------------------
-
-function buildRssItem(article: Article): string {
-  const categories = article.categories
-    .map((c) => `        <category>${escapeXml(c)}</category>`)
-    .join('\n');
-
-  return `    <item>
-      <title>${escapeXml(article.title)}</title>
-      <link>${escapeXml(article.url)}</link>
-      <description>${escapeXml(article.snippet)}</description>
-      <pubDate>${toRfc2822(article.publishedAt)}</pubDate>
-      <guid isPermaLink="true">${escapeXml(article.url)}</guid>
-      <source url="https://${escapeXml(article.sourceDomain)}">${escapeXml(article.source)}</source>
-${categories}
-    </item>`;
-}
-
-function buildRssFeed(
-  articles: Article[],
-  selfUrl: string,
-  title = 'TensorFeed.ai',
-  description = 'AI news, model tracking, and real-time AI ecosystem data for humans and agents.',
-): string {
-  const lastBuildDate = toRfc2822(new Date().toISOString());
-  const items = articles.map(buildRssItem).join('\n');
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>${escapeXml(title)}</title>
-    <link>https://tensorfeed.ai</link>
-    <description>${escapeXml(description)}</description>
-    <language>en-us</language>
-    <lastBuildDate>${lastBuildDate}</lastBuildDate>
-    <atom:link href="${escapeXml(selfUrl)}" rel="self" type="application/rss+xml"/>
-${items}
-  </channel>
-</rss>
-`;
-}
-
-// ---------------------------------------------------------------------------
-// JSON Feed 1.1 generation
-// ---------------------------------------------------------------------------
-
-interface JsonFeedItem {
-  id: string;
-  url: string;
-  title: string;
-  content_text: string;
-  date_published: string;
-  authors: { name: string }[];
-  tags: string[];
-}
-
-interface JsonFeed {
-  version: string;
-  title: string;
-  home_page_url: string;
-  feed_url: string;
-  description: string;
-  items: JsonFeedItem[];
-}
-
-function buildJsonFeed(articles: Article[]): JsonFeed {
-  return {
-    version: 'https://jsonfeed.org/version/1.1',
-    title: 'TensorFeed.ai',
-    home_page_url: 'https://tensorfeed.ai',
-    feed_url: 'https://tensorfeed.ai/feed.json',
-    description:
-      'AI news, model tracking, and real-time AI ecosystem data for humans and agents.',
-    items: articles.map((a) => ({
-      id: a.url,
-      url: a.url,
-      title: a.title,
-      content_text: a.snippet,
-      date_published: a.publishedAt,
-      authors: [{ name: a.source }],
-      tags: a.categories,
-    })),
-  };
-}
-
-// ---------------------------------------------------------------------------
 // Agent API helpers
 // ---------------------------------------------------------------------------
 
@@ -158,16 +54,6 @@ function writeFile(filePath: string, content: string) {
 }
 
 // ---------------------------------------------------------------------------
-// Category filters
-// ---------------------------------------------------------------------------
-
-function filterByCategory(articles: Article[], category: string): Article[] {
-  return articles.filter((a) =>
-    a.categories.some((c) => c.toLowerCase() === category.toLowerCase()),
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -190,45 +76,13 @@ async function main() {
   );
   console.log(`Wrote articles to ${outputPath}`);
 
-  // 2. Generate RSS & JSON feeds
-  console.log('\nGenerating feed files...');
+  // NOTE: /feed.xml, /feed.json, /feed/research.xml, and /feed/tools.xml are
+  // served dynamically by the Worker (see worker/src/index.ts). The Worker
+  // reads the freshest articles from KV on every request (cached 60 to 300s)
+  // so the feeds stay within 10 minutes of the latest RSS poll instead of
+  // being frozen at build time.
 
-  // All articles - RSS
-  writeFile(
-    path.join(publicDir, 'feed.xml'),
-    buildRssFeed(articles, 'https://tensorfeed.ai/feed.xml'),
-  );
-
-  // All articles - JSON Feed
-  writeFile(
-    path.join(publicDir, 'feed.json'),
-    JSON.stringify(buildJsonFeed(articles), null, 2),
-  );
-
-  // Category feeds
-  const researchArticles = filterByCategory(articles, 'Research');
-  writeFile(
-    path.join(publicDir, 'feed', 'research.xml'),
-    buildRssFeed(
-      researchArticles,
-      'https://tensorfeed.ai/feed/research.xml',
-      'TensorFeed.ai - Research',
-      'AI research papers, breakthroughs, and academic findings.',
-    ),
-  );
-
-  const toolsArticles = filterByCategory(articles, 'Tools & Dev');
-  writeFile(
-    path.join(publicDir, 'feed', 'tools.xml'),
-    buildRssFeed(
-      toolsArticles,
-      'https://tensorfeed.ai/feed/tools.xml',
-      'TensorFeed.ai - Tools & Dev',
-      'Developer tools, SDKs, and AI engineering news.',
-    ),
-  );
-
-  // 3. Generate static agent API JSON files
+  // 2. Generate static agent API JSON files
   console.log('\nGenerating agent API files...');
 
   const agentApiDir = path.join(publicDir, 'api', 'agents');
