@@ -50,7 +50,7 @@ export default function LiveTicker() {
       className="tf-ticker relative overflow-hidden border-b border-border bg-bg-secondary"
       role="region"
       aria-label="Live industry ticker"
-      style={{ height: 34 }}
+      style={{ height: 44 }}
     >
       <div
         className="absolute inset-y-0 left-0 z-[2] pointer-events-none"
@@ -64,11 +64,11 @@ export default function LiveTicker() {
       />
 
       <div
-        className="absolute inset-y-0 left-0 z-[3] flex items-center gap-1.5 font-mono uppercase border-r border-border"
+        className="absolute inset-y-0 left-0 z-[3] flex items-center gap-2 font-mono uppercase border-r border-border"
         style={{
           background: 'var(--bg-tertiary)',
-          padding: '0 14px',
-          fontSize: 10.5,
+          padding: '0 18px',
+          fontSize: 12,
           fontWeight: 600,
           letterSpacing: '0.12em',
           color: 'var(--text-secondary)',
@@ -78,8 +78,8 @@ export default function LiveTicker() {
           className="tf-live-dot"
           aria-hidden="true"
           style={{
-            width: 6,
-            height: 6,
+            width: 7,
+            height: 7,
             borderRadius: '50%',
             background: 'var(--accent-green)',
             boxShadow: '0 0 8px var(--accent-green)',
@@ -90,25 +90,25 @@ export default function LiveTicker() {
 
       <div
         className="tf-ticker-track flex whitespace-nowrap"
-        style={{ paddingLeft: 110 }}
+        style={{ paddingLeft: 130 }}
       >
         {loop.map((item, i) => (
           <div
             key={i}
-            className="inline-flex items-center gap-2 font-mono border-r border-border"
+            className="inline-flex items-center gap-2.5 font-mono border-r border-border"
             style={{
-              padding: '0 18px',
-              fontSize: 12,
+              padding: '0 22px',
+              fontSize: 13.5,
               color: 'var(--text-primary)',
-              height: 34,
+              height: 44,
             }}
           >
             {item.kind === 'status' && item.cls && (
               <span
                 aria-hidden="true"
                 style={{
-                  width: 6,
-                  height: 6,
+                  width: 7,
+                  height: 7,
                   borderRadius: '50%',
                   background: DOT_COLOR[item.cls] ?? 'var(--accent-green)',
                   boxShadow: item.cls === 'up' || item.cls === 'ok' ? '0 0 6px var(--accent-green)' : undefined,
@@ -117,7 +117,7 @@ export default function LiveTicker() {
             )}
             <span
               style={{
-                fontSize: 10,
+                fontSize: 11.5,
                 fontWeight: 600,
                 letterSpacing: '0.1em',
                 color: 'var(--text-muted)',
@@ -135,7 +135,7 @@ export default function LiveTicker() {
               {item.text}
             </span>
             {item.mono && (
-              <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>{item.mono}</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>{item.mono}</span>
             )}
           </div>
         ))}
