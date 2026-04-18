@@ -5,8 +5,11 @@ compatibility_flags = ["nodejs_compat"]
 
 routes = [
   { pattern = "tensorfeed.ai/api/*", zone_name = "tensorfeed.ai" },
-  { pattern = "tensorfeed.ai/feed.xml", zone_name = "tensorfeed.ai" },
-  { pattern = "tensorfeed.ai/feed.json", zone_name = "tensorfeed.ai" },
+  # Trailing * on the single-file patterns is required: Cloudflare Pages
+  # default-routes the zone, and exact-path worker routes (no wildcard) lose
+  # the tie. /feed/* works because it is already a wildcard.
+  { pattern = "tensorfeed.ai/feed.xml*", zone_name = "tensorfeed.ai" },
+  { pattern = "tensorfeed.ai/feed.json*", zone_name = "tensorfeed.ai" },
   { pattern = "tensorfeed.ai/feed/*", zone_name = "tensorfeed.ai" }
 ]
 
