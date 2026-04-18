@@ -115,3 +115,8 @@ Contact: feedback@tensorfeed.ai | Press: press@tensorfeed.ai
 - [Full Content Bundle](https://tensorfeed.ai/llms-full.txt): Complete text of all guide pages for full-context ingestion
 - [Sitemap](https://tensorfeed.ai/sitemap.xml): Full XML sitemap of all pages
 - [About](https://tensorfeed.ai/about): About TensorFeed
+- [Editorial Policy](https://tensorfeed.ai/editorial-policy): Editorial standards, sourcing, fact-checking, and corrections policy
+- [Authors](https://tensorfeed.ai/authors): TensorFeed editorial team and author bios
+- [Ripper](https://tensorfeed.ai/authors/ripper): Founder and lead editor, software engineering and AI agents
+- [Kira Nolan](https://tensorfeed.ai/authors/kira-nolan): Contributing editor, AI safety and open source
+- [Marcus Chen](https://tensorfeed.ai/authors/marcus-chen): Contributing editor, API economics and enterprise AI

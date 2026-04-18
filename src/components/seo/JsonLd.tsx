@@ -144,33 +144,68 @@ export function SoftwareApplicationJsonLd({
   return <JsonLd data={data} />;
 }
 
+const AUTHOR_SLUGS: Record<string, string> = {
+  Ripper: 'ripper',
+  'Kira Nolan': 'kira-nolan',
+  'Marcus Chen': 'marcus-chen',
+};
+
+function authorUrlFor(name: string): string {
+  const slug = AUTHOR_SLUGS[name];
+  return slug ? `https://tensorfeed.ai/authors/${slug}` : 'https://tensorfeed.ai/authors';
+}
+
 export function ArticleJsonLd({
   title,
   description,
   datePublished,
   dateModified,
   author = 'Ripper',
+  url,
+  image,
 }: {
   title: string;
   description: string;
   datePublished: string;
   dateModified?: string;
   author?: string;
+  url?: string;
+  image?: string;
 }) {
-  const data = {
+  const articleImage = image || 'https://tensorfeed.ai/tensorfeed-logo.png';
+  const data: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'NewsArticle',
     headline: title,
     description,
-    author: { '@type': 'Person', name: author },
+    author: {
+      '@type': 'Person',
+      name: author,
+      url: authorUrlFor(author),
+    },
     publisher: {
       '@type': 'Organization',
       name: 'TensorFeed.ai',
       url: 'https://tensorfeed.ai',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://tensorfeed.ai/tensorfeed-logo.png',
+        width: 1024,
+        height: 1024,
+      },
     },
     datePublished,
     dateModified: dateModified || datePublished,
+    image: [articleImage],
   };
+
+  if (url) {
+    data.mainEntityOfPage = {
+      '@type': 'WebPage',
+      '@id': url,
+    };
+    data.url = url;
+  }
 
   return <JsonLd data={data} />;
 }

@@ -30,6 +30,7 @@ export default function AiPricingFloorPage() {
         title="The AI Pricing Floor: How Low Can It Go?"
         description="Google ships Flash at $0.10 per million input tokens. Mistral matches. Open source is free. We look at what happens when inference economics approach zero."
         datePublished="2026-04-16"
+        author="Marcus Chen"
       />
 
       <Link

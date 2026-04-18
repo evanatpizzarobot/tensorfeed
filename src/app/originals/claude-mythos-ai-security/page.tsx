@@ -28,6 +28,7 @@ export default function ClaudeMythosAiSecurityPage() {
         title="Claude Mythos Is Rewriting the Rules of AI Security"
         description="The UK AI Security Institute evaluated Claude Mythos Preview in capture-the-flag scenarios and found unprecedented performance in autonomous exploit generation and complex attack simulation."
         datePublished="2026-04-13"
+        author="Kira Nolan"
       />
 
       {/* Back link */}

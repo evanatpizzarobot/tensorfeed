@@ -30,6 +30,7 @@ export default function LlmsTxtEveryDeveloperPage() {
         title="Why Every Developer Needs an llms.txt File"
         description="AI agents are becoming your most important visitors. llms.txt is the standard that tells them what your site actually contains. A practical guide."
         datePublished="2026-04-17"
+        author="Kira Nolan"
       />
 
       <Link

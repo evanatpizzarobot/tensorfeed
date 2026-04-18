@@ -28,6 +28,7 @@ export default function StanfordAiIndex2026Page() {
         title="Stanford&apos;s 2026 AI Index Says We Can&apos;t Keep Up. They&apos;re Right."
         description="The Stanford AI Index 2026 report finds that as of March 2026, Anthropic leads frontier model development, followed by xAI, Google, and OpenAI. Policy is failing to match capability growth."
         datePublished="2026-04-11"
+        author="Marcus Chen"
       />
 
       {/* Back link */}
