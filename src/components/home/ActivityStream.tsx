@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 type EventKind = 'news' | 'status' | 'release' | 'agent' | 'benchmark';
@@ -9,6 +10,7 @@ interface ActivityEvent {
   kind: EventKind;
   type: string;
   msg: React.ReactNode;
+  href?: string;
 }
 
 const HL = (s: string) => (
@@ -16,14 +18,62 @@ const HL = (s: string) => (
 );
 
 const EVENTS: ActivityEvent[] = [
-  { time: '14:32', kind: 'news', type: 'NEW ARTICLE', msg: <>New article from {HL('Anthropic Blog')}: Opus 4.7 benchmarks published</> },
-  { time: '14:30', kind: 'status', type: 'LATENCY', msg: <>Gemini API {HL('latency spike')} detected, p95 at 312ms</> },
-  { time: '14:28', kind: 'release', type: 'MODEL RELEASE', msg: <>Mistral published {HL('Mistral Medium 3')}</> },
-  { time: '14:25', kind: 'agent', type: 'AGENT CRAWL', msg: <>ClaudeBot crawled {HL('/llms-full.txt')}</> },
-  { time: '14:22', kind: 'benchmark', type: 'BENCHMARK', msg: <>MMLU-Pro leader updated: Opus 4.7 at {HL('88.4')}</> },
-  { time: '14:18', kind: 'news', type: 'NEW ARTICLE', msg: <>Ars Technica: Blackwell Ultra B300 ships to first hyperscaler</> },
-  { time: '14:14', kind: 'agent', type: 'AGENT CRAWL', msg: <>GPTBot pulled {HL('/feed.json')} (incremental)</> },
-  { time: '14:11', kind: 'news', type: 'NEW ARTICLE', msg: <>HuggingFace leaderboard updated, Qwen3 takes #1</> },
+  {
+    time: '14:32',
+    kind: 'news',
+    type: 'NEW ARTICLE',
+    msg: <>New article: {HL('Claude Opus 4.7 just dropped')}, here&apos;s what changed</>,
+    href: '/originals/claude-opus-4-7-release',
+  },
+  {
+    time: '14:30',
+    kind: 'status',
+    type: 'LATENCY',
+    msg: <>Gemini API {HL('latency spike')} detected, p95 at 312ms</>,
+    href: '/is-gemini-down',
+  },
+  {
+    time: '14:28',
+    kind: 'release',
+    type: 'MODEL RELEASE',
+    msg: <>Mistral published {HL('Mistral Medium 3')}</>,
+    href: '/models',
+  },
+  {
+    time: '14:25',
+    kind: 'agent',
+    type: 'AGENT CRAWL',
+    msg: <>ClaudeBot crawled {HL('/llms-full.txt')}</>,
+    href: '/llms-full.txt',
+  },
+  {
+    time: '14:22',
+    kind: 'benchmark',
+    type: 'BENCHMARK',
+    msg: <>MMLU-Pro leader updated: Opus 4.7 at {HL('88.4')}</>,
+    href: '/benchmarks',
+  },
+  {
+    time: '14:18',
+    kind: 'news',
+    type: 'NEW ARTICLE',
+    msg: <>{HL('AI pricing floor')}: how low can it actually go?</>,
+    href: '/originals/ai-pricing-floor',
+  },
+  {
+    time: '14:14',
+    kind: 'agent',
+    type: 'AGENT CRAWL',
+    msg: <>GPTBot pulled {HL('/feed.json')} (incremental)</>,
+    href: '/feed.json',
+  },
+  {
+    time: '14:11',
+    kind: 'news',
+    type: 'NEW ARTICLE',
+    msg: <>{HL('Why every developer needs an llms.txt file')}</>,
+    href: '/originals/llms-txt-every-developer',
+  },
 ];
 
 const BULLET_COLORS: Record<EventKind, string> = {
@@ -107,50 +157,84 @@ export default function ActivityStream() {
       </div>
 
       <div className="relative" style={{ padding: '6px 0', maxHeight: 360, overflow: 'hidden' }}>
-        {EVENTS.map((ev, i) => (
-          <div
-            key={`${ev.time}-${i}`}
-            className={`grid items-center font-mono ${i === 0 ? 'tf-activity-enter' : ''}`}
-            style={{
-              gridTemplateColumns: '14px 92px 110px 1fr',
-              gap: 14,
-              padding: '7px 20px',
-              fontSize: 12,
-            }}
-          >
-            <span
-              aria-hidden="true"
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                background: BULLET_COLORS[ev.kind],
-                boxShadow: BULLET_GLOW[ev.kind] ? `0 0 6px ${BULLET_COLORS[ev.kind]}` : undefined,
-              }}
-            />
-            <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>{ev.time} UTC</span>
-            <span
-              className="uppercase"
-              style={{
-                fontSize: 10.5,
-                letterSpacing: '0.1em',
-                fontWeight: 600,
-                color: KIND_COLORS[ev.kind],
-              }}
-            >
-              {ev.type}
-            </span>
-            <span
-              style={{
-                color: 'var(--text-primary)',
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: 13,
-              }}
-            >
-              {ev.msg}
-            </span>
-          </div>
-        ))}
+        {EVENTS.map((ev, i) => {
+          const inner = (
+            <>
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: BULLET_COLORS[ev.kind],
+                  boxShadow: BULLET_GLOW[ev.kind] ? `0 0 6px ${BULLET_COLORS[ev.kind]}` : undefined,
+                }}
+              />
+              <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>{ev.time} UTC</span>
+              <span
+                className="uppercase"
+                style={{
+                  fontSize: 10.5,
+                  letterSpacing: '0.1em',
+                  fontWeight: 600,
+                  color: KIND_COLORS[ev.kind],
+                }}
+              >
+                {ev.type}
+              </span>
+              <span
+                style={{
+                  color: 'var(--text-primary)',
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontSize: 13,
+                }}
+              >
+                {ev.msg}
+              </span>
+            </>
+          );
+
+          const className = `tf-activity-row grid items-center font-mono ${i === 0 ? 'tf-activity-enter' : ''}`;
+          const style = {
+            gridTemplateColumns: '14px 92px 110px 1fr',
+            gap: 14,
+            padding: '7px 20px',
+            fontSize: 12,
+            color: 'inherit',
+            textDecoration: 'none',
+            transition: 'background 0.12s',
+          } as const;
+
+          if (!ev.href) {
+            return (
+              <div key={`${ev.time}-${i}`} className={className} style={style}>
+                {inner}
+              </div>
+            );
+          }
+
+          const isExternal = ev.href.startsWith('http') || ev.href.endsWith('.txt') || ev.href.endsWith('.json') || ev.href.endsWith('.xml');
+          if (isExternal) {
+            return (
+              <a
+                key={`${ev.time}-${i}`}
+                href={ev.href}
+                className={className}
+                style={style}
+                target={ev.href.startsWith('http') ? '_blank' : undefined}
+                rel={ev.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              >
+                {inner}
+              </a>
+            );
+          }
+
+          return (
+            <Link key={`${ev.time}-${i}`} href={ev.href} className={className} style={style}>
+              {inner}
+            </Link>
+          );
+        })}
         <div
           aria-hidden="true"
           className="absolute left-0 right-0 bottom-0 pointer-events-none"

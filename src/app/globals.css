@@ -242,7 +242,7 @@ a, button, input, select, textarea,
 }
 
 .tf-ticker-track {
-  animation: tf-ticker-scroll calc(90s / var(--motion, 1)) linear infinite;
+  animation: tf-ticker-scroll calc(55s / var(--motion, 1)) linear infinite;
   will-change: transform;
 }
 .tf-ticker:hover .tf-ticker-track { animation-play-state: paused; }
@@ -304,6 +304,9 @@ a, button, input, select, textarea,
 }
 .tf-activity-enter {
   animation: tf-activity-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+a.tf-activity-row:hover {
+  background: var(--bg-tertiary);
 }
 
 .tf-mag-lead h2 a {
