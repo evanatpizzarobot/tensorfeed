@@ -10,38 +10,62 @@
         {
           "id": "claude-opus-4-7",
           "name": "Claude Opus 4.7",
-          "inputPrice": 15.00,
-          "outputPrice": 75.00,
+          "inputPrice": 15,
+          "outputPrice": 75,
           "contextWindow": 1000000,
           "released": "2026-04",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "flagship"
         },
         {
           "id": "claude-opus-4-6",
           "name": "Claude Opus 4.6",
-          "inputPrice": 15.00,
-          "outputPrice": 75.00,
+          "inputPrice": 15,
+          "outputPrice": 75,
           "contextWindow": 200000,
           "released": "2026-03",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "mid"
         },
         {
           "id": "claude-sonnet-4-6",
           "name": "Claude Sonnet 4.6",
-          "inputPrice": 3.00,
-          "outputPrice": 15.00,
+          "inputPrice": 3,
+          "outputPrice": 15,
           "contextWindow": 200000,
           "released": "2026-03",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "mid"
         },
         {
           "id": "claude-haiku-4-5",
           "name": "Claude Haiku 4.5",
-          "inputPrice": 0.80,
-          "outputPrice": 4.00,
+          "inputPrice": 0.8,
+          "outputPrice": 4,
           "contextWindow": 200000,
           "released": "2025-06",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "budget"
         }
       ]
     },
@@ -54,38 +78,60 @@
         {
           "id": "gpt-4o",
           "name": "GPT-4o",
-          "inputPrice": 2.50,
-          "outputPrice": 10.00,
+          "inputPrice": 2.5,
+          "outputPrice": 10,
           "contextWindow": 128000,
           "released": "2024-05",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "flagship"
         },
         {
           "id": "gpt-4o-mini",
           "name": "GPT-4o-mini",
           "inputPrice": 0.15,
-          "outputPrice": 0.60,
+          "outputPrice": 0.6,
           "contextWindow": 128000,
           "released": "2024-07",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "budget"
         },
         {
           "id": "o1",
           "name": "o1",
-          "inputPrice": 15.00,
-          "outputPrice": 60.00,
+          "inputPrice": 15,
+          "outputPrice": 60,
           "contextWindow": 200000,
           "released": "2024-12",
-          "capabilities": ["text", "reasoning", "code"]
+          "capabilities": [
+            "text",
+            "reasoning",
+            "code"
+          ],
+          "tier": "flagship"
         },
         {
           "id": "o3-mini",
           "name": "o3-mini",
-          "inputPrice": 1.10,
-          "outputPrice": 4.40,
+          "inputPrice": 1.1,
+          "outputPrice": 4.4,
           "contextWindow": 200000,
           "released": "2025-01",
-          "capabilities": ["text", "reasoning", "code"]
+          "capabilities": [
+            "text",
+            "reasoning",
+            "code"
+          ],
+          "tier": "mid"
         }
       ]
     },
@@ -99,19 +145,32 @@
           "id": "gemini-2-5-pro",
           "name": "Gemini 2.5 Pro",
           "inputPrice": 1.25,
-          "outputPrice": 10.00,
+          "outputPrice": 10,
           "contextWindow": 1000000,
           "released": "2025-03",
-          "capabilities": ["text", "vision", "tool-use", "code", "reasoning"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code",
+            "reasoning"
+          ],
+          "tier": "flagship"
         },
         {
           "id": "gemini-2-0-flash",
           "name": "Gemini 2.0 Flash",
-          "inputPrice": 0.10,
-          "outputPrice": 0.40,
+          "inputPrice": 0.1,
+          "outputPrice": 0.4,
           "contextWindow": 1000000,
           "released": "2025-02",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "budget"
         }
       ]
     },
@@ -130,7 +189,12 @@
           "released": "2025-04",
           "openSource": true,
           "license": "Llama 4 Community License",
-          "capabilities": ["text", "vision", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "code"
+          ],
+          "tier": "mid"
         },
         {
           "id": "llama-4-maverick",
@@ -141,7 +205,12 @@
           "released": "2025-04",
           "openSource": true,
           "license": "Llama 4 Community License",
-          "capabilities": ["text", "vision", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "code"
+          ],
+          "tier": "flagship"
         }
       ]
     },
@@ -154,20 +223,31 @@
         {
           "id": "mistral-large",
           "name": "Mistral Large",
-          "inputPrice": 2.00,
-          "outputPrice": 6.00,
+          "inputPrice": 2,
+          "outputPrice": 6,
           "contextWindow": 128000,
           "released": "2025-01",
-          "capabilities": ["text", "vision", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "vision",
+            "tool-use",
+            "code"
+          ],
+          "tier": "flagship"
         },
         {
           "id": "mistral-small",
           "name": "Mistral Small",
-          "inputPrice": 0.10,
-          "outputPrice": 0.30,
+          "inputPrice": 0.1,
+          "outputPrice": 0.3,
           "contextWindow": 128000,
           "released": "2025-01",
-          "capabilities": ["text", "tool-use", "code"]
+          "capabilities": [
+            "text",
+            "tool-use",
+            "code"
+          ],
+          "tier": "budget"
         }
       ]
     },
@@ -180,20 +260,30 @@
         {
           "id": "command-r-plus",
           "name": "Command R+",
-          "inputPrice": 2.50,
-          "outputPrice": 10.00,
+          "inputPrice": 2.5,
+          "outputPrice": 10,
           "contextWindow": 128000,
           "released": "2024-04",
-          "capabilities": ["text", "tool-use", "RAG"]
+          "capabilities": [
+            "text",
+            "tool-use",
+            "RAG"
+          ],
+          "tier": "flagship"
         },
         {
           "id": "command-r",
           "name": "Command R",
           "inputPrice": 0.15,
-          "outputPrice": 0.60,
+          "outputPrice": 0.6,
           "contextWindow": 128000,
           "released": "2024-03",
-          "capabilities": ["text", "tool-use", "RAG"]
+          "capabilities": [
+            "text",
+            "tool-use",
+            "RAG"
+          ],
+          "tier": "mid"
         }
       ]
     }

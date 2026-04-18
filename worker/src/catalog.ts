@@ -27,6 +27,14 @@ interface ModelEntry {
   capabilities: string[];
   openSource?: boolean;
   license?: string;
+  /**
+   * flagship = the primary model people compare for that provider.
+   * mid = secondary tier, still capable but not the headline.
+   * budget = small / cheap tier.
+   * The /compare page uses this to pick its default selection and to
+   * auto-generate popular comparisons whenever a new flagship lands.
+   */
+  tier?: 'flagship' | 'mid' | 'budget';
 }
 
 interface ProviderEntry {
@@ -258,6 +266,14 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): {
     );
     if (alreadyHave) continue;
 
+    const lowerName = cleanKey.toLowerCase();
+    let inferredTier: ModelEntry['tier'] = 'mid';
+    if (/opus|ultra|max|behemoth|maverick|large|premier|reasoning/.test(lowerName)) {
+      inferredTier = 'flagship';
+    } else if (/mini|nano|flash|tiny|small|haiku|lite|edge/.test(lowerName)) {
+      inferredTier = 'budget';
+    }
+
     const newModel: ModelEntry = {
       id: cleanKey,
       name: cleanKey,
@@ -266,6 +282,7 @@ function mergePricing(current: PricingData, litellm: Record<string, unknown>): {
       contextWindow: maxTokens || 128000,
       released: new Date().toISOString().slice(0, 7),
       capabilities: ['text'],
+      tier: inferredTier,
     };
 
     console.log(`New model detected: ${provider.name} / ${newModel.name}`);
@@ -390,47 +407,47 @@ const BASELINE_PRICING: PricingData = {
     {
       id: 'anthropic', name: 'Anthropic', logo: '/images/providers/anthropic.png', url: 'https://www.anthropic.com',
       models: [
-        { id: 'claude-opus-4-7', name: 'Claude Opus 4.7', inputPrice: 15.00, outputPrice: 75.00, contextWindow: 1000000, released: '2026-04', capabilities: ['text', 'vision', 'tool-use', 'code'] },
-        { id: 'claude-opus-4-6', name: 'Claude Opus 4.6', inputPrice: 15.00, outputPrice: 75.00, contextWindow: 200000, released: '2026-03', capabilities: ['text', 'vision', 'tool-use', 'code'] },
-        { id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', inputPrice: 3.00, outputPrice: 15.00, contextWindow: 200000, released: '2026-03', capabilities: ['text', 'vision', 'tool-use', 'code'] },
-        { id: 'claude-haiku-4-5', name: 'Claude Haiku 4.5', inputPrice: 0.80, outputPrice: 4.00, contextWindow: 200000, released: '2025-06', capabilities: ['text', 'vision', 'tool-use', 'code'] },
+        { id: 'claude-opus-4-7', name: 'Claude Opus 4.7', inputPrice: 15.00, outputPrice: 75.00, contextWindow: 1000000, released: '2026-04', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'flagship' },
+        { id: 'claude-opus-4-6', name: 'Claude Opus 4.6', inputPrice: 15.00, outputPrice: 75.00, contextWindow: 200000, released: '2026-03', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'mid' },
+        { id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', inputPrice: 3.00, outputPrice: 15.00, contextWindow: 200000, released: '2026-03', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'mid' },
+        { id: 'claude-haiku-4-5', name: 'Claude Haiku 4.5', inputPrice: 0.80, outputPrice: 4.00, contextWindow: 200000, released: '2025-06', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'budget' },
       ],
     },
     {
       id: 'openai', name: 'OpenAI', logo: '/images/providers/openai.png', url: 'https://openai.com',
       models: [
-        { id: 'gpt-4o', name: 'GPT-4o', inputPrice: 2.50, outputPrice: 10.00, contextWindow: 128000, released: '2024-05', capabilities: ['text', 'vision', 'tool-use', 'code'] },
-        { id: 'gpt-4o-mini', name: 'GPT-4o-mini', inputPrice: 0.15, outputPrice: 0.60, contextWindow: 128000, released: '2024-07', capabilities: ['text', 'vision', 'tool-use', 'code'] },
-        { id: 'o1', name: 'o1', inputPrice: 15.00, outputPrice: 60.00, contextWindow: 200000, released: '2024-12', capabilities: ['text', 'reasoning', 'code'] },
-        { id: 'o3-mini', name: 'o3-mini', inputPrice: 1.10, outputPrice: 4.40, contextWindow: 200000, released: '2025-01', capabilities: ['text', 'reasoning', 'code'] },
+        { id: 'gpt-4o', name: 'GPT-4o', inputPrice: 2.50, outputPrice: 10.00, contextWindow: 128000, released: '2024-05', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'flagship' },
+        { id: 'gpt-4o-mini', name: 'GPT-4o-mini', inputPrice: 0.15, outputPrice: 0.60, contextWindow: 128000, released: '2024-07', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'budget' },
+        { id: 'o1', name: 'o1', inputPrice: 15.00, outputPrice: 60.00, contextWindow: 200000, released: '2024-12', capabilities: ['text', 'reasoning', 'code'], tier: 'flagship' },
+        { id: 'o3-mini', name: 'o3-mini', inputPrice: 1.10, outputPrice: 4.40, contextWindow: 200000, released: '2025-01', capabilities: ['text', 'reasoning', 'code'], tier: 'mid' },
       ],
     },
     {
       id: 'google', name: 'Google', logo: '/images/providers/google.png', url: 'https://ai.google.dev',
       models: [
-        { id: 'gemini-2-5-pro', name: 'Gemini 2.5 Pro', inputPrice: 1.25, outputPrice: 10.00, contextWindow: 1000000, released: '2025-03', capabilities: ['text', 'vision', 'tool-use', 'code', 'reasoning'] },
-        { id: 'gemini-2-0-flash', name: 'Gemini 2.0 Flash', inputPrice: 0.10, outputPrice: 0.40, contextWindow: 1000000, released: '2025-02', capabilities: ['text', 'vision', 'tool-use', 'code'] },
+        { id: 'gemini-2-5-pro', name: 'Gemini 2.5 Pro', inputPrice: 1.25, outputPrice: 10.00, contextWindow: 1000000, released: '2025-03', capabilities: ['text', 'vision', 'tool-use', 'code', 'reasoning'], tier: 'flagship' },
+        { id: 'gemini-2-0-flash', name: 'Gemini 2.0 Flash', inputPrice: 0.10, outputPrice: 0.40, contextWindow: 1000000, released: '2025-02', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'budget' },
       ],
     },
     {
       id: 'meta', name: 'Meta', logo: '/images/providers/meta.png', url: 'https://ai.meta.com',
       models: [
-        { id: 'llama-4-scout', name: 'Llama 4 Scout', inputPrice: 0, outputPrice: 0, contextWindow: 10000000, released: '2025-04', openSource: true, license: 'Llama 4 Community License', capabilities: ['text', 'vision', 'code'] },
-        { id: 'llama-4-maverick', name: 'Llama 4 Maverick', inputPrice: 0, outputPrice: 0, contextWindow: 1000000, released: '2025-04', openSource: true, license: 'Llama 4 Community License', capabilities: ['text', 'vision', 'code'] },
+        { id: 'llama-4-scout', name: 'Llama 4 Scout', inputPrice: 0, outputPrice: 0, contextWindow: 10000000, released: '2025-04', openSource: true, license: 'Llama 4 Community License', capabilities: ['text', 'vision', 'code'], tier: 'mid' },
+        { id: 'llama-4-maverick', name: 'Llama 4 Maverick', inputPrice: 0, outputPrice: 0, contextWindow: 1000000, released: '2025-04', openSource: true, license: 'Llama 4 Community License', capabilities: ['text', 'vision', 'code'], tier: 'flagship' },
       ],
     },
     {
       id: 'mistral', name: 'Mistral', logo: '/images/providers/mistral.png', url: 'https://mistral.ai',
       models: [
-        { id: 'mistral-large', name: 'Mistral Large', inputPrice: 2.00, outputPrice: 6.00, contextWindow: 128000, released: '2025-01', capabilities: ['text', 'vision', 'tool-use', 'code'] },
-        { id: 'mistral-small', name: 'Mistral Small', inputPrice: 0.10, outputPrice: 0.30, contextWindow: 128000, released: '2025-01', capabilities: ['text', 'tool-use', 'code'] },
+        { id: 'mistral-large', name: 'Mistral Large', inputPrice: 2.00, outputPrice: 6.00, contextWindow: 128000, released: '2025-01', capabilities: ['text', 'vision', 'tool-use', 'code'], tier: 'flagship' },
+        { id: 'mistral-small', name: 'Mistral Small', inputPrice: 0.10, outputPrice: 0.30, contextWindow: 128000, released: '2025-01', capabilities: ['text', 'tool-use', 'code'], tier: 'budget' },
       ],
     },
     {
       id: 'cohere', name: 'Cohere', logo: '/images/providers/cohere.png', url: 'https://cohere.com',
       models: [
-        { id: 'command-r-plus', name: 'Command R+', inputPrice: 2.50, outputPrice: 10.00, contextWindow: 128000, released: '2024-04', capabilities: ['text', 'tool-use', 'RAG'] },
-        { id: 'command-r', name: 'Command R', inputPrice: 0.15, outputPrice: 0.60, contextWindow: 128000, released: '2024-03', capabilities: ['text', 'tool-use', 'RAG'] },
+        { id: 'command-r-plus', name: 'Command R+', inputPrice: 2.50, outputPrice: 10.00, contextWindow: 128000, released: '2024-04', capabilities: ['text', 'tool-use', 'RAG'], tier: 'flagship' },
+        { id: 'command-r', name: 'Command R', inputPrice: 0.15, outputPrice: 0.60, contextWindow: 128000, released: '2024-03', capabilities: ['text', 'tool-use', 'RAG'], tier: 'mid' },
       ],
     },
   ],

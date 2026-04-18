@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Cpu, Plus, X, ChevronDown, ArrowRight } from 'lucide-react';
+import { Cpu, Plus, X, ChevronDown, ArrowRight, RefreshCw } from 'lucide-react';
 import fallbackPricingData from '@/../data/pricing.json';
 import Link from 'next/link';
 interface Model {
@@ -13,6 +13,7 @@ interface Model {
   released: string;
   capabilities: string[];
   openSource?: boolean;
+  tier?: 'flagship' | 'mid' | 'budget';
 }
 
 interface Provider {
@@ -30,6 +31,55 @@ interface PricingData {
 
 interface FlatModel extends Model {
   provider: string;
+  providerId: string;
+}
+
+/**
+ * Sort released strings (YYYY-MM or YYYY-MM-DD) newest first.
+ */
+function compareReleased(a: string, b: string): number {
+  return b.localeCompare(a);
+}
+
+/**
+ * Pick the freshest flagship model per provider. If a provider has no flagship
+ * marked, fall back to its newest model overall. Returns provider id to model.
+ */
+function flagshipPerProvider(providers: Provider[]): Record<string, FlatModel> {
+  const out: Record<string, FlatModel> = {};
+  for (const provider of providers) {
+    const flagships = provider.models
+      .filter((m) => m.tier === 'flagship')
+      .sort((a, b) => compareReleased(a.released, b.released));
+    const pick =
+      flagships[0] ??
+      [...provider.models].sort((a, b) => compareReleased(a.released, b.released))[0];
+    if (pick) {
+      out[provider.id] = { ...pick, provider: provider.name, providerId: provider.id };
+    }
+  }
+  return out;
+}
+
+/**
+ * Build popular comparisons by pairing flagships across providers in a stable
+ * order. Always tries Anthropic vs OpenAI first, then rotates other pairings.
+ */
+function derivePopularComparisons(flagships: Record<string, FlatModel>): { label: string; ids: string[] }[] {
+  const get = (id: string) => flagships[id];
+  const pair = (a?: FlatModel, b?: FlatModel) =>
+    a && b ? { label: `${a.name} vs ${b.name}`, ids: [a.id, b.id] } : null;
+
+  const candidates = [
+    pair(get('anthropic'), get('openai')),
+    pair(get('anthropic'), get('google')),
+    pair(get('openai'), get('google')),
+    pair(get('mistral'), get('meta')),
+    pair(get('anthropic'), get('meta')),
+    pair(get('google'), get('mistral')),
+  ].filter((x): x is { label: string; ids: string[] } => x !== null);
+
+  return candidates.slice(0, 4);
 }
 
 function formatContext(ctx: number): string {
@@ -42,11 +92,15 @@ function formatPrice(price: number): string {
   return `$${price.toFixed(2)}`;
 }
 
-const popularComparisons: { label: string; ids: string[] }[] = [
-  { label: 'Claude Opus vs GPT-4o', ids: ['claude-opus-4-6', 'gpt-4o'] },
+/**
+ * Fallback popular comparisons used only if flagship derivation fails entirely
+ * (e.g. corrupted data). Normal path is derivePopularComparisons() at runtime.
+ */
+const FALLBACK_POPULAR: { label: string; ids: string[] }[] = [
+  { label: 'Claude Opus 4.7 vs GPT-4o', ids: ['claude-opus-4-7', 'gpt-4o'] },
   { label: 'Claude Sonnet vs GPT-4o-mini', ids: ['claude-sonnet-4-6', 'gpt-4o-mini'] },
-  { label: 'Gemini 2.5 Pro vs Claude Opus', ids: ['gemini-2-5-pro', 'claude-opus-4-6'] },
-  { label: 'Llama 4 vs Mistral Large', ids: ['llama-4-scout', 'mistral-large'] },
+  { label: 'Gemini 2.5 Pro vs Claude Opus 4.7', ids: ['gemini-2-5-pro', 'claude-opus-4-7'] },
+  { label: 'Llama 4 vs Mistral Large', ids: ['llama-4-maverick', 'mistral-large'] },
 ];
 
 function ModelSelector({
@@ -117,7 +171,8 @@ function ModelSelector({
 
 export default function ComparePage() {
   const [pricingData, setPricingData] = useState<PricingData>(fallbackPricingData as PricingData);
-  const [selectedIds, setSelectedIds] = useState<(string | null)[]>(['claude-opus-4-6', 'gpt-4o']);
+  const [hasUserSelection, setHasUserSelection] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<(string | null)[]>([]);
 
   useEffect(() => {
     fetch('https://tensorfeed.ai/api/models')
@@ -138,17 +193,37 @@ export default function ComparePage() {
       pricingData.providers.flatMap((provider) =>
         provider.models.map((model) => ({
           provider: provider.name,
+          providerId: provider.id,
           ...model,
         }))
       ),
     [pricingData]
   );
 
+  const flagships = useMemo(() => flagshipPerProvider(pricingData.providers), [pricingData]);
+
+  const popularComparisons = useMemo(() => {
+    const derived = derivePopularComparisons(flagships);
+    return derived.length >= 2 ? derived : FALLBACK_POPULAR;
+  }, [flagships]);
+
+  // Set the default selection from flagship Anthropic + flagship OpenAI as soon
+  // as data lands. The user can override; once they do, we stop auto-overriding.
+  useEffect(() => {
+    if (hasUserSelection) return;
+    const a = flagships['anthropic'];
+    const o = flagships['openai'];
+    if (a && o) {
+      setSelectedIds([a.id, o.id]);
+    }
+  }, [flagships, hasUserSelection]);
+
   const selectedModels = selectedIds
     .map((id) => (id ? allModels.find((m) => m.id === id) ?? null : null))
     .filter((m): m is FlatModel => m !== null);
 
   function setModelAt(index: number, id: string) {
+    setHasUserSelection(true);
     setSelectedIds((prev) => {
       const next = [...prev];
       next[index] = id;
@@ -157,19 +232,33 @@ export default function ComparePage() {
   }
 
   function removeSlot(index: number) {
+    setHasUserSelection(true);
     setSelectedIds((prev) => prev.filter((_, i) => i !== index));
   }
 
   function addSlot() {
     if (selectedIds.length < 3) {
+      setHasUserSelection(true);
       setSelectedIds((prev) => [...prev, null]);
     }
   }
 
   function applyComparison(ids: string[]) {
+    setHasUserSelection(true);
     const slots: (string | null)[] = [...ids];
     while (slots.length < 2) slots.push(null);
     setSelectedIds(slots);
+  }
+
+  function formatLastUpdated(raw: string): string {
+    if (!raw) return 'recently';
+    try {
+      const d = new Date(raw);
+      if (Number.isNaN(d.getTime())) return raw;
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch {
+      return raw;
+    }
   }
 
   // Determine winners for highlighting
@@ -244,6 +333,10 @@ export default function ComparePage() {
         <p className="text-text-secondary text-lg max-w-2xl">
           Side-by-side comparison of pricing, capabilities, and specs.
         </p>
+        <div className="flex items-center gap-2 mt-3 text-xs font-mono text-text-muted">
+          <RefreshCw className="w-3 h-3" />
+          Catalog refreshed {formatLastUpdated(pricingData.lastUpdated)} &middot; updates daily
+        </div>
       </div>
 
       {/* Editorial Intro */}
