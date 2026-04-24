@@ -3,20 +3,7 @@ import Link from 'next/link';
 import { Cpu, ExternalLink } from 'lucide-react';
 import fallbackPricingData from '@/../data/pricing.json';
 import { DatasetJsonLd } from '@/components/seo/JsonLd';
-import { MODEL_DIRECTORY } from '@/lib/model-directory';
-interface ModelRow {
-  id: string;
-  name: string;
-  inputPrice: number;
-  outputPrice: number;
-  contextWindow: number;
-  provider: string;
-}
-
-interface Provider {
-  name: string;
-  models: Omit<ModelRow, 'provider'>[];
-}
+import ModelsDataSection, { PricingData } from '@/components/models/ModelsDataSection';
 
 export const metadata: Metadata = {
   title: 'AI Model Tracker & Pricing Comparison',
@@ -39,72 +26,6 @@ export const metadata: Metadata = {
   },
 };
 
-const latestReleases = [
-  {
-    name: 'Claude Opus 4.7',
-    provider: 'Anthropic',
-    date: 'Apr 2026',
-    capabilities: ['Text', 'Vision', 'Tool Use', 'Code', 'Reasoning'],
-    contextWindow: '1M',
-  },
-  {
-    name: 'Claude Opus 4.6',
-    provider: 'Anthropic',
-    date: 'Mar 2026',
-    capabilities: ['Text', 'Vision', 'Tool Use', 'Code', 'Reasoning'],
-    contextWindow: '200K',
-  },
-  {
-    name: 'GPT-4.5',
-    provider: 'OpenAI',
-    date: 'Feb 2026',
-    capabilities: ['Text', 'Vision', 'Tool Use', 'Code', 'Reasoning'],
-    contextWindow: '256K',
-  },
-  {
-    name: 'Gemini 2.5 Pro',
-    provider: 'Google',
-    date: 'Mar 2026',
-    capabilities: ['Text', 'Vision', 'Tool Use', 'Code', 'Reasoning'],
-    contextWindow: '1M',
-  },
-  {
-    name: 'Llama 4 Scout & Maverick',
-    provider: 'Meta',
-    date: 'Mar 2026',
-    capabilities: ['Text', 'Vision', 'Code', 'Open Source'],
-    contextWindow: '10M / 1M',
-  },
-  {
-    name: 'Mistral Large 2',
-    provider: 'Mistral',
-    date: 'Feb 2026',
-    capabilities: ['Text', 'Vision', 'Tool Use', 'Code'],
-    contextWindow: '256K',
-  },
-  {
-    name: 'Command R+ 2',
-    provider: 'Cohere',
-    date: 'Jan 2026',
-    capabilities: ['Text', 'RAG', 'Tool Use', 'Code'],
-    contextWindow: '256K',
-  },
-  {
-    name: 'Grok 3',
-    provider: 'xAI',
-    date: 'Feb 2026',
-    capabilities: ['Text', 'Vision', 'Code', 'Reasoning'],
-    contextWindow: '128K',
-  },
-  {
-    name: 'DeepSeek V3',
-    provider: 'DeepSeek',
-    date: 'Jan 2026',
-    capabilities: ['Text', 'Code', 'Reasoning', 'Open Source'],
-    contextWindow: '128K',
-  },
-];
-
 const leaderboards = [
   {
     name: 'LMArena',
@@ -123,37 +44,8 @@ const leaderboards = [
   },
 ];
 
-function formatContext(ctx: number): string {
-  if (ctx >= 1000000) return `${(ctx / 1000000).toFixed(ctx % 1000000 === 0 ? 0 : 1)}M`;
-  return `${(ctx / 1000).toFixed(0)}K`;
-}
-
-async function fetchPricingData() {
-  try {
-    const res = await fetch('https://tensorfeed.ai/api/models', { next: { revalidate: 3600 } });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.ok && data.providers?.length) return data;
-    }
-  } catch {}
-  return fallbackPricingData;
-}
-
-export default async function ModelsPage() {
-  const pricingData = await fetchPricingData();
-
-  // Flatten all models with provider info for the pricing table
-  const allModels: ModelRow[] = pricingData.providers.flatMap((provider: Provider) =>
-    provider.models.map((model) => ({
-      provider: provider.name,
-      ...model,
-    }))
-  );
-
-  // Find cheapest input and output prices (excluding free / open-source)
-  const paidModels = allModels.filter((m: ModelRow) => m.inputPrice > 0);
-  const cheapestInput = paidModels.length > 0 ? Math.min(...paidModels.map((m: ModelRow) => m.inputPrice)) : 0;
-  const cheapestOutput = paidModels.length > 0 ? Math.min(...paidModels.map((m: ModelRow) => m.outputPrice)) : 0;
+export default function ModelsPage() {
+  const initialData = fallbackPricingData as PricingData;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -177,13 +69,15 @@ export default async function ModelsPage() {
           <p>
             The AI model landscape changes fast. New releases ship weekly, pricing drops without warning,
             and context windows that seemed impossible a year ago are now standard. This page tracks every
-            major model from Anthropic, OpenAI, Google, Meta, Mistral, and Cohere with current pricing
-            (per million tokens), context window sizes, release dates, and capability tags. Click any model
-            name to see its full detail page with benchmark scores, strengths, and use case recommendations.
+            major model from Anthropic, OpenAI, Google, Meta, Mistral, Cohere, and DeepSeek with current
+            pricing (per million tokens), context window sizes, release dates, and capability tags. Click
+            any model name to see its full detail page with benchmark scores, strengths, and use case
+            recommendations.
           </p>
           <p>
-            Pricing data is sourced directly from provider APIs and official documentation, updated daily
-            by our worker pipeline. For deeper analysis, see the{' '}
+            Pricing data is sourced directly from provider APIs and official documentation, refreshed
+            daily by our worker pipeline and rehydrated in your browser on each visit. For deeper
+            analysis, see the{' '}
             <Link href="/ai-api-pricing-guide" className="text-accent-primary hover:underline">full pricing guide</Link>,
             use the{' '}
             <Link href="/tools/cost-calculator" className="text-accent-primary hover:underline">cost calculator</Link>{' '}
@@ -193,115 +87,8 @@ export default async function ModelsPage() {
         </div>
       </div>
 
-      {/* Latest Releases */}
-      <section className="mb-14">
-        <h2 className="text-2xl font-semibold text-text-primary mb-6">Latest Releases</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {latestReleases.map((model) => (
-            <div
-              key={model.name}
-              className="bg-bg-secondary border border-border rounded-xl p-5 hover:shadow-glow transition-shadow"
-            >
-              <div className="flex items-start gap-3 mb-3">
-                <Cpu className="w-5 h-5 text-accent-cyan mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="text-text-primary font-semibold leading-tight">{model.name}</h3>
-                  <p className="text-text-muted text-sm">
-                    {model.provider} &middot; {model.date}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {model.capabilities.map((cap) => (
-                  <span
-                    key={cap}
-                    className="text-xs px-2 py-0.5 rounded-full bg-bg-tertiary text-text-secondary border border-border"
-                  >
-                    {cap}
-                  </span>
-                ))}
-              </div>
-              <p className="text-xs text-text-muted">
-                Context: <span className="text-accent-green font-medium">{model.contextWindow}</span>
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Pricing Comparison Table */}
-      <section className="mb-14">
-        <h2 className="text-2xl font-semibold text-text-primary mb-2">Pricing Comparison</h2>
-        <p className="text-text-muted text-sm mb-6">
-          Prices in USD per 1M tokens. Last updated {pricingData.lastUpdated}.
-        </p>
-        <div className="overflow-x-auto rounded-xl border border-border">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="bg-bg-tertiary">
-                <th className="px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                  Provider
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                  Model
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider text-right">
-                  Input / 1M
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider text-right">
-                  Output / 1M
-                </th>
-                <th className="px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider text-right">
-                  Context
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {allModels.map((model) => (
-                <tr key={model.id} className="bg-bg-secondary hover:bg-bg-tertiary/50 transition-colors">
-                  <td className="px-4 py-3 text-sm text-text-secondary">{model.provider}</td>
-                  <td className="px-4 py-3 text-sm text-text-primary font-medium">
-                    {MODEL_DIRECTORY.find(m => m.pricingId === model.id) ? (
-                      <Link
-                        href={`/models/${MODEL_DIRECTORY.find(m => m.pricingId === model.id)!.slug}`}
-                        className="hover:text-accent-primary transition-colors"
-                      >
-                        {model.name}
-                      </Link>
-                    ) : (
-                      model.name
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-right">
-                    {model.inputPrice === 0 ? (
-                      <span className="text-accent-green font-medium">Free</span>
-                    ) : (
-                      <span className={model.inputPrice === cheapestInput ? 'text-accent-green font-medium' : 'text-text-secondary'}>
-                        ${model.inputPrice.toFixed(2)}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-right">
-                    {model.outputPrice === 0 ? (
-                      <span className="text-accent-green font-medium">Free</span>
-                    ) : (
-                      <span className={model.outputPrice === cheapestOutput ? 'text-accent-green font-medium' : 'text-text-secondary'}>
-                        ${model.outputPrice.toFixed(2)}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-right text-text-secondary">
-                    {formatContext(model.contextWindow)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-text-muted text-xs mt-3">
-          {pricingData.pricingNotes.openSourceNote} {pricingData.pricingNotes.disclaimer}
-        </p>
-      </section>
+      {/* Latest Releases + Pricing Comparison (client-hydrated) */}
+      <ModelsDataSection initialData={initialData} />
 
       {/* Leaderboard Links */}
       <section className="mb-10">
