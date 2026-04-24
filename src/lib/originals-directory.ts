@@ -17,6 +17,33 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'ai-week-april-24-2026',
+    title: 'This Week in AI: GPT-5.5, DeepSeek V4, and a $250 Billion Acquisition',
+    author: 'Kira Nolan',
+    date: 'Apr 24, 2026',
+    readTime: '7 min read',
+    description:
+      'The biggest week in AI this year. OpenAI shipped GPT-5.5, DeepSeek dropped V4 under MIT license, SpaceX bought xAI for $250B, and Anthropic locked away a model too dangerous to release.',
+  },
+  {
+    slug: 'gpt-5-5-openai-flagship',
+    title: 'GPT-5.5 Just Landed. OpenAI Doubled the Price and Raised the Bar.',
+    author: 'Marcus Chen',
+    date: 'Apr 24, 2026',
+    readTime: '6 min read',
+    description:
+      'OpenAI released GPT-5.5 with 1M context and top benchmark scores, but at $5/$30 per million tokens it costs double what GPT-5.4 did. The first fully retrained base model since GPT-4.5.',
+  },
+  {
+    slug: 'claude-design-anthropic',
+    title: 'Anthropic Just Shipped Claude Design. The Loop from Idea to Code Is Now Closed.',
+    author: 'Ripper',
+    date: 'Apr 22, 2026',
+    readTime: '5 min read',
+    description:
+      'Claude Design lets you create prototypes, slides, and mockups with Claude, then hand them off to Claude Code with one click. Powered by Opus 4.7, it completes Anthropic\'s product trifecta.',
+  },
+  {
     slug: 'claude-opus-4-7-release',
     title: "Claude Opus 4.7 Just Dropped. Here's What Changed.",
     author: 'Ripper',

@@ -94,7 +94,14 @@
       "WebFetch(domain:phreak.fm)",
       "Bash(echo \"EXIT=$?\")",
       "Bash(python -c ':*)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "Bash(npm run *)",
+      "Read(//tmp/**)",
+      "WebFetch(domain:f083839e-ac47-4373-a6b3-d115e544eb47.claudeusercontent.com)",
+      "Bash(grep -oE \"<h1[^>]*>.{0,400}\")",
+      "Bash(env)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(cmd //c \"taskkill /F /IM node.exe\")"
     ]
   }
 }

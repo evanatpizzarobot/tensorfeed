@@ -108,6 +108,23 @@ export const MODEL_DIRECTORY: ModelPageMeta[] = [
 
   // ── OpenAI ─────────────────────────────────────────────────────────
   {
+    slug: 'gpt-5-5',
+    pricingId: 'gpt-5-5',
+    benchmarkName: 'GPT-5.5',
+    providerId: 'openai',
+    providerName: 'OpenAI',
+    providerUrl: 'https://openai.com',
+    seoTitle: 'GPT-5.5: Pricing, Benchmarks, Specs',
+    seoDescription:
+      'GPT-5.5 by OpenAI. Latest flagship with 1M context, omnimodal capabilities, and top benchmark scores. Pricing and specs on TensorFeed.',
+    intro:
+      'GPT-5.5 is OpenAI\'s newest flagship model, the first fully retrained base since GPT-4.5. It features a 1M token context window, native omnimodal capabilities, and leads the Artificial Analysis Intelligence Index. At $5 per million input tokens, it doubles GPT-5.4 pricing while delivering substantially higher benchmark scores.',
+    strengths: ['Top benchmark scores', '1M token context', 'Natively omnimodal', '40% fewer tokens than GPT-5.4'],
+    useCases: ['Complex reasoning and research', 'Full codebase analysis', 'Advanced agentic workflows', 'Multimodal processing'],
+    docsUrl: 'https://platform.openai.com/docs/models',
+    tier: 'flagship',
+  },
+  {
     slug: 'gpt-4o',
     pricingId: 'gpt-4o',
     benchmarkName: 'GPT-4o',
@@ -317,6 +334,42 @@ export const MODEL_DIRECTORY: ModelPageMeta[] = [
     strengths: ['Affordable RAG model', '128K context', 'Tool use support', 'Strong multilingual'],
     useCases: ['Budget RAG pipelines', 'Multilingual search', 'Lightweight enterprise Q&A', 'Data extraction'],
     docsUrl: 'https://docs.cohere.com/',
+    tier: 'budget',
+  },
+
+  // ── DeepSeek ──────────────────────────────────────────────────────
+  {
+    slug: 'deepseek-v4-pro',
+    pricingId: 'deepseek-v4-pro',
+    benchmarkName: 'DeepSeek V4 Pro',
+    providerId: 'deepseek',
+    providerName: 'DeepSeek',
+    providerUrl: 'https://www.deepseek.com',
+    seoTitle: 'DeepSeek V4 Pro: Pricing, Benchmarks, Specs',
+    seoDescription:
+      'DeepSeek V4 Pro. Open source 1.6T parameter model with 1M context under MIT license. Pricing, benchmarks, and specs on TensorFeed.',
+    intro:
+      'DeepSeek V4 Pro is a 1.6 trillion parameter Mixture-of-Experts model with 49 billion active parameters per token, trained on 33 trillion tokens. Released under the MIT license with a native 1M context window, it delivers benchmark scores within striking distance of frontier proprietary models at a fraction of the cost.',
+    strengths: ['1.6T total parameters', 'MIT open source license', '1M native context', 'Near-frontier benchmarks at budget pricing'],
+    useCases: ['Self-hosted deployments', 'Cost-sensitive production', 'Code generation', 'Long document processing'],
+    docsUrl: 'https://api-docs.deepseek.com/',
+    tier: 'flagship',
+  },
+  {
+    slug: 'deepseek-v4-flash',
+    pricingId: 'deepseek-v4-flash',
+    benchmarkName: 'DeepSeek V4 Flash',
+    providerId: 'deepseek',
+    providerName: 'DeepSeek',
+    providerUrl: 'https://www.deepseek.com',
+    seoTitle: 'DeepSeek V4 Flash: Pricing, Benchmarks, Specs',
+    seoDescription:
+      'DeepSeek V4 Flash. Ultra-affordable open source model at $0.14/1M input with 1M context. Pricing, benchmarks, and specs on TensorFeed.',
+    intro:
+      'DeepSeek V4 Flash is the efficiency model in the V4 family, with 284 billion total parameters and 13 billion active per token. At $0.14 per million input tokens with a 1M context window under the MIT license, it is one of the cheapest capable models available anywhere.',
+    strengths: ['Ultra-low pricing ($0.14/1M input)', '1M context window', 'MIT open source', 'Strong efficiency benchmarks'],
+    useCases: ['High-volume chat', 'Budget inference at scale', 'Self-hosted deployments', 'Lightweight code tasks'],
+    docsUrl: 'https://api-docs.deepseek.com/',
     tier: 'budget',
   },
 ];

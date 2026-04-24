@@ -104,6 +104,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/originals/stanford-ai-index-2026`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/claude-vs-gpt-vs-gemini`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/state-of-ai-apis-2026`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/originals/gpt-5-5-openai-flagship`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/originals/claude-design-anthropic`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/originals/ai-week-april-24-2026`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
 
     // Info pages
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },

@@ -54,7 +54,7 @@ export const PROVIDERS: ProviderMeta[] = [
     founded: '2015',
     headquarters: 'San Francisco, CA',
     ceo: 'Sam Altman',
-    keyProducts: ['GPT-4o', 'GPT-4o Mini', 'o1', 'o3-mini', 'ChatGPT', 'DALL-E', 'Whisper'],
+    keyProducts: ['GPT-5.5', 'GPT-4o', 'GPT-4o Mini', 'o1', 'o3-mini', 'ChatGPT', 'Codex', 'DALL-E'],
     strengths: ['Largest developer ecosystem', 'Native audio support in GPT-4o', 'Strong reasoning models (o1, o3)', 'Consumer brand recognition', 'Broad enterprise partnerships'],
     statusSlug: 'is-chatgpt-down',
   },
@@ -124,6 +124,22 @@ export const PROVIDERS: ProviderMeta[] = [
     keyProducts: ['Command R+', 'Command R', 'Embed v4', 'Rerank'],
     strengths: ['Purpose-built for RAG', 'Native grounding and citations', 'Strong embedding models', 'Enterprise search focus', 'Multilingual support'],
     statusSlug: 'is-cohere-down',
+  },
+  {
+    slug: 'deepseek',
+    pricingId: 'deepseek',
+    name: 'DeepSeek',
+    url: 'https://www.deepseek.com',
+    seoTitle: 'DeepSeek: V4 Models, Open Source AI, Pricing, and Overview',
+    seoDescription:
+      'Everything about DeepSeek. V4 Pro and Flash models, MIT license, pricing, benchmarks, and capabilities. Updated daily on TensorFeed.',
+    intro:
+      'DeepSeek is the Chinese AI lab that keeps closing the gap with frontier proprietary models while releasing everything under the MIT license. Their V4 family, launched in April 2026, includes V4 Pro (1.6 trillion parameters, 49B active) and V4 Flash (284B total, 13B active), both with native 1M token context windows. V4 Pro scored 80.6% on SWE-bench Verified, within 0.2 points of Claude Opus 4.6. At $1.74 per million input tokens for Pro and $0.14 for Flash, they offer near-frontier performance at a fraction of proprietary pricing.',
+    founded: '2023',
+    headquarters: 'Hangzhou, China',
+    ceo: 'Liang Wenfeng',
+    keyProducts: ['DeepSeek V4 Pro', 'DeepSeek V4 Flash', 'DeepSeek API'],
+    strengths: ['MIT open source license', 'Near-frontier benchmarks', 'Ultra-competitive pricing', 'Native 1M context', 'Strong coding performance'],
   },
 ];
 

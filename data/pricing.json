@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-17",
+  "lastUpdated": "2026-04-24",
   "providers": [
     {
       "id": "anthropic",
@@ -75,6 +75,16 @@
       "logo": "/images/providers/openai.png",
       "url": "https://openai.com",
       "models": [
+        {
+          "id": "gpt-5-5",
+          "name": "GPT-5.5",
+          "inputPrice": 5.00,
+          "outputPrice": 30.00,
+          "contextWindow": 1000000,
+          "released": "2026-04",
+          "capabilities": ["text", "vision", "tool-use", "code", "reasoning"],
+          "tier": "flagship"
+        },
         {
           "id": "gpt-4o",
           "name": "GPT-4o",
@@ -284,6 +294,38 @@
             "RAG"
           ],
           "tier": "mid"
+        }
+      ]
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "logo": "/images/providers/deepseek.png",
+      "url": "https://www.deepseek.com",
+      "models": [
+        {
+          "id": "deepseek-v4-pro",
+          "name": "DeepSeek V4 Pro",
+          "inputPrice": 1.74,
+          "outputPrice": 3.48,
+          "contextWindow": 1000000,
+          "released": "2026-04",
+          "openSource": true,
+          "license": "MIT",
+          "capabilities": ["text", "vision", "code", "reasoning"],
+          "tier": "flagship"
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "name": "DeepSeek V4 Flash",
+          "inputPrice": 0.14,
+          "outputPrice": 0.28,
+          "contextWindow": 1000000,
+          "released": "2026-04",
+          "openSource": true,
+          "license": "MIT",
+          "capabilities": ["text", "vision", "code"],
+          "tier": "budget"
         }
       ]
     }

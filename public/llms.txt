@@ -54,6 +54,9 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Mistral Small](https://tensorfeed.ai/models/mistral-small): Pricing, benchmarks, specs for Mistral AI's budget model
 - [Command R+](https://tensorfeed.ai/models/command-r-plus): Pricing, benchmarks, specs for Cohere's RAG flagship
 - [Command R](https://tensorfeed.ai/models/command-r): Pricing, benchmarks, specs for Cohere's affordable RAG model
+- [GPT-5.5](https://tensorfeed.ai/models/gpt-5-5): Pricing, benchmarks, specs for OpenAI's latest flagship (1M context, omnimodal)
+- [DeepSeek V4 Pro](https://tensorfeed.ai/models/deepseek-v4-pro): Pricing, benchmarks, specs for DeepSeek's 1.6T parameter open source flagship
+- [DeepSeek V4 Flash](https://tensorfeed.ai/models/deepseek-v4-flash): Pricing, benchmarks, specs for DeepSeek's ultra-affordable open source model
 
 ## Model Comparisons
 - [Claude Opus 4.7 vs 4.6](https://tensorfeed.ai/compare/claude-opus-4-7-vs-claude-opus-4-6): Generational comparison of Anthropic flagships
@@ -71,6 +74,7 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Meta](https://tensorfeed.ai/providers/meta): Llama open-source models and deployment overview
 - [Mistral](https://tensorfeed.ai/providers/mistral): European AI models, pricing, and overview
 - [Cohere](https://tensorfeed.ai/providers/cohere): Enterprise RAG models and Command R overview
+- [DeepSeek](https://tensorfeed.ai/providers/deepseek): Open source V4 models, MIT license, pricing, and overview
 
 ## Content Hubs
 - [News Feed](https://tensorfeed.ai/): Aggregated AI news from 15+ sources, categorized and timestamped
@@ -83,7 +87,7 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [AI Podcasts](https://tensorfeed.ai/podcasts): Stream AI podcast episodes from top shows
 - [Status Dashboard](https://tensorfeed.ai/status): Real-time AI service status monitoring
 - [Live Data](https://tensorfeed.ai/live): Real-time data feeds (GitHub trending, predictions, cyber threats, pricing)
-- [Originals](https://tensorfeed.ai/originals): Original editorial articles by TensorFeed (21 articles)
+- [Originals](https://tensorfeed.ai/originals): Original editorial articles by TensorFeed (24 articles)
 - [Claude Opus 4.7 Release](https://tensorfeed.ai/originals/claude-opus-4-7-release): Analysis of Anthropic's April 17, 2026 flagship release
 - [Why Every Developer Needs an llms.txt](https://tensorfeed.ai/originals/llms-txt-every-developer): Practical guide to the agent-discovery standard
 - [The AI Pricing Floor](https://tensorfeed.ai/originals/ai-pricing-floor): Where budget AI inference pricing bottoms out and what it means
@@ -91,6 +95,9 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Claude Mythos AI Security](https://tensorfeed.ai/originals/claude-mythos-ai-security): How Mythos is rewriting cybersecurity rules
 - [Google NotebookLM in Gemini](https://tensorfeed.ai/originals/google-notebooklm-gemini): Google integrates research assistant into Gemini
 - [Stanford AI Index 2026](https://tensorfeed.ai/originals/stanford-ai-index-2026): Stanford says AI capability is outpacing readiness
+- [GPT-5.5 Just Landed](https://tensorfeed.ai/originals/gpt-5-5-openai-flagship): OpenAI doubled the price and raised the bar
+- [Claude Design Launch](https://tensorfeed.ai/originals/claude-design-anthropic): Anthropic closes the loop from idea to code
+- [This Week in AI](https://tensorfeed.ai/originals/ai-week-april-24-2026): GPT-5.5, DeepSeek V4, and a $250 billion acquisition
 - [Developer Docs](https://tensorfeed.ai/developers): Full API documentation with code examples
 - [Changelog](https://tensorfeed.ai/changelog): Public build log of features shipped
 

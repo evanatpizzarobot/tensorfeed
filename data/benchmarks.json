@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-17",
+  "lastUpdated": "2026-04-24",
   "benchmarks": [
     { "id": "mmlu_pro", "name": "MMLU-Pro", "description": "General knowledge and reasoning across 57 subjects", "maxScore": 100 },
     { "id": "human_eval", "name": "HumanEval", "description": "Python code generation and problem solving", "maxScore": 100 },
@@ -8,6 +8,24 @@
     { "id": "swe_bench", "name": "SWE-bench", "description": "Real-world software engineering tasks from GitHub issues", "maxScore": 100 }
   ],
   "models": [
+    {
+      "model": "GPT-5.5",
+      "provider": "OpenAI",
+      "released": "2026-04",
+      "scores": { "mmlu_pro": 94.2, "human_eval": 97.1, "gpqa_diamond": 78.3, "math": 95.8, "swe_bench": 68.7 }
+    },
+    {
+      "model": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "released": "2026-04",
+      "scores": { "mmlu_pro": 91.5, "human_eval": 94.8, "gpqa_diamond": 73.1, "math": 92.4, "swe_bench": 63.8 }
+    },
+    {
+      "model": "DeepSeek V4 Flash",
+      "provider": "DeepSeek",
+      "released": "2026-04",
+      "scores": { "mmlu_pro": 85.2, "human_eval": 89.4, "gpqa_diamond": 58.7, "math": 82.1, "swe_bench": 48.9 }
+    },
     {
       "model": "Claude Opus 4.7",
       "provider": "Anthropic",
