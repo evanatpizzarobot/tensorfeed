@@ -17,6 +17,24 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'ai-money-gap-pwc',
+    title: "74% of AI's Economic Value Goes to 20% of Companies. Here's Why.",
+    author: 'Kira Nolan',
+    date: 'Apr 25, 2026',
+    readTime: '6 min read',
+    description:
+      "PwC surveyed 1,217 executives and found the top 20% of companies capture nearly three-quarters of all AI-driven gains. The gap is not about tools. It is about how companies deploy them.",
+  },
+  {
+    slug: 'deepseek-v4-open-source-frontier',
+    title: 'DeepSeek V4 Is The First Open Source Frontier Model. Closed Labs Should Be Worried.',
+    author: 'Marcus Chen',
+    date: 'Apr 25, 2026',
+    readTime: '7 min read',
+    description:
+      'DeepSeek dropped V4 yesterday under MIT license. 1.6T parameters, 1M context, 80.6% on SWE-bench Verified, and pricing that undercuts GPT-5.5 by 30x. The architecture innovation behind it might matter more than the price.',
+  },
+  {
     slug: 'google-anthropic-40b-compute',
     title: 'Google Just Committed $40 Billion to Anthropic Compute. The Stakes Just Got Real.',
     author: 'Ripper',

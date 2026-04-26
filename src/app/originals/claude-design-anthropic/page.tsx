@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Clock } from 'lucide-react';
 import { ArticleJsonLd } from '@/components/seo/JsonLd';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: "Anthropic Just Shipped Claude Design. The Loop from Idea to Code Is Now Closed.",
@@ -136,6 +137,8 @@ export default function ClaudeDesignAnthropicPage() {
           The competitive threat is not to Figma. It is to Canva, to generic template marketplaces, to the entire category of &quot;good enough&quot; design tools that exist because professional tools are too hard. Claude Design is &quot;good enough&quot; with the potential to be genuinely good, and it gets better every time you give it feedback.
         </p>
 
+        <AdPlaceholder format="in-article" className="my-8" />
+
         <h2 className="text-2xl font-semibold text-text-primary pt-4">Anthropic&apos;s Full Stack Is Taking Shape</h2>
 
         <p>
@@ -185,6 +188,8 @@ export default function ClaudeDesignAnthropicPage() {
           </Link>
         </div>
       </footer>
+
+      <AdPlaceholder format="horizontal" className="mt-10" />
 
       {/* Footer links */}
       <div className="flex flex-wrap items-center gap-4 mt-12 pt-6 border-t border-border text-sm">

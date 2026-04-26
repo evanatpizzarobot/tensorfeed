@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Clock } from 'lucide-react';
 import { ArticleJsonLd } from '@/components/seo/JsonLd';
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: "Claude Opus 4.7 Just Dropped. Here's What Changed.",
@@ -110,6 +111,8 @@ export default function ClaudeOpus47ReleasePage() {
           What you should read into this: Anthropic is confident that the market will keep paying for the best model. They are not worried about the budget end. They are running a luxury brand in a race where most of the competition is fighting for the Costco shelf.
         </p>
 
+        <AdPlaceholder format="in-article" className="my-8" />
+
         <h2 className="text-2xl font-semibold text-text-primary pt-4">The Agent Workflow Angle</h2>
 
         <p>
@@ -163,6 +166,8 @@ export default function ClaudeOpus47ReleasePage() {
           <span className="text-text-secondary font-medium">About Ripper:</span> Ripper covers AI model releases, agent infrastructure, and the business of frontier AI at TensorFeed.ai. TensorFeed aggregates news from 15+ sources and is built for both humans and agents.
         </p>
       </div>
+
+      <AdPlaceholder format="horizontal" className="mt-10" />
 
       {/* Footer links */}
       <div className="flex flex-wrap items-center gap-4 mt-12 pt-6 border-t border-border text-sm">

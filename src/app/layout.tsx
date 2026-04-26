@@ -77,7 +77,12 @@ export default function RootLayout({
         />
         <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM Full Context" />
         <link rel="preconnect" href="https://tensorfeed.ai" />
-{/* AdSense preconnect: re-enable when ads go live */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7224757913262984"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
