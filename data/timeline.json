@@ -1,6 +1,41 @@
 {
   "events": [
     {
+      "date": "2026-04-25",
+      "title": "Amazon Commits $25B to Anthropic",
+      "provider": "Anthropic",
+      "category": "funding",
+      "description": "Amazon invests up to $25 billion in additional funding to Anthropic, bringing its total commitment to $33 billion. The deal includes over $100 billion in AWS infrastructure spending over the next decade."
+    },
+    {
+      "date": "2026-04-24",
+      "title": "DeepSeek V4 Pro & Flash Released",
+      "provider": "DeepSeek",
+      "category": "open-source",
+      "description": "DeepSeek releases V4 Pro (1.6T parameters, 49B active) and V4 Flash (284B total, 13B active) under the MIT license with native 1M context windows. V4 Pro scores 80.6% on SWE-bench Verified."
+    },
+    {
+      "date": "2026-04-23",
+      "title": "GPT-5.5 Released",
+      "provider": "OpenAI",
+      "category": "model-release",
+      "description": "OpenAI launches GPT-5.5, its first fully retrained base model since GPT-4.5. Features 1M context, native omnimodal capabilities, and benchmark leadership at $5/$30 per million tokens."
+    },
+    {
+      "date": "2026-04-22",
+      "title": "Claude Design Launched",
+      "provider": "Anthropic",
+      "category": "product-launch",
+      "description": "Anthropic launches Claude Design as an Anthropic Labs research preview. It reads codebases, generates design systems, and hands off finished prototypes to Claude Code."
+    },
+    {
+      "date": "2026-04-21",
+      "title": "SpaceX Acquires xAI for $250B",
+      "provider": "xAI",
+      "category": "acquisition",
+      "description": "SpaceX acquires Elon Musk's xAI in a $250 billion deal, the largest acquisition in AI history. The merger brings Grok and the Colossus GPU cluster under SpaceX."
+    },
+    {
       "date": "2026-04-17",
       "title": "Claude Opus 4.7 Released",
       "provider": "Anthropic",

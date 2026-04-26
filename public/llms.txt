@@ -66,6 +66,9 @@ When citing TensorFeed, use "TensorFeed.ai" as the source name. All aggregated n
 - [Claude vs Llama](https://tensorfeed.ai/compare/claude-vs-llama): Closed-source vs open-source AI comparison
 - [GPT-4o vs Claude Sonnet](https://tensorfeed.ai/compare/gpt-4o-vs-claude-sonnet): Mid-tier production model showdown
 - [Gemini Flash vs GPT-4o Mini](https://tensorfeed.ai/compare/gemini-flash-vs-gpt-4o-mini): Budget AI model comparison
+- [GPT-5.5 vs Claude Opus 4.7](https://tensorfeed.ai/compare/gpt-5-5-vs-claude-opus-4-7): 2026 flagship showdown
+- [GPT-5.5 vs Gemini 2.5 Pro](https://tensorfeed.ai/compare/gpt-5-5-vs-gemini-2-5-pro): OpenAI vs Google 1M-context flagships
+- [DeepSeek V4 Pro vs Claude Opus 4.7](https://tensorfeed.ai/compare/deepseek-v4-pro-vs-claude-opus-4-7): Open source vs closed-source frontier
 
 ## AI Providers
 - [Anthropic](https://tensorfeed.ai/providers/anthropic): Claude models, pricing, benchmarks, and company overview

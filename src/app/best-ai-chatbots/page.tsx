@@ -17,21 +17,21 @@ const chatbots = [
   {
     name: 'ChatGPT',
     company: 'OpenAI',
-    model: 'GPT-4o / o3',
+    model: 'GPT-5.5 / GPT-4o / o3',
     pricing: 'Free / Plus $20/mo / Pro $200/mo',
-    contextWindow: '128K tokens',
+    contextWindow: '1M tokens (GPT-5.5) / 128K (GPT-4o)',
     strengths: [
+      'GPT-5.5 tops benchmarks with 1M context and omnimodal input (text, image, audio, video)',
       'Largest ecosystem of plugins and custom GPTs',
-      'Strong all-around performance',
       'Built-in image generation (DALL-E) and browsing',
       'Voice mode with natural conversation',
       'Massive user community and shared resources',
     ],
     weaknesses: [
-      'Can be verbose and repetitive',
+      'Pro tier is expensive at $200/mo',
+      'GPT-5.5 API pricing ($5/$30) is double GPT-5.4',
       'Free tier is rate-limited during peak hours',
       'Custom GPTs vary wildly in quality',
-      'Pro tier is expensive at $200/mo',
     ],
   },
   {
