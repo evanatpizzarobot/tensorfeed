@@ -17,6 +17,15 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'openai-workspace-agents-chatgpt-enterprise',
+    title: 'OpenAI Just Turned ChatGPT Into an Enterprise Automation Platform',
+    author: 'Ripper',
+    date: 'Apr 26, 2026',
+    readTime: '7 min read',
+    description:
+      'OpenAI launched Workspace Agents in research preview for ChatGPT Business, Enterprise, and Edu. Long-running, scheduled, Codex-powered agents that plug straight into Slack, Salesforce, Drive, and Notion. The Custom GPT era is over.',
+  },
+  {
     slug: 'anthropic-project-deal-agent-marketplace',
     title: 'Anthropic Just Ran the First Real-Money AI Agent Marketplace. The Results Reveal a Coming Inequality.',
     author: 'Kira Nolan',

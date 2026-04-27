@@ -33,7 +33,7 @@ export const PROVIDERS: ProviderMeta[] = [
     seoDescription:
       'Everything about Anthropic and Claude. Model lineup, API pricing, benchmark scores, and status monitoring. Updated daily on TensorFeed.',
     intro:
-      'Anthropic is the AI safety company behind the Claude family of models. Founded in 2021 by former OpenAI researchers Dario and Daniela Amodei, Anthropic has built a reputation for producing models that lead on reasoning and code generation benchmarks while emphasizing safety research. Their current flagship, Claude Opus 4.7, shipped on April 17, 2026 with a 1 million token context window at the same price as Opus 4.6. Their Model Context Protocol (MCP) has become foundational infrastructure for AI agents.',
+      'Anthropic is the AI safety company behind the Claude family of models. Founded in 2021 by former OpenAI researchers Dario and Daniela Amodei, Anthropic has built a reputation for producing models that lead on reasoning and code generation benchmarks while emphasizing safety research. Their current flagship, Claude Opus 4.7, shipped on April 17, 2026 with a 1 million token context window at the same price as Opus 4.6. In late April 2026 the company secured up to $25 billion in additional Amazon investment (April 21) and up to $40 billion in compute and capital from Google (April 24), bringing combined hyperscaler commitments past $65 billion at a $350 to $380 billion valuation. Their Model Context Protocol (MCP) has become foundational infrastructure for AI agents.',
     founded: '2021',
     headquarters: 'San Francisco, CA',
     ceo: 'Dario Amodei',
@@ -67,11 +67,11 @@ export const PROVIDERS: ProviderMeta[] = [
     seoDescription:
       'Everything about Google AI and Gemini. Model lineup, pricing, 1M context window, benchmarks, and status. Updated daily on TensorFeed.',
     intro:
-      'Google brings the deepest infrastructure advantage to the AI race. Their Gemini 2.5 Pro offers the industry\'s largest production context window at 1 million tokens, and their Flash models deliver some of the lowest per-token pricing available. Backed by custom TPU hardware and decades of ML research (Transformer architecture was invented at Google), they compete on both the frontier and the budget ends of the market.',
+      'Google brings the deepest infrastructure advantage to the AI race. Their Gemini 2.5 Pro offers a 1 million token context window, and their Flash models deliver some of the lowest per-token pricing available. At Google Cloud Next \'26 in Las Vegas on April 22, 2026, Google launched the Gemini Enterprise Agent Platform (the evolution of Vertex AI), backed by a $750 million partner fund, and announced that Gemini will power the next generation of Apple\'s Siri. Backed by custom TPU hardware and decades of ML research (Transformer architecture was invented at Google), they compete on both the frontier and the budget ends of the market.',
     founded: '1998 (Google); 2023 (Google DeepMind)',
     headquarters: 'Mountain View, CA',
     ceo: 'Sundar Pichai',
-    keyProducts: ['Gemini 2.5 Pro', 'Gemini 2.0 Flash', 'NotebookLM', 'Vertex AI', 'Google AI Studio'],
+    keyProducts: ['Gemini 2.5 Pro', 'Gemini 2.0 Flash', 'Gemini Enterprise Agent Platform', 'NotebookLM', 'Vertex AI', 'Google AI Studio'],
     strengths: ['1M token context window', 'Lowest-cost budget models', 'Custom TPU infrastructure', 'Vertex AI enterprise platform', 'NotebookLM research integration'],
     statusSlug: 'is-gemini-down',
   },
