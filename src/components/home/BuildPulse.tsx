@@ -17,15 +17,15 @@ const METRICS: MetricCard[] = [
   },
   {
     label: 'Worker tests',
-    value: '122',
+    value: '129',
     hint: 'pure-logic, all passing',
     href: '/changelog',
   },
   {
-    label: 'Daily snapshots',
-    value: '5',
-    hint: 'pricing, models, benchmarks, status, activity',
-    href: '/api/history',
+    label: 'Webhook watch types',
+    value: '3',
+    hint: 'price, status, daily/weekly digest',
+    href: '/developers/agent-payments',
   },
   {
     label: 'Editorial articles',
@@ -43,7 +43,12 @@ interface ShippingEntry {
 
 const RECENT_SHIPS: ShippingEntry[] = [
   {
-    what: 'Cross-Worker validate-and-charge for sister-site integration',
+    what: 'Daily/weekly digest webhook tier (set-and-forget agent summaries)',
+    when: 'Apr 27, 2026',
+    href: '/developers/agent-payments',
+  },
+  {
+    what: 'Cross-Worker validate-and-charge powering TerminalFeed cross-site bundle',
     when: 'Apr 27, 2026',
     href: '/changelog',
   },
@@ -58,12 +63,7 @@ const RECENT_SHIPS: ShippingEntry[] = [
     href: '/developers/agent-payments',
   },
   {
-    what: 'Premium news search with relevance scoring + recency boost',
-    when: 'Apr 27, 2026',
-    href: '/developers/agent-payments',
-  },
-  {
-    what: 'MCP server 1.4.0 exposing all 17 tools to Claude Desktop',
+    what: 'MCP server 1.5.0 exposing 18 tools to Claude Desktop',
     when: 'Apr 27, 2026',
     href: 'https://github.com/RipperMercs/tensorfeed/tree/main/mcp-server',
   },
