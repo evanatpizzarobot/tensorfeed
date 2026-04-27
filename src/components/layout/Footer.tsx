@@ -45,6 +45,18 @@ export default function Footer() {
             >
               Contact
             </Link>
+            <Link
+              href="/developers/agent-payments"
+              className="text-sm text-text-muted hover:text-text-primary transition-colors"
+            >
+              Agent Payments
+            </Link>
+            <Link
+              href="/account"
+              className="text-sm text-text-muted hover:text-text-primary transition-colors"
+            >
+              Account
+            </Link>
             <a
               href="https://x.com/tensorfeed"
               target="_blank"
