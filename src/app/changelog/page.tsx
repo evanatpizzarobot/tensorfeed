@@ -23,6 +23,17 @@ const CHANGELOG = [
   {
     date: 'April 27, 2026',
     entries: [
+      'Validated the full agent payments loop end-to-end on Base mainnet with real USDC. tf.buy_credits, send tx, tf.confirm, tf.routing, tf.balance: all five steps worked first try, no bugs surfaced.',
+      'Shipped four new premium history endpoints (Tier 1, 1 credit each): /api/premium/history/pricing/series for daily price points with min/max/delta, /api/premium/history/benchmarks/series for benchmark score evolution with delta_pp, /api/premium/history/status/uptime for SLA-grade uptime rollups, and /api/premium/history/compare to diff two daily snapshots',
+      'Shipped premium webhook watches at /api/premium/watches: agents register a price-change or status-transition watch (1 credit), receive HMAC-signed POST deliveries, watch lives 90 days with a default fire cap of 100. SSRF guard blocks private hostnames.',
+      'Shipped /api/premium/agents/directory: enriched catalog joined with live status, recent news, agent traffic, flagship pricing, and a 0-100 trending score. Server-side filter and sort so agents pull a ranked shortlist in one call.',
+      'New /account dashboard for humans: paste a bearer token to see balance, account age, per-endpoint API usage, and active webhook watches with one-click delete. Token stored in sessionStorage only, never localStorage.',
+      'New /api/payment/usage endpoint exposes per-token call history (last 100 calls aggregated by endpoint) so agents can monitor their own spend',
+      'MCP server 1.1.0 (mcp-server/) exposes all 12 new premium tools to Claude Desktop and Claude Code: premium_routing, pricing_series, benchmark_series, status_uptime, history_compare, premium_agents_directory, list_watches, create_price_watch, create_status_watch, delete_watch, get_account_balance, get_account_usage. Auth via TENSORFEED_TOKEN env var.',
+      'Python SDK shipped 1.3.0, 1.4.0, 1.5.0, and 1.6.0 covering history series, watches, enriched directory, and per-token usage. pip install tensorfeed is live on PyPI.',
+      'TypeScript SDK shipped 1.2.0 through 1.5.0 with full TypeScript response types for every premium endpoint',
+      'Footer now links to /account and /developers/agent-payments so the human credits dashboard and pay docs are reachable from any page',
+      'Worker test suite grew from 15 to 80 tests across 5 files: routing engine, history series, payment + per-token usage, watches (predicates, SSRF, dispatch), and enriched directory (joins, filters, sorting)',
       'Launched the agent payments stack: AI agents can now pay TensorFeed directly via USDC on Base for premium API access. No accounts, no API keys, no traditional payment processors.',
       'New paid endpoint /api/premium/routing (Tier 2, 1 credit per call) returns top-N ranked model recommendations with full composite-score breakdown synthesizing live pricing, benchmarks, and status data',
       'New free /api/preview/routing returns the top-1 recommendation, rate-limited to 5 calls per UTC day per IP for discovery before committing credits',
