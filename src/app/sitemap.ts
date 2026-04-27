@@ -114,6 +114,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/originals/anthropic-project-deal-agent-marketplace`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/originals/openai-workspace-agents-chatgpt-enterprise`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/originals/alibaba-happy-horse-video-crown`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/originals/microsoft-openai-partnership-reset`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/originals/validating-agent-payments-mainnet`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
 
     // Info pages
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },

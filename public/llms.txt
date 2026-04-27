@@ -131,7 +131,8 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 - [AI Podcasts](https://tensorfeed.ai/podcasts): Stream AI podcast episodes from top shows
 - [Status Dashboard](https://tensorfeed.ai/status): Real-time AI service status monitoring
 - [Live Data](https://tensorfeed.ai/live): Real-time data feeds (GitHub trending, predictions, cyber threats, pricing)
-- [Originals](https://tensorfeed.ai/originals): Original editorial articles by TensorFeed (31 articles)
+- [Originals](https://tensorfeed.ai/originals): Original editorial articles by TensorFeed (32 articles)
+- [Validating Agent Payments on Base Mainnet](https://tensorfeed.ai/originals/validating-agent-payments-mainnet): First-person walkthrough of the five-step USDC payment loop that proved TensorFeed agent payments work in production. Real tx hash on Base mainnet, no bugs surfaced.
 - [Microsoft OpenAI Partnership Reset](https://tensorfeed.ai/originals/microsoft-openai-partnership-reset): Microsoft and OpenAI restructured their partnership on April 27, 2026, ending exclusivity, removing the AGI clause, capping the revenue share through 2030, and freeing OpenAI to sell on any cloud
 - [Alibaba Happy Horse Video Crown](https://tensorfeed.ai/originals/alibaba-happy-horse-video-crown): Alibaba opened HappyHorse 1.0 to public beta and a 15B parameter Chinese model now leads the Artificial Analysis Video Arena by 115 Elo
 - [OpenAI Workspace Agents](https://tensorfeed.ai/originals/openai-workspace-agents-chatgpt-enterprise): OpenAI turns ChatGPT Business, Enterprise, and Edu into an enterprise automation platform with long-running Codex-powered Workspace Agents

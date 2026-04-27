@@ -17,6 +17,24 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'validating-agent-payments-mainnet',
+    title: 'We Validated Agent Payments End-to-End on Base Mainnet',
+    author: 'Ripper',
+    date: 'Apr 27, 2026',
+    readTime: '6 min read',
+    description:
+      'A first-person walkthrough of the five-step USDC payment loop that took TensorFeed agent payments from designed to operational. Real tx hash, real credits, no bugs surfaced. Why this is the moment the system stopped being theoretical.',
+  },
+  {
+    slug: 'microsoft-openai-partnership-reset',
+    title: 'The Microsoft and OpenAI Divorce Is Done. Both Sides Got What They Wanted.',
+    author: 'Ripper',
+    date: 'Apr 27, 2026',
+    readTime: '7 min read',
+    description:
+      'Microsoft and OpenAI announced a sweeping restructure of their partnership today. No more exclusivity, no more AGI clause, capped revenue share through 2030, and OpenAI is free to ship on any cloud. What actually changed and why it matters.',
+  },
+  {
     slug: 'alibaba-happy-horse-video-crown',
     title: "Alibaba's Happy Horse Just Took the AI Video Crown. China Now Owns Two Frontiers.",
     author: 'Marcus Chen',
