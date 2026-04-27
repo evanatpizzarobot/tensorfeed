@@ -148,6 +148,86 @@ const ENDPOINTS: PremiumEndpoint[] = [
   "billing": { "credits_charged": 1, "credits_remaining": 49 }
 }`,
   },
+  {
+    method: 'GET',
+    path: '/api/premium/history/pricing/series',
+    description: 'Daily price points for one model across a date range, with min/max/delta summary and changes-detected count. Range capped at 90 days, default 30 days back.',
+    cost: '1 credit per call',
+    example: `// Query: ?model=Claude+Opus+4.7&from=2026-04-01&to=2026-04-27
+{
+  "ok": true,
+  "model": "Claude Opus 4.7",
+  "provider": "Anthropic",
+  "range": { "from": "2026-04-01", "to": "2026-04-27", "days": 27 },
+  "points": [
+    { "date": "2026-04-01", "input": 18, "output": 90, "blended": 54 },
+    { "date": "2026-04-15", "input": 15, "output": 75, "blended": 45 },
+    { "date": "2026-04-27", "input": 12, "output": 60, "blended": 36 }
+  ],
+  "summary": {
+    "first": { "date": "2026-04-01", "blended": 54 },
+    "latest": { "date": "2026-04-27", "blended": 36 },
+    "min_blended": 36, "max_blended": 54,
+    "delta_pct_blended": -33.33,
+    "changes_detected": 2,
+    "days_with_data": 27, "days_missing": 0
+  },
+  "billing": { "credits_charged": 1, "credits_remaining": 48 }
+}`,
+  },
+  {
+    method: 'GET',
+    path: '/api/premium/history/benchmarks/series',
+    description: 'Score evolution for a single benchmark on one model. Supported benchmark keys: swe_bench, mmlu_pro, gpqa_diamond, math, human_eval. Returns delta in percentage points.',
+    cost: '1 credit per call',
+    example: `// Query: ?model=Claude+Opus+4.7&benchmark=swe_bench&from=2026-04-01&to=2026-04-27
+{
+  "ok": true,
+  "model": "Claude Opus 4.7",
+  "benchmark": "swe_bench",
+  "points": [
+    { "date": "2026-04-01", "score": 70.0 },
+    { "date": "2026-04-27", "score": 73.4 }
+  ],
+  "summary": { "min_score": 70.0, "max_score": 73.4, "delta_pp": 3.4 }
+}`,
+  },
+  {
+    method: 'GET',
+    path: '/api/premium/history/status/uptime',
+    description: 'Daily status rollup for one provider over a date range. Returns operational/degraded/down day counts plus uptime % (degraded counts as half-credit). Missing-data days are excluded from the denominator.',
+    cost: '1 credit per call',
+    example: `// Query: ?provider=anthropic&from=2026-04-01&to=2026-04-27
+{
+  "ok": true,
+  "provider": "anthropic",
+  "days_total": 27, "days_with_data": 27, "days_missing": 0,
+  "days_operational": 24, "days_degraded": 2, "days_down": 1, "days_unknown": 0,
+  "uptime_pct": 92.59,
+  "incident_days": [
+    { "date": "2026-04-09", "status": "degraded" },
+    { "date": "2026-04-17", "status": "down" }
+  ]
+}`,
+  },
+  {
+    method: 'GET',
+    path: '/api/premium/history/compare',
+    description: 'Diff two daily snapshots: returns added, removed, and changed entries with deltas. Supported types: pricing, benchmarks. Useful for detecting price wars and benchmark regressions.',
+    cost: '1 credit per call',
+    example: `// Query: ?from=2026-04-01&to=2026-04-27&type=pricing
+{
+  "ok": true,
+  "type": "pricing",
+  "from_date": "2026-04-01", "to_date": "2026-04-27",
+  "added": [{ "model": "Opus 4.7", "provider": "Anthropic", ... }],
+  "removed": [{ "model": "Opus 4.6", "provider": "Anthropic", ... }],
+  "changed": [
+    { "model": "GPT-5.5", "field": "inputPrice", "from": 12, "to": 10, "delta_pct": -16.67 }
+  ],
+  "unchanged_count": 8
+}`,
+  },
 ];
 
 const PYTHON_QUICKSTART = `from tensorfeed import TensorFeed

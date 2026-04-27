@@ -191,6 +191,10 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 
 **Paid (USDC on Base, credits-first):**
 - `/api/premium/routing`: Tier 2 routing engine, 1 credit per call. Top-N ranked recommendations with full composite score breakdown.
+- `/api/premium/history/pricing/series?model=&from=&to=`: Tier 1, 1 credit. Daily input/output/blended price points for one model with min/max/delta summary. Range capped at 90 days.
+- `/api/premium/history/benchmarks/series?model=&benchmark=&from=&to=`: Tier 1, 1 credit. Score evolution for a single benchmark on one model. Returns delta in percentage points.
+- `/api/premium/history/status/uptime?provider=&from=&to=`: Tier 1, 1 credit. Daily uptime % for one provider (degraded counts as half) with incident-day list. Missing-data days excluded from denominator.
+- `/api/premium/history/compare?from=&to=&type=pricing|benchmarks`: Tier 1, 1 credit. Diff two daily snapshots: added, removed, changed entries with deltas.
 
 **Admin (auth-gated via `?key=ENVIRONMENT`):**
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup

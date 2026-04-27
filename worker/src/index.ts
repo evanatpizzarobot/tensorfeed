@@ -8,6 +8,15 @@ import { pollPodcastFeeds } from './podcasts';
 import { pollTrendingRepos } from './trending';
 import { captureAllSnapshots, getSnapshotSummary, restoreFromSnapshot, getLatestSnapshot } from './snapshots';
 import { captureHistory, listHistory, readHistory } from './history';
+import {
+  resolveRange,
+  getPricingSeries,
+  getBenchmarkSeries,
+  getStatusUptime,
+  compareHistory,
+  MAX_RANGE_DAYS,
+  DEFAULT_RANGE_DAYS,
+} from './history-series';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
   requirePayment,
@@ -156,6 +165,39 @@ async function cachedKVGet(
   }
 
   return data;
+}
+
+/**
+ * Wraps a successful premium endpoint result with billing metadata and
+ * the X-Payment-* response headers used by both credits and x402 flows.
+ */
+function premiumResponse(
+  result: object,
+  payment: { tokenRemaining?: number; token?: string; newToken?: boolean },
+  creditsCharged: number,
+): Response {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'no-store',
+  };
+  if (payment.token) headers['X-Payment-Token-Balance'] = String(payment.tokenRemaining ?? 0);
+  if (payment.newToken && payment.token) {
+    headers['X-Payment-Token'] = payment.token;
+    headers['X-Payment-Token-Note'] = 'Save this token; use Authorization: Bearer <token> for future calls.';
+  }
+
+  return new Response(
+    JSON.stringify({
+      ...result,
+      billing: {
+        credits_charged: creditsCharged,
+        credits_remaining: payment.tokenRemaining,
+        ...(payment.newToken ? { new_token_issued: true, token: payment.token } : {}),
+      },
+    }),
+    { status: 200, headers },
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -425,6 +467,10 @@ export default {
           historySnapshot: '/api/history/{YYYY-MM-DD}/{type}',
           routingPreview: '/api/preview/routing',
           premiumRouting: '/api/premium/routing',
+          premiumPricingSeries: '/api/premium/history/pricing/series?model=&from=&to=',
+          premiumBenchmarkSeries: '/api/premium/history/benchmarks/series?model=&benchmark=&from=&to=',
+          premiumStatusUptime: '/api/premium/history/status/uptime?provider=&from=&to=',
+          premiumHistoryCompare: '/api/premium/history/compare?from=&to=&type=pricing|benchmarks',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -678,6 +724,136 @@ export default {
         }),
         { status: 200, headers },
       );
+    }
+
+    // === PAID PREMIUM ENDPOINTS: HISTORY SERIES (Tier 1, 1 credit each) ===
+    // Derived/aggregated views over the daily history:* snapshots captured
+    // by Phase 0. Single-date snapshots stay free at /api/history; these
+    // pay endpoints add deltas, ranges, uptime rollups, and date diffs.
+
+    if (path === '/api/premium/history/pricing/series') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const model = url.searchParams.get('model')?.trim();
+      if (!model) {
+        return jsonResponse(
+          { ok: false, error: 'model_required', hint: 'Pass ?model=<id-or-name>' },
+          400,
+        );
+      }
+      const range = resolveRange(url.searchParams.get('from'), url.searchParams.get('to'));
+      if (!range.ok) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: range.error,
+            limits: { max_range_days: MAX_RANGE_DAYS, default_range_days: DEFAULT_RANGE_DAYS },
+          },
+          400,
+        );
+      }
+
+      const result = await getPricingSeries(env, model, range.from, range.to);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/history/pricing/series', request.headers.get('User-Agent') || 'unknown', 1),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    if (path === '/api/premium/history/benchmarks/series') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const model = url.searchParams.get('model')?.trim();
+      const benchmark = url.searchParams.get('benchmark')?.trim();
+      if (!model || !benchmark) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: 'model_and_benchmark_required',
+            hint: 'Pass ?model=<name>&benchmark=<key> (e.g. swe_bench, mmlu_pro, gpqa_diamond, math, human_eval)',
+          },
+          400,
+        );
+      }
+      const range = resolveRange(url.searchParams.get('from'), url.searchParams.get('to'));
+      if (!range.ok) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: range.error,
+            limits: { max_range_days: MAX_RANGE_DAYS, default_range_days: DEFAULT_RANGE_DAYS },
+          },
+          400,
+        );
+      }
+
+      const result = await getBenchmarkSeries(env, model, benchmark, range.from, range.to);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/history/benchmarks/series', request.headers.get('User-Agent') || 'unknown', 1),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    if (path === '/api/premium/history/status/uptime') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const provider = url.searchParams.get('provider')?.trim();
+      if (!provider) {
+        return jsonResponse(
+          { ok: false, error: 'provider_required', hint: 'Pass ?provider=<name>' },
+          400,
+        );
+      }
+      const range = resolveRange(url.searchParams.get('from'), url.searchParams.get('to'));
+      if (!range.ok) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: range.error,
+            limits: { max_range_days: MAX_RANGE_DAYS, default_range_days: DEFAULT_RANGE_DAYS },
+          },
+          400,
+        );
+      }
+
+      const result = await getStatusUptime(env, provider, range.from, range.to);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/history/status/uptime', request.headers.get('User-Agent') || 'unknown', 1),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    if (path === '/api/premium/history/compare') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const fromDate = url.searchParams.get('from')?.trim();
+      const toDate = url.searchParams.get('to')?.trim();
+      const typeParam = url.searchParams.get('type')?.trim() ?? 'pricing';
+      if (!fromDate || !toDate) {
+        return jsonResponse(
+          { ok: false, error: 'from_and_to_required', hint: 'Pass ?from=YYYY-MM-DD&to=YYYY-MM-DD&type=pricing|benchmarks' },
+          400,
+        );
+      }
+      if (typeParam !== 'pricing' && typeParam !== 'benchmarks') {
+        return jsonResponse(
+          { ok: false, error: 'invalid_type', hint: 'type must be pricing or benchmarks' },
+          400,
+        );
+      }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(fromDate) || !/^\d{4}-\d{2}-\d{2}$/.test(toDate)) {
+        return jsonResponse({ ok: false, error: 'invalid_date_format' }, 400);
+      }
+
+      const result = await compareHistory(env, fromDate, toDate, typeParam);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/history/compare', request.headers.get('User-Agent') || 'unknown', 1),
+      );
+      return premiumResponse(result, payment, 1);
     }
 
     // === ADMIN: usage and revenue rollup (auth-gated) ===
