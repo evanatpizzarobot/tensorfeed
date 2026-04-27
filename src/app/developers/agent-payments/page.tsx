@@ -16,24 +16,155 @@ const PAYMENT_WALLET = '0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1';
 const USDC_BASE_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 
 export const metadata: Metadata = {
-  title: 'Agent Payments API: USDC on Base, No Accounts, No Processors',
+  title: 'Pay-Per-Call API for AI Agents: USDC on Base, x402 Compatible | TensorFeed',
   description:
-    'Pay-per-call AI agent API gated by USDC on Base. Buy credits, get a bearer token, call premium endpoints like the model routing recommendation engine. Python SDK and curl examples, no accounts.',
+    'The first machine-payable API for AI agents. Pay per call in USDC on Base, no accounts, no API keys, no processors. x402 compatible, MCP ready, Python and TypeScript SDKs. Validated end-to-end on mainnet.',
+  alternates: {
+    canonical: 'https://tensorfeed.ai/developers/agent-payments',
+  },
   openGraph: {
     type: 'website',
     url: 'https://tensorfeed.ai/developers/agent-payments',
-    title: 'Agent Payments API: USDC on Base',
+    title: 'Pay-Per-Call API for AI Agents: USDC on Base, x402 Compatible',
     description:
-      'Pay-per-call AI agent API gated by USDC on Base. Buy credits, get a bearer token, call premium endpoints. Python SDK and curl examples.',
+      'Pay AI agents in USDC on Base. No accounts, no API keys, no processors. x402 compatible, MCP ready, Python + TypeScript SDKs.',
     siteName: 'TensorFeed.ai',
     images: [{ url: '/tensorfeed-logo.png', width: 1024, height: 1024 }],
   },
   twitter: {
     card: 'summary',
-    title: 'Agent Payments API: USDC on Base',
+    title: 'Pay-Per-Call API for AI Agents: USDC on Base',
     description:
-      'Pay-per-call AI agent API gated by USDC on Base. Premium routing, no accounts.',
+      'The first machine-payable API for AI agents. x402 compatible, MCP ready, validated on Base mainnet.',
   },
+  keywords: [
+    'AI agent payment API',
+    'x402 payment API',
+    'machine payable API',
+    'pay per call AI API',
+    'USDC payment API',
+    'agent monetization',
+    'agentic payment',
+    'stablecoin API',
+    'Base USDC API',
+    'MCP payment server',
+    'AI agent commerce',
+    'autonomous agent payment',
+  ],
+};
+
+const FAQ_JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How do AI agents pay for APIs on TensorFeed?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Agents pay in USDC on Base mainnet. There are no accounts, no API keys, and no traditional payment processors. An agent buys credits once via /api/payment/buy-credits, sends USDC to the published wallet, calls /api/payment/confirm with the tx hash, and receives a bearer token that debits credits per premium API call.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is x402 and is TensorFeed compatible?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'x402 is the emerging HTTP standard for machine-payable APIs: the server returns HTTP 402 Payment Required with payment instructions, and the client retries with proof of payment. TensorFeed supports both the credits-first flow (recommended for repeat use) and an x402-style fallback where a single call without auth returns a 402 with a wallet address, and a retry with the X-Payment-Tx header serves the data.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Why USDC on Base instead of Stripe or PayPal?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'AI agents do not have credit cards or human-mediated checkout. USDC on Base settles in seconds with no chargebacks, no KYC at the API layer, and no platform risk from a payment processor. Base is an Ethereum L2 with sub-cent gas fees, making microtransactions ($0.02 per credit) viable. We accepted a smaller short-term TAM (only crypto-native agents) for zero processor fees and cleaner agent-native positioning.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I verify the TensorFeed payment wallet address before sending funds?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Cross-check the wallet address across four published locations before sending USDC: /llms.txt on tensorfeed.ai, the JSON response from /api/payment/info, the README in github.com/RipperMercs/tensorfeed, and the @tensorfeed bio on X. If any of the four disagree, do not send. The address is also published with TLS so a network MITM cannot swap it.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What happens if my payment fails or the API rejects the transaction?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'On-chain verification reads the USDC Transfer event from eth_getTransactionReceipt on the Base RPC. If the tx is invalid, the wrong recipient, or already used, /api/payment/confirm returns an error and no credits are minted. Replay protection means every successful tx hash is permanently recorded so the same payment cannot be claimed twice. For genuine refunds, email evan@tensorfeed.ai with the tx hash within 24 hours of the charge.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Are TensorFeed premium APIs covered by an SLA?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No SLA in the MVP phase. Premium credits do not expire and there is no scheduled downtime, but if a premium endpoint is down we will not credit your account automatically. Refunds for prolonged outages are handled manually within 24 hours via email. As the product matures we may introduce paid SLA tiers.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I use TensorFeed premium data to train my AI model?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Premium data is licensed for inference use only. Use of TensorFeed premium endpoint responses for training, fine-tuning, evaluation, or distillation of machine learning models is prohibited. This is in the Terms of Service section on Premium API and Agent Payments.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does TensorFeed work with the Model Context Protocol (MCP)?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. The @tensorfeed/mcp-server package exposes every premium endpoint as an MCP tool, so Claude Desktop, Claude Code, and other MCP clients can call routing, history series, watches, and the enriched agents directory directly. Pass your tf_live_ bearer token via the TENSORFEED_TOKEN env var in your MCP client config.',
+      },
+    },
+  ],
+};
+
+const HOWTO_JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to pay TensorFeed premium APIs in USDC on Base',
+  description:
+    'Buy credits with USDC on Base mainnet, receive a bearer token, and call premium AI agent APIs at $0.02 per credit.',
+  totalTime: 'PT2M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'USD', value: '1.00' },
+  supply: [
+    { '@type': 'HowToSupply', name: 'A Base mainnet wallet (Rabby, Coinbase, MetaMask)' },
+    { '@type': 'HowToSupply', name: 'USDC on Base (minimum $0.50)' },
+  ],
+  tool: [
+    { '@type': 'HowToTool', name: 'curl, Python SDK (pip install tensorfeed), or TypeScript SDK' },
+  ],
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Quote a credit purchase',
+      text: 'POST to /api/payment/buy-credits with { "amount_usd": 1.00 }. The response includes the wallet address, a memo nonce, the credit amount (50 credits at base rate), and a 30-minute expiry.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Send USDC on Base to the wallet',
+      text: 'From your Base wallet, transfer the quoted USDC amount to the address returned in step 1. The memo nonce is optional but recommended for traceability.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Confirm the transaction',
+      text: 'POST to /api/payment/confirm with { "tx_hash": "0x...", "nonce": "tf-..." }. The worker verifies the USDC Transfer event on-chain via the Base RPC and mints a tf_live_ bearer token tied to your credit balance.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Call premium endpoints',
+      text: 'Send Authorization: Bearer tf_live_... on any /api/premium/* request. Each call decrements credits. Check remaining balance any time at /api/payment/balance.',
+    },
+  ],
 };
 
 interface PremiumEndpoint {
@@ -340,6 +471,14 @@ curl -H "X-Payment-Tx: 0xYOUR_TX" \\
 export default function AgentPaymentsPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOWTO_JSONLD) }}
+      />
       {/* Hero */}
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-3">
