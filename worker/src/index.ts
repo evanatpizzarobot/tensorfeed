@@ -43,6 +43,7 @@ import {
   getRollup,
   listRollupDates,
   getTokenUsage,
+  validateAndCharge,
 } from './payments';
 import { recordPollRun, checkNewsStaleness, alertStaleNews, sendDailySummary, getAlertsStatus } from './alerts';
 
@@ -63,6 +64,22 @@ function xmlResponse(xml: string): Response {
   return new Response(xml, {
     headers: { ...CORS_HEADERS, 'Content-Type': 'application/rss+xml; charset=utf-8', 'Cache-Control': 'public, max-age=300' },
   });
+}
+
+/**
+ * String compare that is best-effort constant-time so a wrong-secret
+ * attempt cannot be distinguished from a right-length-wrong-bytes
+ * attempt by timing alone. JS optimizers can still introduce
+ * variability; acceptable for v1 per the cross-Worker validate-and-
+ * charge spec (April 2026).
+ */
+function constantTimeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
 }
 
 function escapeXml(str: string): string {
@@ -1123,6 +1140,64 @@ export default {
         }
         return jsonResponse({ ok: true }, 200, 0);
       }
+    }
+
+    // === INTERNAL: cross-Worker validate-and-charge ===
+    // Server-to-server only. Sister-site Workers (TerminalFeed, future
+    // sister sites) call this to validate bearer tokens and decrement
+    // credits over HTTP. Authenticated by X-Internal-Auth header
+    // against SHARED_INTERNAL_SECRET. NOT advertised in /api/meta,
+    // /llms.txt, /api/payment/info, or any agent-facing surface.
+
+    if (path === '/api/internal/validate-and-charge') {
+      if (request.method !== 'POST') {
+        return jsonResponse({ error: 'method_not_allowed' }, 405, 0);
+      }
+      // Auth check happens BEFORE any body parsing so a 401 response
+      // does not leak the existence of the endpoint, the expected body
+      // shape, or any credit state. Constant-time string comparison so
+      // wrong-secret attempts cannot be distinguished by timing in the
+      // same way a `===` would expose.
+      const auth = request.headers.get('X-Internal-Auth') ?? '';
+      const secret = env.SHARED_INTERNAL_SECRET ?? '';
+      if (!secret || !constantTimeEqual(auth, secret)) {
+        return jsonResponse({ error: 'unauthorized' }, 401, 0);
+      }
+      let body: { token?: unknown; cost?: unknown; endpoint?: unknown };
+      try {
+        body = await request.json();
+      } catch {
+        return jsonResponse({ error: 'bad_json' }, 400, 0);
+      }
+      const token = typeof body?.token === 'string' ? body.token : '';
+      const costRaw = typeof body?.cost === 'number' ? body.cost : NaN;
+      const endpoint = typeof body?.endpoint === 'string' ? body.endpoint : '';
+      if (!token || !Number.isFinite(costRaw) || costRaw < 0) {
+        return jsonResponse({ error: 'bad_request' }, 400, 0);
+      }
+      const cost = Math.floor(costRaw);
+      const result = await validateAndCharge(env, {
+        token,
+        cost,
+        endpoint: endpoint || 'tf:internal',
+      });
+      // Fire-and-forget usage logging so the sister-site call sees the
+      // same daily rollup and per-token usage history that in-process
+      // calls produce. Only log when the charge succeeded.
+      if (result.ok) {
+        ctx.waitUntil(
+          logPremiumUsage(
+            env,
+            endpoint || 'tf:internal',
+            request.headers.get('User-Agent') || 'sister-site',
+            cost,
+            token,
+          ),
+        );
+      }
+      // Always 200 on this endpoint (per spec) so the caller can read
+      // the body cleanly regardless of outcome. Not cached.
+      return jsonResponse(result, 200, 0);
     }
 
     // === ADMIN: usage and revenue rollup (auth-gated) ===

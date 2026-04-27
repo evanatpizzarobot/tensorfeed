@@ -8,7 +8,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { logPremiumUsage, getTokenUsage } from './payments';
+import { logPremiumUsage, getTokenUsage, validateAndCharge } from './payments';
 import type { Env } from './types';
 
 interface MockKV {
@@ -133,5 +133,69 @@ describe('getTokenUsage', () => {
     expect(summary.total_calls).toBe(0);
     expect(summary.total_credits_spent).toBe(0);
     expect(summary.recent).toHaveLength(0);
+  });
+});
+
+// ── validateAndCharge (cross-Worker helper) ─────────────────────────
+
+describe('validateAndCharge', () => {
+  it('decrements credits and returns the new balance on success', async () => {
+    const env = makeEnv();
+    seedCredits(env, 50);
+    const r = await validateAndCharge(env, { token: FIXTURE, cost: 1, endpoint: 'tf:/api/pro/macro' });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.credits_remaining).toBe(49);
+    // A second call should see the new balance
+    const r2 = await validateAndCharge(env, { token: FIXTURE, cost: 5 });
+    expect(r2.ok).toBe(true);
+    if (!r2.ok) return;
+    expect(r2.credits_remaining).toBe(44);
+  });
+
+  it('returns invalid_token for a malformed token', async () => {
+    const env = makeEnv();
+    const r = await validateAndCharge(env, { token: 'sk-not-a-tf-token', cost: 1 });
+    expect(r.ok).toBe(false);
+    if (r.ok) return;
+    expect(r.reason).toBe('invalid_token');
+  });
+
+  it('returns invalid_token when token is unknown', async () => {
+    const env = makeEnv();
+    const r = await validateAndCharge(env, { token: FIXTURE, cost: 1 });
+    expect(r.ok).toBe(false);
+    if (r.ok) return;
+    expect(r.reason).toBe('invalid_token');
+  });
+
+  it('returns insufficient_credits and does NOT decrement when balance < cost', async () => {
+    const env = makeEnv();
+    seedCredits(env, 2);
+    const r = await validateAndCharge(env, { token: FIXTURE, cost: 5 });
+    expect(r.ok).toBe(false);
+    if (r.ok) return;
+    expect(r.reason).toBe('insufficient_credits');
+    // Balance must remain 2 (atomic-charge property)
+    const usage = await getTokenUsage(env, FIXTURE);
+    expect(usage?.token_balance).toBe(2);
+  });
+
+  it('rejects negative or NaN cost values', async () => {
+    const env = makeEnv();
+    seedCredits(env, 50);
+    const neg = await validateAndCharge(env, { token: FIXTURE, cost: -1 });
+    expect(neg.ok).toBe(false);
+    const nan = await validateAndCharge(env, { token: FIXTURE, cost: NaN });
+    expect(nan.ok).toBe(false);
+  });
+
+  it('handles zero-cost calls (validate-only, no charge)', async () => {
+    const env = makeEnv();
+    seedCredits(env, 50);
+    const r = await validateAndCharge(env, { token: FIXTURE, cost: 0 });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.credits_remaining).toBe(50);
   });
 });

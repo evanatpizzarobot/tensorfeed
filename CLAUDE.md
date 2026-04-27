@@ -219,6 +219,9 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup
 - `/api/admin/usage/dates`: List of dates with rollup data
 
+**Internal (server-to-server only, NOT in `/api/meta` or `/llms.txt`):**
+- `/api/internal/validate-and-charge` (POST): Sister-site Workers (TerminalFeed and any future Pizza Robot Studios sister site like VR.org) call this with `X-Internal-Auth: ${SHARED_INTERNAL_SECRET}` to validate a TensorFeed bearer token and atomically debit credits. Body: `{ token, cost, endpoint }`. Always returns HTTP 200 with `{ok: true, credits_remaining}` or `{ok: false, reason}`; only 401/405/400 for auth/method/body failures. Auth check runs BEFORE body parsing so 401 does not leak endpoint existence. Constant-time secret compare. Backed by `validateAndCharge` helper in `worker/src/payments.ts` which is the same atomic-charge logic that `requirePayment` uses internally for in-process callers.
+
 Every new endpoint MUST be documented on `/developers` (or `/developers/agent-payments` for paid endpoints), added to `/api/meta`, and linked from `public/llms.txt`.
 
 ## RSS Sources (12 active)

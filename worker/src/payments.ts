@@ -628,6 +628,64 @@ export async function getBalance(env: Env, token: string): Promise<BalanceResult
   };
 }
 
+// === Cross-Worker validate-and-charge ===
+//
+// Same atomic credit-charge logic that requirePayment runs internally,
+// but exposed as a pure function so the /api/internal/validate-and-charge
+// HTTP wrapper can call it from sister-site Workers (TerminalFeed, etc.).
+//
+// Bearer-token-only path. The x402 fallback is NOT supported here because
+// sister sites have already authenticated their end users via this same
+// token; they should not be re-broadcasting fresh on-chain payments
+// through a server-to-server hop.
+//
+// Side effects: decrements `pay:credits:{token}` on success. The caller
+// is responsible for calling logPremiumUsage (typically via
+// ctx.waitUntil) so the daily rollup and per-token usage history get
+// updated. We keep this helper pure-over-credits so internal callers
+// can decide their own logging cadence.
+
+export type ValidateAndChargeReason =
+  | 'invalid_token'
+  | 'insufficient_credits'
+  | 'expired'
+  | 'replayed';
+
+export type ValidateAndChargeResult =
+  | { ok: true; credits_remaining: number }
+  | { ok: false; reason: ValidateAndChargeReason };
+
+export async function validateAndCharge(
+  env: Env,
+  args: { token: string; cost: number; endpoint?: string },
+): Promise<ValidateAndChargeResult> {
+  const { token, cost } = args;
+  if (
+    typeof token !== 'string' ||
+    !token ||
+    !token.startsWith('tf_live_')
+  ) {
+    return { ok: false, reason: 'invalid_token' };
+  }
+  if (!Number.isFinite(cost) || cost < 0) {
+    return { ok: false, reason: 'invalid_token' };
+  }
+  const record = (await env.TENSORFEED_CACHE.get(
+    `pay:credits:${token}`,
+    'json',
+  )) as CreditsRecord | null;
+  if (!record) {
+    return { ok: false, reason: 'invalid_token' };
+  }
+  if (record.balance < cost) {
+    return { ok: false, reason: 'insufficient_credits' };
+  }
+  record.balance -= cost;
+  record.last_used = new Date().toISOString();
+  await env.TENSORFEED_CACHE.put(`pay:credits:${token}`, JSON.stringify(record));
+  return { ok: true, credits_remaining: record.balance };
+}
+
 // === Middleware: requirePayment ===
 
 export interface PaymentResult {
