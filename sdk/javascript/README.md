@@ -197,6 +197,7 @@ try {
 | `tf.listWatches()` | Free | List all active watches owned by the current token |
 | `tf.getWatch(id)` | Free | Read one watch including fire_count and last_fired_at |
 | `tf.deleteWatch(id)` | Free | Remove an owned watch |
+| `tf.premiumAgentsDirectory({ category?, status?, sort?, limit?, ... })` | 1 credit | Enriched directory: status, news, traffic, pricing, trending_score per agent |
 
 ## Wallet & Trust
 

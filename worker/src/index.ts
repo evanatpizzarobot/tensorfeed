@@ -24,6 +24,11 @@ import {
   deleteWatch,
   runPriceWatchCycle,
 } from './watches';
+import {
+  getEnrichedDirectory,
+  EnrichedOptions,
+  SortKey,
+} from './agents-enriched';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
   requirePayment,
@@ -481,6 +486,7 @@ export default {
           premiumWatchesCreate: 'POST /api/premium/watches (1 credit per registration)',
           premiumWatchesList: 'GET /api/premium/watches',
           premiumWatchesItem: 'GET|DELETE /api/premium/watches/{id}',
+          premiumAgentsDirectory: '/api/premium/agents/directory?category=&status=&open_source=&capability=&sort=&limit=',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -862,6 +868,51 @@ export default {
       const result = await compareHistory(env, fromDate, toDate, typeParam);
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/history/compare', request.headers.get('User-Agent') || 'unknown', 1),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: ENRICHED AGENTS DIRECTORY (Tier 1, 1 credit) ===
+    // Static directory joined with live status, recent news count,
+    // recent news (top 3), agent traffic, flagship pricing, and a
+    // trending_score. Server-side sort + filter so agents pull a
+    // ranked list in one call.
+
+    if (path === '/api/premium/agents/directory') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const sortParam = url.searchParams.get('sort');
+      const validSorts: SortKey[] = ['trending', 'alphabetical', 'status', 'price_low', 'price_high', 'news_count'];
+      const sort: SortKey | undefined =
+        sortParam && (validSorts as string[]).includes(sortParam) ? (sortParam as SortKey) : undefined;
+
+      const statusParam = url.searchParams.get('status');
+      const validStatus: ('operational' | 'degraded' | 'down' | 'unknown')[] = ['operational', 'degraded', 'down', 'unknown'];
+      const status =
+        statusParam && (validStatus as string[]).includes(statusParam)
+          ? (statusParam as 'operational' | 'degraded' | 'down' | 'unknown')
+          : undefined;
+
+      const openSourceParam = url.searchParams.get('open_source');
+      const openSource =
+        openSourceParam === 'true' ? true : openSourceParam === 'false' ? false : undefined;
+
+      const limitParam = parseInt(url.searchParams.get('limit') ?? '50', 10);
+      const limit = Number.isFinite(limitParam) ? Math.max(1, Math.min(limitParam, 100)) : 50;
+
+      const opts: EnrichedOptions = {
+        ...(url.searchParams.get('category') ? { category: url.searchParams.get('category')! } : {}),
+        ...(status ? { status } : {}),
+        ...(typeof openSource === 'boolean' ? { open_source: openSource } : {}),
+        ...(url.searchParams.get('capability') ? { capability: url.searchParams.get('capability')! } : {}),
+        ...(sort ? { sort } : {}),
+        limit,
+      };
+
+      const result = await getEnrichedDirectory(env, opts);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/agents/directory', request.headers.get('User-Agent') || 'unknown', 1),
       );
       return premiumResponse(result, payment, 1);
     }

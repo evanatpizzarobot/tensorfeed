@@ -41,6 +41,8 @@ tensorfeed/
       history-series.ts  Premium history series: pricing/benchmark series, status uptime, snapshot diff
       watches.ts      Premium webhook watches: register, predicate eval, HMAC-signed POST delivery, cron-driven dispatch
       watches.test.ts Vitest coverage for predicate edge transitions, SSRF guard, dispatch end-to-end
+      agents-enriched.ts  Premium enriched agents directory: joins catalog with status, news, activity, pricing; trending score; sort/filter
+      agents-enriched.test.ts  Vitest coverage for enrichment join logic, filters, sort, scoring
       podcasts.ts     Podcast feed polling
       trending.ts     Trending GitHub repos
       twitter.ts      X/Twitter auto-posting
@@ -201,6 +203,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/premium/watches` (POST): Tier 1, 1 credit per registration. Body `{ spec, callback_url, secret?, fire_cap? }`. Spec is `{ type: "price"|"status", ... }`. Watch lives 90 days, default fire cap 100. Fires deliver HMAC-signed POST to callback URL.
 - `/api/premium/watches` (GET): List watches owned by the bearer token. Free.
 - `/api/premium/watches/{id}` (GET|DELETE): Read or remove an owned watch. Free.
+- `/api/premium/agents/directory?category=&status=&open_source=&capability=&sort=&limit=`: Tier 1, 1 credit. Enriched agents catalog joined with live status, recent news (count + top 3), agent traffic, flagship pricing, and a derived trending_score. Sort options: trending, alphabetical, status, price_low, price_high, news_count.
 
 **Admin (auth-gated via `?key=ENVIRONMENT`):**
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup

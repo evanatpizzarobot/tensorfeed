@@ -229,6 +229,35 @@ const ENDPOINTS: PremiumEndpoint[] = [
 }`,
   },
   {
+    method: 'GET',
+    path: '/api/premium/agents/directory',
+    description:
+      'The agents catalog joined with live status, recent news (count + top 3 articles), agent traffic, flagship pricing, and a derived trending_score (0-100). Server-side filter and sort so you pull a ranked list in one call. Default limit=50, max 100.',
+    cost: '1 credit per call',
+    example: `// Query: ?sort=trending&category=coding&status=operational
+{
+  "ok": true,
+  "total": 18, "returned": 5,
+  "sort": "trending",
+  "filters_applied": { "category": "coding", "status": "operational" },
+  "agents": [
+    {
+      "id": "claude-code", "name": "Claude Code", "provider": "Anthropic",
+      "live_status": "operational",
+      "status_page_url": "https://status.anthropic.com",
+      "recent_news_count": 7,
+      "recent_news": [
+        { "title": "Anthropic ships Opus 4.7", "url": "...", "published_at": "..." }
+      ],
+      "agent_traffic_24h": 124,
+      "flagship_pricing": { "model": "Claude Opus 4.7", "input": 15, "output": 75, "blended": 45 },
+      "trending_score": 86
+    }
+  ],
+  "billing": { "credits_charged": 1, "credits_remaining": 48 }
+}`,
+  },
+  {
     method: 'POST',
     path: '/api/premium/watches',
     description:

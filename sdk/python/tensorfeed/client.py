@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.4"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.5"
 
 
 class TensorFeedError(Exception):
@@ -626,4 +626,62 @@ class TensorFeed:
         self._require_token("delete_watch")
         return self._request(
             "DELETE", f"/premium/watches/{watch_id}", require_token=True,
+        )
+
+    # ── Paid: enriched agents directory (Tier 1, 1 credit) ─────────
+
+    def premium_agents_directory(
+        self,
+        *,
+        category: str | None = None,
+        status: str | None = None,
+        open_source: bool | None = None,
+        capability: str | None = None,
+        sort: str | None = None,
+        limit: int | None = None,
+    ) -> dict[str, Any]:
+        """Enriched agents directory: catalog joined with live signals.
+
+        Costs 1 credit per call. Each agent record includes ``live_status``,
+        ``status_page_url``, ``recent_news_count``, ``recent_news`` (top 3),
+        ``agent_traffic_24h``, ``flagship_pricing`` (with blended $/1M),
+        and a derived ``trending_score`` (0-100).
+
+        Args:
+            category: Filter to one category id (e.g. "coding", "research",
+                "general", "creative", "frameworks").
+            status: Filter to one live status: "operational", "degraded",
+                "down", or "unknown".
+            open_source: True for OSS-only, False for closed-only.
+            capability: Substring match against an agent's capabilities tags.
+            sort: One of "trending" (default), "alphabetical", "status",
+                "price_low", "price_high", "news_count".
+            limit: Max records to return (1-100, default 50).
+
+        Returns:
+            Dict with ``agents`` (list), ``total``, ``returned``,
+            ``filters_applied``, ``sort``, ``data_freshness``, and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+        """
+        self._require_token("premium_agents_directory")
+        params: dict[str, Any] = {}
+        if category is not None:
+            params["category"] = category
+        if status is not None:
+            params["status"] = status
+        if open_source is True:
+            params["open_source"] = "true"
+        elif open_source is False:
+            params["open_source"] = "false"
+        if capability is not None:
+            params["capability"] = capability
+        if sort is not None:
+            params["sort"] = sort
+        if limit is not None:
+            params["limit"] = limit
+        return self._request(
+            "GET", "/premium/agents/directory", params=params, require_token=True,
         )

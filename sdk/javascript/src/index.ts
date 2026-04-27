@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.3';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.4';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -389,6 +389,55 @@ export interface WatchListResponse {
 export interface WatchGetResponse {
   ok: boolean;
   watch: Watch;
+}
+
+// ── Premium: enriched agents directory ────────────────────────────
+
+export interface EnrichedAgentRecord {
+  id: string;
+  name: string;
+  provider: string;
+  category: string;
+  description: string;
+  url: string;
+  pricing?: string;
+  launched?: number | string;
+  capabilities?: string[];
+  openSource?: boolean;
+  live_status: 'operational' | 'degraded' | 'down' | 'unknown';
+  status_page_url: string | null;
+  recent_news_count: number;
+  recent_news: { title: string; url: string; published_at: string; source: string }[];
+  agent_traffic_24h: number;
+  flagship_pricing: { model: string; input: number; output: number; blended: number } | null;
+  trending_score: number;
+}
+
+export type AgentsDirectorySort =
+  | 'trending'
+  | 'alphabetical'
+  | 'status'
+  | 'price_low'
+  | 'price_high'
+  | 'news_count';
+
+export interface PremiumAgentsDirectoryResponse {
+  ok: boolean;
+  source: 'tensorfeed.ai';
+  computed_at: string;
+  total: number;
+  returned: number;
+  filters_applied: Record<string, unknown>;
+  sort: AgentsDirectorySort;
+  data_freshness: {
+    directory: string | null;
+    status: string | null;
+    news: string | null;
+    pricing: string | null;
+    activity: string | null;
+  };
+  agents: EnrichedAgentRecord[];
+  billing?: { credits_charged: number; credits_remaining?: number };
 }
 
 // ── Payment ─────────────────────────────────────────────────────────
@@ -839,6 +888,40 @@ export class TensorFeed {
   async deleteWatch(id: string): Promise<{ ok: boolean }> {
     this.requireToken('deleteWatch');
     return this.request<{ ok: boolean }>('DELETE', `/premium/watches/${id}`, {
+      requireToken: true,
+    });
+  }
+
+  // ── Paid: enriched agents directory (1 credit per call) ──────
+
+  /**
+   * Premium agents directory: catalog joined with live status, recent news
+   * (count + top 3), agent traffic, flagship pricing, and a derived
+   * trending_score (0-100). Server-side filter and sort. Costs 1 credit.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   */
+  async premiumAgentsDirectory(options?: {
+    category?: string;
+    status?: 'operational' | 'degraded' | 'down' | 'unknown';
+    openSource?: boolean;
+    capability?: string;
+    sort?: AgentsDirectorySort;
+    limit?: number;
+  }): Promise<PremiumAgentsDirectoryResponse> {
+    this.requireToken('premiumAgentsDirectory');
+    const params: Record<string, unknown> = {
+      category: options?.category,
+      status: options?.status,
+      capability: options?.capability,
+      sort: options?.sort,
+      limit: options?.limit,
+    };
+    if (options?.openSource === true) params.open_source = 'true';
+    else if (options?.openSource === false) params.open_source = 'false';
+    return this.request<PremiumAgentsDirectoryResponse>('GET', '/premium/agents/directory', {
+      params,
       requireToken: true,
     });
   }
