@@ -479,7 +479,7 @@ const ENDPOINTS: PremiumEndpoint[] = [
     method: 'POST',
     path: '/api/premium/watches',
     description:
-      'Register a webhook watch on a price change or service status transition. Each watch lives 90 days and fires up to 100 times by default. Deliveries POST to your callback URL with an HMAC-SHA256 signature header (X-TensorFeed-Signature: sha256=...). Per-token cap of 25 active watches. Listing and per-watch read/delete are free for the owning bearer token.',
+      'Register a webhook watch. Three types: realtime price (fires when a model price crosses a threshold or any change), realtime status (fires on provider operational/degraded/down transitions), or scheduled digest (fires daily or weekly with a curated summary of pricing changes regardless of whether anything dramatic happened). Each watch lives 90 days and fires up to 100 times by default. Deliveries POST to your callback URL with an HMAC-SHA256 signature header (X-TensorFeed-Signature: sha256=...). Per-token cap of 25 active watches. Listing and per-watch read/delete are free for the owning bearer token.',
     cost: '1 credit per registration',
     example: `// Body: { spec, callback_url, secret?, fire_cap? }
 // Spec types:
@@ -487,18 +487,38 @@ const ENDPOINTS: PremiumEndpoint[] = [
 //     op: "lt"|"gt"|"changes", threshold? }
 //   { type: "status", provider, op: "becomes"|"changes",
 //     value?: "operational"|"degraded"|"down" }
+//   { type: "digest", cadence: "daily"|"weekly" }
 {
   "ok": true,
   "watch": {
     "id": "wat_a1b2c3d4e5f60718a9b0c1d2",
-    "spec": { "type": "price", "model": "Claude Opus 4.7",
-              "field": "blended", "op": "lt", "threshold": 30 },
+    "spec": { "type": "digest", "cadence": "daily" },
     "callback_url": "https://agent.example.com/hook",
     "created": "2026-04-27T18:00:00Z",
     "expires_at": "2026-07-26T18:00:00Z",
     "fire_count": 0, "fire_cap": 100, "status": "active"
   },
   "billing": { "credits_charged": 1, "credits_remaining": 49 }
+}
+
+// Digest fire payload (delivered to callback_url):
+{
+  "event": "watch.fire",
+  "watch_id": "wat_...",
+  "fired_at": "2026-04-28T07:00:00Z",
+  "spec": { "type": "digest", "cadence": "daily" },
+  "match": {
+    "type": "digest",
+    "cadence": "daily",
+    "period": { "from": "2026-04-27T07:00:00Z", "to": "2026-04-28T07:00:00Z" },
+    "pricing": {
+      "changed": [
+        { "model": "Claude Opus 4.7", "provider": "Anthropic",
+          "field": "inputPrice", "from": 15, "to": 12, "delta_pct": -20 }
+      ],
+      "added": [], "removed": [], "total_changes": 1
+    }
+  }
 }`,
   },
 ];

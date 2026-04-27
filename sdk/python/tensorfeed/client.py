@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.9"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.10"
 
 
 class TensorFeedError(Exception):
@@ -649,6 +649,55 @@ class TensorFeed:
         self._require_token("delete_watch")
         return self._request(
             "DELETE", f"/premium/watches/{watch_id}", require_token=True,
+        )
+
+    def create_digest_watch(
+        self,
+        *,
+        cadence: str,
+        callback_url: str,
+        secret: str | None = None,
+        fire_cap: int | None = None,
+    ) -> dict[str, Any]:
+        """Register a scheduled digest watch.
+
+        Costs 1 credit at registration. Fires on a fixed cadence (daily
+        or weekly) with a curated summary of pricing changes,
+        added/removed models, and total change count for the period,
+        regardless of whether anything dramatic happened. Set-and-forget
+        for agents that want a periodic snapshot without subscribing to
+        realtime transitions.
+
+        First fire happens at the next daily 7am UTC cron after
+        registration. Daily watches re-fire roughly every 24 hours;
+        weekly watches re-fire roughly every 7 days. A small slack
+        window (1h for daily, 12h for weekly) absorbs cron drift.
+
+        Same delivery contract as ``create_watch``: HMAC-SHA256 signed
+        POST to callback_url with X-TensorFeed-Signature and
+        X-TensorFeed-Watch-Id headers. The fire payload's
+        ``match.type`` is ``'digest'`` so consumers can route on it.
+
+        Args:
+            cadence: 'daily' or 'weekly'.
+            callback_url: HTTPS URL to POST to on each fire.
+            secret: Optional HMAC shared secret.
+            fire_cap: Max fires before auto-disable (default 100).
+
+        Returns:
+            Same shape as ``create_watch``: dict with ``watch`` (full
+            record) and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+            TensorFeedError: 400 on invalid cadence or callback URL
+        """
+        return self.create_watch(
+            spec={"type": "digest", "cadence": cadence},
+            callback_url=callback_url,
+            secret=secret,
+            fire_cap=fire_cap,
         )
 
     # ── Paid: enriched agents directory (Tier 1, 1 credit) ─────────

@@ -194,7 +194,8 @@ try {
 | `tf.benchmarkSeries({ model, benchmark, from?, to? })` | 1 credit | Score evolution for a benchmark on one model, returns delta_pp |
 | `tf.statusUptime({ provider, from?, to? })` | 1 credit | Uptime % per provider with incident days (degraded = half) |
 | `tf.historyCompare({ from, to, type? })` | 1 credit | Diff two snapshots: added, removed, changed entries with deltas |
-| `tf.createWatch({ spec, callbackUrl, secret?, fireCap? })` | 1 credit | Register a webhook watch on a price change or status transition |
+| `tf.createWatch({ spec, callbackUrl, secret?, fireCap? })` | 1 credit | Register a webhook watch (price / status / digest) |
+| `tf.createDigestWatch({ cadence, callbackUrl, secret?, fireCap? })` | 1 credit | Convenience: scheduled daily/weekly digest of pricing changes |
 | `tf.listWatches()` | Free | List all active watches owned by the current token |
 | `tf.getWatch(id)` | Free | Read one watch including fire_count and last_fired_at |
 | `tf.deleteWatch(id)` | Free | Remove an owned watch |

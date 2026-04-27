@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.8';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.9';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -357,7 +357,12 @@ export interface StatusWatchSpec {
   value?: 'operational' | 'degraded' | 'down';
 }
 
-export type WatchSpec = PriceWatchSpec | StatusWatchSpec;
+export interface DigestWatchSpec {
+  type: 'digest';
+  cadence: 'daily' | 'weekly';
+}
+
+export type WatchSpec = PriceWatchSpec | StatusWatchSpec | DigestWatchSpec;
 
 export interface Watch {
   id: string;
@@ -1005,6 +1010,29 @@ export class TensorFeed {
     this.requireToken('deleteWatch');
     return this.request<{ ok: boolean }>('DELETE', `/premium/watches/${id}`, {
       requireToken: true,
+    });
+  }
+
+  /**
+   * Convenience helper that registers a scheduled digest watch.
+   * Costs 1 credit. Fires on the given cadence (daily or weekly) with
+   * a curated summary of pricing changes regardless of whether anything
+   * dramatic happened. Same delivery contract as createWatch.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   */
+  async createDigestWatch(options: {
+    cadence: 'daily' | 'weekly';
+    callbackUrl: string;
+    secret?: string;
+    fireCap?: number;
+  }): Promise<WatchCreateResponse> {
+    return this.createWatch({
+      spec: { type: 'digest', cadence: options.cadence },
+      callbackUrl: options.callbackUrl,
+      secret: options.secret,
+      fireCap: options.fireCap,
     });
   }
 

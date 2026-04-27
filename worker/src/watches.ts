@@ -14,6 +14,7 @@ import { Env } from './types';
  *   watch:{id}              -> full Watch record (90-day TTL)
  *   watch:index:price       -> string[] of watch IDs subscribed to price events
  *   watch:index:status      -> string[] of watch IDs subscribed to status events
+ *   watch:index:digest      -> string[] of watch IDs subscribed to scheduled digest events
  *   watch:byToken:{token}   -> string[] of watch IDs owned by this token (read-only listing)
  *   watch:prev:pricing      -> last pricing payload seen by dispatchPriceWatches
  *
@@ -52,7 +53,19 @@ export interface StatusWatchSpec {
   value?: 'operational' | 'degraded' | 'down';
 }
 
-export type WatchSpec = PriceWatchSpec | StatusWatchSpec;
+/**
+ * Scheduled digest watch. Fires on a fixed cadence with a curated
+ * summary of pricing changes and incident counts since the previous
+ * digest, regardless of whether anything dramatic happened. Set-and-
+ * forget for agents that want to stay informed without subscribing to
+ * realtime transitions.
+ */
+export interface DigestWatchSpec {
+  type: 'digest';
+  cadence: 'daily' | 'weekly';
+}
+
+export type WatchSpec = PriceWatchSpec | StatusWatchSpec | DigestWatchSpec;
 
 export interface Watch {
   id: string;
@@ -165,6 +178,12 @@ export function validateSpec(spec: unknown): SpecValidation {
     }
     return { ok: true };
   }
+  if (s.type === 'digest') {
+    if (s.cadence !== 'daily' && s.cadence !== 'weekly') {
+      return { ok: false, error: 'digest_watch_cadence_invalid' };
+    }
+    return { ok: true };
+  }
   return { ok: false, error: 'unsupported_watch_type' };
 }
 
@@ -236,12 +255,14 @@ export async function signBody(body: string, secret: string): Promise<string> {
 
 // === Storage ===
 
-async function readIndex(env: Env, type: 'price' | 'status'): Promise<string[]> {
+type WatchIndexType = 'price' | 'status' | 'digest';
+
+async function readIndex(env: Env, type: WatchIndexType): Promise<string[]> {
   const raw = (await env.TENSORFEED_CACHE.get(`watch:index:${type}`, 'json')) as string[] | null;
   return raw ?? [];
 }
 
-async function writeIndex(env: Env, type: 'price' | 'status', ids: string[]): Promise<void> {
+async function writeIndex(env: Env, type: WatchIndexType, ids: string[]): Promise<void> {
   await env.TENSORFEED_CACHE.put(`watch:index:${type}`, JSON.stringify(ids));
 }
 
@@ -631,4 +652,185 @@ export async function runPriceWatchCycle(env: Env): Promise<DispatchSummary> {
     await env.TENSORFEED_CACHE.put('watch:prev:pricing', JSON.stringify(current));
   }
   return summary;
+}
+
+// === Digest dispatch (scheduled cadence, not transition-driven) ===
+
+const DAILY_THRESHOLD_MS = 23 * 60 * 60 * 1000; // ~24h with 1h slack for cron drift
+const WEEKLY_THRESHOLD_MS = 6.5 * 24 * 60 * 60 * 1000;
+
+interface DigestSummary {
+  pricing: {
+    changed: { model: string; provider: string; field: string; from: number; to: number; delta_pct: number | null }[];
+    added: { model: string; provider: string; inputPrice: number; outputPrice: number }[];
+    removed: { model: string; provider: string; inputPrice: number; outputPrice: number }[];
+    total_changes: number;
+  };
+}
+
+/**
+ * Compute a digest summary by diffing the current pricing payload
+ * against the historical snapshot from the start of the cadence
+ * window. We use the dated history snapshots from history.ts (not
+ * watch:prev:pricing) so every digest fire reads the canonical
+ * snapshot for that period, regardless of when the last digest fired.
+ */
+async function computeDigestSummary(
+  env: Env,
+  cadence: 'daily' | 'weekly',
+): Promise<DigestSummary> {
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+  const periodDays = cadence === 'daily' ? 1 : 7;
+  const windowStart = new Date(today);
+  windowStart.setUTCDate(windowStart.getUTCDate() - periodDays);
+  const windowStartStr = windowStart.toISOString().slice(0, 10);
+
+  const [fromSnap, toSnap, current] = await Promise.all([
+    env.TENSORFEED_CACHE.get(`history:${windowStartStr}:models`, 'json') as Promise<{ data: PricingPayload } | null>,
+    env.TENSORFEED_CACHE.get(`history:${todayStr}:models`, 'json') as Promise<{ data: PricingPayload } | null>,
+    env.TENSORFEED_CACHE.get('models', 'json') as Promise<PricingPayload | null>,
+  ]);
+
+  // Prefer the dated snapshots; fall back to the live `models` payload as the "to" side
+  // when today's snapshot hasn't been captured yet (the digest cron should run after
+  // captureHistory in the same daily slot, but order isn't strictly enforced).
+  const before: PricingPayload | null = fromSnap?.data ?? null;
+  const after: PricingPayload | null = toSnap?.data ?? current ?? null;
+
+  const transitions = computePriceTransitions(before, after);
+  const changed = transitions
+    .filter(t => t.field !== 'blended')
+    .slice(0, 20)
+    .map(t => ({
+      model: t.model,
+      provider: t.provider,
+      field: t.field,
+      from: t.from,
+      to: t.to,
+      delta_pct:
+        t.from === 0 ? null : parseFloat((((t.to - t.from) / t.from) * 100).toFixed(4)),
+    }));
+
+  // Detect added/removed at the model granularity
+  const beforeNames = new Set<string>();
+  if (before?.providers) {
+    for (const p of before.providers) for (const m of p.models) beforeNames.add(m.name.toLowerCase());
+  }
+  const afterIndex = new Map<string, { provider: string; model: ModelPricing }>();
+  if (after?.providers) {
+    for (const p of after.providers) {
+      for (const m of p.models) {
+        afterIndex.set(m.name.toLowerCase(), { provider: p.name, model: m });
+      }
+    }
+  }
+
+  const added: DigestSummary['pricing']['added'] = [];
+  for (const [key, entry] of afterIndex) {
+    if (!beforeNames.has(key)) {
+      added.push({
+        model: entry.model.name,
+        provider: entry.provider,
+        inputPrice: entry.model.inputPrice,
+        outputPrice: entry.model.outputPrice,
+      });
+    }
+  }
+
+  const removed: DigestSummary['pricing']['removed'] = [];
+  if (before?.providers) {
+    for (const p of before.providers) {
+      for (const m of p.models) {
+        if (!afterIndex.has(m.name.toLowerCase())) {
+          removed.push({
+            model: m.name,
+            provider: p.name,
+            inputPrice: m.inputPrice,
+            outputPrice: m.outputPrice,
+          });
+        }
+      }
+    }
+  }
+
+  return {
+    pricing: {
+      changed,
+      added,
+      removed,
+      total_changes: changed.length + added.length + removed.length,
+    },
+  };
+}
+
+/**
+ * Dispatch any digest watch whose cadence has elapsed since its last
+ * fire. Called once per day from the 7am UTC cron. Daily watches fire
+ * roughly every 24h; weekly watches fire roughly every 7 days. A small
+ * slack window (1h for daily, 12h for weekly) absorbs cron drift.
+ */
+export async function runDigestWatchCycle(env: Env): Promise<DispatchSummary> {
+  const ids = await readIndex(env, 'digest');
+  if (ids.length === 0) {
+    return { watches_evaluated: 0, watches_fired: 0, delivery_failures: 0 };
+  }
+
+  const watches = (await Promise.all(ids.map(id => getWatch(env, id)))).filter(
+    (w): w is Watch => w !== null && w.spec.type === 'digest' && w.status === 'active',
+  );
+
+  // Cache the daily and weekly summaries so we don't recompute per watch
+  let dailySummary: DigestSummary | null = null;
+  let weeklySummary: DigestSummary | null = null;
+
+  const now = Date.now();
+  let fired = 0;
+  let failures = 0;
+
+  for (const watch of watches) {
+    const spec = watch.spec as DigestWatchSpec;
+    const lastMs = watch.last_fired_at ? new Date(watch.last_fired_at).getTime() : 0;
+    const elapsed = now - lastMs;
+    const threshold = spec.cadence === 'daily' ? DAILY_THRESHOLD_MS : WEEKLY_THRESHOLD_MS;
+
+    if (watch.last_fired_at && elapsed < threshold) {
+      continue; // not yet
+    }
+
+    let summary: DigestSummary;
+    if (spec.cadence === 'daily') {
+      if (!dailySummary) dailySummary = await computeDigestSummary(env, 'daily');
+      summary = dailySummary;
+    } else {
+      if (!weeklySummary) weeklySummary = await computeDigestSummary(env, 'weekly');
+      summary = weeklySummary;
+    }
+
+    const periodDays = spec.cadence === 'daily' ? 1 : 7;
+    const periodFromMs = now - periodDays * 24 * 60 * 60 * 1000;
+
+    const payload: FirePayload = {
+      event: 'watch.fire',
+      watch_id: watch.id,
+      fired_at: nowIso(),
+      spec,
+      match: {
+        type: 'digest',
+        cadence: spec.cadence,
+        period: {
+          from: new Date(periodFromMs).toISOString(),
+          to: new Date(now).toISOString(),
+        },
+        ...summary,
+      },
+    };
+
+    const deliveryStatus = await deliver(watch, payload);
+    if (deliveryStatus === null || deliveryStatus >= 400) failures += 1;
+    await recordFire(env, watch, deliveryStatus);
+    fired += 1;
+  }
+
+  return { watches_evaluated: watches.length, watches_fired: fired, delivery_failures: failures };
 }

@@ -20,6 +20,7 @@ import {
   deleteWatch,
   dispatchPriceWatches,
   dispatchStatusWatches,
+  runDigestWatchCycle,
   PriceWatchSpec,
   StatusWatchSpec,
 } from './watches';
@@ -140,6 +141,20 @@ describe('validateSpec', () => {
 
   it('rejects unsupported watch types', () => {
     expect(validateSpec({ type: 'benchmark', provider: 'x', op: 'changes' }).ok).toBe(false);
+  });
+
+  it('accepts a daily digest watch', () => {
+    expect(validateSpec({ type: 'digest', cadence: 'daily' }).ok).toBe(true);
+  });
+
+  it('accepts a weekly digest watch', () => {
+    expect(validateSpec({ type: 'digest', cadence: 'weekly' }).ok).toBe(true);
+  });
+
+  it('rejects digest with bad cadence', () => {
+    const r = validateSpec({ type: 'digest', cadence: 'monthly' });
+    expect(r.ok).toBe(false);
+    expect(r.error).toBe('digest_watch_cadence_invalid');
   });
 });
 
@@ -475,5 +490,115 @@ describe('dispatch (network-stubbed)', () => {
     ]);
     expect(summary.watches_fired).toBe(1);
     expect(captured).toHaveLength(1);
+  });
+});
+
+// ── Digest dispatch (cadence-based) ─────────────────────────────────
+
+describe('runDigestWatchCycle', () => {
+  let originalFetch: typeof globalThis.fetch;
+  let captured: { url: string; init: RequestInit }[];
+
+  beforeEach(() => {
+    originalFetch = globalThis.fetch;
+    captured = [];
+    globalThis.fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      captured.push({ url: String(input), init: init ?? {} });
+      return new Response('{"received": true}', { status: 200 });
+    }) as typeof globalThis.fetch;
+  });
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+  });
+
+  function seedHistorySnapshot(env: Env, date: string, providers: { name: string; models: { id: string; name: string; inputPrice: number; outputPrice: number }[] }[]): void {
+    const snapshot = {
+      date,
+      type: 'models',
+      capturedAt: `${date}T07:00:00.000Z`,
+      data: { providers: providers.map((p, i) => ({ id: `p${i}`, name: p.name, models: p.models })) },
+    };
+    return void (env.TENSORFEED_CACHE as unknown as { put: (k: string, v: string) => Promise<void> }).put(
+      `history:${date}:models`,
+      JSON.stringify(snapshot),
+    );
+  }
+
+  it('fires a never-fired daily digest watch even when no pricing changed', async () => {
+    const env = makeEnv();
+    const created = await createWatch(env, 'tf_live_abc', {
+      spec: { type: 'digest', cadence: 'daily' },
+      callback_url: 'https://agent.example.com/digest',
+    });
+    if (!created.ok) throw new Error('setup failed');
+
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    const sameModels = [{ name: 'Anthropic', models: [{ id: 'op', name: 'Opus 4.7', inputPrice: 15, outputPrice: 75 }] }];
+    seedHistorySnapshot(env, yesterday, sameModels);
+    seedHistorySnapshot(env, today, sameModels);
+
+    const summary = await runDigestWatchCycle(env);
+    expect(summary.watches_fired).toBe(1);
+    expect(captured).toHaveLength(1);
+    const body = JSON.parse(captured[0].init.body as string) as { match: { type: string; cadence: string; pricing: { total_changes: number } } };
+    expect(body.match.type).toBe('digest');
+    expect(body.match.cadence).toBe('daily');
+    expect(body.match.pricing.total_changes).toBe(0);
+  });
+
+  it('does NOT re-fire a daily digest within 23 hours', async () => {
+    const env = makeEnv();
+    const created = await createWatch(env, 'tf_live_abc', {
+      spec: { type: 'digest', cadence: 'daily' },
+      callback_url: 'https://agent.example.com/digest',
+    });
+    if (!created.ok) throw new Error('setup failed');
+
+    // Manually set last_fired_at to 1 hour ago via direct put (simulating a recent fire)
+    const watch = await getWatch(env, created.watch.id);
+    if (!watch) throw new Error('watch missing');
+    watch.last_fired_at = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    watch.fire_count = 1;
+    await (env.TENSORFEED_CACHE as unknown as { put: (k: string, v: string) => Promise<void> }).put(
+      `watch:${watch.id}`,
+      JSON.stringify(watch),
+    );
+
+    const summary = await runDigestWatchCycle(env);
+    expect(summary.watches_fired).toBe(0);
+    expect(captured).toHaveLength(0);
+  });
+
+  it('includes pricing diff in the digest payload when models changed', async () => {
+    const env = makeEnv();
+    const created = await createWatch(env, 'tf_live_abc', {
+      spec: { type: 'digest', cadence: 'daily' },
+      callback_url: 'https://agent.example.com/digest',
+    });
+    if (!created.ok) throw new Error('setup failed');
+
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    seedHistorySnapshot(env, yesterday, [
+      { name: 'Anthropic', models: [{ id: 'op', name: 'Opus 4.7', inputPrice: 15, outputPrice: 75 }] },
+    ]);
+    seedHistorySnapshot(env, today, [
+      { name: 'Anthropic', models: [{ id: 'op', name: 'Opus 4.7', inputPrice: 12, outputPrice: 60 }] },
+    ]);
+
+    const summary = await runDigestWatchCycle(env);
+    expect(summary.watches_fired).toBe(1);
+    const body = JSON.parse(captured[0].init.body as string) as { match: { pricing: { changed: { field: string; from: number; to: number }[]; total_changes: number } } };
+    expect(body.match.pricing.changed.length).toBeGreaterThan(0);
+    expect(body.match.pricing.total_changes).toBeGreaterThan(0);
+  });
+
+  it('fires nothing when no digest watches are registered', async () => {
+    const env = makeEnv();
+    const summary = await runDigestWatchCycle(env);
+    expect(summary).toEqual({ watches_evaluated: 0, watches_fired: 0, delivery_failures: 0 });
+    expect(captured).toHaveLength(0);
   });
 });

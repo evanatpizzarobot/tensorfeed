@@ -5,7 +5,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 
 const API_BASE = 'https://tensorfeed.ai/api';
-const SDK_VERSION = '1.4.0';
+const SDK_VERSION = '1.5.0';
 
 // ── API helpers ─────────────────────────────────────────────────────
 
@@ -790,6 +790,37 @@ server.tool(
         {
           type: 'text' as const,
           text: `Created watch ${data.watch.id} (expires ${data.watch.expires_at}). Credits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: create_digest_watch (1 credit) ────────────────────────────
+
+server.tool(
+  'create_digest_watch',
+  'Register a scheduled digest webhook that fires daily or weekly with a curated summary of pricing changes (regardless of whether anything dramatic happened). Costs 1 credit. Watch lives 90 days. Set-and-forget for agents that want a periodic snapshot without subscribing to realtime transitions.',
+  {
+    cadence: z.enum(['daily', 'weekly']).describe('How often the digest fires'),
+    callback_url: z.string().describe('HTTPS URL to POST to when the digest fires'),
+    secret: z.string().optional().describe('Optional HMAC shared secret'),
+  },
+  async ({ cadence, callback_url, secret }) => {
+    const body: Record<string, unknown> = {
+      spec: { type: 'digest', cadence },
+      callback_url,
+    };
+    if (secret !== undefined) body.secret = secret;
+    const data = (await fetchJSON('/premium/watches', { method: 'POST', body, auth: true })) as {
+      watch: { id: string; expires_at: string };
+      billing?: { credits_remaining?: number };
+    };
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `Created ${cadence} digest watch ${data.watch.id} (expires ${data.watch.expires_at}). First fire at the next 7am UTC daily cron. Credits remaining: ${data.billing?.credits_remaining ?? '?'}`,
         },
       ],
     };

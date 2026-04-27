@@ -23,6 +23,7 @@ import {
   listWatchesForToken,
   deleteWatch,
   runPriceWatchCycle,
+  runDigestWatchCycle,
 } from './watches';
 import {
   getEnrichedDirectory,
@@ -1376,6 +1377,9 @@ export default {
       // Premium webhook watches: fire price-change webhooks based on the
       // diff between the last seen pricing and the freshly-updated payload.
       await run('runPriceWatchCycle', () => runPriceWatchCycle(env));
+      // Digest webhooks: fire scheduled summaries (daily / weekly) for
+      // any digest watch whose cadence has elapsed.
+      await run('runDigestWatchCycle', () => runDigestWatchCycle(env));
     // X/Twitter: 1 post/day, re-enabled 2026-04-12 after spam flag on 2026-04-04.
     // Hold at 1/day until 2026-05-04; do not increase cadence without 30 clean days.
     } else if (cron === '30 14 * * *') {

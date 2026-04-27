@@ -32,6 +32,7 @@ These tools require a `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/
 | `list_watches` | Free | List active webhook watches owned by the token |
 | `create_price_watch` | 1 credit | Register a webhook watch on a model price change |
 | `create_status_watch` | 1 credit | Register a webhook watch on a service status transition |
+| `create_digest_watch` | 1 credit | Register a daily/weekly digest webhook (pricing-changes summary, set-and-forget) |
 | `delete_watch` | Free | Remove an active watch |
 
 ## Setup with Claude Code

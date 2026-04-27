@@ -207,7 +207,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/premium/history/benchmarks/series?model=&benchmark=&from=&to=`: Tier 1, 1 credit. Score evolution for a single benchmark on one model. Returns delta in percentage points.
 - `/api/premium/history/status/uptime?provider=&from=&to=`: Tier 1, 1 credit. Daily uptime % for one provider (degraded counts as half) with incident-day list. Missing-data days excluded from denominator.
 - `/api/premium/history/compare?from=&to=&type=pricing|benchmarks`: Tier 1, 1 credit. Diff two daily snapshots: added, removed, changed entries with deltas.
-- `/api/premium/watches` (POST): Tier 1, 1 credit per registration. Body `{ spec, callback_url, secret?, fire_cap? }`. Spec is `{ type: "price"|"status", ... }`. Watch lives 90 days, default fire cap 100. Fires deliver HMAC-signed POST to callback URL.
+- `/api/premium/watches` (POST): Tier 1, 1 credit per registration. Body `{ spec, callback_url, secret?, fire_cap? }`. Spec is `{ type: "price"|"status"|"digest", ... }`. Price/status fire on transitions; digest fires on a daily/weekly cadence with a pricing-changes summary. Watch lives 90 days, default fire cap 100. Fires deliver HMAC-signed POST to callback URL.
 - `/api/premium/watches` (GET): List watches owned by the bearer token. Free.
 - `/api/premium/watches/{id}` (GET|DELETE): Read or remove an owned watch. Free.
 - `/api/premium/agents/directory?category=&status=&open_source=&capability=&sort=&limit=`: Tier 1, 1 credit. Enriched agents catalog joined with live status, recent news (count + top 3), agent traffic, flagship pricing, and a derived trending_score. Sort options: trending, alphabetical, status, price_low, price_high, news_count.

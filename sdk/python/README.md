@@ -216,7 +216,8 @@ except TensorFeedError as e:
 | `tf.benchmark_series(model=, benchmark=, from_date=, to_date=)` | 1 credit | Score evolution for a benchmark on one model, returns delta_pp |
 | `tf.status_uptime(provider=, from_date=, to_date=)` | 1 credit | Uptime % per provider with incident days (degraded = half) |
 | `tf.history_compare(from_date=, to_date=, snapshot_type=)` | 1 credit | Diff two snapshots: added, removed, changed entries with deltas |
-| `tf.create_watch(spec=, callback_url=, secret=, fire_cap=)` | 1 credit | Register a webhook watch on a price change or status transition |
+| `tf.create_watch(spec=, callback_url=, secret=, fire_cap=)` | 1 credit | Register a webhook watch (price / status / digest) |
+| `tf.create_digest_watch(cadence=, callback_url=, secret=, fire_cap=)` | 1 credit | Convenience: scheduled daily/weekly digest of pricing changes |
 | `tf.list_watches()` | Free | List all active watches owned by the current token |
 | `tf.get_watch(watch_id)` | Free | Read one watch including fire_count and last_fired_at |
 | `tf.delete_watch(watch_id)` | Free | Remove an owned watch |
