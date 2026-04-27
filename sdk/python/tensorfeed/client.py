@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.10"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.11"
 
 
 class TensorFeedError(Exception):
@@ -698,6 +698,39 @@ class TensorFeed:
             callback_url=callback_url,
             secret=secret,
             fire_cap=fire_cap,
+        )
+
+    # ── Paid: provider deep-dive (Tier 1, 1 credit) ────────────────
+
+    def provider_deepdive(self, provider: str) -> dict[str, Any]:
+        """Everything about a provider in one paid call.
+
+        Costs 1 credit. Returns the live status + status_page_url +
+        components, all of the provider's models with pricing, tier,
+        context window, capabilities, and benchmark scores joined in,
+        recent news mentions, and agent-traffic attribution.
+
+        Aggregation IS the value. Doing this from free endpoints would
+        take 4 round-trips and a non-trivial join.
+
+        Args:
+            provider: Provider id or display name. Case-insensitive.
+                Examples: "anthropic", "OpenAI", "google".
+
+        Returns:
+            Dict with ``provider``, ``status``, ``models`` (sorted
+            flagship-first), ``recent_news`` (top 8), ``recent_news_count``,
+            ``agent_traffic_24h``, ``data_freshness``, ``notes``, and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+            TensorFeedError: 404 with available_providers if the
+                provider name does not match any known provider
+        """
+        self._require_token("provider_deepdive")
+        return self._request(
+            "GET", f"/premium/providers/{provider}", require_token=True,
         )
 
     # ── Paid: enriched agents directory (Tier 1, 1 credit) ─────────

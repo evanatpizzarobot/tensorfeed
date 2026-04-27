@@ -364,6 +364,37 @@ const ENDPOINTS: PremiumEndpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/premium/providers/{name}',
+    description:
+      'Everything about an AI provider in one paid call: live status + components, all models with pricing + tier + benchmark scores joined, recent news mentions, agent traffic. Aggregation over 4 free endpoints in one paid request.',
+    cost: '1 credit per call',
+    example: `// Path: /api/premium/providers/anthropic
+{
+  "ok": true,
+  "provider": { "id": "anthropic", "name": "Anthropic", "url": "https://anthropic.com" },
+  "status": {
+    "state": "operational",
+    "status_page_url": "https://status.anthropic.com",
+    "last_checked": "2026-04-27T18:00:00Z",
+    "components": [{ "name": "API", "status": "operational" }]
+  },
+  "models": [
+    {
+      "id": "opus-4-7", "name": "Claude Opus 4.7", "tier": "flagship",
+      "pricing": { "input": 15, "output": 75, "blended": 45 },
+      "context_window": 1000000, "released": "2026-04-17",
+      "capabilities": ["tool-use", "vision"],
+      "benchmark_scores": { "swe_bench": 73.4, "mmlu_pro": 88.5 }
+    }
+  ],
+  "recent_news": [{ "title": "Anthropic ships...", "url": "...", "published_at": "..." }],
+  "recent_news_count": 12,
+  "agent_traffic_24h": 124,
+  "billing": { "credits_charged": 1, "credits_remaining": 44 }
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/premium/forecast',
     description:
       'Conservative statistical forecast for a price field or benchmark score. Linear least-squares fit on 7-90 days of history, projected forward 1-30 days with a 95% prediction interval and a confidence score (low/medium/high) so you can ignore low-signal forecasts. Includes explicit "not a guarantee" disclaimers.',

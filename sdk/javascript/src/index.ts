@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.9';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.10';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -436,6 +436,43 @@ export interface NewsSearchResultItem {
   published_at: string;
   relevance: number;
   matched_terms: string[];
+}
+
+export interface ProviderDeepDiveModel {
+  id: string;
+  name: string;
+  tier: string | null;
+  pricing: { input: number; output: number; blended: number };
+  context_window: number | null;
+  released: string | null;
+  capabilities: string[];
+  open_source: boolean;
+  license: string | null;
+  benchmark_scores: Record<string, number>;
+}
+
+export interface ProviderDeepDiveResponse {
+  ok: boolean;
+  provider: { id: string; name: string; url: string | null; logo: string | null };
+  status: {
+    state: 'operational' | 'degraded' | 'down' | 'unknown';
+    last_checked: string | null;
+    status_page_url: string | null;
+    components: { name: string; status: string }[];
+  };
+  models: ProviderDeepDiveModel[];
+  recent_news: { title: string; url: string; source: string; published_at: string; snippet: string }[];
+  recent_news_count: number;
+  agent_traffic_24h: number;
+  data_freshness: {
+    pricing: string | null;
+    benchmarks: string | null;
+    status: string | null;
+    news: string | null;
+    activity: string | null;
+  };
+  notes: string[];
+  billing?: { credits_charged: number; credits_remaining?: number };
 }
 
 export type ForecastTarget = 'price' | 'benchmark';
@@ -1034,6 +1071,26 @@ export class TensorFeed {
       secret: options.secret,
       fireCap: options.fireCap,
     });
+  }
+
+  // ── Paid: provider deep-dive (1 credit per call) ─────────────
+
+  /**
+   * Everything about a provider in one paid call: live status,
+   * all models with pricing + tier + benchmark scores joined,
+   * recent news, agent traffic. Costs 1 credit.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   * @throws TensorFeedError 404 with available_providers if no match
+   */
+  async providerDeepDive(provider: string): Promise<ProviderDeepDiveResponse> {
+    this.requireToken('providerDeepDive');
+    return this.request<ProviderDeepDiveResponse>(
+      'GET',
+      `/premium/providers/${encodeURIComponent(provider)}`,
+      { requireToken: true },
+    );
   }
 
   // ── Paid: enriched agents directory (1 credit per call) ──────

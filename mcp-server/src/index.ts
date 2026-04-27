@@ -5,7 +5,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 
 const API_BASE = 'https://tensorfeed.ai/api';
-const SDK_VERSION = '1.5.0';
+const SDK_VERSION = '1.6.0';
 
 // ── API helpers ─────────────────────────────────────────────────────
 
@@ -544,6 +544,52 @@ server.tool(
         {
           type: 'text' as const,
           text: `Agents (sort: ${data.sort}, ${data.returned} of ${data.total}):\n\n${list}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: provider_deepdive (1 credit) ──────────────────────────────
+
+server.tool(
+  'provider_deepdive',
+  'Everything about an AI provider in one call: live status, all models with pricing + tier + benchmark scores joined in, recent news mentions, and agent traffic. Costs 1 credit. Aggregation IS the value; doing this from free endpoints would take 4 round-trips.',
+  {
+    provider: z.string().describe('Provider id or display name (case-insensitive). Examples: anthropic, openai, google, mistral, cohere'),
+  },
+  async ({ provider }) => {
+    const data = (await fetchJSON(`/premium/providers/${encodeURIComponent(provider)}`, { auth: true })) as {
+      provider: { name: string; url: string | null };
+      status: { state: string; status_page_url: string | null; last_checked: string | null };
+      models: { name: string; tier: string | null; pricing: { input: number; output: number }; benchmark_scores: Record<string, number> }[];
+      recent_news: { title: string; url: string; published_at: string }[];
+      recent_news_count: number;
+      agent_traffic_24h: number;
+      billing?: { credits_remaining?: number };
+    };
+    const modelLines = data.models
+      .map(m => {
+        const benchKeys = Object.keys(m.benchmark_scores);
+        const benches = benchKeys.length ? ` | ${benchKeys.map(k => `${k}=${m.benchmark_scores[k]}`).join(', ')}` : '';
+        return `  ${m.name} [${m.tier ?? '-'}] in $${m.pricing.input}/1M, out $${m.pricing.output}/1M${benches}`;
+      })
+      .join('\n');
+    const newsLines = data.recent_news
+      .slice(0, 5)
+      .map(n => `  - ${n.title} (${n.published_at})\n    ${n.url}`)
+      .join('\n');
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text:
+            `${data.provider.name} (${data.provider.url ?? 'no url'})\n` +
+            `Status: ${data.status.state}${data.status.status_page_url ? ` (${data.status.status_page_url})` : ''}, last checked ${data.status.last_checked ?? 'unknown'}\n` +
+            `Agent traffic (24h): ${data.agent_traffic_24h}\n\n` +
+            `Models (${data.models.length}):\n${modelLines}\n\n` +
+            `Recent news (${data.recent_news_count} matched, top 5 shown):\n${newsLines || '  none'}\n\n` +
+            `Credits remaining: ${data.billing?.credits_remaining ?? '?'}`,
         },
       ],
     };

@@ -33,6 +33,7 @@ import {
 import { searchNews, NewsSearchOptions } from './news-search';
 import { computeCostProjection, CostProjectionOptions } from './cost-projection';
 import { computeForecast, ForecastOptions, PriceField } from './forecast';
+import { computeProviderDeepDive } from './provider-deepdive';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
   requirePayment,
@@ -512,6 +513,7 @@ export default {
           premiumNewsSearch: '/api/premium/news/search?q=&from=&to=&provider=&category=&limit=',
           premiumCostProjection: '/api/premium/cost/projection?model=opus-4-7,gpt-5-5&input_tokens_per_day=&output_tokens_per_day=&horizon=monthly',
           premiumForecast: '/api/premium/forecast?target=price|benchmark&model=&field=inputPrice|outputPrice|blended&benchmark=&lookback=30&horizon=7',
+          premiumProviderDeepDive: '/api/premium/providers/{name}',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -950,6 +952,27 @@ export default {
       }
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/forecast', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: PROVIDER DEEP-DIVE (Tier 1, 1 credit) ===
+    // /api/premium/providers/{name} returns one paid response that
+    // joins live status, all models with pricing + tier, all benchmark
+    // scores, recent news, and agent traffic. Aggregation IS the value;
+    // agents pay 1 credit instead of stitching 4-5 free endpoints.
+
+    const providerMatch = path.match(/^\/api\/premium\/providers\/([a-zA-Z0-9_\- ]+)$/);
+    if (providerMatch) {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+      const providerKey = decodeURIComponent(providerMatch[1]);
+      const result = await computeProviderDeepDive(env, providerKey);
+      if (!result.ok) {
+        return jsonResponse(result, 404);
+      }
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/providers', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
