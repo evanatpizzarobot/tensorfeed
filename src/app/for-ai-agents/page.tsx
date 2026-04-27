@@ -186,6 +186,16 @@ export default function ForAIAgentsPage() {
             description="Machine-readable API catalog. Lists every endpoint with its expected query/path params. JSON, no auth."
           />
           <DiscoveryCard
+            href="/api-reference"
+            title="/api-reference"
+            description="Per-endpoint reference pages. Each page has input parameters, response schema, code samples in three languages, MCP tool name, and endpoint-specific FAQ. Branded for the SEO surface."
+          />
+          <DiscoveryCard
+            href="/openapi.json"
+            title="/openapi.json"
+            description="Complete OpenAPI 3.1 spec. Drop-in for Swagger UI, Postman, code generators, and agent toolkits."
+          />
+          <DiscoveryCard
             href="https://github.com/RipperMercs/tensorfeed/blob/main/mcp-server/server.json"
             title="server.json (MCP registry)"
             description="MCP server manifest. Registered in the official MCP registry as ai.tensorfeed/mcp-server. Includes all 20 tools split into freeTools and premiumTools."
