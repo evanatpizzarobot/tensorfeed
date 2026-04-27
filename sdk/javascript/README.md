@@ -205,6 +205,7 @@ try {
 | `tf.forecast({ target, model, field?, benchmark?, lookback?, horizon? })` | 1 credit | Linear-regression forecast for a price or benchmark series with 95% CI and confidence label |
 | `tf.providerDeepDive(provider)` | 1 credit | One provider's full profile: status + all models + benchmarks joined + news + traffic |
 | `tf.compareModels({ ids })` | 1 credit | Side-by-side compare of 2-5 models with normalized benchmarks + rankings |
+| `tf.whatsNew({ days?, newsLimit? })` | 1 credit | Agent morning brief: pricing changes + incidents + top news from last 1-7 days |
 
 ## Wallet & Trust
 

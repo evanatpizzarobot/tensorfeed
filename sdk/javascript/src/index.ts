@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.11';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.12';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -436,6 +436,77 @@ export interface NewsSearchResultItem {
   published_at: string;
   relevance: number;
   matched_terms: string[];
+}
+
+export interface WhatsNewPriceChange {
+  model: string;
+  provider: string;
+  field: 'inputPrice' | 'outputPrice';
+  from: number;
+  to: number;
+  delta_pct: number | null;
+}
+
+export interface WhatsNewNewModel {
+  model: string;
+  provider: string;
+  input_per_1m: number;
+  output_per_1m: number;
+  tier: string | null;
+}
+
+export interface WhatsNewIncident {
+  service: string;
+  provider: string;
+  severity: string;
+  title: string;
+  started_at: string;
+  resolved_at: string | null;
+  duration_minutes: number | null;
+}
+
+export interface WhatsNewHeadline {
+  title: string;
+  url: string;
+  source: string;
+  source_domain: string;
+  published_at: string;
+  snippet: string;
+  categories: string[];
+}
+
+export interface WhatsNewResponse {
+  ok: boolean;
+  window: { from: string; to: string; days: number };
+  computed_at: string;
+  summary: {
+    total_pricing_changes: number;
+    new_models: number;
+    removed_models: number;
+    incidents: number;
+    news_articles: number;
+  };
+  pricing: {
+    changes: WhatsNewPriceChange[];
+    new_models: WhatsNewNewModel[];
+    removed_models: { model: string; provider: string }[];
+  };
+  status: {
+    incidents: WhatsNewIncident[];
+    currently_operational: number;
+    currently_degraded: number;
+    currently_down: number;
+    currently_unknown: number;
+  };
+  news: WhatsNewHeadline[];
+  data_freshness: {
+    pricing: string | null;
+    status: string | null;
+    incidents_count: number;
+    news_total_corpus: number;
+  };
+  notes: string[];
+  billing?: { credits_charged: number; credits_remaining?: number };
 }
 
 export interface CompareModelEntry {
@@ -1287,6 +1358,30 @@ export class TensorFeed {
         benchmark: options.benchmark,
         lookback: options.lookback,
         horizon: options.horizon,
+      },
+      requireToken: true,
+    });
+  }
+
+  // ── Paid: whats-new summary (1 credit per call) ───────────────
+
+  /**
+   * Agent morning brief: pricing changes, new/removed models, status
+   * incidents, and top news headlines from the last 1-7 days. The
+   * endpoint to call when an agent boots up. Costs 1 credit.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   */
+  async whatsNew(options?: {
+    days?: number;
+    newsLimit?: number;
+  }): Promise<WhatsNewResponse> {
+    this.requireToken('whatsNew');
+    return this.request<WhatsNewResponse>('GET', '/premium/whats-new', {
+      params: {
+        days: options?.days,
+        news_limit: options?.newsLimit,
       },
       requireToken: true,
     });

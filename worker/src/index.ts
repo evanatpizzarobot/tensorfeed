@@ -35,6 +35,7 @@ import { computeCostProjection, CostProjectionOptions } from './cost-projection'
 import { computeForecast, ForecastOptions, PriceField } from './forecast';
 import { computeProviderDeepDive } from './provider-deepdive';
 import { compareModels } from './compare-models';
+import { computeWhatsNew } from './whats-new';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
   requirePayment,
@@ -516,6 +517,7 @@ export default {
           premiumForecast: '/api/premium/forecast?target=price|benchmark&model=&field=inputPrice|outputPrice|blended&benchmark=&lookback=30&horizon=7',
           premiumProviderDeepDive: '/api/premium/providers/{name}',
           premiumCompareModels: '/api/premium/compare/models?ids=opus-4-7,gpt-5-5,gemini-3',
+          premiumWhatsNew: '/api/premium/whats-new?days=1&news_limit=10',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -954,6 +956,31 @@ export default {
       }
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/forecast', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: WHATS-NEW SUMMARY (Tier 1, 1 credit) ===
+    // Agent morning brief: pricing changes, new/removed models, status
+    // incidents, and top news headlines from the last 1-7 days. Pure
+    // aggregation over existing data (history snapshots + incidents +
+    // articles) but the join + delta is the value.
+
+    if (path === '/api/premium/whats-new') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const daysParam = parseInt(url.searchParams.get('days') ?? '', 10);
+      const newsLimitParam = parseInt(url.searchParams.get('news_limit') ?? '', 10);
+      const result = await computeWhatsNew(env, {
+        ...(Number.isFinite(daysParam) ? { days: daysParam } : {}),
+        ...(Number.isFinite(newsLimitParam) ? { newsLimit: newsLimitParam } : {}),
+      });
+      if (!result.ok) {
+        return jsonResponse(result, 400);
+      }
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/whats-new', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }

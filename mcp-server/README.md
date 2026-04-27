@@ -31,6 +31,7 @@ These tools require a `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/
 | `forecast` | 1 credit | Linear-regression forecast for a price field or benchmark score with 95% CI and confidence label |
 | `provider_deepdive` | 1 credit | One provider's full profile: status, all models with benchmarks joined, recent news, traffic |
 | `compare_models` | 1 credit | Side-by-side comparison of 2-5 models with normalized benchmarks and rankings |
+| `whats_new` | 1 credit | Agent morning brief: pricing changes, incidents, top news from last 1-7 days |
 | `list_watches` | Free | List active webhook watches owned by the token |
 | `create_price_watch` | 1 credit | Register a webhook watch on a model price change |
 | `create_status_watch` | 1 credit | Register a webhook watch on a service status transition |

@@ -5,7 +5,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 
 const API_BASE = 'https://tensorfeed.ai/api';
-const SDK_VERSION = '1.7.0';
+const SDK_VERSION = '1.8.0';
 
 // ── API helpers ─────────────────────────────────────────────────────
 
@@ -544,6 +544,59 @@ server.tool(
         {
           type: 'text' as const,
           text: `Agents (sort: ${data.sort}, ${data.returned} of ${data.total}):\n\n${list}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: whats_new (1 credit) ──────────────────────────────────────
+
+server.tool(
+  'whats_new',
+  'Agent morning brief: pricing changes, new/removed models, status incidents, and top news from the last 1-7 days. The tool to call when your agent boots up. Costs 1 credit.',
+  {
+    days: z.number().min(1).max(7).optional().describe('Window length in days (default 1)'),
+    news_limit: z.number().min(1).max(25).optional().describe('Max news headlines (default 10)'),
+  },
+  async ({ days, news_limit }) => {
+    const params = new URLSearchParams();
+    if (typeof days === 'number') params.set('days', String(days));
+    if (typeof news_limit === 'number') params.set('news_limit', String(news_limit));
+    const data = (await fetchJSON(`/premium/whats-new?${params}`, { auth: true })) as {
+      window: { days: number };
+      summary: { total_pricing_changes: number; new_models: number; removed_models: number; incidents: number; news_articles: number };
+      pricing: {
+        changes: { model: string; provider: string; field: string; from: number; to: number; delta_pct: number | null }[];
+        new_models: { model: string; provider: string; input_per_1m: number; output_per_1m: number }[];
+        removed_models: { model: string; provider: string }[];
+      };
+      status: { incidents: { service: string; severity: string; title: string; started_at: string }[]; currently_operational: number; currently_degraded: number; currently_down: number };
+      news: { title: string; url: string; source: string; published_at: string }[];
+      billing?: { credits_remaining?: number };
+    };
+    const sum = data.summary;
+    const priceLines = data.pricing.changes.length
+      ? '\nPricing changes:\n' + data.pricing.changes.map(c => `  ${c.model} ${c.field}: ${c.from} -> ${c.to} (${c.delta_pct ?? 'n/a'}%)`).join('\n')
+      : '';
+    const newLines = data.pricing.new_models.length
+      ? '\nNew models:\n' + data.pricing.new_models.map(m => `  ${m.model} (${m.provider}) in $${m.input_per_1m}/1M, out $${m.output_per_1m}/1M`).join('\n')
+      : '';
+    const incidentLines = data.status.incidents.length
+      ? '\nIncidents:\n' + data.status.incidents.map(i => `  ${i.service} (${i.severity}): ${i.title} @ ${i.started_at}`).join('\n')
+      : '';
+    const newsLines = data.news.length
+      ? '\nTop news:\n' + data.news.map(n => `  ${n.title} (${n.source})\n    ${n.url}`).join('\n')
+      : '';
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text:
+            `What's new (last ${data.window.days}d): ${sum.total_pricing_changes} price changes, ${sum.new_models} new models, ${sum.removed_models} removed, ${sum.incidents} incidents, ${sum.news_articles} headlines\n` +
+            `Live: ${data.status.currently_operational} operational, ${data.status.currently_degraded} degraded, ${data.status.currently_down} down` +
+            priceLines + newLines + incidentLines + newsLines +
+            `\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
         },
       ],
     };

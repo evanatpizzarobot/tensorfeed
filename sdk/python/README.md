@@ -227,6 +227,7 @@ except TensorFeedError as e:
 | `tf.forecast(target=, model=, field=, benchmark=, lookback=, horizon=)` | 1 credit | Linear-regression forecast for a price or benchmark series with 95% CI and confidence label |
 | `tf.provider_deepdive(provider)` | 1 credit | One provider's full profile: status + all models + benchmarks joined + news + traffic |
 | `tf.compare_models(ids=)` | 1 credit | Side-by-side compare of 2-5 models with normalized benchmarks + rankings |
+| `tf.whats_new(days=, news_limit=)` | 1 credit | Agent morning brief: pricing changes + incidents + top news from last 1-7 days |
 
 ### Auto-send (requires `tensorfeed[web3]`)
 

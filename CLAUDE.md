@@ -53,6 +53,8 @@ tensorfeed/
       provider-deepdive.test.ts  Vitest coverage for join logic, sort order, fuzzy match, fallbacks, news cap
       compare-models.ts  Premium model comparison: 2-5 models side-by-side with pricing, benchmarks normalized to union-of-keys, status, news, plus rankings
       compare-models.test.ts  Vitest coverage for benchmark normalization, ranking math, validation
+      whats-new.ts  Premium morning brief: 1-7 day window, pricing diff, status incidents, top news, in one paid call
+      whats-new.test.ts  Vitest coverage for window math, news limit, status counts, validation, no-snapshot fallback
       podcasts.ts     Podcast feed polling
       trending.ts     Trending GitHub repos
       twitter.ts      X/Twitter auto-posting
@@ -220,6 +222,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/premium/forecast?target=price|benchmark&model=&field=&benchmark=&lookback=&horizon=`: Tier 1, 1 credit. Conservative linear-regression forecast (95% prediction interval) for one model price field or benchmark score, projected 1-30 days forward. Confidence label (low/medium/high) reflects fit quality and sample size. Returns explicit "not a guarantee" disclaimers.
 - `/api/premium/providers/{name}`: Tier 1, 1 credit. One provider's complete profile in one call: live status + components, all models with pricing + tier + benchmark scores joined, recent news (top 8), agent traffic. Aggregation over 4 free endpoints; agents pay 1 credit instead of stitching client-side.
 - `/api/premium/compare/models?ids=`: Tier 1, 1 credit. Side-by-side comparison of 2-5 models with pricing, benchmarks (union-of-keys normalized to null for missing), status, news. Plus rankings (cheapest_blended, most_context, by_benchmark leaderboard).
+- `/api/premium/whats-new?days=&news_limit=`: Tier 1, 1 credit. Agent morning brief: pricing changes, new/removed models, status incidents, top news headlines from last 1-7 days. Single call instead of stitching free endpoints client-side.
 
 **Admin (auth-gated via `?key=ENVIRONMENT`):**
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup

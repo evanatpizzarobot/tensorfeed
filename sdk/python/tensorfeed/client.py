@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.12"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.13"
 
 
 class TensorFeedError(Exception):
@@ -765,6 +765,46 @@ class TensorFeed:
             "GET", "/premium/compare/models",
             params={"ids": ids_csv},
             require_token=True,
+        )
+
+    # ── Paid: whats-new summary (Tier 1, 1 credit) ─────────────────
+
+    def whats_new(
+        self,
+        *,
+        days: int | None = None,
+        news_limit: int | None = None,
+    ) -> dict[str, Any]:
+        """Agent morning brief: pricing changes, incidents, and top news.
+
+        Costs 1 credit. The endpoint to call when an agent boots up.
+        Returns a curated summary across pricing changes (input/output
+        deltas), new and removed models, status incidents that started
+        or resolved in the window, current operational counts, and the
+        top news headlines from the period.
+
+        Args:
+            days: Window length in days, 1-7 (default 1).
+            news_limit: Max news headlines (1-25, default 10).
+
+        Returns:
+            Dict with ``window``, ``summary`` (counts), ``pricing``
+            (changes/new_models/removed_models), ``status``
+            (incidents, current state counts), ``news``, ``data_freshness``,
+            ``notes``, and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+        """
+        self._require_token("whats_new")
+        params: dict[str, Any] = {}
+        if days is not None:
+            params["days"] = days
+        if news_limit is not None:
+            params["news_limit"] = news_limit
+        return self._request(
+            "GET", "/premium/whats-new", params=params, require_token=True,
         )
 
     # ── Paid: enriched agents directory (Tier 1, 1 credit) ─────────

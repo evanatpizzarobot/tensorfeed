@@ -364,6 +364,37 @@ const ENDPOINTS: PremiumEndpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/premium/whats-new',
+    description:
+      "Agent morning brief: pricing changes, new/removed models, status incidents, and top news headlines from the last 1-7 days. The single endpoint to call when an agent boots up, instead of stitching news + status + history-compare client-side.",
+    cost: '1 credit per call',
+    example: `// Query: ?days=1&news_limit=10
+{
+  "ok": true,
+  "window": { "from": "2026-04-26T...", "to": "2026-04-27T...", "days": 1 },
+  "summary": {
+    "total_pricing_changes": 2, "new_models": 1, "removed_models": 0,
+    "incidents": 1, "news_articles": 8
+  },
+  "pricing": {
+    "changes": [
+      { "model": "Claude Opus 4.7", "field": "inputPrice", "from": 15, "to": 12, "delta_pct": -20 }
+    ],
+    "new_models": [
+      { "model": "Gemini 3.5", "provider": "Google", "input_per_1m": 6, "output_per_1m": 18, "tier": "flagship" }
+    ],
+    "removed_models": []
+  },
+  "status": {
+    "incidents": [{ "service": "OpenAI", "severity": "minor", "title": "Degraded latency", "duration_minutes": 35 }],
+    "currently_operational": 8, "currently_degraded": 0, "currently_down": 0
+  },
+  "news": [{ "title": "Anthropic ships ...", "url": "...", "published_at": "..." }],
+  "billing": { "credits_charged": 1, "credits_remaining": 42 }
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/premium/compare/models',
     description:
       'Side-by-side comparison of 2-5 AI models. Each entry returns pricing, benchmarks (normalized to a union of keys with null for missing scores so downstream code never crashes on undefined), provider live status, capabilities, context window, and recent news. Plus rankings: cheapest blended, most context, and a per-benchmark leaderboard.',
