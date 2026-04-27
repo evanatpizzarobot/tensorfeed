@@ -146,7 +146,7 @@ export default function UsdcOverStripePage() {
           Anthropic&apos;s SDKs don&apos;t have wallets. Most agentic frameworks (LangChain,
           LangGraph, CrewAI, Autogen) have no native wallet abstraction. The few projects working
           on agent wallets (Coinbase&apos;s AgentKit, a handful of Solana experiments) are very
-          early. So when I say "the buyer has a wallet," I mean the buyer needs to opt into a
+          early. So when I say &quot;the buyer has a wallet,&quot; I mean the buyer needs to opt into a
           stack that does not yet exist for most developers.
         </p>
 
@@ -208,9 +208,9 @@ export default function UsdcOverStripePage() {
         <h2 className="text-2xl font-semibold text-text-primary pt-4">The decision was not close</h2>
 
         <p>
-          When I lay it out as "smaller short-term TAM in exchange for cleaner architecture, lower
+          When I lay it out as &quot;smaller short-term TAM in exchange for cleaner architecture, lower
           fees, faster latency, no platform risk, public auditability, and a positioning that
-          compounds as agent wallets become standard" the decision is not close. We picked USDC.
+          compounds as agent wallets become standard&quot; the decision is not close. We picked USDC.
         </p>
 
         <p>

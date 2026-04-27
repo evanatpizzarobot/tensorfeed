@@ -261,6 +261,7 @@ To add a source: append to `data/sources.json` with `id`, `name`, `url`, `domain
 - **Editorial originals**: `/originals/why-we-built-tensorfeed`, `/originals/claude-mythos-not-afraid`, `/originals/claude-code-leak`, `/originals/ai-api-pricing-war-2026`, `/originals/rise-of-agentic-ai`, `/originals/state-of-ai-apis-2026`, `/originals/mcp-97-million-installs`, `/originals/openai-killed-sora`, `/originals/claude-vs-gpt-vs-gemini`, `/originals/open-source-llms-closing-gap`, `/originals/ai-service-outages-month`, `/originals/building-for-ai-agents`
 - **Hubs**: `/agi-asi`, `/model-wars`
 - **Meta/legal**: `/about`, `/privacy`, `/terms`, `/contact`, `/developers`, `/developers/agent-payments`, `/account` (human credits dashboard, noindex), `/changelog`
+- **Agent acquisition surface**: `/for-ai-agents` (explicit agent-first landing page with discovery surfaces and integration paths), `/glossary` + `/glossary/{x402,mcp,agent-payments}` (FAQPage-schema definitions for the agent payment ecosystem), `/openapi.json` (machine-readable API spec at the root, served from `public/openapi.json`)
 - **Meta editorial**: `/claude-md-guide`, `/claude-md-generator`, `/claude-md-examples`
 
 ## Feeds & Agent Discovery

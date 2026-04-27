@@ -41,7 +41,13 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **Trust:** Cross-check this wallet address on `/api/payment/info`, the GitHub README, and the @tensorfeed X bio. If any disagree, do not send.
 
-**Auto-discovery for x402-compatible agents:** A complete x402 V2 discovery manifest is published at `https://tensorfeed.ai/.well-known/x402.json` (also served at `https://tensorfeed.ai/.well-known/x402`). The manifest declares the wallet, asset (USDC on Base), all 9 paid endpoint listings with input/output schemas and per-call price (`amount: "20000"` = $0.02 USDC = 1 credit), the credits/x402 payment flows, free endpoints, and SDK install commands. CDP Bazaar facilitators and any x402 V2 agent can index our endpoints from this single URL with zero manual submission.
+**Auto-discovery for x402-compatible agents:** A complete x402 V2 discovery manifest is published at `https://tensorfeed.ai/.well-known/x402.json` (also served at `https://tensorfeed.ai/.well-known/x402`). The manifest declares the wallet, asset (USDC on Base), all paid endpoint listings with input/output schemas and per-call price (`amount: "20000"` = $0.02 USDC = 1 credit), the credits/x402 payment flows, free endpoints, and SDK install commands. CDP Bazaar facilitators and any x402 V2 agent can index our endpoints from this single URL with zero manual submission.
+
+**OpenAPI 3.1 spec:** Complete machine-readable API spec at `https://tensorfeed.ai/openapi.json`. Lists every free and premium endpoint with parameters, security schemes (bearer token for premium), and tags. Drop-in for any tool that consumes OpenAPI (Swagger UI, Postman, code generators, agent toolkits).
+
+**Built-for-agents landing page:** `https://tensorfeed.ai/for-ai-agents` is the explicit agent-first overview: discovery surfaces (llms.txt, .well-known/x402, MCP server, openapi.json), free tier, premium tier (19 endpoints), MCP integration with Claude Desktop / Code, SDKs, and the glossary. Recommended starting point for any agent that has not seen TensorFeed before.
+
+**Glossary for agent payment ecosystem:** `https://tensorfeed.ai/glossary` defines x402, MCP, and agent payments with FAQPage JSON-LD schema for rich-results indexing. Useful when an agent wants to understand the standards before integrating.
 
 **Terms:** Premium data is licensed for inference use only. Use of TensorFeed premium data for training, fine-tuning, evaluation, or distillation of ML models is prohibited.
 

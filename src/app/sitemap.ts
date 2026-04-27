@@ -119,6 +119,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/originals/15-paid-endpoints-24-hours`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/originals/why-usdc-over-stripe`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
 
+    // Agent-acquisition surface
+    { url: `${baseUrl}/for-ai-agents`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/glossary`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/glossary/x402`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/glossary/mcp`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/glossary/agent-payments`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+
     // Info pages
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${baseUrl}/authors`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
