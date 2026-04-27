@@ -13,6 +13,7 @@ import { Env } from './types';
  *   pay:tx:{txHash}       -> { amount_usd, credits, token, created } (no TTL, replay protection)
  *   pay:quote:{nonce}     -> { amount_usd, credits, expires_at, created } (TTL: 30 min)
  *   pay:revenue:{date}    -> { total_usd, tx_count, unique_agents } (no TTL, daily rollup)
+ *   pay:usage:{token}     -> { entries: TokenUsageEntry[] } ring buffer of last 100 calls per token
  *
  * On-chain trust anchor: Base mainnet RPC verifies the USDC Transfer event
  * to our wallet. We log the block_number on every accepted tx for forensic
@@ -297,12 +298,20 @@ async function logRevenue(env: Env, amountUsd: number, agentUa: string): Promise
 /**
  * Record a successful premium endpoint call so we can see what's selling.
  * Caller should wrap in ctx.waitUntil so this never blocks the response.
+ *
+ * Writes to two places:
+ *   1. The site-wide daily rollup (pay:rollup:{date})
+ *   2. The per-token usage ring buffer (pay:usage:{token}) when token is set,
+ *      so /api/payment/usage and the human-facing /account dashboard can
+ *      show "you spent N credits across these endpoints" without scanning
+ *      every daily rollup.
  */
 export async function logPremiumUsage(
   env: Env,
   endpoint: string,
   agentUa: string,
   creditsCharged: number,
+  token?: string,
 ): Promise<void> {
   try {
     const date = new Date().toISOString().slice(0, 10);
@@ -326,9 +335,92 @@ export async function logPremiumUsage(
     rollup.by_endpoint[endpoint] = slot;
 
     await writeRollup(env, rollup);
+
+    if (token && token.startsWith('tf_live_')) {
+      await appendTokenUsage(env, token, endpoint, creditsCharged, now);
+    }
   } catch (e) {
     console.error('logPremiumUsage failed:', e);
   }
+}
+
+// === Per-token usage ring buffer ===
+
+const TOKEN_USAGE_CAP = 100;
+
+export interface TokenUsageEntry {
+  endpoint: string;
+  credits: number;
+  at: string;
+}
+
+interface TokenUsageRecord {
+  entries: TokenUsageEntry[];
+}
+
+async function appendTokenUsage(
+  env: Env,
+  token: string,
+  endpoint: string,
+  credits: number,
+  at: string,
+): Promise<void> {
+  try {
+    const existing = (await env.TENSORFEED_CACHE.get(`pay:usage:${token}`, 'json')) as TokenUsageRecord | null;
+    const entries = existing?.entries ?? [];
+    entries.push({ endpoint, credits, at });
+    if (entries.length > TOKEN_USAGE_CAP) {
+      entries.splice(0, entries.length - TOKEN_USAGE_CAP);
+    }
+    await env.TENSORFEED_CACHE.put(`pay:usage:${token}`, JSON.stringify({ entries }));
+  } catch (e) {
+    console.error('appendTokenUsage failed:', e);
+  }
+}
+
+export interface TokenUsageSummary {
+  ok: true;
+  token_balance: number | null;
+  total_calls: number;
+  total_credits_spent: number;
+  by_endpoint: Record<string, { calls: number; credits: number; last_seen: string }>;
+  recent: TokenUsageEntry[];
+}
+
+/**
+ * Read the per-token usage ring buffer and aggregate it for the dashboard.
+ * Returns null if the token isn't recognized.
+ */
+export async function getTokenUsage(env: Env, token: string): Promise<TokenUsageSummary | null> {
+  if (!token.startsWith('tf_live_')) return null;
+  const credits = (await env.TENSORFEED_CACHE.get(`pay:credits:${token}`, 'json')) as CreditsRecord | null;
+  if (!credits) return null;
+
+  const usage = (await env.TENSORFEED_CACHE.get(`pay:usage:${token}`, 'json')) as TokenUsageRecord | null;
+  const entries = usage?.entries ?? [];
+
+  const byEndpoint: Record<string, { calls: number; credits: number; last_seen: string }> = {};
+  let totalCredits = 0;
+  for (const e of entries) {
+    totalCredits += e.credits;
+    const slot = byEndpoint[e.endpoint] || { calls: 0, credits: 0, last_seen: e.at };
+    slot.calls += 1;
+    slot.credits += e.credits;
+    if (e.at > slot.last_seen) slot.last_seen = e.at;
+    byEndpoint[e.endpoint] = slot;
+  }
+
+  // Recent: newest first, capped at 25
+  const recent = entries.slice().reverse().slice(0, 25);
+
+  return {
+    ok: true,
+    token_balance: credits.balance,
+    total_calls: entries.length,
+    total_credits_spent: totalCredits,
+    by_endpoint: byEndpoint,
+    recent,
+  };
 }
 
 /**

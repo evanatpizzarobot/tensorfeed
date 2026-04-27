@@ -39,6 +39,7 @@ import {
   logPremiumUsage,
   getRollup,
   listRollupDates,
+  getTokenUsage,
 } from './payments';
 import { recordPollRun, checkNewsStaleness, alertStaleNews, sendDailySummary, getAlertsStatus } from './alerts';
 
@@ -491,6 +492,7 @@ export default {
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
           paymentBalance: '/api/payment/balance',
+          paymentUsage: '/api/payment/usage',
         },
         admin: {
           usage: '/api/admin/usage?date=YYYY-MM-DD&key=<env>',
@@ -673,6 +675,22 @@ export default {
       return jsonResponse(result, 200, 0);
     }
 
+    if (path === '/api/payment/usage') {
+      const authHeader = request.headers.get('Authorization');
+      const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
+      if (!token) {
+        return jsonResponse(
+          { ok: false, error: 'token_required', message: 'Send the bearer token via Authorization: Bearer <token>' },
+          401,
+        );
+      }
+      const result = await getTokenUsage(env, token);
+      if (!result) {
+        return jsonResponse({ ok: false, error: 'token_not_found' }, 404);
+      }
+      return jsonResponse(result, 200, 0);
+    }
+
     // === PAID PREMIUM ENDPOINT: ROUTING (Tier 2, requires credits) ===
 
     if (path === '/api/premium/routing') {
@@ -715,7 +733,7 @@ export default {
 
       // Fire-and-forget usage logging so the response isn't blocked
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/routing', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/routing', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
 
       const headers: Record<string, string> = {
@@ -772,7 +790,7 @@ export default {
 
       const result = await getPricingSeries(env, model, range.from, range.to);
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/history/pricing/series', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/history/pricing/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -807,7 +825,7 @@ export default {
 
       const result = await getBenchmarkSeries(env, model, benchmark, range.from, range.to);
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/history/benchmarks/series', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/history/benchmarks/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -837,7 +855,7 @@ export default {
 
       const result = await getStatusUptime(env, provider, range.from, range.to);
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/history/status/uptime', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/history/status/uptime', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -867,7 +885,7 @@ export default {
 
       const result = await compareHistory(env, fromDate, toDate, typeParam);
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/history/compare', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/history/compare', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -912,7 +930,7 @@ export default {
 
       const result = await getEnrichedDirectory(env, opts);
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/agents/directory', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/agents/directory', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -949,7 +967,7 @@ export default {
         return jsonResponse(result, 400);
       }
       ctx.waitUntil(
-        logPremiumUsage(env, '/api/premium/watches', request.headers.get('User-Agent') || 'unknown', 1),
+        logPremiumUsage(env, '/api/premium/watches', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }

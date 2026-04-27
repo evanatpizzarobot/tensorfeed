@@ -191,6 +191,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/payment/buy-credits` (POST): Generate a 30-min payment quote with memo nonce
 - `/api/payment/confirm` (POST): Verify USDC tx on-chain, mint a bearer token
 - `/api/payment/balance`: Read remaining credits for the current bearer token
+- `/api/payment/usage`: Per-token call history (last 100 calls aggregated by endpoint). Auth required, no credit cost. Powers the human /account dashboard.
 - `/api/alerts/subscribe`: Outage alert email signup
 - `/api/refresh?key=production[&task=history]`: Manual data refresh / history capture trigger
 
@@ -238,7 +239,7 @@ To add a source: append to `data/sources.json` with `id`, `name`, `url`, `domain
 - **Guides** (pillar SEO pages): `/what-is-ai`, `/best-ai-tools`, `/best-ai-chatbots`, `/ai-api-pricing-guide`, `/what-are-ai-agents`, `/best-open-source-llms`
 - **Editorial originals**: `/originals/why-we-built-tensorfeed`, `/originals/claude-mythos-not-afraid`, `/originals/claude-code-leak`, `/originals/ai-api-pricing-war-2026`, `/originals/rise-of-agentic-ai`, `/originals/state-of-ai-apis-2026`, `/originals/mcp-97-million-installs`, `/originals/openai-killed-sora`, `/originals/claude-vs-gpt-vs-gemini`, `/originals/open-source-llms-closing-gap`, `/originals/ai-service-outages-month`, `/originals/building-for-ai-agents`
 - **Hubs**: `/agi-asi`, `/model-wars`
-- **Meta/legal**: `/about`, `/privacy`, `/terms`, `/contact`, `/developers`, `/developers/agent-payments`, `/changelog`
+- **Meta/legal**: `/about`, `/privacy`, `/terms`, `/contact`, `/developers`, `/developers/agent-payments`, `/account` (human credits dashboard, noindex), `/changelog`
 - **Meta editorial**: `/claude-md-guide`, `/claude-md-generator`, `/claude-md-examples`
 
 ## Feeds & Agent Discovery

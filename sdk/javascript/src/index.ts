@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.4';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.5';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -491,6 +491,21 @@ export interface BalanceResponse {
   total_purchased: number;
 }
 
+export interface UsageEntry {
+  endpoint: string;
+  credits: number;
+  at: string;
+}
+
+export interface UsageResponse {
+  ok: boolean;
+  token_balance: number | null;
+  total_calls: number;
+  total_credits_spent: number;
+  by_endpoint: Record<string, { calls: number; credits: number; last_seen: string }>;
+  recent: UsageEntry[];
+}
+
 // ── Options ────────────────────────────────────────────────────────
 
 export interface TensorFeedOptions {
@@ -697,6 +712,21 @@ export class TensorFeed {
       );
     }
     return this.request<BalanceResponse>('GET', '/payment/balance', { requireToken: true });
+  }
+
+  /**
+   * Per-token usage history for the current bearer token. Free.
+   * Returns the last 100 premium API calls aggregated by endpoint plus
+   * the 25 most recent entries. Useful for monitoring your own spend.
+   * @throws Error if no token is set on the client
+   */
+  async usage(): Promise<UsageResponse> {
+    if (!this.token) {
+      throw new Error(
+        'usage() requires a token. Pass it via new TensorFeed({ token }) or call confirm() first.',
+      );
+    }
+    return this.request<UsageResponse>('GET', '/payment/usage', { requireToken: true });
   }
 
   // ── Paid: routing (Tier 2, 1 credit per call) ─────────────────

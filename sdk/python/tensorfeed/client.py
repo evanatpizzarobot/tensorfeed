@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.5"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.6"
 
 
 class TensorFeedError(Exception):
@@ -303,6 +303,29 @@ class TensorFeed:
                 "or call confirm() first."
             )
         return self._request("GET", "/payment/balance", require_token=True)
+
+    def usage(self) -> dict[str, Any]:
+        """Per-token call history for the current bearer token. Free.
+
+        Returns the last 100 premium API calls aggregated by endpoint
+        plus the 25 most recent entries. Powers the human-facing
+        ``/account`` dashboard but is also useful for agents that want
+        to monitor their own spend.
+
+        Returns:
+            Dict with ``token_balance``, ``total_calls``,
+            ``total_credits_spent``, ``by_endpoint`` (per-endpoint
+            counts and credits), and ``recent`` (last 25 entries).
+
+        Raises:
+            ValueError: if no token is set on the client
+        """
+        if not self.token:
+            raise ValueError(
+                "usage() requires a token. Set it via TensorFeed(token=...) "
+                "or call confirm() first."
+            )
+        return self._request("GET", "/payment/usage", require_token=True)
 
     # ── Auto-purchase via web3 (optional dependency) ───────────────
 

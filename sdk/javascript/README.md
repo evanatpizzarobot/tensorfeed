@@ -188,6 +188,7 @@ try {
 | Method | Cost | Description |
 |--------|------|-------------|
 | `tf.balance()` | Free | Check remaining credits |
+| `tf.usage()` | Free | Per-token call history (last 100 calls aggregated by endpoint) |
 | `tf.routing({ task, budget, topN, weights })` | 1 credit | Top-N ranked routing with full detail |
 | `tf.pricingSeries({ model, from?, to? })` | 1 credit | Daily price points for one model with min/max/delta summary |
 | `tf.benchmarkSeries({ model, benchmark, from?, to? })` | 1 credit | Score evolution for a benchmark on one model, returns delta_pp |
