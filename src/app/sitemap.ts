@@ -81,6 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Developer, editorial, changelog
     { url: `${baseUrl}/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/developers/agent-payments`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${baseUrl}/changelog`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
     { url: `${baseUrl}/originals`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${baseUrl}/originals/claude-opus-4-7-release`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -111,6 +112,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/originals/deepseek-v4-open-source-frontier`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/originals/ai-money-gap-pwc`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/originals/anthropic-project-deal-agent-marketplace`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/originals/openai-workspace-agents-chatgpt-enterprise`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
     // Info pages
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },

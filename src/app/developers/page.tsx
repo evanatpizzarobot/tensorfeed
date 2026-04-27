@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { Code, Zap, Bot, FileText, Globe, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { Code, Zap, Bot, FileText, Globe, ExternalLink, Wallet, ArrowRight } from 'lucide-react';
 import { WebApplicationJsonLd } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
@@ -276,6 +277,33 @@ export default function DevelopersPage() {
           </code>
         </p>
       </div>
+
+      {/* Premium Tier Callout */}
+      <section className="mb-10">
+        <Link
+          href="/developers/agent-payments"
+          className="block bg-gradient-to-br from-accent-primary/10 via-bg-secondary to-accent-cyan/10 border border-accent-primary/30 rounded-xl p-5 hover:border-accent-primary transition-colors group"
+        >
+          <div className="flex items-start gap-3">
+            <div className="p-2 rounded-lg bg-accent-primary/20 shrink-0">
+              <Wallet className="w-5 h-5 text-accent-primary" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-lg font-semibold text-text-primary group-hover:text-accent-primary transition-colors">
+                  Premium Agent API (paid, USDC on Base)
+                </h2>
+                <ArrowRight className="w-4 h-4 text-accent-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <p className="text-text-secondary text-sm">
+                Pay-per-call premium tier for ranked model routing recommendations and
+                computed intelligence. USDC on Base, no accounts, no API keys, no traditional
+                processors. See the full payment flow, endpoints, and SDK examples.
+              </p>
+            </div>
+          </div>
+        </Link>
+      </section>
 
       {/* Endpoints */}
       <section className="mb-14">

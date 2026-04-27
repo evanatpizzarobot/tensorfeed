@@ -29,7 +29,7 @@ export default function TermsPage() {
           <FileText className="w-7 h-7 text-accent-primary" />
           <h1 className="text-3xl font-bold text-text-primary">Terms of Service</h1>
         </div>
-        <p className="text-text-muted text-sm">Last updated: April 6, 2026</p>
+        <p className="text-text-muted text-sm">Last updated: April 27, 2026</p>
       </div>
 
       <div className="space-y-8 text-text-secondary leading-relaxed">
@@ -103,6 +103,79 @@ export default function TermsPage() {
             <li>Data obtained from our API should not be resold as a standalone product</li>
             <li>We may modify or discontinue API endpoints at any time</li>
           </ul>
+        </section>
+
+        {/* Premium API and Agent Payments */}
+        <section>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">Premium API and Agent Payments</h2>
+          <p className="mb-3">
+            TensorFeed offers a paid premium API tier for AI agents and developers who need ranked
+            routing recommendations, computed intelligence, and historical data. Premium access is
+            paid via USDC on Base mainnet only. By using premium endpoints (any path under
+            <code className="bg-bg-tertiary px-1 py-0.5 rounded text-xs font-mono mx-1">/api/premium/</code>)
+            you agree to the additional terms below.
+          </p>
+          <ul className="list-disc list-inside space-y-2 pl-2">
+            <li>
+              <span className="text-text-primary font-medium">Inference-only license:</span> Premium
+              API responses are licensed for inference-time use only. You may not use TensorFeed
+              premium data, in whole or in part, for training, fine-tuning, evaluation, distillation,
+              or benchmarking of machine learning models without prior written consent. Violation
+              results in immediate access revocation and forfeiture of remaining credits.
+            </li>
+            <li>
+              <span className="text-text-primary font-medium">Bearer token security:</span> The
+              bearer token issued after a successful payment is your responsibility to safeguard.
+              Anyone with the token can spend the credits attached to it. Treat it like an API key.
+              We will not replace tokens leaked or shared by your account.
+            </li>
+            <li>
+              <span className="text-text-primary font-medium">Wallet verification:</span> Always
+              cross-check the TensorFeed payment wallet across our published locations
+              (<code className="bg-bg-tertiary px-1 py-0.5 rounded text-xs font-mono">/llms.txt</code>,
+              {' '}
+              <code className="bg-bg-tertiary px-1 py-0.5 rounded text-xs font-mono">/api/payment/info</code>,
+              {' '}
+              the GitHub README, and the verified X bio) before sending funds. We are not
+              responsible for funds sent to incorrect addresses.
+            </li>
+            <li>
+              <span className="text-text-primary font-medium">Refunds:</span> Unused credits are
+              refundable within 24 hours of the original purchase. Email
+              {' '}
+              <a href="mailto:evan@tensorfeed.ai" className="text-accent-primary hover:underline">
+                evan@tensorfeed.ai
+              </a>
+              {' '}
+              with the tx hash. Refunds are processed manually in USDC to the originating address
+              and may take up to 5 business days.
+            </li>
+            <li>
+              <span className="text-text-primary font-medium">No SLA:</span> Premium endpoints are
+              provided on a best-effort basis. We do not offer a service level agreement and are
+              not liable for downtime, latency, or data quality issues. Credits do not expire, but
+              specific premium endpoints may be modified or discontinued with reasonable notice.
+            </li>
+            <li>
+              <span className="text-text-primary font-medium">Replay protection:</span> Each USDC
+              transaction can be used to mint credits exactly once. Submitting the same tx hash a
+              second time will be rejected.
+            </li>
+            <li>
+              <span className="text-text-primary font-medium">Pizza Robot Studios LLC handles
+              taxes:</span> All USDC received is logged at the received-date USD value and reported
+              as ordinary income. We do not issue invoices to agents; the on-chain transaction is
+              the receipt.
+            </li>
+          </ul>
+          <p className="mt-3">
+            See the{' '}
+            <Link href="/developers/agent-payments" className="text-accent-primary hover:underline">
+              premium API documentation
+            </Link>
+            {' '}
+            for technical details, the wallet address, and the full payment flow.
+          </p>
         </section>
 
         {/* Disclaimers */}

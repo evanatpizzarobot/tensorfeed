@@ -54,6 +54,8 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **SDK (Python, stdlib-only, free + premium):** `pip install tensorfeed`. Single-class client (`TensorFeed`) covers every free endpoint plus the full payment flow and premium routing. See [tensorfeed on PyPI](https://pypi.org/project/tensorfeed/) and the [SDK source](https://github.com/RipperMercs/tensorfeed/tree/main/sdk/python). TypeScript SDK is in `sdk/javascript/` (free endpoints today, premium support coming).
 
+**Full developer documentation:** [/developers/agent-payments](https://tensorfeed.ai/developers/agent-payments) covers the wallet, pricing tiers, both payment flows (credits and x402), every endpoint with example responses, code samples (Python SDK + curl), and the no-training Terms of Service.
+
 ## Reference Guides
 - [What is AI?](https://tensorfeed.ai/what-is-ai): Comprehensive 2000+ word guide to artificial intelligence
 - [Best AI Tools 2026](https://tensorfeed.ai/best-ai-tools): 22 AI tools reviewed and compared
