@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.2';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.3';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -336,6 +336,61 @@ export interface BenchmarkCompareResponse {
 
 export type CompareResponse = PricingCompareResponse | BenchmarkCompareResponse;
 
+// ── Premium: webhook watches ───────────────────────────────────────
+
+export interface PriceWatchSpec {
+  type: 'price';
+  /** Model id or display name (case-insensitive). */
+  model: string;
+  field: 'inputPrice' | 'outputPrice' | 'blended';
+  op: 'lt' | 'gt' | 'changes';
+  /** Required when op is lt or gt. */
+  threshold?: number;
+}
+
+export interface StatusWatchSpec {
+  type: 'status';
+  /** Provider name (case-insensitive). */
+  provider: string;
+  op: 'becomes' | 'changes';
+  /** Required when op is becomes. */
+  value?: 'operational' | 'degraded' | 'down';
+}
+
+export type WatchSpec = PriceWatchSpec | StatusWatchSpec;
+
+export interface Watch {
+  id: string;
+  spec: WatchSpec;
+  callback_url: string;
+  secret?: string;
+  token: string;
+  created: string;
+  expires_at: string;
+  fire_count: number;
+  fire_cap: number;
+  last_fired_at: string | null;
+  last_delivery_status: number | null;
+  status: 'active' | 'expired' | 'cap_reached' | 'deleted';
+}
+
+export interface WatchCreateResponse {
+  ok: boolean;
+  watch: Watch;
+  billing?: { credits_charged: number; credits_remaining?: number };
+}
+
+export interface WatchListResponse {
+  ok: boolean;
+  count: number;
+  watches: Watch[];
+}
+
+export interface WatchGetResponse {
+  ok: boolean;
+  watch: Watch;
+}
+
 // ── Payment ─────────────────────────────────────────────────────────
 
 export interface PaymentInfo {
@@ -411,7 +466,7 @@ export class TensorFeed {
   }
 
   private async request<T>(
-    method: 'GET' | 'POST',
+    method: 'GET' | 'POST' | 'DELETE',
     path: string,
     options?: { params?: Record<string, unknown>; body?: unknown; requireToken?: boolean },
   ): Promise<T> {
@@ -726,6 +781,64 @@ export class TensorFeed {
     this.requireToken('historyCompare');
     return this.request<CompareResponse>('GET', '/premium/history/compare', {
       params: { from: options.from, to: options.to, type: options.type ?? 'pricing' },
+      requireToken: true,
+    });
+  }
+
+  // ── Paid: webhook watches (1 credit per registration) ─────────
+
+  /**
+   * Register a webhook watch on a price change or status transition.
+   * Costs 1 credit at registration. Watch lives 90 days, fires up to
+   * fire_cap times (default 100), capped at 25 active watches per token.
+   *
+   * Each fire is a signed POST to callbackUrl with X-TensorFeed-Signature
+   * (HMAC-SHA256 over the body using `secret`) and X-TensorFeed-Watch-Id
+   * headers. Predicates are debounced: they fire only on edge transitions.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   * @throws TensorFeedError 400 on invalid spec or callback URL
+   */
+  async createWatch(options: {
+    spec: WatchSpec;
+    callbackUrl: string;
+    secret?: string;
+    fireCap?: number;
+  }): Promise<WatchCreateResponse> {
+    this.requireToken('createWatch');
+    const body: Record<string, unknown> = {
+      spec: options.spec,
+      callback_url: options.callbackUrl,
+    };
+    if (options.secret !== undefined) body.secret = options.secret;
+    if (options.fireCap !== undefined) body.fire_cap = options.fireCap;
+    return this.request<WatchCreateResponse>('POST', '/premium/watches', {
+      body,
+      requireToken: true,
+    });
+  }
+
+  /** List all active watches owned by the current bearer token. Free. */
+  async listWatches(): Promise<WatchListResponse> {
+    this.requireToken('listWatches');
+    return this.request<WatchListResponse>('GET', '/premium/watches', {
+      requireToken: true,
+    });
+  }
+
+  /** Read one watch (must be owned by the current token). Free. */
+  async getWatch(id: string): Promise<WatchGetResponse> {
+    this.requireToken('getWatch');
+    return this.request<WatchGetResponse>('GET', `/premium/watches/${id}`, {
+      requireToken: true,
+    });
+  }
+
+  /** Delete an owned watch. Free. */
+  async deleteWatch(id: string): Promise<{ ok: boolean }> {
+    this.requireToken('deleteWatch');
+    return this.request<{ ok: boolean }>('DELETE', `/premium/watches/${id}`, {
       requireToken: true,
     });
   }

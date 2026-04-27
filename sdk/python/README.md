@@ -90,6 +90,31 @@ diff = tf.history_compare(
 )
 print(f'{len(diff["changed"])} price changes, {len(diff["added"])} new models')
 
+# Premium webhook watches (1 credit per registration, free reads)
+created = tf.create_watch(
+    spec={
+        "type": "price",
+        "model": "Claude Opus 4.7",
+        "field": "blended",
+        "op": "lt",
+        "threshold": 30,
+    },
+    callback_url="https://agent.example.com/hook",
+    secret="any-shared-secret",  # used to sign deliveries
+)
+watch_id = created["watch"]["id"]
+print(f"Watch {watch_id} active until {created['watch']['expires_at']}")
+
+# When a delivery arrives, verify it:
+#   sig = request.headers["X-TensorFeed-Signature"]  # "sha256=<hex>"
+#   import hmac, hashlib
+#   expected = "sha256=" + hmac.new(b"any-shared-secret", body, hashlib.sha256).hexdigest()
+#   assert hmac.compare_digest(sig, expected)
+
+print(tf.list_watches())          # see all your active watches
+print(tf.get_watch(watch_id))     # check fire_count, last_fired_at
+tf.delete_watch(watch_id)         # remove when done
+
 # Check remaining credits
 print(tf.balance())
 ```
@@ -190,6 +215,10 @@ except TensorFeedError as e:
 | `tf.benchmark_series(model=, benchmark=, from_date=, to_date=)` | 1 credit | Score evolution for a benchmark on one model, returns delta_pp |
 | `tf.status_uptime(provider=, from_date=, to_date=)` | 1 credit | Uptime % per provider with incident days (degraded = half) |
 | `tf.history_compare(from_date=, to_date=, snapshot_type=)` | 1 credit | Diff two snapshots: added, removed, changed entries with deltas |
+| `tf.create_watch(spec=, callback_url=, secret=, fire_cap=)` | 1 credit | Register a webhook watch on a price change or status transition |
+| `tf.list_watches()` | Free | List all active watches owned by the current token |
+| `tf.get_watch(watch_id)` | Free | Read one watch including fire_count and last_fired_at |
+| `tf.delete_watch(watch_id)` | Free | Remove an owned watch |
 
 ### Auto-send (requires `tensorfeed[web3]`)
 

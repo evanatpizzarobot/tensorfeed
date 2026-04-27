@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.3"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.4"
 
 
 class TensorFeedError(Exception):
@@ -546,4 +546,84 @@ class TensorFeed:
             "/premium/history/compare",
             params={"from": from_date, "to": to_date, "type": snapshot_type},
             require_token=True,
+        )
+
+    # ── Paid: webhook watches (Tier 1, 1 credit per registration) ──
+
+    def create_watch(
+        self,
+        *,
+        spec: dict[str, Any],
+        callback_url: str,
+        secret: str | None = None,
+        fire_cap: int | None = None,
+    ) -> dict[str, Any]:
+        """Register a webhook watch on a price change or status transition.
+
+        Costs 1 credit at registration. Watch lives 90 days, fires up to
+        ``fire_cap`` times (default 100), capped at 25 active watches per
+        token. Each fire is a signed POST to ``callback_url`` with an
+        ``X-TensorFeed-Signature: sha256=<hex>`` header (HMAC over the
+        body using ``secret``) and ``X-TensorFeed-Watch-Id``.
+
+        Args:
+            spec: Watch predicate. One of:
+                ``{"type": "price", "model": str, "field": "inputPrice"|
+                "outputPrice"|"blended", "op": "lt"|"gt"|"changes",
+                "threshold": float}``
+                ``{"type": "status", "provider": str,
+                "op": "becomes"|"changes",
+                "value": "operational"|"degraded"|"down"}``
+                Predicates are debounced: they fire only on edge
+                transitions, not while continuously satisfying.
+            callback_url: HTTPS URL to POST to. Private hosts (RFC1918,
+                localhost, link-local) are rejected.
+            secret: Optional shared secret. If provided, deliveries
+                include an HMAC-SHA256 signature over the body.
+            fire_cap: Max fires before the watch auto-disables (1-1000,
+                default 100).
+
+        Returns:
+            Dict with ``watch`` (full record including ``id``,
+            ``expires_at``, ``status``) and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+            TensorFeedError: 400 on invalid spec or callback URL
+        """
+        self._require_token("create_watch")
+        body: dict[str, Any] = {"spec": spec, "callback_url": callback_url}
+        if secret is not None:
+            body["secret"] = secret
+        if fire_cap is not None:
+            body["fire_cap"] = fire_cap
+        return self._request(
+            "POST", "/premium/watches", body=body, require_token=True,
+        )
+
+    def list_watches(self) -> dict[str, Any]:
+        """List all active watches owned by the current bearer token. Free."""
+        self._require_token("list_watches")
+        return self._request("GET", "/premium/watches", require_token=True)
+
+    def get_watch(self, watch_id: str) -> dict[str, Any]:
+        """Read one watch (must be owned by the current token). Free.
+
+        Includes ``fire_count``, ``last_fired_at``, ``last_delivery_status``.
+        """
+        self._require_token("get_watch")
+        return self._request(
+            "GET", f"/premium/watches/{watch_id}", require_token=True,
+        )
+
+    def delete_watch(self, watch_id: str) -> dict[str, Any]:
+        """Delete an owned watch. Free.
+
+        Args:
+            watch_id: The wat_... id returned from create_watch().
+        """
+        self._require_token("delete_watch")
+        return self._request(
+            "DELETE", f"/premium/watches/{watch_id}", require_token=True,
         )

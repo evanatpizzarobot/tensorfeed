@@ -97,6 +97,32 @@ if (diff.type === 'pricing') {
   console.log(`${diff.changed.length} price changes, ${diff.added.length} new models`);
 }
 
+// Premium webhook watches (1 credit per registration, free reads)
+const created = await tf.createWatch({
+  spec: {
+    type: 'price',
+    model: 'Claude Opus 4.7',
+    field: 'blended',
+    op: 'lt',
+    threshold: 30,
+  },
+  callbackUrl: 'https://agent.example.com/hook',
+  secret: 'any-shared-secret', // used to sign deliveries
+});
+console.log(`Watch ${created.watch.id} active until ${created.watch.expires_at}`);
+
+// When a delivery arrives, verify it:
+//   const sig = req.headers['x-tensorfeed-signature']; // "sha256=<hex>"
+//   const expected = 'sha256=' + crypto
+//     .createHmac('sha256', 'any-shared-secret')
+//     .update(rawBody)
+//     .digest('hex');
+//   if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) reject();
+
+console.log(await tf.listWatches());           // all your active watches
+console.log(await tf.getWatch(created.watch.id)); // fire_count, last_fired_at
+await tf.deleteWatch(created.watch.id);        // remove when done
+
 // Check remaining credits
 console.log(await tf.balance());
 ```
@@ -167,6 +193,10 @@ try {
 | `tf.benchmarkSeries({ model, benchmark, from?, to? })` | 1 credit | Score evolution for a benchmark on one model, returns delta_pp |
 | `tf.statusUptime({ provider, from?, to? })` | 1 credit | Uptime % per provider with incident days (degraded = half) |
 | `tf.historyCompare({ from, to, type? })` | 1 credit | Diff two snapshots: added, removed, changed entries with deltas |
+| `tf.createWatch({ spec, callbackUrl, secret?, fireCap? })` | 1 credit | Register a webhook watch on a price change or status transition |
+| `tf.listWatches()` | Free | List all active watches owned by the current token |
+| `tf.getWatch(id)` | Free | Read one watch including fire_count and last_fired_at |
+| `tf.deleteWatch(id)` | Free | Remove an owned watch |
 
 ## Wallet & Trust
 
