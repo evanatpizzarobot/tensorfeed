@@ -2,7 +2,7 @@
 
 ## Vision
 
-TensorFeed becomes the first AI data hub that treats autonomous agents as paying customers. Agents buy credits via USDC (on Base) or traditional payment (Stripe), then consume premium data feeds at millisecond latency using a bearer token. Revenue flows to a TensorFeed-controlled wallet or Stripe account with zero platform risk. No middlemen deciding who gets to participate.
+TensorFeed becomes the first AI data hub that treats autonomous agents as paying customers. Agents buy credits via USDC on Base, then consume premium data feeds at millisecond latency using a bearer token. Revenue flows directly to a TensorFeed-controlled wallet with zero platform risk and zero processor fees. No middlemen deciding who gets to participate.
 
 ## Why This Works Now
 
@@ -32,14 +32,17 @@ Per-call x402 (pay on-chain for each request) adds 3-4 seconds of latency per ca
 4. Worker verifies, issues a credit balance + token.
 5. Even one-off payments funnel into the credit system.
 
-### Hybrid payment rails
+### USDC-only payment rail (decision locked 2026-04-27)
 
-In Q2 2026, fewer than 5% of agents have funded crypto wallets. Both paths feed the same credits ledger:
+TensorFeed accepts USDC on Base exclusively. No Stripe, no PayPal, no traditional processors.
 
-- **USDC on Base**: Zero account, anonymous, 0% processor fee. For crypto-native agents.
-- **Stripe + email API key**: Traditional, ~3% fee, requires email. For the 95% of agent operators without wallets yet.
+Tradeoffs accepted:
+- **Smaller short-term TAM.** In 2026, fewer than 5% of agents have funded crypto wallets. The bet is on the trend curve (Coinbase Smart Wallet adoption, agent SDK wallet integration, x402 standardization) accelerating faster than the lost early revenue matters.
+- **Crypto-native positioning.** TensorFeed is for AI agents, not humans operating agents. USDC-only doubles down on that positioning rather than diluting it.
+- **Zero platform risk.** No Stripe account that can be deplatformed, no card-network policy changes that affect us, no chargebacks. The wallet exists, the API exists, payments flow.
+- **Zero processor fees.** Every cent paid by an agent ends up in our wallet (minus L2 gas, ~$0.0001 per tx).
 
-Same credits, same bearer token, same premium endpoints. The payment method is invisible after purchase.
+Tax compliance is handled separately by Pizza Robot Studios LLC; receipts are logged via the daily revenue cron and reported as ordinary income at received-date USD value.
 
 ### Snapshotting is Phase 0
 
@@ -70,20 +73,21 @@ Ship on PyPI and npm. Cost: 1-2 weeks. Value: every agent framework adopts it as
 
 ```
 POST /api/payment/buy-credits
-Body: { amount_usd: 1.00, method: "usdc" | "stripe" }
+Body: { amount_usd: 1.00 }
+Response: {
+  wallet: "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1",
+  amount: "1.00",
+  currency: "USDC",
+  network: "base",
+  memo: "tf-{nonce}"
+}
 
-USDC path:
-  Response: { wallet: "0x...", amount: "1.00", network: "base", memo: "tf-{nonce}" }
-  Agent sends USDC, then:
-  POST /api/payment/confirm
-  Body: { tx_hash: "0x...", nonce: "tf-{nonce}" }
-  Response: { token: "tf_live_...", credits: 50, rate: "$0.02/credit" }
+Agent sends USDC on Base to the wallet (the memo is optional but helps
+correlate the tx to the quote on our side), then:
 
-Stripe path:
-  Response: { checkout_url: "https://checkout.stripe.com/..." }
-  After payment, webhook creates credits:
-  GET /api/payment/activate?session_id=...
-  Response: { token: "tf_live_...", credits: 50, rate: "$0.02/credit" }
+POST /api/payment/confirm
+Body: { tx_hash: "0x...", nonce: "tf-{nonce}" }
+Response: { token: "tf_live_...", credits: 50, rate: "$0.02/credit" }
 ```
 
 ### x402 Fallback (one-off discovery)
@@ -149,10 +153,11 @@ An agent could ask GPT "which model should I use" for ~$0.005 in tokens. TensorF
 
 ```
 Launch pricing:     $0.01-0.02 per credit (all tiers same price initially)
-Credit bundles:     50 credits for $1.00 USDC (or $1.03 via Stripe)
-                    250 credits for $4.50 USDC
-                    1000 credits for $15.00 USDC
-After validation:   Tier 2 rises to $0.03-0.05 based on usage data
+Credit bundles:     50 credits for $1.00 USDC
+                    250 credits for $4.50 USDC (10% volume discount)
+                    1000 credits for $15.00 USDC (25% volume discount)
+                    10000 credits for $120.00 USDC (40% volume discount)
+After validation:   Tier 2 rises to $0.03-0.05 per credit based on usage data
 ```
 
 Revenue math at scale: 100 agents * 20 queries/day * $0.02 = $40/day = $14,600/year in passive income. Zero support tickets, zero invoicing, zero chargebacks on the USDC path.
@@ -212,15 +217,13 @@ Premium tier: adds impact_score, affected_entities, action_type, full_summary (5
 ### New Env vars (wrangler.toml)
 ```toml
 [vars]
-PAYMENT_WALLET = "0x..."
+PAYMENT_WALLET = "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1"
 PAYMENT_ENABLED = "true"
 BASE_RPC_URL = "https://base-mainnet.g.alchemy.com/v2/{key}"
 
 # Secrets (wrangler secret put):
-# STRIPE_SECRET_KEY
-# STRIPE_WEBHOOK_SECRET
-# ALCHEMY_API_KEY
-# PAYMENT_HMAC_KEY  (for signed payment info responses)
+# ALCHEMY_API_KEY        (Base RPC access)
+# PAYMENT_HMAC_KEY       (signs /api/payment/info responses; pubkey in DNS TXT)
 ```
 
 ### New KV namespace
@@ -234,14 +237,14 @@ id = "..."
 ### KV schema
 ```
 TENSORFEED_PAYMENTS:
-  credits:{token}             -> { balance, created, last_used, agent_ua, method }
+  credits:{token}             -> { balance, created, last_used, agent_ua }
   tx:{txHash}                 -> { amount, agent, endpoint, timestamp, verified }
-  revenue:daily:{date}        -> { total_usd, tx_count, unique_agents, by_method }
+  revenue:daily:{date}        -> { total_usd, tx_count, unique_agents }
   revenue:monthly:{month}     -> { aggregated }
 
 TENSORFEED_CACHE:
-  snapshot:{date}:{type}      -> { ...snapshot data }
-  routing-scores              -> { ...computed scores, ttl: 120s }
+  history:{date}:{type}       -> { ...daily snapshot data, Phase 0 shipped }
+  routing-scores              -> { ...computed scores, ttl: 120s, optional cache }
 ```
 
 Replay protection: tx hashes stored permanently in TENSORFEED_PAYMENTS (no TTL expiry). The free-tier TENSORFEED_CACHE KV has TTL behavior that could allow replay if tx hashes were stored there.
@@ -255,10 +258,10 @@ Free:
   /api/payment/info            -> Signed wallet address, pricing, supported methods
 
 Payment:
-  /api/payment/buy-credits     -> Initiate credit purchase
-  /api/payment/confirm         -> Confirm USDC payment
-  /api/payment/activate        -> Activate Stripe credits
-  /api/payment/balance         -> Check credit balance
+  /api/payment/info            -> Signed wallet address, pricing, supported methods
+  /api/payment/buy-credits     -> Generate a USDC payment quote (wallet + memo)
+  /api/payment/confirm         -> Confirm a sent USDC tx and mint credit token
+  /api/payment/balance         -> Check credit balance for a token
 
 Premium (requires credits):
   /api/premium/routing         -> Model routing score
@@ -291,8 +294,8 @@ Every USDC payment received is taxable income at received-date USD value. Daily 
 
 1. **Base RPC**: Public Base RPC will rate-limit within hours. Budget for Alchemy or QuickNode (~$50/month for production).
 2. **KV ops**: At 50K paid requests/day, the 100K free-tier ceiling is exceeded. Workers Paid plan ($5/month) is mandatory before launch.
-3. **Stripe fees**: ~3% on card payments. Baked into Stripe credit pricing (e.g., 50 credits = $1.03 via Stripe vs $1.00 via USDC).
-4. **Monitoring**: Add payment verification failures and credit depletion events to the existing daily ops email.
+3. **Monitoring**: Add payment verification failures and credit depletion events to the existing daily ops email.
+4. **Tax tracking**: Daily cron logs USD value of received USDC at receipt time to a `revenue:daily:{date}` KV entry. Pizza Robot Studios LLC reports as ordinary income at received-date USD value.
 
 ## Open-Source SDK
 
@@ -350,14 +353,17 @@ Note: an MCP server already exists at `/mcp-server/`. Extend it with premium end
 - [ ] Zero monetization, just start the data clock
 
 ### Phase 1: MVP Launch (weeks 2-4)
-- [ ] Base USDC wallet setup, published in llms.txt + DNS TXT
-- [ ] Payment middleware: credits-first, x402 fallback, Stripe alternative
-- [ ] ONE premium endpoint: `/api/premium/routing` at $0.01-0.02/credit
-- [ ] Free `/api/routing-preview` (5 calls/day per IP)
-- [ ] `/api/payment/info` with signed response (wallet attestation)
-- [ ] ToS with no-training clause
-- [ ] Documentation on `/developers/agent-payments`
-- [ ] Python SDK: `pip install tensorfeed`
+- [x] Routing engine + free preview endpoint (shipped 2026-04-27, commit 19f728a). `/api/preview/routing` is live, top-1 only, 5 calls/day per IP.
+- [x] Base USDC wallet locked in: `0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1` (Rabby on Base).
+- [ ] Fund the wallet with ~$5 of Base ETH for outbound gas.
+- [ ] DNS TXT record at `_tensorfeed-payment.tensorfeed.ai` with attestation public key.
+- [ ] Payment middleware (`worker/src/payments.ts`): credits-first USDC flow + x402 fallback for one-off discovery.
+- [ ] Endpoints: `/api/payment/info` (signed), `/api/payment/buy-credits`, `/api/payment/confirm`, `/api/payment/balance`.
+- [ ] Paid `/api/premium/routing` (top 5, full score detail, no rate limit) gated behind credits.
+- [ ] ToS at `/terms` with no-training clause for premium data.
+- [ ] Documentation on `/developers/agent-payments`.
+- [ ] Wallet address published in `public/llms.txt` under Premium Agent API.
+- [ ] Python SDK: `pip install tensorfeed` (handles wallet, x402, credits transparently).
 
 ### Phase 2: Expand (months 2-4, after first paying agent)
 - [ ] Tier 1 enhanced endpoints (news, status, models with 30-day history)
@@ -397,8 +403,8 @@ Fixed monthly costs before any revenue:
 ```
 Workers Paid plan       $5/mo     (KV ops budget)
 Base RPC (Alchemy)     ~$50/mo    (production rate limits)
-Stripe                  variable  (only on Stripe-path payments, ~3% per tx)
-D1                      $0        (free tier sufficient)
+Base L2 gas             ~$0       (only when sending outbound; receiving costs nothing)
+D1                      $0        (free tier sufficient if used at all)
 Total fixed:           ~$55/mo
 ```
 
