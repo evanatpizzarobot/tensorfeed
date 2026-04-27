@@ -8,6 +8,13 @@
     "contact": "evan@tensorfeed.ai",
     "docs": "https://tensorfeed.ai/developers/agent-payments",
     "llmsTxt": "https://tensorfeed.ai/llms.txt",
+    "operator": {
+      "legalEntity": "Pizza Robot Studios LLC",
+      "jurisdiction": "California, USA",
+      "terms": "https://tensorfeed.ai/terms",
+      "privacy": "https://tensorfeed.ai/privacy",
+      "note": "Pizza Robot Studios LLC is the legal entity behind the payment wallet, responsible for refunds and disputes per the Terms of Service."
+    },
     "validation": {
       "method": "TLS + multi-publication",
       "publishedAt": [

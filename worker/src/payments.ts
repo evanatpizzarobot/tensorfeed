@@ -454,6 +454,12 @@ export async function getPaymentInfo(env: Env): Promise<unknown> {
   }));
   return {
     ok: true,
+    operator: {
+      legal_entity: 'Pizza Robot Studios LLC',
+      jurisdiction: 'California, USA',
+      contact: 'evan@tensorfeed.ai',
+      note: 'The legal entity behind the payment wallet, responsible for refunds and disputes per the Terms of Service at https://tensorfeed.ai/terms.',
+    },
     wallet: {
       address: env.PAYMENT_WALLET,
       currency: 'USDC',

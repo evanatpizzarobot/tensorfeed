@@ -38,8 +38,13 @@ export default function TermsPage() {
           <p>
             Welcome to TensorFeed.ai. By accessing or using our website at tensorfeed.ai (the
             &quot;Site&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If
-            you do not agree to these Terms, please do not use the Site. TensorFeed.ai is operated by
-            Pizza Robot Studios LLC (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;).
+            you do not agree to these Terms, please do not use the Site. TensorFeed.ai, the Premium
+            API, and all related services are operated by Pizza Robot Studios LLC, a California
+            limited liability company (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). Pizza
+            Robot Studios LLC is the legal entity responsible for the payment wallet at
+            <code className="bg-bg-tertiary px-1 py-0.5 rounded text-xs font-mono mx-1">0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1</code>
+            on Base mainnet and is the counterparty for all premium-tier purchases, refunds, and
+            disputes per the Premium API and Agent Payments section below.
           </p>
         </section>
 

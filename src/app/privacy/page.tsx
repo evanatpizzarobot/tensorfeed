@@ -37,9 +37,17 @@ export default function PrivacyPage() {
         <section>
           <p>
             TensorFeed.ai (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is operated by Pizza Robot
-            Studios LLC. We are committed to protecting your privacy and being transparent about how we
-            collect and use data. This Privacy Policy explains our practices regarding information
-            collection, use, and disclosure when you visit tensorfeed.ai (the &quot;Site&quot;).
+            Studios LLC, a California limited liability company. We are committed to protecting your
+            privacy and being transparent about how we collect and use data. This Privacy Policy
+            explains our practices regarding information collection, use, and disclosure when you
+            visit tensorfeed.ai (the &quot;Site&quot;).
+          </p>
+          <p className="mt-3">
+            <span className="text-text-primary font-medium">Data controller.</span> Pizza Robot
+            Studios LLC, 3705 W Pico Blvd #B, Los Angeles, CA 90019, USA. Data-protection contact:{' '}
+            <a href="mailto:evan@pizzarobotstudios.com" className="text-accent-primary hover:underline">
+              evan@pizzarobotstudios.com
+            </a>.
           </p>
         </section>
 
