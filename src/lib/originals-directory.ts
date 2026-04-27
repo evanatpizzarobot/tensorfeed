@@ -17,6 +17,15 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'mcp-server-fifty-line-file',
+    title: 'An MCP Server Is a 50-Line File. Why Every Paid API Should Ship One.',
+    author: 'Ripper',
+    date: 'Apr 27, 2026',
+    readTime: '6 min read',
+    description:
+      'The Model Context Protocol server you would build for your existing paid API is a 50-line file. The agent-acquisition leverage of having one is enormous. The actual code, what it costs to ship, and why most teams overthink the work. Stop writing the planning doc; write the file.',
+  },
+  {
     slug: 'why-usdc-over-stripe',
     title: 'Why We Picked USDC on Base Over Stripe for Agent Payments',
     author: 'Ripper',
