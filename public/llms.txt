@@ -49,6 +49,8 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **Glossary for agent payment ecosystem:** `https://tensorfeed.ai/glossary` defines x402, MCP, and agent payments with FAQPage JSON-LD schema for rich-results indexing. Useful when an agent wants to understand the standards before integrating.
 
+**Per-benchmark leaderboards:** `https://tensorfeed.ai/benchmarks/{name}` (where `name` is `swe_bench`, `mmlu_pro`, `human_eval`, `gpqa_diamond`, or `math`). Each page is a ranked leaderboard for that benchmark with FAQPage and Dataset JSON-LD schema, score interpretation ranges, and a link from the leaderboard rows back to the relevant `/models/[slug]` pages. Computed live from `data/benchmarks.json` so the rankings stay current as scores are ingested.
+
 **Terms:** Premium data is licensed for inference use only. Use of TensorFeed premium data for training, fine-tuning, evaluation, or distillation of ML models is prohibited.
 
 **Endpoints:**

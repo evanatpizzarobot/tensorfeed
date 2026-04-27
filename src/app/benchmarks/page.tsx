@@ -140,6 +140,25 @@ export default function BenchmarksPage() {
         </p>
       </div>
 
+      {/* Per-benchmark leaderboard quick links */}
+      <div className="mb-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+        {[
+          { slug: 'swe_bench', name: 'SWE-bench' },
+          { slug: 'mmlu_pro', name: 'MMLU-Pro' },
+          { slug: 'human_eval', name: 'HumanEval' },
+          { slug: 'gpqa_diamond', name: 'GPQA Diamond' },
+          { slug: 'math', name: 'MATH' },
+        ].map(b => (
+          <Link
+            key={b.slug}
+            href={`/benchmarks/${b.slug}`}
+            className="bg-bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-text-secondary hover:border-accent-primary hover:text-accent-primary transition text-center"
+          >
+            {b.name} leaderboard →
+          </Link>
+        ))}
+      </div>
+
       {/* Editorial Intro */}
       <div className="max-w-4xl mb-10 text-text-secondary leading-relaxed space-y-4">
         <p>

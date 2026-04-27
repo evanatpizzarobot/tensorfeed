@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllModelSlugs } from '@/lib/model-directory';
 import { getAllComparisonSlugs } from '@/lib/comparison-directory';
 import { getAllProviderSlugs } from '@/lib/provider-directory';
+import { getAllBenchmarkSlugs } from '@/lib/benchmark-directory';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://tensorfeed.ai';
@@ -23,6 +24,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Per-benchmark leaderboard pages (high-intent "best AI model on X" queries)
+  const benchmarkPages: MetadataRoute.Sitemap = getAllBenchmarkSlugs().map(slug => ({
+    url: `${baseUrl}/benchmarks/${slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.75,
+  }));
+
   // Provider hub pages
   const providerPages: MetadataRoute.Sitemap = getAllProviderSlugs().map(slug => ({
     url: `${baseUrl}/providers/${slug}`,
@@ -41,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...modelPages,
     ...comparisonPages,
     ...providerPages,
+    ...benchmarkPages,
     { url: `${baseUrl}/agents`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/research`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: `${baseUrl}/podcasts`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
