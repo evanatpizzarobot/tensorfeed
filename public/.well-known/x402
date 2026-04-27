@@ -1,0 +1,315 @@
+{
+  "x402Version": 2,
+  "site": "tensorfeed.ai",
+  "publisher": {
+    "name": "TensorFeed.ai",
+    "url": "https://tensorfeed.ai",
+    "description": "Real-time AI news, model pricing, service status, and machine-payable premium intelligence for AI agents.",
+    "contact": "evan@tensorfeed.ai",
+    "docs": "https://tensorfeed.ai/developers/agent-payments",
+    "llmsTxt": "https://tensorfeed.ai/llms.txt",
+    "validation": {
+      "method": "TLS + multi-publication",
+      "publishedAt": [
+        "https://tensorfeed.ai/llms.txt",
+        "https://tensorfeed.ai/api/payment/info",
+        "https://github.com/RipperMercs/tensorfeed",
+        "https://x.com/tensorfeed"
+      ],
+      "note": "Cross-check the wallet address across all four published locations before sending funds. If any disagree, do not send."
+    }
+  },
+  "payment": {
+    "wallet": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "assetSymbol": "USDC",
+    "assetDecimals": 6,
+    "network": "eip155:8453",
+    "networkName": "Base mainnet",
+    "creditsPerUsd": 50,
+    "centsPerCredit": 2,
+    "volumeDiscounts": [
+      { "minUsd": 5, "creditsPerUsd": 55, "label": "10% off" },
+      { "minUsd": 30, "creditsPerUsd": 65, "label": "25% off" },
+      { "minUsd": 200, "creditsPerUsd": 80, "label": "40% off" }
+    ],
+    "flows": {
+      "credits": {
+        "description": "Recommended for repeat use. Buy a bearer token once, decrement credits per call.",
+        "endpoints": {
+          "info": "https://tensorfeed.ai/api/payment/info",
+          "quote": "https://tensorfeed.ai/api/payment/buy-credits",
+          "confirm": "https://tensorfeed.ai/api/payment/confirm",
+          "balance": "https://tensorfeed.ai/api/payment/balance",
+          "usage": "https://tensorfeed.ai/api/payment/usage"
+        }
+      },
+      "x402": {
+        "description": "One-shot fallback. Call any /api/premium/* endpoint without auth; the 402 response includes payment instructions. Retry with X-Payment-Tx header to receive data and a token.",
+        "header": "X-Payment-Tx",
+        "verification": "Worker reads the USDC Transfer event from eth_getTransactionReceipt on the Base mainnet RPC. Replay protection: every used tx hash is permanently recorded."
+      }
+    },
+    "terms": {
+      "noTraining": "Premium data is licensed for inference use only. Use of TensorFeed premium endpoint responses for training, fine-tuning, evaluation, or distillation of machine learning models is prohibited.",
+      "refund": "Email evan@tensorfeed.ai with the tx hash within 24 hours of the charge for a manual refund.",
+      "sla": "No SLA in MVP phase. Credits do not expire."
+    }
+  },
+  "items": [
+    {
+      "resource": "https://tensorfeed.ai/api/premium/routing",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "amount": "20000",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1",
+          "maxTimeoutSeconds": 60
+        }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Premium routing recommendations",
+        "description": "Top-N ranked AI model recommendations for a task with full composite-score breakdown across quality, availability, cost, and latency. Synthesizes live pricing, benchmarks, and provider status.",
+        "tier": 2,
+        "credits": 1,
+        "category": "ai-model-routing",
+        "input": {
+          "task": "code|reasoning|creative|general",
+          "budget": 5.0,
+          "min_quality": 0.7,
+          "top_n": 3
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "task": { "type": "string", "enum": ["code", "reasoning", "creative", "general"], "description": "Task family the model needs to be good at" },
+            "budget": { "type": "number", "description": "Max blended USD per 1M tokens" },
+            "min_quality": { "type": "number", "minimum": 0, "maximum": 1 },
+            "top_n": { "type": "integer", "minimum": 1, "maximum": 10 }
+          }
+        },
+        "output": {
+          "example": {
+            "task": "code",
+            "recommendations": [
+              {
+                "rank": 1,
+                "model": { "name": "Claude Opus 4.7", "provider": "anthropic" },
+                "pricing": { "input": 15, "output": 75, "currency": "USD", "unit": "per 1M tokens" },
+                "status": "operational",
+                "composite_score": 0.87,
+                "components": { "quality": 0.94, "availability": 1.0, "cost": 0.65, "latency": 0.5 }
+              }
+            ],
+            "billing": { "credits_charged": 1, "credits_remaining": 49 }
+          }
+        }
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/history/pricing/series",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Pricing series",
+        "description": "Daily input/output/blended price points for one model with min/max/delta summary. Default 30-day window, max 90 days.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-pricing-history"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/history/benchmarks/series",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Benchmark score series",
+        "description": "Score evolution for a single benchmark on one model with delta in percentage points. Supported keys: swe_bench, mmlu_pro, gpqa_diamond, math, human_eval.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-benchmark-history"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/history/status/uptime",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Uptime rollup",
+        "description": "Daily uptime rollup for one provider with operational, degraded, and down day counts. Uptime % treats degraded as half-credit. Missing-data days excluded from denominator.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-status-history"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/history/compare",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Snapshot diff",
+        "description": "Diff two daily snapshots: returns added, removed, and changed entries with deltas. Supported types: pricing, benchmarks.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-snapshot-diff"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/agents/directory",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Enriched agents directory",
+        "description": "Static AI agents catalog joined with live status, recent news count and top 3 articles, agent traffic, flagship pricing, and a derived 0-100 trending_score. Server-side filter and sort.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-agents-directory"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/news/search",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "News search",
+        "description": "Full-text search over the AI news corpus with relevance scoring (term hits weighted 3 in title, 1 in snippet, plus recency boost) and date/provider/category filters.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-news-search"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/cost/projection",
+      "type": "http",
+      "method": "GET",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Cost projection",
+        "description": "Project the cost of a token-usage workload across 1-10 AI models. Returns daily/weekly/monthly/yearly totals per model plus a ranking by cheapest monthly.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-cost-projection"
+      }
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/premium/watches",
+      "type": "http",
+      "method": "POST",
+      "x402Version": 2,
+      "accepts": [
+        { "scheme": "exact", "network": "eip155:8453", "amount": "20000", "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "payTo": "0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1", "maxTimeoutSeconds": 60 }
+      ],
+      "lastUpdated": "2026-04-27T00:00:00Z",
+      "metadata": {
+        "name": "Webhook watches",
+        "description": "Register a webhook watch on a price change or service status transition. HMAC-SHA256 signed POST deliveries. 90-day TTL, default fire cap 100, per-token cap 25.",
+        "tier": 1,
+        "credits": 1,
+        "category": "ai-webhooks",
+        "input": {
+          "spec": { "type": "price", "model": "Claude Opus 4.7", "field": "blended", "op": "lt", "threshold": 30 },
+          "callback_url": "https://your-agent.example.com/hook",
+          "secret": "optional shared secret"
+        }
+      }
+    }
+  ],
+  "freeEndpoints": [
+    {
+      "resource": "https://tensorfeed.ai/api/news",
+      "description": "Latest AI news articles aggregated from 15+ sources. Free, no auth."
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/status",
+      "description": "Real-time AI service status (Claude, OpenAI, Gemini, Mistral, Cohere, Replicate, Hugging Face). Free, no auth."
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/models",
+      "description": "AI model pricing, context windows, capabilities. Free, no auth."
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/benchmarks",
+      "description": "AI model benchmark scores. Free, no auth."
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/history",
+      "description": "Daily historical snapshots of pricing, models, benchmarks, status, and agent activity. Free, no auth. Single-day raw payload; aggregated views are premium.",
+      "perDate": "https://tensorfeed.ai/api/history/{YYYY-MM-DD}/{type}"
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/preview/routing",
+      "description": "Free top-1 routing recommendation. Rate-limited to 5 calls per UTC day per IP. Premium /api/premium/routing has no rate limit and returns top-N with full breakdown."
+    },
+    {
+      "resource": "https://tensorfeed.ai/api/agents/activity",
+      "description": "Real-time AI agent traffic metrics on tensorfeed.ai. Free, no auth."
+    }
+  ],
+  "sdks": [
+    {
+      "language": "python",
+      "package": "tensorfeed",
+      "registry": "pypi",
+      "install": "pip install tensorfeed",
+      "withWeb3": "pip install 'tensorfeed[web3]'",
+      "url": "https://pypi.org/project/tensorfeed/"
+    },
+    {
+      "language": "typescript",
+      "package": "tensorfeed",
+      "registry": "npm",
+      "install": "npm install tensorfeed",
+      "url": "https://www.npmjs.com/package/tensorfeed"
+    },
+    {
+      "language": "mcp",
+      "package": "@tensorfeed/mcp-server",
+      "registry": "npm",
+      "install": "npx -y @tensorfeed/mcp-server",
+      "envVar": "TENSORFEED_TOKEN",
+      "url": "https://www.npmjs.com/package/@tensorfeed/mcp-server",
+      "manifest": "https://github.com/RipperMercs/tensorfeed/blob/main/mcp-server/server.json"
+    }
+  ],
+  "lastUpdated": "2026-04-27T00:00:00Z"
+}

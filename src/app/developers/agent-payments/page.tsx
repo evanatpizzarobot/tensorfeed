@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     'MCP payment server',
     'AI agent commerce',
     'autonomous agent payment',
+    'x402 v2 discovery',
+    '.well-known x402',
+    'CDP Bazaar',
   ],
 };
 

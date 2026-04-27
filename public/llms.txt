@@ -41,6 +41,8 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **Trust:** Cross-check this wallet address on `/api/payment/info`, the GitHub README, and the @tensorfeed X bio. If any disagree, do not send.
 
+**Auto-discovery for x402-compatible agents:** A complete x402 V2 discovery manifest is published at `https://tensorfeed.ai/.well-known/x402.json` (also served at `https://tensorfeed.ai/.well-known/x402`). The manifest declares the wallet, asset (USDC on Base), all 9 paid endpoint listings with input/output schemas and per-call price (`amount: "20000"` = $0.02 USDC = 1 credit), the credits/x402 payment flows, free endpoints, and SDK install commands. CDP Bazaar facilitators and any x402 V2 agent can index our endpoints from this single URL with zero manual submission.
+
 **Terms:** Premium data is licensed for inference use only. Use of TensorFeed premium data for training, fine-tuning, evaluation, or distillation of ML models is prohibited.
 
 **Endpoints:**
