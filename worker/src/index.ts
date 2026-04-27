@@ -34,6 +34,7 @@ import { searchNews, NewsSearchOptions } from './news-search';
 import { computeCostProjection, CostProjectionOptions } from './cost-projection';
 import { computeForecast, ForecastOptions, PriceField } from './forecast';
 import { computeProviderDeepDive } from './provider-deepdive';
+import { compareModels } from './compare-models';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
   requirePayment,
@@ -514,6 +515,7 @@ export default {
           premiumCostProjection: '/api/premium/cost/projection?model=opus-4-7,gpt-5-5&input_tokens_per_day=&output_tokens_per_day=&horizon=monthly',
           premiumForecast: '/api/premium/forecast?target=price|benchmark&model=&field=inputPrice|outputPrice|blended&benchmark=&lookback=30&horizon=7',
           premiumProviderDeepDive: '/api/premium/providers/{name}',
+          premiumCompareModels: '/api/premium/compare/models?ids=opus-4-7,gpt-5-5,gemini-3',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -952,6 +954,29 @@ export default {
       }
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/forecast', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: COMPARE MODELS (Tier 1, 1 credit) ===
+    // /api/premium/compare/models?ids=opus-4-7,gpt-5-5,gemini-3
+    // Returns a normalized side-by-side comparison block per model
+    // (pricing, benchmarks union-filled with null for missing scores,
+    // provider status, recent news) plus rankings by cheapest blended,
+    // most context, and per-benchmark leaderboard. 2-5 models per call.
+
+    if (path === '/api/premium/compare/models') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const idsParam = url.searchParams.get('ids') || url.searchParams.get('models') || '';
+      const modelKeys = idsParam.split(',').map(s => s.trim()).filter(s => s.length > 0);
+      const result = await compareModels(env, { modelKeys });
+      if (!result.ok) {
+        return jsonResponse(result, 400);
+      }
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/compare/models', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }

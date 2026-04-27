@@ -226,6 +226,7 @@ except TensorFeedError as e:
 | `tf.cost_projection(models=, input_tokens_per_day=, output_tokens_per_day=, horizon=)` | 1 credit | Project workload cost across 1-10 models, 4 horizons, cheapest-monthly ranking |
 | `tf.forecast(target=, model=, field=, benchmark=, lookback=, horizon=)` | 1 credit | Linear-regression forecast for a price or benchmark series with 95% CI and confidence label |
 | `tf.provider_deepdive(provider)` | 1 credit | One provider's full profile: status + all models + benchmarks joined + news + traffic |
+| `tf.compare_models(ids=)` | 1 credit | Side-by-side compare of 2-5 models with normalized benchmarks + rankings |
 
 ### Auto-send (requires `tensorfeed[web3]`)
 

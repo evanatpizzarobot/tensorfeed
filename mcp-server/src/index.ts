@@ -5,7 +5,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 
 const API_BASE = 'https://tensorfeed.ai/api';
-const SDK_VERSION = '1.6.0';
+const SDK_VERSION = '1.7.0';
 
 // ── API helpers ─────────────────────────────────────────────────────
 
@@ -544,6 +544,54 @@ server.tool(
         {
           type: 'text' as const,
           text: `Agents (sort: ${data.sort}, ${data.returned} of ${data.total}):\n\n${list}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: compare_models (1 credit) ─────────────────────────────────
+
+server.tool(
+  'compare_models',
+  'Side-by-side comparison of 2-5 AI models. Returns pricing, benchmarks (normalized to a union of keys with null for missing scores), provider status, and recent news per model, plus rankings (cheapest blended, most context, per-benchmark leaderboard). Costs 1 credit.',
+  {
+    ids: z.string().describe('Comma-separated list of 2-5 model ids or display names. Examples: "Claude Opus 4.7,GPT-5.5,Gemini 3" or "opus-4-7,gpt-5-5"'),
+  },
+  async ({ ids }) => {
+    const data = (await fetchJSON(`/premium/compare/models?ids=${encodeURIComponent(ids)}`, { auth: true })) as {
+      benchmark_keys: string[];
+      models: (
+        | { matched: true; name: string; provider: string; pricing: { input: number; output: number; blended: number }; context_window: number | null; status: string; benchmarks: Record<string, number | null> }
+        | { matched: false; query: string; reason: string }
+      )[];
+      rankings: {
+        cheapest_blended: { name: string; blended: number }[];
+        most_context: { name: string; context_window: number }[];
+        by_benchmark: Record<string, { name: string; score: number }[]>;
+      };
+      billing?: { credits_remaining?: number };
+    };
+
+    const lines = data.models.map(m => {
+      if (!m.matched) return `  ${m.query}: not found`;
+      const benches = data.benchmark_keys
+        .map(k => `${k}=${m.benchmarks[k] ?? '-'}`)
+        .join(', ');
+      return `  ${m.name} (${m.provider}) [${m.status}]\n     in $${m.pricing.input}/1M, out $${m.pricing.output}/1M, ctx ${m.context_window ?? '-'}\n     ${benches}`;
+    }).join('\n\n');
+
+    const cheapest = data.rankings.cheapest_blended.map((r, i) => `  #${i + 1} ${r.name} ($${r.blended}/1M blended)`).join('\n');
+    const ctxLine = data.rankings.most_context.map((r, i) => `  #${i + 1} ${r.name} (${r.context_window})`).join('\n');
+    const benchSections = Object.entries(data.rankings.by_benchmark)
+      .map(([k, v]) => `  ${k}: ${v.map(r => `${r.name}=${r.score}`).join(' > ')}`)
+      .join('\n');
+
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `Models compared:\n${lines}\n\nCheapest blended:\n${cheapest}\n\nMost context:\n${ctxLine || '  (no context data)'}\n\nBenchmark leaders:\n${benchSections || '  (no benchmark data)'}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
         },
       ],
     };

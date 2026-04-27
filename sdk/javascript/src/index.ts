@@ -10,7 +10,7 @@
  */
 
 const DEFAULT_BASE_URL = 'https://tensorfeed.ai/api';
-const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.10';
+const DEFAULT_USER_AGENT = 'TensorFeed-SDK-JS/1.11';
 
 // ── Error types ─────────────────────────────────────────────────────
 
@@ -436,6 +436,48 @@ export interface NewsSearchResultItem {
   published_at: string;
   relevance: number;
   matched_terms: string[];
+}
+
+export interface CompareModelEntry {
+  matched: true;
+  id: string;
+  name: string;
+  provider: string;
+  tier: string | null;
+  context_window: number | null;
+  released: string | null;
+  capabilities: string[];
+  open_source: boolean;
+  pricing: { input: number; output: number; blended: number };
+  benchmarks: Record<string, number | null>;
+  status: 'operational' | 'degraded' | 'down' | 'unknown';
+  recent_news_count: number;
+  recent_news: { title: string; url: string; source: string; published_at: string }[];
+}
+
+export interface UnmatchedCompareEntry {
+  matched: false;
+  query: string;
+  reason: 'model_not_found';
+}
+
+export type CompareEntry = CompareModelEntry | UnmatchedCompareEntry;
+
+export interface CompareModelsResponse {
+  ok: boolean;
+  benchmark_keys: string[];
+  models: CompareEntry[];
+  rankings: {
+    cheapest_blended: { name: string; blended: number }[];
+    most_context: { name: string; context_window: number }[];
+    by_benchmark: Record<string, { name: string; score: number }[]>;
+  };
+  data_freshness: {
+    pricing: string | null;
+    benchmarks: string | null;
+    status: string | null;
+  };
+  billing?: { credits_charged: number; credits_remaining?: number };
 }
 
 export interface ProviderDeepDiveModel {
@@ -1091,6 +1133,30 @@ export class TensorFeed {
       `/premium/providers/${encodeURIComponent(provider)}`,
       { requireToken: true },
     );
+  }
+
+  // ── Paid: compare models (1 credit per call) ──────────────────
+
+  /**
+   * Side-by-side comparison of 2-5 AI models. Each entry includes
+   * pricing, benchmarks (normalized to union-of-keys with null for
+   * missing scores), provider live status, and recent news. Plus
+   * rankings: cheapest_blended, most_context, by_benchmark. Costs
+   * 1 credit.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   * @throws TensorFeedError 400 on < 2 or > 5 models
+   */
+  async compareModels(options: {
+    ids: string | string[];
+  }): Promise<CompareModelsResponse> {
+    this.requireToken('compareModels');
+    const idsCsv = Array.isArray(options.ids) ? options.ids.join(',') : options.ids;
+    return this.request<CompareModelsResponse>('GET', '/premium/compare/models', {
+      params: { ids: idsCsv },
+      requireToken: true,
+    });
   }
 
   // ── Paid: enriched agents directory (1 credit per call) ──────

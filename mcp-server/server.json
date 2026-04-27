@@ -3,7 +3,7 @@
   "name": "ai.tensorfeed/mcp-server",
   "title": "TensorFeed",
   "description": "TensorFeed.ai MCP server: real-time AI news, service status, model pricing, and a paid premium tier (routing recommendations, history series, news search, cost projection, webhook watches, enriched agents directory, account management). Premium endpoints are pay-per-call in USDC on Base mainnet, no accounts required.",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "websiteUrl": "https://tensorfeed.ai/developers/agent-payments",
   "repository": {
     "url": "https://github.com/RipperMercs/tensorfeed",
@@ -15,7 +15,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@tensorfeed/mcp-server",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
@@ -55,6 +55,7 @@
         "cost_projection",
         "forecast",
         "provider_deepdive",
+        "compare_models",
         "list_watches",
         "create_price_watch",
         "create_status_watch",

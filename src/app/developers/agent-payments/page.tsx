@@ -364,6 +364,44 @@ const ENDPOINTS: PremiumEndpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/premium/compare/models',
+    description:
+      'Side-by-side comparison of 2-5 AI models. Each entry returns pricing, benchmarks (normalized to a union of keys with null for missing scores so downstream code never crashes on undefined), provider live status, capabilities, context window, and recent news. Plus rankings: cheapest blended, most context, and a per-benchmark leaderboard.',
+    cost: '1 credit per call',
+    example: `// Query: ?ids=opus-4-7,gpt-5-5,gemini-3
+{
+  "ok": true,
+  "benchmark_keys": ["mmlu_pro", "swe_bench"],
+  "models": [
+    {
+      "matched": true, "id": "opus-4-7", "name": "Claude Opus 4.7",
+      "provider": "Anthropic", "tier": "flagship",
+      "pricing": { "input": 15, "output": 75, "blended": 45 },
+      "context_window": 1000000, "status": "operational",
+      "benchmarks": { "swe_bench": 73.4, "mmlu_pro": 88.5 }
+    }
+  ],
+  "rankings": {
+    "cheapest_blended": [
+      { "name": "Gemini 3", "blended": 14 },
+      { "name": "GPT-5.5", "blended": 20 },
+      { "name": "Claude Opus 4.7", "blended": 45 }
+    ],
+    "most_context": [
+      { "name": "Gemini 3", "context_window": 2000000 }
+    ],
+    "by_benchmark": {
+      "swe_bench": [
+        { "name": "Claude Opus 4.7", "score": 73.4 },
+        { "name": "GPT-5.5", "score": 70.0 }
+      ]
+    }
+  },
+  "billing": { "credits_charged": 1, "credits_remaining": 43 }
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/premium/providers/{name}',
     description:
       'Everything about an AI provider in one paid call: live status + components, all models with pricing + tier + benchmark scores joined, recent news mentions, agent traffic. Aggregation over 4 free endpoints in one paid request.',

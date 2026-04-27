@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.11"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.12"
 
 
 class TensorFeedError(Exception):
@@ -731,6 +731,40 @@ class TensorFeed:
         self._require_token("provider_deepdive")
         return self._request(
             "GET", f"/premium/providers/{provider}", require_token=True,
+        )
+
+    # ── Paid: compare models (Tier 1, 1 credit) ────────────────────
+
+    def compare_models(self, *, ids: list[str] | str) -> dict[str, Any]:
+        """Side-by-side comparison of 2-5 AI models.
+
+        Costs 1 credit. Returns each model's pricing, benchmarks
+        (normalized to a union of keys with null for missing scores),
+        provider-level live status, capabilities, context window, and
+        recent news mentions. Plus three rankings: cheapest blended,
+        most context, and a per-benchmark leaderboard.
+
+        Args:
+            ids: 2-5 model ids or display names. Pass a list or a
+                comma-separated string.
+
+        Returns:
+            Dict with ``models`` (list of matched/unmatched entries),
+            ``benchmark_keys`` (union of all benchmark keys present),
+            ``rankings`` (cheapest_blended, most_context, by_benchmark),
+            ``data_freshness``, and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+            TensorFeedError: 400 on validation failure (< 2 or > 5 models)
+        """
+        self._require_token("compare_models")
+        ids_csv = ",".join(ids) if isinstance(ids, list) else str(ids)
+        return self._request(
+            "GET", "/premium/compare/models",
+            params={"ids": ids_csv},
+            require_token=True,
         )
 
     # ── Paid: enriched agents directory (Tier 1, 1 credit) ─────────
