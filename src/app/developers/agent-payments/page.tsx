@@ -364,6 +364,32 @@ const ENDPOINTS: PremiumEndpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/premium/forecast',
+    description:
+      'Conservative statistical forecast for a price field or benchmark score. Linear least-squares fit on 7-90 days of history, projected forward 1-30 days with a 95% prediction interval and a confidence score (low/medium/high) so you can ignore low-signal forecasts. Includes explicit "not a guarantee" disclaimers.',
+    cost: '1 credit per call',
+    example: `// Query: ?target=price&model=Claude+Opus+4.7&field=blended&lookback=30&horizon=7
+{
+  "ok": true,
+  "target": "price",
+  "model": "Claude Opus 4.7",
+  "field": "blended",
+  "fitted_on": { "from": "2026-03-29", "to": "2026-04-27", "days": 30, "data_points": 27 },
+  "horizon_days": 7,
+  "current_value": 36,
+  "trend": { "slope_per_day": -0.31, "r_squared": 0.78 },
+  "confidence": { "score": 0.7, "label": "high" },
+  "forecast": [
+    { "date": "2026-04-28", "predicted": 35.69, "lower": 34.2, "upper": 37.18 }
+  ],
+  "notes": [
+    "Statistical inference, not a guarantee. The forecast assumes the underlying trend continues..."
+  ],
+  "billing": { "credits_charged": 1, "credits_remaining": 45 }
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/premium/cost/projection',
     description:
       'Project the cost of a token-usage workload across 1-10 AI models. Returns daily/weekly/monthly/yearly totals per model plus a ranking by cheapest monthly. Pure compute on live /api/models pricing.',

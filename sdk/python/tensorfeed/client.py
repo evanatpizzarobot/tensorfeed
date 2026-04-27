@@ -18,7 +18,7 @@ from typing import Any  # noqa: F401  (re-exported by purchase_credits return ty
 
 
 DEFAULT_BASE_URL = "https://tensorfeed.ai/api"
-DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.8"
+DEFAULT_USER_AGENT = "TensorFeed-SDK-Python/1.9"
 
 
 class TensorFeedError(Exception):
@@ -815,4 +815,60 @@ class TensorFeed:
             params["horizon"] = horizon
         return self._request(
             "GET", "/premium/cost/projection", params=params, require_token=True,
+        )
+
+    # ── Paid: forecast (Tier 1, 1 credit) ──────────────────────────
+
+    def forecast(
+        self,
+        *,
+        target: str,
+        model: str,
+        field: str | None = None,
+        benchmark: str | None = None,
+        lookback: int | None = None,
+        horizon: int | None = None,
+    ) -> dict[str, Any]:
+        """Conservative statistical forecast for a price or benchmark series.
+
+        Costs 1 credit per call. Linear least-squares fit on the last
+        7-90 days of daily snapshots, projected forward 1-30 days with a
+        95% prediction interval. Includes a confidence score so you can
+        ignore low-signal forecasts.
+
+        Args:
+            target: 'price' or 'benchmark'.
+            model: Model id or display name. Case-insensitive.
+            field: Required when target='price'. One of 'inputPrice',
+                'outputPrice', 'blended'.
+            benchmark: Required when target='benchmark'. e.g. 'swe_bench'.
+            lookback: Days of history to fit on (7-90, default 30).
+            horizon: Days into the future to project (1-30, default 7).
+
+        Returns:
+            Dict with ``current_value``, ``trend`` (slope_per_day,
+            r_squared), ``confidence`` (score, label),
+            ``forecast`` (list of {date, predicted, lower, upper}),
+            ``notes`` with explicit "not a guarantee" disclaimers,
+            and ``billing``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+            TensorFeedError: 400 on invalid target/field/benchmark or
+                if the model has fewer than 4 historical data points in
+                the requested window (try a longer lookback).
+        """
+        self._require_token("forecast")
+        params: dict[str, Any] = {"target": target, "model": model}
+        if field is not None:
+            params["field"] = field
+        if benchmark is not None:
+            params["benchmark"] = benchmark
+        if lookback is not None:
+            params["lookback"] = lookback
+        if horizon is not None:
+            params["horizon"] = horizon
+        return self._request(
+            "GET", "/premium/forecast", params=params, require_token=True,
         )

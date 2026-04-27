@@ -31,6 +31,7 @@ import {
 } from './agents-enriched';
 import { searchNews, NewsSearchOptions } from './news-search';
 import { computeCostProjection, CostProjectionOptions } from './cost-projection';
+import { computeForecast, ForecastOptions, PriceField } from './forecast';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
   requirePayment,
@@ -492,6 +493,7 @@ export default {
           premiumAgentsDirectory: '/api/premium/agents/directory?category=&status=&open_source=&capability=&sort=&limit=',
           premiumNewsSearch: '/api/premium/news/search?q=&from=&to=&provider=&category=&limit=',
           premiumCostProjection: '/api/premium/cost/projection?model=opus-4-7,gpt-5-5&input_tokens_per_day=&output_tokens_per_day=&horizon=monthly',
+          premiumForecast: '/api/premium/forecast?target=price|benchmark&model=&field=inputPrice|outputPrice|blended&benchmark=&lookback=30&horizon=7',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -890,6 +892,46 @@ export default {
       const result = await compareHistory(env, fromDate, toDate, typeParam);
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/history/compare', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: FORECAST (Tier 1, 1 credit) ===
+    // Conservative statistical forecast (linear least-squares with a
+    // 95% prediction interval) over the last 7-90 days of price or
+    // benchmark history, projected forward 1-30 days. Includes
+    // confidence score so agents can ignore low-signal forecasts.
+
+    if (path === '/api/premium/forecast') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const targetParam = url.searchParams.get('target') ?? 'price';
+      const target: 'price' | 'benchmark' =
+        targetParam === 'price' || targetParam === 'benchmark' ? targetParam : 'price';
+      const fieldParam = url.searchParams.get('field');
+      const field: PriceField | undefined =
+        fieldParam === 'inputPrice' || fieldParam === 'outputPrice' || fieldParam === 'blended'
+          ? fieldParam
+          : undefined;
+      const lookback = parseInt(url.searchParams.get('lookback') ?? '', 10);
+      const horizon = parseInt(url.searchParams.get('horizon') ?? '', 10);
+
+      const opts: ForecastOptions = {
+        target,
+        model: url.searchParams.get('model')?.trim() ?? '',
+        ...(field ? { field } : {}),
+        ...(url.searchParams.get('benchmark') ? { benchmark: url.searchParams.get('benchmark')! } : {}),
+        ...(Number.isFinite(lookback) ? { lookback } : {}),
+        ...(Number.isFinite(horizon) ? { horizon } : {}),
+      };
+
+      const result = await computeForecast(env, opts);
+      if (!result.ok) {
+        return jsonResponse(result, 400);
+      }
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/forecast', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }

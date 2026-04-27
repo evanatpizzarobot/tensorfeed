@@ -5,7 +5,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 
 const API_BASE = 'https://tensorfeed.ai/api';
-const SDK_VERSION = '1.3.0';
+const SDK_VERSION = '1.4.0';
 
 // ── API helpers ─────────────────────────────────────────────────────
 
@@ -544,6 +544,53 @@ server.tool(
         {
           type: 'text' as const,
           text: `Agents (sort: ${data.sort}, ${data.returned} of ${data.total}):\n\n${list}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: forecast (1 credit) ───────────────────────────────────────
+
+server.tool(
+  'forecast',
+  'Conservative statistical forecast for an AI model price or benchmark series. Linear least-squares fit on 7-90 days of history projected forward 1-30 days with a 95% prediction interval and confidence label. Costs 1 credit.',
+  {
+    target: z.enum(['price', 'benchmark']).describe('Forecast a price field or a benchmark score'),
+    model: z.string().describe('Model id or display name'),
+    field: z.enum(['inputPrice', 'outputPrice', 'blended']).optional().describe('Required when target=price'),
+    benchmark: z.string().optional().describe('Required when target=benchmark (e.g. swe_bench, mmlu_pro)'),
+    lookback: z.number().min(7).max(90).optional().describe('Days of history to fit on (default 30)'),
+    horizon: z.number().min(1).max(30).optional().describe('Days into the future to project (default 7)'),
+  },
+  async ({ target, model, field, benchmark, lookback, horizon }) => {
+    const params = new URLSearchParams({ target, model });
+    if (field) params.set('field', field);
+    if (benchmark) params.set('benchmark', benchmark);
+    if (typeof lookback === 'number') params.set('lookback', String(lookback));
+    if (typeof horizon === 'number') params.set('horizon', String(horizon));
+    const data = (await fetchJSON(`/premium/forecast?${params}`, { auth: true })) as {
+      target: string;
+      model: string;
+      field?: string;
+      benchmark?: string;
+      current_value: number;
+      trend: { slope_per_day: number; r_squared: number };
+      confidence: { score: number; label: string };
+      forecast: { date: string; predicted: number; lower: number; upper: number }[];
+      notes: string[];
+      billing?: { credits_remaining?: number };
+    };
+    const what = target === 'price' ? `${data.model} ${data.field}` : `${data.model} ${data.benchmark}`;
+    const trendLine = `current=${data.current_value}, slope=${data.trend.slope_per_day}/day, r2=${data.trend.r_squared}, confidence=${data.confidence.label} (${data.confidence.score})`;
+    const forecastLines = data.forecast
+      .map(p => `  ${p.date}: ${p.predicted} (95% CI [${p.lower}, ${p.upper}])`)
+      .join('\n');
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `Forecast: ${what}\n${trendLine}\n\n${forecastLines}\n\nNotes: ${data.notes.join(' ')}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
         },
       ],
     };
