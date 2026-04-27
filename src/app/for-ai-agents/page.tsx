@@ -196,6 +196,11 @@ export default function ForAIAgentsPage() {
             description="Complete OpenAPI 3.1 spec. Drop-in for Swagger UI, Postman, code generators, and agent toolkits."
           />
           <DiscoveryCard
+            href="/agent-traffic"
+            title="/agent-traffic"
+            description="Live public dashboard of AI bot traffic hitting TensorFeed: ClaudeBot, GPTBot, PerplexityBot, Bytespider, Google-Extended, and more. Per-bot breakdown, top endpoints, live tail. Most sites hide this; we publish it."
+          />
+          <DiscoveryCard
             href="https://github.com/RipperMercs/tensorfeed/blob/main/mcp-server/server.json"
             title="server.json (MCP registry)"
             description="MCP server manifest. Registered in the official MCP registry as ai.tensorfeed/mcp-server. Includes all 20 tools split into freeTools and premiumTools."

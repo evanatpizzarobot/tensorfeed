@@ -55,6 +55,8 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **Per-endpoint API reference:** `https://tensorfeed.ai/api-reference` indexes one page per endpoint (free + premium). Each page has input parameters, response schema, code samples in curl/Python/TypeScript, MCP tool name (when applicable), endpoint-specific FAQPage schema, and TechArticle JSON-LD. Targets branded queries like "tensorfeed routing api" and "tensorfeed news search api". Auto-generated from `src/lib/api-reference-directory.ts` so the route, sitemap, and metadata stay current as the catalog grows.
 
+**Live AI bot traffic dashboard:** `https://tensorfeed.ai/agent-traffic` surfaces the bot crawl data from `/api/agents/activity` as a public dashboard with per-bot breakdown (ClaudeBot, GPTBot, PerplexityBot, Googlebot, Bytespider, etc), top hit endpoints, a live tail of the most recent 50 hits, and a daily counter. JSON-LD Dataset + FAQPage schema. Refreshes every 30s. Most sites hide this; we publish it because TensorFeed was built for AI agents.
+
 **Terms:** Premium data is licensed for inference use only. Use of TensorFeed premium data for training, fine-tuning, evaluation, or distillation of ML models is prohibited.
 
 **Endpoints:**
