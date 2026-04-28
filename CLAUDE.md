@@ -158,6 +158,10 @@ Defined in `worker/wrangler.toml`. All cron handlers dispatched from `worker/src
 
 Fallback: Worker keeps rolling snapshots in KV. If a live poll returns empty or fails, `snapshots.ts` restores the previous known-good payload so the public API never serves blank data. `alerts.ts` sends an email if news staleness exceeds thresholds and sends a daily ops summary.
 
+## View as Agent toggle (frontend)
+
+Every page has a `HUMAN | AGENT` toggle in the navbar (and in the mobile menu). When toggled, a terminal-style overlay (`src/components/AgentView.tsx`) takes over the viewport and shows the raw API JSON powering the current route, the response status line, response headers, and the equivalent `curl` command. Route → endpoint mapping lives in `getRouteEndpoints` inside `AgentView.tsx`; default is `/api/meta`. Multiple endpoints per route are supported via clickable pills. Preference is persisted in a `view-mode` cookie and applied early via the inline script in `src/app/layout.tsx` to prevent flash. CSS lives in the View as Agent overlay block in `src/app/globals.css` (scanlines, CRT flicker, JSON syntax classes). State is held in `src/components/ViewModeProvider.tsx`. This is a DX/marketing feature, not a separate API surface; the data is the same `/api/*` endpoints documented above.
+
 ## Design System
 
 ```

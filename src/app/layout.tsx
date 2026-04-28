@@ -3,6 +3,8 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import ConditionalFooter from '@/components/layout/ConditionalFooter';
 import ThemeProvider from '@/components/ThemeProvider';
+import ViewModeProvider from '@/components/ViewModeProvider';
+import AgentView from '@/components/AgentView';
 import CookieConsent from '@/components/CookieConsent';
 import LiveTicker from '@/components/home/LiveTicker';
 import JsonLd from '@/components/seo/JsonLd';
@@ -72,7 +74,7 @@ export default function RootLayout({
         <meta name="google-adsense-account" content="ca-pub-7224757913262984" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var m=document.cookie.match(/(^| )theme=([^;]+)/);var t=m?m[2]:'dark';document.documentElement.setAttribute('data-theme',t)})()`,
+            __html: `(function(){var m=document.cookie.match(/(^| )theme=([^;]+)/);var t=m?m[2]:'dark';document.documentElement.setAttribute('data-theme',t);var v=document.cookie.match(/(^| )view-mode=([^;]+)/);document.documentElement.setAttribute('data-view-mode',v&&v[2]==='agent'?'agent':'human')})()`,
           }}
         />
         <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLM Full Context" />
@@ -114,11 +116,14 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
-          <LiveTicker />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <ConditionalFooter />
-          <CookieConsent />
+          <ViewModeProvider>
+            <LiveTicker />
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <ConditionalFooter />
+            <CookieConsent />
+            <AgentView />
+          </ViewModeProvider>
         </ThemeProvider>
       </body>
     </html>

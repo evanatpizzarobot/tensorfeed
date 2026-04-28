@@ -201,6 +201,11 @@ export default function ForAIAgentsPage() {
             description="Live public dashboard of AI bot traffic hitting TensorFeed: ClaudeBot, GPTBot, PerplexityBot, Bytespider, Google-Extended, and more. Per-bot breakdown, top endpoints, live tail. Most sites hide this; we publish it."
           />
           <DiscoveryCard
+            href="/"
+            title='HUMAN | AGENT toggle (in nav)'
+            description="A toggle in the top navigation flips the entire site to a terminal-style overlay showing the raw API JSON powering the current route, the response status line, headers, and the equivalent curl command. The data comes from the same /api/* endpoints; this is the human-visible window into what agents actually consume."
+          />
+          <DiscoveryCard
             href="https://github.com/RipperMercs/tensorfeed/blob/main/mcp-server/server.json"
             title="server.json (MCP registry)"
             description="MCP server manifest. Registered in the official MCP registry as ai.tensorfeed/mcp-server. Includes all 20 tools split into freeTools and premiumTools."

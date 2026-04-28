@@ -4,9 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { Menu, X, Zap, Search, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Menu, X, Zap, Search, ChevronDown, Sun, Moon, Terminal } from 'lucide-react';
 import { NAV_LINKS } from '@/lib/constants';
 import { useTheme } from '@/components/ThemeProvider';
+import { useViewMode } from '@/components/ViewModeProvider';
 
 const GUIDE_LINKS = [
   { href: '/what-is-ai', label: 'What is AI?' },
@@ -32,6 +33,7 @@ export default function Navbar() {
   const [overallStatus, setOverallStatus] = useState<'operational' | 'degraded' | 'down' | 'unknown'>('unknown');
   const guidesRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
+  const { viewMode, toggleViewMode, mounted: viewModeMounted } = useViewMode();
 
   // Fetch overall status for the nav indicator
   useEffect(() => {
@@ -171,6 +173,23 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            {/* View mode toggle (Human / Agent) */}
+            {viewModeMounted && (
+              <button
+                onClick={toggleViewMode}
+                className={`hidden sm:flex items-center gap-1 text-[10px] font-mono font-bold tracking-widest px-2 py-1 rounded border transition-colors ${
+                  viewMode === 'agent'
+                    ? 'border-accent-cyan text-accent-cyan bg-accent-cyan/10 hover:bg-accent-cyan/20'
+                    : 'border-border text-text-secondary hover:border-accent-cyan/60 hover:text-accent-cyan'
+                }`}
+                aria-label={viewMode === 'agent' ? 'Switch to human view' : 'Switch to agent view'}
+                title={viewMode === 'agent' ? 'Showing raw API data. Click for human UI.' : 'See the data as an AI agent does'}
+              >
+                <Terminal className="w-3 h-3" />
+                {viewMode === 'agent' ? 'AGENT' : 'HUMAN'}
+              </button>
+            )}
+
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
@@ -279,6 +298,24 @@ export default function Navbar() {
             <Zap className="w-3.5 h-3.5" />
             Agent API
           </Link>
+
+          {viewModeMounted && (
+            <button
+              onClick={() => {
+                toggleViewMode();
+                setMobileOpen(false);
+              }}
+              className={`w-full flex items-center gap-1.5 px-3 py-2 rounded text-sm font-mono transition-colors ${
+                viewMode === 'agent'
+                  ? 'text-accent-cyan bg-accent-cyan/10 hover:bg-accent-cyan/20'
+                  : 'text-text-secondary hover:text-accent-cyan hover:bg-bg-secondary'
+              }`}
+              aria-label={viewMode === 'agent' ? 'Switch to human view' : 'Switch to agent view'}
+            >
+              <Terminal className="w-3.5 h-3.5" />
+              {viewMode === 'agent' ? 'Exit Agent View' : 'View as Agent'}
+            </button>
+          )}
         </div>
       </div>
     </nav>

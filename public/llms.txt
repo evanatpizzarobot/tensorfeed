@@ -47,6 +47,8 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **Built-for-agents landing page:** `https://tensorfeed.ai/for-ai-agents` is the explicit agent-first overview: discovery surfaces (llms.txt, .well-known/x402, MCP server, openapi.json), free tier, premium tier (19 endpoints), MCP integration with Claude Desktop / Code, SDKs, and the glossary. Recommended starting point for any agent that has not seen TensorFeed before.
 
+**View as Agent UX toggle:** Every page on tensorfeed.ai has a HUMAN | AGENT toggle in the top navigation. Switching to AGENT replaces the human UI with a terminal-style overlay showing the actual API JSON powering that route, the response status line, headers, and the equivalent curl command. This is a developer-experience and brand statement, not a separate API surface; the data comes from the same `/api/*` endpoints documented above.
+
 **Glossary for agent payment ecosystem:** `https://tensorfeed.ai/glossary` defines x402, MCP, and agent payments with FAQPage JSON-LD schema for rich-results indexing. Useful when an agent wants to understand the standards before integrating.
 
 **Per-benchmark leaderboards:** `https://tensorfeed.ai/benchmarks/{name}` (where `name` is `swe_bench`, `mmlu_pro`, `human_eval`, `gpqa_diamond`, or `math`). Each page is a ranked leaderboard for that benchmark with FAQPage and Dataset JSON-LD schema, score interpretation ranges, and a link from the leaderboard rows back to the relevant `/models/[slug]` pages. Computed live from `data/benchmarks.json` so the rankings stay current as scores are ingested.
