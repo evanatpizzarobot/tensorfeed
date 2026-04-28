@@ -237,7 +237,10 @@ export default function AgentTrafficClient() {
         )}
         <p className="text-text-muted text-xs mt-3">
           We keep the most recent 50 bot hits in a rolling buffer plus a daily counter (resets at
-          00:00 UTC). Daily totals are also captured into the public history snapshot at{' '}
+          00:00 UTC). Coverage spans both the API/feed surface (via the Cloudflare Worker) and
+          every static editorial / SEO route (via a Pages Functions middleware that pings the
+          Worker on detection). Daily totals are also captured into the public history snapshot
+          at{' '}
           <Link href="/api/history" className="text-accent-primary hover:underline">
             /api/history
           </Link>{' '}

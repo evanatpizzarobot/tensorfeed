@@ -48,7 +48,7 @@ const FAQS = [
   {
     question: 'How is bot traffic detected?',
     answer:
-      'Pure user-agent string matching at the Cloudflare Worker layer. We do not fingerprint, rate-limit, or block any of these bots. Hits are buffered in memory and flushed to KV in batches to stay inside the 100k operations/day budget on the Cloudflare free tier.',
+      'Pure user-agent string matching, in two places. The Cloudflare Worker matches on every API/feed request; a Cloudflare Pages Functions middleware matches on every static route request (/originals/*, /api-reference/*, /for-ai-agents, etc) and forwards a fire-and-forget ping to the Worker so both stream into the same in-memory buffer. We do not fingerprint, rate-limit, or block any of these bots. Hits flush to KV in batches to stay inside the 100k operations/day budget on the Cloudflare free tier.',
   },
   {
     question: 'How often does the dashboard refresh?',

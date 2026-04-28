@@ -97,6 +97,29 @@ export async function trackAgentActivity(
   }
 }
 
+/**
+ * Direct injection of a pre-detected bot hit. Used by /api/internal/track-bot
+ * which is called by the Pages Functions middleware so that hits to static
+ * editorial/SEO routes (/originals/*, /api-reference/*, /for-ai-agents, etc)
+ * land in the same buffer as Worker-route hits.
+ *
+ * Caller is responsible for having validated the bot label; we trust it. The
+ * X-Internal-Auth check on the route prevents arbitrary callers.
+ */
+export async function trackBotHitDirect(
+  env: Env,
+  bot: string,
+  path: string,
+): Promise<void> {
+  pendingHits.push({ bot, endpoint: path, timestamp: new Date().toISOString() });
+  pendingCount++;
+
+  const now = Date.now();
+  if (pendingCount >= FLUSH_BATCH_SIZE || (now - lastFlushTime) >= FLUSH_INTERVAL) {
+    await flushToKV(env);
+  }
+}
+
 async function flushToKV(env: Env): Promise<void> {
   if (pendingHits.length === 0 && pendingCount === 0) return;
 

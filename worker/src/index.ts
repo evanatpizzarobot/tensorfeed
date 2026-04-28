@@ -2,7 +2,7 @@ import { Env, Article } from './types';
 import { pollRSSFeeds, RSSPollResult } from './rss';
 import { pollStatusPages } from './status';
 import { updateDailyData, updateCatalog } from './catalog';
-import { trackAgentActivity, getAgentActivity } from './activity';
+import { trackAgentActivity, getAgentActivity, trackBotHitDirect } from './activity';
 import { postTopStories } from './twitter';
 import { pollPodcastFeeds } from './podcasts';
 import { pollTrendingRepos } from './trending';
@@ -1274,6 +1274,38 @@ export default {
       // Always 200 on this endpoint (per spec) so the caller can read
       // the body cleanly regardless of outcome. Not cached.
       return jsonResponse(result, 200, 0);
+    }
+
+    // === INTERNAL: bot-hit ingest from Pages Functions middleware ===
+    // The Pages middleware at functions/_middleware.ts detects bot
+    // user agents on every static-route request (/originals/*, /for-ai-agents,
+    // /api-reference/*, etc) and forwards the {bot, path} pair here so the
+    // hit lands in the same in-memory buffer as Worker-route hits. This
+    // closes the coverage gap where SEO routes were invisible to /agent-traffic.
+    // Auth: SHARED_INTERNAL_SECRET via X-Internal-Auth.
+
+    if (path === '/api/internal/track-bot') {
+      if (request.method !== 'POST') {
+        return jsonResponse({ error: 'method_not_allowed' }, 405, 0);
+      }
+      const auth = request.headers.get('X-Internal-Auth') ?? '';
+      const secret = env.SHARED_INTERNAL_SECRET ?? '';
+      if (!secret || !constantTimeEqual(auth, secret)) {
+        return jsonResponse({ error: 'unauthorized' }, 401, 0);
+      }
+      let body: { bot?: unknown; path?: unknown };
+      try {
+        body = await request.json();
+      } catch {
+        return jsonResponse({ error: 'bad_json' }, 400, 0);
+      }
+      const bot = typeof body?.bot === 'string' ? body.bot : '';
+      const hitPath = typeof body?.path === 'string' ? body.path : '';
+      if (!bot || !hitPath) {
+        return jsonResponse({ error: 'bad_request' }, 400, 0);
+      }
+      ctx.waitUntil(trackBotHitDirect(env, bot, hitPath));
+      return jsonResponse({ ok: true }, 200, 0);
     }
 
     // === ADMIN: usage and revenue rollup (auth-gated) ===
