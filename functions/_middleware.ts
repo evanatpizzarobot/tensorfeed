@@ -30,50 +30,58 @@ interface Env {
 const TRACK_URL = 'https://tensorfeed.ai/api/internal/track-bot';
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const { request, env, next, waitUntil } = context;
+  const { request, env, next } = context;
+
+  let trackingStatus = 'no-bot';
 
   try {
     const ua = request.headers.get('user-agent') || '';
     const bot = detectBot(ua);
 
-    if (bot && env.PAGES_TRACK_SECRET) {
-      const url = new URL(request.url);
-      // Skip api/feed paths: those go to the Worker which already tracks
-      // them. We only care about the static Pages routes here.
-      const pathname = url.pathname;
-      const isWorkerPath =
-        pathname.startsWith('/api/') ||
-        pathname.startsWith('/feed.') ||
-        pathname.startsWith('/feed/') ||
-        pathname === '/llms.txt' ||
-        pathname === '/llms-full.txt';
+    if (bot) {
+      trackingStatus = `bot:${bot}`;
+      if (!env.PAGES_TRACK_SECRET) {
+        trackingStatus = `bot:${bot}:no-secret`;
+      } else {
+        const url = new URL(request.url);
+        const pathname = url.pathname;
+        const isWorkerPath =
+          pathname.startsWith('/api/') ||
+          pathname.startsWith('/feed.') ||
+          pathname.startsWith('/feed/') ||
+          pathname === '/llms.txt' ||
+          pathname === '/llms-full.txt';
 
-      if (!isWorkerPath) {
-        waitUntil(
-          fetch(TRACK_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Internal-Auth': env.PAGES_TRACK_SECRET,
-              // Use a recognizable UA on the internal hop so it never
-              // matches a bot pattern itself, preventing self-counting
-              // if the Worker later starts logging this internal route.
-              'User-Agent': 'TensorFeed-Pages-Track/1.0',
-            },
-            body: JSON.stringify({ bot, path: pathname }),
-          }).catch(() => {
-            // Tracking is best-effort; never let it impact the user.
-          }),
-        );
+        if (isWorkerPath) {
+          trackingStatus = `bot:${bot}:skipped-worker-path`;
+        } else {
+          // Diagnostic mode: AWAIT the fetch so we can capture the
+          // status code into the response header. Will revert to
+          // waitUntil (fire-and-forget) once verified.
+          try {
+            const r = await fetch(TRACK_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Internal-Auth': env.PAGES_TRACK_SECRET,
+                'User-Agent': 'TensorFeed-Pages-Track/1.0',
+              },
+              body: JSON.stringify({ bot, path: pathname }),
+            });
+            trackingStatus = `bot:${bot}:fetch:${r.status}`;
+          } catch (e) {
+            const msg = e instanceof Error ? e.message : 'unknown';
+            trackingStatus = `bot:${bot}:fetch-err:${msg.slice(0, 40)}`;
+          }
+        }
       }
     }
   } catch {
-    // Defense in depth: never block a page response on tracking errors.
+    trackingStatus = 'middleware-error';
   }
 
   const response = await next();
-  // Diagnostic header so we can verify the middleware is actually running.
-  // Safe to leave in production; it just confirms the function is active.
   response.headers.set('X-Pages-Middleware', 'active');
+  response.headers.set('X-Pages-Track', trackingStatus);
   return response;
 };
