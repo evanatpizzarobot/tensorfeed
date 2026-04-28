@@ -154,7 +154,7 @@ curl https://tensorfeed.ai/api/premium/routing?task=code \\
   "mcpServers": {
     "tensorfeed": {
       "command": "npx",
-      "args": ["-y", "@tensorfeedai/mcp-server"],
+      "args": ["-y", "@tensorfeed/mcp-server"],
       "env": { "TENSORFEED_TOKEN": "tf_live_..." }
     }
   }
