@@ -1295,6 +1295,22 @@ export default {
       return jsonResponse({ ok: true, count: dates.length, dates }, 200, 0);
     }
 
+    if (path === '/api/admin/burn-token' && url.searchParams.get('key') === env.ENVIRONMENT) {
+      const token = url.searchParams.get('token');
+      if (!token || !token.startsWith('tf_live_')) {
+        return jsonResponse({ ok: false, error: 'missing_or_invalid_token_param' }, 400);
+      }
+      const credKey = `pay:credits:${token}`;
+      const before = await env.TENSORFEED_CACHE.get(credKey, 'json') as { balance?: number } | null;
+      await env.TENSORFEED_CACHE.delete(credKey);
+      return jsonResponse({
+        ok: true,
+        burned: token.slice(0, 16) + '...',
+        previous_balance: before?.balance ?? 0,
+        message: 'Token credits record deleted. Any further premium call with this token will be rejected.',
+      }, 200, 0);
+    }
+
     if (path === '/api/alerts-status') {
       const status = await getAlertsStatus(env);
       return jsonResponse({ ok: true, now: new Date().toISOString(), ...status }, 200, 60);
