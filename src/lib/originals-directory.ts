@@ -17,6 +17,15 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'ai-talent-war-billion-dollar-engineers',
+    title: "The AI Talent War's New Price Tag: $1.5 Billion Per Engineer",
+    author: 'Marcus Chen',
+    date: 'Apr 28, 2026',
+    readTime: '7 min read',
+    description:
+      'Meta paid one engineer a reported $1.5 billion over six years. VCs poured $18.8 billion into AI startups founded since 2025. Three OpenAI executives walked out in 10 days. The AI talent market in April 2026 is not a labor market anymore. It is a commodity auction. We look at the numbers, the moves, and what they mean for the model release pipeline.',
+  },
+  {
     slug: 'publishing-bot-traffic',
     title: "We Made Our AI Bot Traffic Public. Here's What We're Seeing.",
     author: 'Ripper',
