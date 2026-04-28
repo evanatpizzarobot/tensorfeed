@@ -352,6 +352,31 @@ SDKs:
 
 Frontend docs: `/developers/agent-payments` (Next.js page) covers the wallet, pricing, both flows, all endpoints, and code examples. `/terms` includes the Premium API and Agent Payments section with the no-training license, refund policy, and replay protection.
 
+## Pending Work
+
+### OFAC sanctions screening on /api/payment/confirm (Section 3 of compliance spec)
+
+Spec: `C:\projects\terminalfeed\cc-spec-tensorfeed-premium-compliance.md` (Section 3).
+
+Sections 1, 2, and 4 of that spec already shipped on 2026-04-28:
+- `974441b` Section 4 geo-IP block on `/api/payment/buy-credits` (CU/IR/KP/SY)
+- `53e6741` Section 1 Terms restructure with §17.9 through §17.15 sanctions clauses, no-refunds, expanded venue
+- `dff1c64` Section 2 Privacy §4B (Premium API data, Chainalysis screening disclosure, 7-year retention)
+
+Section 3 is paused waiting on the free Chainalysis sanctions API key (signup at https://www.chainalysis.com/free-cryptocurrency-sanctions-screening-tools/, approval typically same-day or next business day, requested 2026-04-28).
+
+**When the API key arrives:**
+1. `cd worker && npx wrangler secret put CHAINALYSIS_API_KEY`
+2. (Optional but recommended for 7-year audit retention) `npx wrangler kv namespace create OFAC_AUDIT_LOG` and add the binding to `wrangler.toml`.
+3. Implement per the spec:
+   - Add `CHAINALYSIS_API_KEY?: string` and `OFAC_AUDIT_LOG?: KVNamespace` to `Env` in `worker/src/types.ts`.
+   - Update `VerifiedTx` to include `senderAddress`. Extract `topics[1]` (the Transfer event sender) inside `verifyBaseUSDCTransaction` in `worker/src/payments.ts`.
+   - Add `screenWalletOFAC(walletAddress, env)` helper (pattern in spec section 3.3): fail-closed on misconfig (`screening_not_configured` → 503), fail-open on transient Chainalysis errors (log and continue), 8s abort timeout, treat 404 from Chainalysis as clean.
+   - Wire screening into `confirmPayment` AFTER `verifyBaseUSDCTransaction` succeeds and BEFORE credit minting. On `sanctioned: true`, return `error: 'sanctions_block'` with HTTP 403 (extend `ConfirmResult` with an optional `status` field so the handler in `index.ts` can map sanctions to 403 and screening_unavailable to 503).
+   - Apply the same screening gate to the x402 fallback path in `requirePayment` (premium endpoints can also mint tokens from a tx).
+4. Test fixtures: clean wallet should mint, a known-sanctioned wallet (e.g., a Tornado Cash SDN address) should return 403, missing key should return 503, invalid key should fail open with `ofac_screen_degraded` log.
+5. Commit message: `feat(payment): OFAC sanctions screening at /api/payment/confirm via Chainalysis public API`. After ship, move the spec to `cc-specs-archive/` per the standard lifecycle.
+
 ## Testing
 
 The Worker has Vitest unit tests under `worker/src/*.test.ts`. Run from the `worker/` directory:
