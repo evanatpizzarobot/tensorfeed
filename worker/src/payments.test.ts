@@ -7,8 +7,8 @@
  * relies on.
  */
 
-import { describe, it, expect } from 'vitest';
-import { logPremiumUsage, getTokenUsage, validateAndCharge } from './payments';
+import { describe, it, expect, afterEach, vi } from 'vitest';
+import { logPremiumUsage, getTokenUsage, validateAndCharge, screenWalletOFAC } from './payments';
 import type { Env } from './types';
 
 interface MockKV {
@@ -197,5 +197,79 @@ describe('validateAndCharge', () => {
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.credits_remaining).toBe(50);
+  });
+});
+
+// ── screenWalletOFAC (Chainalysis sanctions screen) ─────────────────
+
+describe('screenWalletOFAC', () => {
+  const realFetch = globalThis.fetch;
+  afterEach(() => {
+    globalThis.fetch = realFetch;
+  });
+
+  function envWithKey(key?: string): Env {
+    const e = makeEnv();
+    if (key !== undefined) (e as Env & { CHAINALYSIS_API_KEY?: string }).CHAINALYSIS_API_KEY = key;
+    return e;
+  }
+
+  it('fails closed when CHAINALYSIS_API_KEY is unset (misconfig protects users)', async () => {
+    const r = await screenWalletOFAC('0x549c82e6bfc54bdae9a2073744cbc2af5d1fc6d1', envWithKey());
+    expect(r.sanctioned).toBe(true);
+    expect(r.error).toBe('screening_not_configured');
+  });
+
+  it('treats an empty identifications array as clean', async () => {
+    globalThis.fetch = vi.fn(async () =>
+      new Response(JSON.stringify({ identifications: [] }), { status: 200 }),
+    ) as typeof fetch;
+    const r = await screenWalletOFAC('0xabc', envWithKey('test_key'));
+    expect(r.sanctioned).toBe(false);
+    expect(r.error).toBeNull();
+  });
+
+  it('returns sanctioned=true when Chainalysis returns identifications', async () => {
+    globalThis.fetch = vi.fn(async () =>
+      new Response(
+        JSON.stringify({
+          identifications: [{ category: 'sanctions', name: 'OFAC SDN', description: 'test' }],
+        }),
+        { status: 200 },
+      ),
+    ) as typeof fetch;
+    const r = await screenWalletOFAC('0xdeadbeef', envWithKey('test_key'));
+    expect(r.sanctioned).toBe(true);
+    expect(Array.isArray(r.identifications)).toBe(true);
+    expect(r.identifications?.length).toBe(1);
+  });
+
+  it('treats 404 from Chainalysis as clean (address not in sanctions DB)', async () => {
+    globalThis.fetch = vi.fn(async () => new Response('not found', { status: 404 })) as typeof fetch;
+    const r = await screenWalletOFAC('0xabc', envWithKey('test_key'));
+    expect(r.sanctioned).toBe(false);
+    expect(r.error).toBeNull();
+  });
+
+  it('fails open with a logged error on transient 5xx (availability over strictness)', async () => {
+    globalThis.fetch = vi.fn(async () => new Response('upstream', { status: 503 })) as typeof fetch;
+    const r = await screenWalletOFAC('0xabc', envWithKey('test_key'));
+    expect(r.sanctioned).toBe(false);
+    expect(r.error).toBe('chainalysis_status_503');
+  });
+
+  it('fails open when fetch throws (network unreachable)', async () => {
+    globalThis.fetch = vi.fn(async () => {
+      throw new Error('ECONNREFUSED');
+    }) as typeof fetch;
+    const r = await screenWalletOFAC('0xabc', envWithKey('test_key'));
+    expect(r.sanctioned).toBe(false);
+    expect(r.error?.startsWith('chainalysis_unreachable')).toBe(true);
+  });
+
+  it('rejects empty / non-string addresses', async () => {
+    const r = await screenWalletOFAC('', envWithKey('test_key'));
+    expect(r.error).toBe('invalid_address');
+    expect(r.sanctioned).toBe(false);
   });
 });

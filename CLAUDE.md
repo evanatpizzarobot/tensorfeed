@@ -352,30 +352,18 @@ SDKs:
 
 Frontend docs: `/developers/agent-payments` (Next.js page) covers the wallet, pricing, both flows, all endpoints, and code examples. `/terms` Premium API and Agent Payments section is structured into numbered subsections 17.1 through 17.15 covering the inference-only license, no-refunds policy, replay protection, cross-site applicability, sanctions warranty, autonomous-agent acknowledgment, suspension/revocation, AUP, liability cap, chargeback handling, and no-MSB representation. Premium API data practices are in `/privacy` Section 4B.
 
-## Pending Work
+## OFAC Sanctions Screening (shipped 2026-04-28)
 
-### OFAC sanctions screening on /api/payment/confirm (Section 3 of compliance spec)
+The full Premium API legal hardening from `terminalfeed/cc-spec-tensorfeed-premium-compliance.md` is now live across all four sections:
 
-Spec: `C:\projects\terminalfeed\cc-spec-tensorfeed-premium-compliance.md` (Section 3).
+- Section 1 (Terms §17.9-17.15, no-refunds, governing law and venue): `53e6741`
+- Section 2 (Privacy §4B Premium API data practices, Chainalysis disclosure, 7-year retention): `dff1c64`
+- Section 4 (geo-IP block on `/api/payment/buy-credits` for CU/IR/KP/SY): `974441b`
+- Section 3 (Chainalysis wallet-level screening on `/api/payment/confirm` and the x402 fallback)
 
-Sections 1, 2, and 4 of that spec already shipped on 2026-04-28:
-- `974441b` Section 4 geo-IP block on `/api/payment/buy-credits` (CU/IR/KP/SY)
-- `53e6741` Section 1 Terms restructure with §17.9 through §17.15 sanctions clauses, no-refunds, expanded venue
-- `dff1c64` Section 2 Privacy §4B (Premium API data, Chainalysis screening disclosure, 7-year retention)
+`screenWalletOFAC` in `worker/src/payments.ts` calls the free Chainalysis public sanctions API. Misconfig (no `CHAINALYSIS_API_KEY` secret) fails closed with HTTP 503 so credits cannot be minted without a screen. Sanctioned wallets return HTTP 403 `sanctions_block` and the block is logged via `console.log` (always) and persisted to the `OFAC_AUDIT_LOG` KV namespace if bound (7-year TTL per privacy policy retention). Transient Chainalysis errors fail open with an `ofac_screen_degraded` log line. The sender wallet is extracted from the USDC Transfer event `topics[1]` inside `verifyBaseUSDCTransaction`. Both the credits flow (`confirmPayment`) and the x402 per-call fallback (`requirePayment`) gate on the screen before any token is minted.
 
-Section 3 is paused waiting on the free Chainalysis sanctions API key (signup at https://www.chainalysis.com/free-cryptocurrency-sanctions-screening-tools/, approval typically same-day or next business day, requested 2026-04-28).
-
-**When the API key arrives:**
-1. `cd worker && npx wrangler secret put CHAINALYSIS_API_KEY`
-2. (Optional but recommended for 7-year audit retention) `npx wrangler kv namespace create OFAC_AUDIT_LOG` and add the binding to `wrangler.toml`.
-3. Implement per the spec:
-   - Add `CHAINALYSIS_API_KEY?: string` and `OFAC_AUDIT_LOG?: KVNamespace` to `Env` in `worker/src/types.ts`.
-   - Update `VerifiedTx` to include `senderAddress`. Extract `topics[1]` (the Transfer event sender) inside `verifyBaseUSDCTransaction` in `worker/src/payments.ts`.
-   - Add `screenWalletOFAC(walletAddress, env)` helper (pattern in spec section 3.3): fail-closed on misconfig (`screening_not_configured` → 503), fail-open on transient Chainalysis errors (log and continue), 8s abort timeout, treat 404 from Chainalysis as clean.
-   - Wire screening into `confirmPayment` AFTER `verifyBaseUSDCTransaction` succeeds and BEFORE credit minting. On `sanctioned: true`, return `error: 'sanctions_block'` with HTTP 403 (extend `ConfirmResult` with an optional `status` field so the handler in `index.ts` can map sanctions to 403 and screening_unavailable to 503).
-   - Apply the same screening gate to the x402 fallback path in `requirePayment` (premium endpoints can also mint tokens from a tx).
-4. Test fixtures: clean wallet should mint, a known-sanctioned wallet (e.g., a Tornado Cash SDN address) should return 403, missing key should return 503, invalid key should fail open with `ofac_screen_degraded` log.
-5. Commit message: `feat(payment): OFAC sanctions screening at /api/payment/confirm via Chainalysis public API`. After ship, move the spec to `cc-specs-archive/` per the standard lifecycle.
+Optional follow-up for compliance audit trail beyond Workers' default ~3-day log retention: bind an `OFAC_AUDIT_LOG` KV namespace. The screening helper writes to it conditionally so the unbound case is a no-op.
 
 ## Testing
 

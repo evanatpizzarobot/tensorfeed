@@ -21,6 +21,10 @@ export interface Env {
   SHARED_INTERNAL_SECRET?: string;
   // Pages Functions middleware -> Worker bot-hit ingest auth
   PAGES_TRACK_SECRET?: string;
+  // OFAC sanctions screening (Chainalysis public sanctions API)
+  CHAINALYSIS_API_KEY?: string;
+  // Persistent OFAC block audit log (optional, 7-year retention per privacy policy)
+  OFAC_AUDIT_LOG?: KVNamespace;
 }
 
 export interface Article {

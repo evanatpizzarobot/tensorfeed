@@ -711,7 +711,10 @@ export default {
         }
         const result = await confirmPayment(env, txHash, request, nonce);
         if (!result.ok) {
-          return jsonResponse(result, 400);
+          // Sanctions block -> 403, screening misconfig -> 503,
+          // anything else (verification failed, replay, expired quote) -> 400.
+          const status = result.status ?? 400;
+          return jsonResponse(result, status);
         }
         return jsonResponse(result);
       } catch {

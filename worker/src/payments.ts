@@ -136,6 +136,10 @@ interface VerifiedTx {
   reason?: string;
   amountUsd: number;
   blockNumber?: number;
+  // Lowercased 0x-prefixed sender address pulled from Transfer event topics[1].
+  // Used by the Chainalysis OFAC screen on /api/payment/confirm before any
+  // credits are minted.
+  senderAddress?: string;
 }
 
 interface RpcLog {
@@ -199,8 +203,9 @@ export async function verifyBaseUSDCTransaction(
     if (log.address.toLowerCase() !== usdcContractLower) continue;
     if (!log.topics || log.topics[0] !== TRANSFER_TOPIC) continue;
     if (log.topics.length < 3) continue;
-    // topics[2] is the recipient address (32-byte left-padded). Last 40 hex
-    // chars are the actual address.
+    // topics[1] is the sender, topics[2] is the recipient (both 32-byte
+    // left-padded). Last 40 hex chars are the actual address.
+    const fromAddress = '0x' + log.topics[1].slice(-40).toLowerCase();
     const toAddress = '0x' + log.topics[2].slice(-40).toLowerCase();
     if (toAddress !== ourWallet) continue;
 
@@ -211,10 +216,112 @@ export async function verifyBaseUSDCTransaction(
       ok: true,
       amountUsd,
       blockNumber: parseInt(receipt.blockNumber, 16),
+      senderAddress: fromAddress,
     };
   }
 
   return { ok: false, reason: 'no_usdc_transfer_to_wallet', amountUsd: 0 };
+}
+
+// === OFAC sanctions screening (Chainalysis public sanctions API) ===
+//
+// The Chainalysis public API is free in perpetuity for OFAC SDN
+// screening. Endpoint: GET https://public.chainalysis.com/api/v1/address/{addr}
+// with X-API-Key header. Response shape:
+//   { identifications: [{ category, name, description, url }, ...] }
+// An empty array means clean. A 404 response also means clean (the
+// address is not in their sanctions database). Other non-2xx responses
+// are treated as transient upstream errors.
+//
+// Failure posture:
+//  - Misconfigured (no API key bound): fail CLOSED with 503. Refusing
+//    to mint credits is safer than allowing them with no screen.
+//  - Chainalysis unreachable / 5xx: fail OPEN with logging. A
+//    Chainalysis outage should not freeze TensorFeed payments. The
+//    spec note allows flipping FAIL_CLOSED if regulator pressure or
+//    audit findings ever require it.
+//  - Sanctioned hit: refuse, log, and (if OFAC_AUDIT_LOG is bound)
+//    persist for 7 years per the privacy policy retention statement.
+
+interface OFACScreenResult {
+  sanctioned: boolean;
+  identifications: unknown[] | null;
+  error: string | null;
+}
+
+interface ChainalysisResponse {
+  identifications?: unknown[];
+}
+
+const CHAINALYSIS_TIMEOUT_MS = 8000;
+
+export async function screenWalletOFAC(
+  walletAddress: string,
+  env: Env,
+): Promise<OFACScreenResult> {
+  if (!walletAddress || typeof walletAddress !== 'string') {
+    return { sanctioned: false, identifications: null, error: 'invalid_address' };
+  }
+  if (!env.CHAINALYSIS_API_KEY) {
+    return { sanctioned: true, identifications: null, error: 'screening_not_configured' };
+  }
+  const url = 'https://public.chainalysis.com/api/v1/address/' + encodeURIComponent(walletAddress);
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'X-API-Key': env.CHAINALYSIS_API_KEY,
+        Accept: 'application/json',
+      },
+      signal: AbortSignal.timeout(CHAINALYSIS_TIMEOUT_MS),
+    });
+    if (!res.ok) {
+      // 404 means address not in their sanctions database, treat as clean.
+      if (res.status === 404) {
+        return { sanctioned: false, identifications: [], error: null };
+      }
+      return { sanctioned: false, identifications: null, error: 'chainalysis_status_' + res.status };
+    }
+    const data = (await res.json()) as ChainalysisResponse;
+    const ids = Array.isArray(data?.identifications) ? data.identifications : [];
+    return { sanctioned: ids.length > 0, identifications: ids, error: null };
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return { sanctioned: false, identifications: null, error: 'chainalysis_unreachable: ' + msg };
+  }
+}
+
+async function persistOFACBlock(
+  env: Env,
+  walletAddress: string,
+  txHash: string,
+  identifications: unknown[] | null,
+): Promise<void> {
+  const log = {
+    event: 'ofac_block',
+    wallet: walletAddress,
+    tx_hash: txHash,
+    identifications,
+    timestamp: new Date().toISOString(),
+  };
+  console.log(JSON.stringify(log));
+  if (!env.OFAC_AUDIT_LOG) return;
+  const day = new Date().toISOString().slice(0, 10);
+  const key = 'ofac:' + day + ':' + walletAddress.toLowerCase() + ':' + txHash.toLowerCase();
+  try {
+    await env.OFAC_AUDIT_LOG.put(
+      key,
+      JSON.stringify({
+        wallet: walletAddress,
+        tx_hash: txHash,
+        identifications,
+        screened_at: log.timestamp,
+      }),
+      { expirationTtl: 60 * 60 * 24 * 365 * 7 }, // 7 years
+    );
+  } catch (e) {
+    console.error('persistOFACBlock kv write failed:', e);
+  }
 }
 
 // === Daily rollup (revenue + usage analytics) ===
@@ -636,7 +743,7 @@ export async function createQuote(
 
 export type ConfirmResult =
   | { ok: true; token: string; credits: number; balance: number; tx_amount_usd: number; rate: string }
-  | { ok: false; error: string; reason?: string };
+  | { ok: false; error: string; reason?: string; status?: number };
 
 export async function confirmPayment(
   env: Env,
@@ -675,6 +782,43 @@ export async function confirmPayment(
   const verified = await verifyBaseUSDCTransaction(txHash, env);
   if (!verified.ok) {
     return { ok: false, error: 'verification_failed', reason: verified.reason };
+  }
+
+  // OFAC sanctions screen on the sender wallet, after on-chain
+  // verification but BEFORE any credits are minted. Cross-references
+  // Terms 17.9 (sanctions warranty) and 17.11 (suspension/revocation).
+  if (verified.senderAddress) {
+    const screen = await screenWalletOFAC(verified.senderAddress, env);
+    if (screen.error === 'screening_not_configured') {
+      return {
+        ok: false,
+        error: 'screening_unavailable',
+        reason: 'Sanctions screening is currently unavailable. Please retry shortly.',
+        status: 503,
+      };
+    }
+    if (screen.sanctioned) {
+      await persistOFACBlock(env, verified.senderAddress, txHash, screen.identifications);
+      return {
+        ok: false,
+        error: 'sanctions_block',
+        reason:
+          'This wallet address cannot be credited due to applicable sanctions law. No credits will be issued. The original USDC transfer is on-chain and irreversible. See https://tensorfeed.ai/terms#premium Section 17.9 and 17.11.',
+        status: 403,
+      };
+    }
+    if (screen.error) {
+      console.log(
+        JSON.stringify({
+          event: 'ofac_screen_degraded',
+          wallet: verified.senderAddress,
+          tx_hash: txHash,
+          error: screen.error,
+          decision: 'fail_open_continue',
+          timestamp: new Date().toISOString(),
+        }),
+      );
+    }
   }
 
   let credits: number;
@@ -910,6 +1054,53 @@ export async function requirePayment(
           402,
         ),
       };
+    }
+
+    // OFAC sanctions screen for the x402 fallback. Same gate as
+    // /api/payment/confirm: misconfig fails closed, transient errors
+    // fail open with logging, sanctioned hits refuse and persist.
+    if (verified.senderAddress) {
+      const screen = await screenWalletOFAC(verified.senderAddress, env);
+      if (screen.error === 'screening_not_configured') {
+        return {
+          paid: false,
+          response: jsonResponse(
+            {
+              ok: false,
+              error: 'screening_unavailable',
+              message: 'Sanctions screening is currently unavailable. Please retry shortly.',
+            },
+            503,
+          ),
+        };
+      }
+      if (screen.sanctioned) {
+        await persistOFACBlock(env, verified.senderAddress, txHash, screen.identifications);
+        return {
+          paid: false,
+          response: jsonResponse(
+            {
+              ok: false,
+              error: 'sanctions_block',
+              message:
+                'This wallet address cannot be credited due to applicable sanctions law. No credits will be issued. The original USDC transfer is on-chain and irreversible. See https://tensorfeed.ai/terms#premium Section 17.9 and 17.11.',
+            },
+            403,
+          ),
+        };
+      }
+      if (screen.error) {
+        console.log(
+          JSON.stringify({
+            event: 'ofac_screen_degraded',
+            wallet: verified.senderAddress,
+            tx_hash: txHash,
+            error: screen.error,
+            decision: 'fail_open_continue',
+            timestamp: new Date().toISOString(),
+          }),
+        );
+      }
     }
 
     const credits = calculateCredits(verified.amountUsd);
