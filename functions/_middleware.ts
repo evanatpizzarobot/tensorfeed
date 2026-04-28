@@ -71,5 +71,9 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     // Defense in depth: never block a page response on tracking errors.
   }
 
-  return next();
+  const response = await next();
+  // Diagnostic header so we can verify the middleware is actually running.
+  // Safe to leave in production; it just confirms the function is active.
+  response.headers.set('X-Pages-Middleware', 'active');
+  return response;
 };
