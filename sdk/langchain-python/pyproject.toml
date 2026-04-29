@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "langchain-tensorfeed"
+version = "0.1.0"
+description = "LangChain integration for TensorFeed.ai: AI news, service status, model pricing, and benchmarks for AI agents and RAG pipelines."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [{ name = "TensorFeed.ai", email = "feedback@tensorfeed.ai" }]
+keywords = [
+    "langchain",
+    "tensorfeed",
+    "ai",
+    "agents",
+    "tools",
+    "document-loader",
+    "rag",
+    "llm",
+    "ai-news",
+    "model-pricing",
+    "benchmarks",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "langchain-core>=0.2.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[project.urls]
+Homepage = "https://tensorfeed.ai"
+Documentation = "https://tensorfeed.ai/developers"
+Repository = "https://github.com/RipperMercs/tensorfeed"
+"Bug Tracker" = "https://github.com/RipperMercs/tensorfeed/issues"
+Changelog = "https://tensorfeed.ai/changelog"
+
+[tool.setuptools.packages.find]
+include = ["langchain_tensorfeed*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
