@@ -777,6 +777,60 @@ class TensorFeed:
             "GET", "/premium/whats-new", params=params, require_token=True,
         )
 
+    # ── Free: MCP server registry telemetry ─────────────────────────
+
+    def get_mcp_registry_snapshot(self) -> dict[str, Any]:
+        """Today's summary of the official MCP server registry.
+
+        Free, no auth. Returns total servers, by-status breakdown, top
+        namespaces, and 1-day deltas (newly added, reactivated, deprecated).
+        Captured daily at 9:30 AM UTC from registry.modelcontextprotocol.io.
+
+        Returns:
+            Dict with ``ok`` and ``summary`` keys. The ``summary`` includes
+            ``date``, ``total_servers``, ``by_status``, ``top_namespaces``,
+            ``new_today``, and ``delta_vs_yesterday``.
+        """
+        return self._request("GET", "/mcp/registry/snapshot")
+
+    # ── Paid: MCP registry time series (Tier 1, 1 credit) ──────────
+
+    def get_mcp_registry_series(
+        self,
+        *,
+        from_date: str | None = None,
+        to_date: str | None = None,
+    ) -> dict[str, Any]:
+        """Multi-day series of MCP registry growth and churn.
+
+        Costs 1 credit. Returns per-day total servers, active count,
+        daily added/removed for each day in the requested window. The
+        registry itself is open data, but a 30/90-day trend requires
+        daily capture started weeks before the question is asked.
+
+        Args:
+            from_date: Inclusive start date as YYYY-MM-DD. Defaults to
+                30 days before ``to_date``.
+            to_date: Inclusive end date as YYYY-MM-DD. Defaults to today UTC.
+
+        Returns:
+            Dict with ``from``, ``to``, ``days``, ``points`` (per-day
+            datapoints with ``has_data`` flag), and ``delta_in_window``.
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+        """
+        self._require_token("get_mcp_registry_series")
+        params: dict[str, Any] = {}
+        if from_date is not None:
+            params["from"] = from_date
+        if to_date is not None:
+            params["to"] = to_date
+        return self._request(
+            "GET", "/premium/mcp/registry/series", params=params, require_token=True,
+        )
+
     # ── Paid: enriched agents directory (Tier 1, 1 credit) ─────────
 
     def premium_agents_directory(

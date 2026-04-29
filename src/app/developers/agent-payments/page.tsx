@@ -377,6 +377,27 @@ const ENDPOINTS: PremiumEndpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/premium/mcp/registry/series',
+    description:
+      "Multi-day time series of the official Model Context Protocol server registry: total server count, active/deprecated breakdown, daily added and removed counts. The registry is open data, but a 30/90-day trend requires daily capture started weeks ago. We capture every morning at 9:30 AM UTC. 90-day max range, default 30 days back. A free single-day snapshot lives at /api/mcp/registry/snapshot.",
+    cost: '1 credit per call',
+    example: `// Query: ?from=2026-04-01&to=2026-04-29
+{
+  "ok": true,
+  "from": "2026-04-01",
+  "to": "2026-04-29",
+  "days": 29,
+  "points": [
+    { "date": "2026-04-01", "total_servers": 4812, "active_count": 4798, "added": 24, "removed": 3, "net": 21, "has_data": true },
+    { "date": "2026-04-29", "total_servers": 5104, "active_count": 5089, "added": 18, "removed": 2, "net": 16, "has_data": true }
+  ],
+  "delta_in_window": { "start_total": 4812, "end_total": 5104, "net": 292 },
+  "notes": [],
+  "billing": { "credits_charged": 1, "credits_remaining": 41 }
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/premium/compare/models',
     description:
       'Side-by-side comparison of 2-5 AI models. Each entry returns pricing, benchmarks (normalized to a union of keys with null for missing scores so downstream code never crashes on undefined), provider live status, capabilities, context window, and recent news. Plus rankings: cheapest blended, most context, and a per-benchmark leaderboard.',

@@ -2,6 +2,14 @@
 
 All notable changes to the [TensorFeed.ai MCP server](https://github.com/RipperMercs/tensorfeed/tree/main/mcp-server). Free tools work without configuration; premium tools require a bearer token via the `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/developers/agent-payments](https://tensorfeed.ai/developers/agent-payments).
 
+## 1.10.0 - 2026-04-29
+
+### Added
+- `mcp_registry_snapshot` tool — today's summary of the official Model Context Protocol server registry: total servers, by-status breakdown, top namespaces, 1-day deltas (newly added, reactivated, deprecated). Free, no auth.
+- `mcp_registry_series` tool — multi-day time series of MCP registry growth and churn. Range capped at 90 days, default 30 days back. 1 credit per call.
+
+The new tools are backed by a fresh daily cron capture of registry.modelcontextprotocol.io. The registry itself is open data, but a 30/90-day trend requires daily capture started weeks before the question is asked.
+
 ## 1.7.0 - 2026-04-27
 
 ### Added

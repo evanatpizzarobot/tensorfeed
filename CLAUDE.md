@@ -53,6 +53,8 @@ tensorfeed/
       compare-models.test.ts  Vitest coverage for benchmark normalization, ranking math, validation
       whats-new.ts  Premium morning brief: 1-7 day window, pricing diff, status incidents, top news, in one paid call
       whats-new.test.ts  Vitest coverage for window math, news limit, status counts, validation, no-snapshot fallback
+      mcp-registry.ts  Daily MCP server registry telemetry: paginate registry.modelcontextprotocol.io, dedup by name (latest version), compute summary + day-over-day deltas, store under mcp-reg:* prefix, expose range queries
+      mcp-registry.test.ts  Vitest coverage for dedup logic, summarize transitions (new/reactivated/deprecated), and resolveRange validation
       podcasts.ts     Podcast feed polling
       trending.ts     Trending GitHub repos
       twitter.ts      X/Twitter auto-posting
@@ -125,6 +127,9 @@ GET https://tensorfeed.ai/api/refresh?key=production
   - `pay:quote:{nonce}`: `{ amount_usd, credits, expires_at }` (30-min TTL)
   - `pay:rollup:{YYYY-MM-DD}`: daily revenue + usage rollup with per-endpoint breakdown and top-agents leaderboard
   - `rate:routing-preview:{YYYY-MM-DD}:{ip}`: free preview rate limit counter (2-day TTL)
+  - `mcp-reg:summary:{YYYY-MM-DD}`: daily MCP registry summary (counts, deltas, top namespaces)
+  - `mcp-reg:servers:{YYYY-MM-DD}`: full deduped server list for that day (latest version per name); used by the next day's capture for delta computation
+  - `mcp-reg:index`: ordered list of dates with MCP registry snapshot data
 
 ## KV Operation Limits (CRITICAL)
 
@@ -144,6 +149,7 @@ Defined in `worker/wrangler.toml`. All cron handlers dispatched from `worker/src
 - `0 * * * *`: Hourly full refresh (RSS + status + podcasts)
 - `0 7 * * *`: Daily 7am UTC: models, benchmarks, agents catalog update (LiteLLM + HuggingFace), then daily history snapshot capture (`worker/src/history.ts`, Phase 0 of agent payments)
 - `30 8 * * *`: Daily 8:30am UTC: trending AI repos from GitHub
+- `30 9 * * *`: Daily 9:30am UTC: MCP server registry telemetry capture (`worker/src/mcp-registry.ts`). Paginates registry.modelcontextprotocol.io, dedups by name keeping isLatest, computes day-over-day deltas, stores under `mcp-reg:` prefix. Backs free `/api/mcp/registry/snapshot` and premium `/api/premium/mcp/registry/series`.
 - `30 14 * * *`: Daily 2:30pm UTC: X/Twitter post (1/day, see X posting rules below)
 
 ## Data Flow
@@ -220,6 +226,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/podcasts`, `/api/trending-repos`
 - `/api/health`, `/api/ping`, `/api/meta`, `/api/cron-status`, `/api/snapshots`, `/api/alerts-status`
 - `/api/history`, `/api/history/{YYYY-MM-DD}/{type}`: Daily historical snapshots (Phase 0 of agent payments)
+- `/api/mcp/registry/snapshot`: Today's summary of the official MCP server registry (total servers, by-status breakdown, top namespaces, 1-day deltas). Captured daily at 9:30 AM UTC from registry.modelcontextprotocol.io. Bootstraps a live capture on cold start so it never returns empty.
 - `/api/preview/routing?task=code|reasoning|creative|general&budget=&min_quality=`: Free top-1 routing recommendation (5 calls/day per IP)
 - `/api/payment/info`: Wallet, pricing tiers, supported flows, verification metadata
 - `/api/payment/buy-credits` (POST): Generate a 30-min payment quote with memo nonce
@@ -244,6 +251,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/premium/providers/{name}`: Tier 1, 1 credit. One provider's complete profile in one call: live status + components, all models with pricing + tier + benchmark scores joined, recent news (top 8), agent traffic. Aggregation over 4 free endpoints; agents pay 1 credit instead of stitching client-side.
 - `/api/premium/compare/models?ids=`: Tier 1, 1 credit. Side-by-side comparison of 2-5 models with pricing, benchmarks (union-of-keys normalized to null for missing), status, news. Plus rankings (cheapest_blended, most_context, by_benchmark leaderboard).
 - `/api/premium/whats-new?days=&news_limit=`: Tier 1, 1 credit. Agent morning brief: pricing changes, new/removed models, status incidents, top news headlines from last 1-7 days. Single call instead of stitching free endpoints client-side.
+- `/api/premium/mcp/registry/series?from=&to=`: Tier 1, 1 credit. Multi-day time series of the official MCP server registry: total servers, active count, daily added/removed. Range capped at 90 days. The registry itself is open data; the 30/90-day trend requires daily capture started weeks ago and cannot be backfilled.
 
 **Admin (auth-gated via `?key=ENVIRONMENT`):**
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup

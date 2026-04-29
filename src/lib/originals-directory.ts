@@ -17,6 +17,15 @@ export interface OriginalArticle {
 
 export const ORIGINALS: OriginalArticle[] = [
   {
+    slug: 'openai-aws-bedrock-24-hours',
+    title: 'OpenAI Hit AWS Bedrock in 24 Hours. The Infrastructure Was Already Built.',
+    author: 'Marcus Chen',
+    date: 'Apr 29, 2026',
+    readTime: '7 min read',
+    description:
+      'A day after Microsoft and OpenAI dissolved their exclusive cloud deal, OpenAI models, Codex, and a jointly built Managed Agents service went live on AWS Bedrock. The speed of the launch tells you both companies had this fully wired and were waiting for legal clearance. We break down what shipped, what Bedrock Managed Agents actually is, and what it means for Microsoft, Anthropic, and every enterprise AI buyer.',
+  },
+  {
     slug: 'ai-talent-war-billion-dollar-engineers',
     title: "The AI Talent War's New Price Tag: $1.5 Billion Per Engineer",
     author: 'Marcus Chen',

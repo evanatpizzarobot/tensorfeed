@@ -21,6 +21,10 @@ crons = [
   "0 */2 * * *",
   "0 7 * * *",
   "30 8 * * *",
+  # Daily 9:30 AM UTC: capture MCP server registry telemetry from
+  # registry.modelcontextprotocol.io. Powers /api/mcp/registry/snapshot
+  # (free) and /api/premium/mcp/registry/series (1 credit).
+  "30 9 * * *",
   # X/Twitter: 1 post/day, re-enabled 2026-04-12 after spam flag on 2026-04-04.
   # Hold at 1/day for 30 clean days before bumping to 2/day ("30 8,17 * * *").
   "30 14 * * *",

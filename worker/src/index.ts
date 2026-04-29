@@ -36,6 +36,14 @@ import { compareModels } from './compare-models';
 import { computeWhatsNew } from './whats-new';
 import { computeRouting, checkRoutingPreviewRateLimit, hoursUntilUTCRollover, RoutingTask } from './routing';
 import {
+  captureRegistrySnapshot,
+  getLatestSummary as getMcpRegistryLatest,
+  getSeries as getMcpRegistrySeries,
+  resolveRange as resolveMcpRegistryRange,
+  MAX_RANGE_DAYS as MCP_REG_MAX_RANGE_DAYS,
+  DEFAULT_RANGE_DAYS as MCP_REG_DEFAULT_RANGE_DAYS,
+} from './mcp-registry';
+import {
   requirePayment,
   getPaymentInfo,
   createQuote,
@@ -584,6 +592,7 @@ export default {
           health: '/api/health',
           history: '/api/history',
           historySnapshot: '/api/history/{YYYY-MM-DD}/{type}',
+          mcpRegistrySnapshot: '/api/mcp/registry/snapshot',
           routingPreview: '/api/preview/routing',
           premiumRouting: '/api/premium/routing',
           premiumPricingSeries: '/api/premium/history/pricing/series?model=&from=&to=',
@@ -598,6 +607,7 @@ export default {
           premiumProviderDeepDive: '/api/premium/providers/{name}',
           premiumCompareModels: '/api/premium/compare/models?ids=opus-4-7,gpt-5-5,gemini-3',
           premiumWhatsNew: '/api/premium/whats-new?days=1&news_limit=10',
+          premiumMcpRegistrySeries: '/api/premium/mcp/registry/series?from=&to=',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -676,6 +686,20 @@ export default {
         return jsonResponse({ ok: false, error: 'not_found', date, type }, 404);
       }
       return jsonResponse({ ok: true, ...snapshot }, 200, 86400);
+    }
+
+    // === MCP REGISTRY TELEMETRY (free) ===
+    // Today's summary + 1-day deltas of the official MCP server registry.
+    // First request after deploy may bootstrap a live capture if the cron
+    // has not yet run, so it never returns empty. Daily refresh via the
+    // 30 9 * * * cron.
+
+    if (path === '/api/mcp/registry/snapshot') {
+      const summary = await getMcpRegistryLatest(env);
+      if (!summary) {
+        return jsonResponse({ ok: false, error: 'registry_unavailable' }, 503);
+      }
+      return jsonResponse({ ok: true, summary }, 200, 600);
     }
 
     // === ROUTING PREVIEW (free, rate-limited; Phase 1 of agent payments) ===
@@ -1035,6 +1059,38 @@ export default {
       const result = await getStatusUptime(env, provider, range.from, range.to);
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/history/status/uptime', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: MCP REGISTRY TIME SERIES (Tier 1, 1 credit) ===
+    // Multi-day series of MCP server registry growth and churn. The
+    // registry is open data, but agents that want a 30/90-day trend
+    // would otherwise have to capture it themselves daily for months.
+    // We do that capture once on 30 9 * * *. 90-day max range.
+
+    if (path === '/api/premium/mcp/registry/series') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const range = resolveMcpRegistryRange(url.searchParams.get('from'), url.searchParams.get('to'));
+      if (!range.ok) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: range.error,
+            limits: {
+              max_range_days: MCP_REG_MAX_RANGE_DAYS,
+              default_range_days: MCP_REG_DEFAULT_RANGE_DAYS,
+            },
+          },
+          400,
+        );
+      }
+
+      const result = await getMcpRegistrySeries(env, range.from!, range.to!);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/mcp/registry/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -1592,6 +1648,12 @@ export default {
       // Daily 8:30 AM UTC: refresh trending AI repos + send daily summary email
       await run('pollTrendingRepos', () => pollTrendingRepos(env));
       await run('sendDailySummary', () => sendDailySummary(env));
+    } else if (cron === '30 9 * * *') {
+      // Daily 9:30 AM UTC: capture MCP server registry telemetry. Compounds
+      // into a multi-month time series of registry growth, churn, and
+      // status transitions. Backs /api/mcp/registry/snapshot (free) and
+      // /api/premium/mcp/registry/series (1 credit).
+      await run('captureMCPRegistry', () => captureRegistrySnapshot(env));
     }
 
     // Record RSS poll history for the daily summary digest

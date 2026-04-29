@@ -221,6 +221,25 @@
         ]
       }
     },
+    "/mcp/registry/snapshot": {
+      "get": {
+        "tags": ["Free"],
+        "summary": "Today's MCP server registry summary with 1-day deltas",
+        "description": "Free. Total servers, by-status breakdown, top namespaces, newly added/reactivated/deprecated counts. Captured daily at 9:30 AM UTC from registry.modelcontextprotocol.io."
+      }
+    },
+    "/premium/mcp/registry/series": {
+      "get": {
+        "tags": ["Premium"],
+        "summary": "Multi-day MCP registry growth and churn series",
+        "description": "1 credit. Per-day total servers, active count, daily added/removed. 90-day max range, default 30 days back. The registry is open data; a 90-day trend requires daily capture started weeks ago.",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "from", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "to", "in": "query", "schema": { "type": "string", "format": "date" } }
+        ]
+      }
+    },
     "/premium/history/status/uptime": {
       "get": {
         "tags": ["Premium"],

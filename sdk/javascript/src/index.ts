@@ -433,6 +433,44 @@ export interface WhatsNewHeadline {
   categories: string[];
 }
 
+export interface MCPRegistrySnapshotResponse {
+  ok: boolean;
+  summary: {
+    date: string;
+    capturedAt: string;
+    total_servers: number;
+    total_versions: number;
+    by_status: Record<string, number>;
+    top_namespaces: Array<{ namespace: string; count: number }>;
+    new_today: { count: number; names: string[] };
+    reactivated_today: { count: number; names: string[] };
+    deprecated_today: { count: number; names: string[] };
+    delta_vs_yesterday: { added: number; removed: number; net: number } | null;
+    pages_fetched: number;
+    fetch_truncated: boolean;
+  };
+}
+
+export interface MCPRegistrySeriesPoint {
+  date: string;
+  total_servers: number | null;
+  total_versions: number | null;
+  active_count: number | null;
+  added: number | null;
+  removed: number | null;
+  net: number | null;
+  has_data: boolean;
+}
+
+export interface MCPRegistrySeriesResponse {
+  from: string;
+  to: string;
+  days: number;
+  points: MCPRegistrySeriesPoint[];
+  delta_in_window: { start_total: number | null; end_total: number | null; net: number | null };
+  notes: string[];
+}
+
 export interface WhatsNewResponse {
   ok: boolean;
   window: { from: string; to: string; days: number };
@@ -1267,6 +1305,40 @@ export class TensorFeed {
         days: options?.days,
         news_limit: options?.newsLimit,
       },
+      requireToken: true,
+    });
+  }
+
+  /**
+   * Today's MCP server registry summary with 1-day deltas.
+   *
+   * Free, no auth. Captured daily at 9:30 AM UTC from
+   * registry.modelcontextprotocol.io. Returns total servers, by-status
+   * breakdown, top namespaces, and newly added/reactivated/deprecated
+   * names compared to yesterday's capture.
+   */
+  async getMCPRegistrySnapshot(): Promise<MCPRegistrySnapshotResponse> {
+    return this.request<MCPRegistrySnapshotResponse>('GET', '/mcp/registry/snapshot');
+  }
+
+  /**
+   * Multi-day series of MCP registry growth and churn. Costs 1 credit.
+   *
+   * Range capped at 90 days, default 30 days back. The registry itself is
+   * open data, but a 30/90-day trend requires daily capture started weeks
+   * before the question is asked. Days without a captured snapshot return
+   * has_data=false.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   */
+  async getMCPRegistrySeries(options?: {
+    from?: string;
+    to?: string;
+  }): Promise<MCPRegistrySeriesResponse> {
+    this.requireToken('getMCPRegistrySeries');
+    return this.request<MCPRegistrySeriesResponse>('GET', '/premium/mcp/registry/series', {
+      params: { from: options?.from, to: options?.to },
       requireToken: true,
     });
   }

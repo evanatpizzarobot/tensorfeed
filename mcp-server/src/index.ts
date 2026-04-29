@@ -917,6 +917,102 @@ server.tool(
   },
 );
 
+// ── Tool: mcp_registry_snapshot (free) ──────────────────────────────
+
+server.tool(
+  'mcp_registry_snapshot',
+  'Today\'s summary of the official Model Context Protocol server registry. Returns total servers, by-status breakdown, top namespaces, and 1-day deltas (newly added, reactivated, deprecated). Captured daily at 9:30 AM UTC from registry.modelcontextprotocol.io. Useful when an agent wants to see how the MCP ecosystem is growing or detect freshly-deprecated servers it may be using. Free, no auth.',
+  {},
+  async () => {
+    const data = (await fetchJSON('/mcp/registry/snapshot')) as {
+      summary: {
+        date: string;
+        capturedAt: string;
+        total_servers: number;
+        total_versions: number;
+        by_status: Record<string, number>;
+        top_namespaces: { namespace: string; count: number }[];
+        new_today: { count: number; names: string[] };
+        reactivated_today: { count: number; names: string[] };
+        deprecated_today: { count: number; names: string[] };
+        delta_vs_yesterday: { added: number; removed: number; net: number } | null;
+      };
+    };
+    const s = data.summary;
+    const statusLine = Object.entries(s.by_status)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(', ');
+    const topNs = s.top_namespaces.slice(0, 10).map(n => `  ${n.namespace}: ${n.count}`).join('\n');
+    const delta = s.delta_vs_yesterday
+      ? `Day over day: +${s.delta_vs_yesterday.added} new, -${s.delta_vs_yesterday.removed} removed, net ${s.delta_vs_yesterday.net >= 0 ? '+' : ''}${s.delta_vs_yesterday.net}`
+      : 'Day over day: not available (first snapshot)';
+    const newToday = s.new_today.count > 0
+      ? `\nNewly listed today (${s.new_today.count}):\n` + s.new_today.names.slice(0, 10).map(n => `  ${n}`).join('\n')
+      : '';
+    const deprecatedToday = s.deprecated_today.count > 0
+      ? `\nDeprecated today (${s.deprecated_today.count}):\n` + s.deprecated_today.names.slice(0, 10).map(n => `  ${n}`).join('\n')
+      : '';
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text:
+            `MCP Server Registry — ${s.date}\n` +
+            `Total servers: ${s.total_servers} (across ${s.total_versions} versioned entries)\n` +
+            `Status: ${statusLine}\n${delta}\n\n` +
+            `Top namespaces:\n${topNs}` +
+            newToday + deprecatedToday +
+            `\n\nSource: registry.modelcontextprotocol.io`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: mcp_registry_series (1 credit) ────────────────────────────
+
+server.tool(
+  'mcp_registry_series',
+  'Multi-day series of MCP server registry growth and churn. Returns per-day total servers, active count, and daily added/removed counts across the requested window. The registry itself is open data, but a 30/90-day trend requires daily capture started weeks ago, which TensorFeed has been running. Costs 1 credit.',
+  {
+    from: z.string().optional().describe('Inclusive start date YYYY-MM-DD (default: 30 days before to)'),
+    to: z.string().optional().describe('Inclusive end date YYYY-MM-DD (default: today UTC)'),
+  },
+  async ({ from, to }) => {
+    const params = new URLSearchParams();
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    const data = (await fetchJSON(`/premium/mcp/registry/series?${params}`, { auth: true })) as {
+      from: string;
+      to: string;
+      days: number;
+      points: { date: string; total_servers: number | null; added: number | null; removed: number | null; has_data: boolean }[];
+      delta_in_window: { start_total: number | null; end_total: number | null; net: number | null };
+      notes: string[];
+      billing?: { credits_remaining?: number };
+    };
+    const lines = data.points
+      .map(p => p.has_data
+        ? `  ${p.date}  total=${p.total_servers}  +${p.added ?? 0}/-${p.removed ?? 0}`
+        : `  ${p.date}  (no snapshot captured)`,
+      )
+      .join('\n');
+    const w = data.delta_in_window;
+    const summary = w.start_total !== null && w.end_total !== null
+      ? `Window ${data.from} -> ${data.to}: ${w.start_total} -> ${w.end_total} (net ${w.net! >= 0 ? '+' : ''}${w.net})`
+      : `Window ${data.from} -> ${data.to}: insufficient data`;
+    const notes = data.notes.length ? '\nNotes: ' + data.notes.join('; ') : '';
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `${summary}\n\n${lines}${notes}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
 // ── Start ───────────────────────────────────────────────────────────
 
 async function main() {
