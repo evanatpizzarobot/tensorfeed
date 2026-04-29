@@ -1,0 +1,52 @@
+# TensorFeed
+
+[TensorFeed.ai](https://tensorfeed.ai) is an AI news and real-time data hub built for humans and AI agents. The `langchain-tensorfeed` package gives LangChain agents zero-friction access to AI news headlines, live service status, model pricing, and public benchmark scores. Every endpoint used by the integration is free and requires no API key.
+
+## Installation and setup
+
+Install the package from PyPI:
+
+```bash
+pip install langchain-tensorfeed
+```
+
+No environment variables are required. The TensorFeed public API is open and rate-limited per IP.
+
+## Tools
+
+See the [TensorFeed tools notebook](/docs/integrations/tools/tensorfeed) for runnable examples.
+
+```python
+from langchain_tensorfeed import (
+    TensorFeedNewsTool,
+    TensorFeedStatusTool,
+    TensorFeedPricingTool,
+    TensorFeedBenchmarksTool,
+)
+```
+
+| Tool | Purpose |
+| --- | --- |
+| `TensorFeedNewsTool` | Latest AI news from 12+ sources, filterable by category. |
+| `TensorFeedStatusTool` | Live up/down status for Claude, ChatGPT, Gemini, Copilot, and more. |
+| `TensorFeedPricingTool` | Per-token pricing for AI models across all major providers. |
+| `TensorFeedBenchmarksTool` | Public benchmark scores (MMLU, HumanEval, GPQA, MATH, SWE-Bench). |
+
+## Document loader
+
+See the [TensorFeed document loader notebook](/docs/integrations/document_loaders/tensorfeed) for a full example.
+
+```python
+from langchain_tensorfeed import TensorFeedLoader
+
+loader = TensorFeedLoader(category="research", limit=100)
+docs = loader.load()
+```
+
+Supports filtering by category (single or multi), date range, and limit. Each `Document` carries the article title and snippet as `page_content` plus structured metadata (url, source, categories, published_at, fetched_at).
+
+## Resources
+
+- TensorFeed developer docs: https://tensorfeed.ai/developers
+- Source code: https://github.com/RipperMercs/tensorfeed (under `sdk/langchain-python/`)
+- PyPI: https://pypi.org/project/langchain-tensorfeed/
