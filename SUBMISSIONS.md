@@ -332,13 +332,13 @@ Subreddits where MCP and agent-payment tooling actually gets discussed. Don't po
 | 1 | registry.modelcontextprotocol.io | `mcp-publisher publish` | ✅ | 2026-04-28 (`ai.tensorfeed/mcp-server` v1.9.1, DNS-verified) |
 | 2 | modelcontextprotocol/servers | PR | ⛔ skipped | README no longer lists individual community servers; readers are pointed at the awesome-lists and the official registry instead |
 | 3 | punkpeye/awesome-mcp-servers | PR | 🟡 open | 2026-04-28 ([#5565](https://github.com/punkpeye/awesome-mcp-servers/pull/5565)) |
-| 4 | xpaysh/awesome-x402 | PR | ☐ | |
+| 4 | xpaysh/awesome-x402 | PR | 🟡 open | 2026-04-28 ([#299](https://github.com/xpaysh/awesome-x402/pull/299)) |
 | 5a | wong2/awesome-mcp-servers | PR | ☐ | |
 | 5b | appcypher/awesome-mcp-servers | PR | ☐ | |
 | 5c | TensorBlock/awesome-mcp-servers | PR | ☐ | |
 | 6 | mcpservers.org | Web form | ☐ | |
 | 7 | mcp.so | Web form | ☐ | |
-| 8 | smithery.ai | `smithery mcp publish` | ☐ | |
+| 8 | smithery.ai | Web form | 🟠 blocked | UI only offers hosted-HTTP-URL form; no GitHub-import path visible from /new or dashboard. `smithery.yaml` + `Dockerfile` already in repo for any future scanner. Revisit when their UI changes. |
 | 9 | e2b-dev/awesome-sdks-for-ai-agents | Form/PR | ☐ | |
 | 10 | Hacker News (Show HN) | Post | ☐ | |
 | 11 | Anthropic Discord | DM/message | ☐ | |
