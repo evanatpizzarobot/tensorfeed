@@ -333,9 +333,9 @@ Subreddits where MCP and agent-payment tooling actually gets discussed. Don't po
 | 2 | modelcontextprotocol/servers | PR | ⛔ skipped | README no longer lists individual community servers; readers are pointed at the awesome-lists and the official registry instead |
 | 3 | punkpeye/awesome-mcp-servers | PR | 🟡 open | 2026-04-28 ([#5565](https://github.com/punkpeye/awesome-mcp-servers/pull/5565)) |
 | 4 | xpaysh/awesome-x402 | PR | 🟡 open | 2026-04-28 ([#299](https://github.com/xpaysh/awesome-x402/pull/299)) |
-| 5a | wong2/awesome-mcp-servers | PR | ☐ | |
-| 5b | appcypher/awesome-mcp-servers | PR | ☐ | |
-| 5c | TensorBlock/awesome-mcp-servers | PR | ☐ | |
+| 5a | wong2/awesome-mcp-servers | PR | ⛔ blocked | Issues + PRs disabled at repo level. Branch ready in `RipperMercs/awesome-mcp-servers-1@add-tensorfeed`. Requires direct contact with wong2 to submit. |
+| 5b | appcypher/awesome-mcp-servers | PR | ⛔ blocked | Issues + PRs disabled at repo level. Branch ready in `RipperMercs/awesome-mcp-servers-2@add-tensorfeed`. Requires direct contact with appcypher to submit. |
+| 5c | TensorBlock/awesome-mcp-servers | PR | 🟡 open | 2026-04-28 ([#465](https://github.com/TensorBlock/awesome-mcp-servers/pull/465)) |
 | 6 | mcpservers.org | Web form | ☐ | |
 | 7 | mcp.so | Web form | ☐ | |
 | 8 | smithery.ai | Web form | 🟠 blocked | UI only offers hosted-HTTP-URL form; no GitHub-import path visible from /new or dashboard. `smithery.yaml` + `Dockerfile` already in repo for any future scanner. Revisit when their UI changes. |
