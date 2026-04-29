@@ -1,0 +1,13 @@
+{
+  "$schema": "https://glama.ai/schemas/glama.json",
+  "maintainers": ["RipperMercs"],
+  "title": "TensorFeed",
+  "description": "Real-time AI industry intelligence MCP server. 6 free tools (AI news from 15+ sources, service status, model pricing, today summary, agent activity, MCP registry snapshot) and 13 paid premium tools (routing recommendations, news search, history series, cost projection, provider deep-dive, model comparison, agents directory, what's new brief, MCP registry series, webhook watches with daily/weekly digest tier). Pay-per-call in USDC on Base mainnet, no accounts.",
+  "tags": ["ai", "ai-news", "mcp", "llm", "x402", "usdc", "base", "agent-payments", "machine-payable", "stablecoin", "model-routing", "model-pricing", "ai-status", "ai-agents"],
+  "homepage": "https://tensorfeed.ai",
+  "repository": "https://github.com/RipperMercs/tensorfeed",
+  "license": "MIT",
+  "categories": ["ai-machine-learning", "research-data", "search", "aggregators"],
+  "language": "TypeScript",
+  "runtime": "node"
+}
