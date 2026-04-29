@@ -17,8 +17,8 @@ import { Env } from './types';
  */
 
 const REGISTRY_URL = 'https://registry.modelcontextprotocol.io/v0/servers';
-const PAGE_LIMIT = 100;
-const MAX_PAGES = 200; // hard cap, prevents runaway loops; 200 * 100 = 20k servers
+const PAGE_LIMIT = 100; // hard cap on registry side: ?limit=500 returns HTTP 422
+const MAX_PAGES = 500; // 500 * 100 = 50k versioned entries headroom (registry was 20k+ on 2026-04-29)
 
 const SUMMARY_PREFIX = 'mcp-reg:summary:';
 const SERVERS_PREFIX = 'mcp-reg:servers:';

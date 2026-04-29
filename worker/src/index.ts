@@ -1509,6 +1509,10 @@ export default {
         const result = await captureHistory(env);
         return jsonResponse({ ok: true, message: 'History snapshot captured', ...result });
       }
+      if (task === 'mcp-registry') {
+        const result = await captureRegistrySnapshot(env);
+        return jsonResponse({ ok: true, message: 'MCP registry snapshot captured', ...result });
+      }
       await Promise.all([pollRSSFeeds(env), pollStatusPages(env), updateCatalog(env), pollPodcastFeeds(env), pollTrendingRepos(env)]);
 
       return jsonResponse({ ok: true, message: 'Refreshed all feeds, status, and catalog' });
