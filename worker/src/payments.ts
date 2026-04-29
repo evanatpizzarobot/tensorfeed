@@ -1,4 +1,5 @@
 import { Env } from './types';
+import { checkCircuitBreaker } from './circuit-breaker';
 
 /**
  * Payment middleware for premium endpoints.
@@ -111,6 +112,17 @@ function generateNonce(): string {
   const bytes = new Uint8Array(8);
   crypto.getRandomValues(bytes);
   return `tf-${toHex(bytes)}`;
+}
+
+function checkRequestCircuit(request: Request, token: string) {
+  const url = new URL(request.url);
+  const sortedParams = [...url.searchParams.entries()].sort(
+    ([a], [b]) => (a < b ? -1 : a > b ? 1 : 0),
+  );
+  const canonicalQuery = sortedParams.map(([k, v]) => `${k}=${v}`).join('&');
+  // Use a non-secret prefix as the lookup key so the full bearer token
+  // never lives in the in-memory tracker.
+  return checkCircuitBreaker(token.slice(0, 16), url.pathname, canonicalQuery);
 }
 
 function jsonResponse(
@@ -996,6 +1008,31 @@ export async function requirePayment(
     if (!record) {
       return { paid: false, response: jsonResponse({ ok: false, error: 'token_not_found' }, 401) };
     }
+
+    // Circuit breaker: refuse to charge credits if this same token has
+    // already issued THRESHOLD identical requests inside the rolling
+    // 60s window. Catches naive while(true) loops in agent code.
+    const breaker = checkRequestCircuit(request, token);
+    if (breaker.tripped) {
+      const retryAfterSeconds = breaker.cooldown_seconds ?? 120;
+      return {
+        paid: false,
+        response: jsonResponse(
+          {
+            ok: false,
+            error: 'infinite_loop_detected',
+            message: `Circuit breaker tripped. The same request was issued ${breaker.count} times in the last minute. Re-evaluate the agent's planning logic before retrying.`,
+            cooldown_seconds: retryAfterSeconds,
+            retry_after_unix_ms: breaker.retry_after_unix_ms,
+            balance: record.balance,
+            doc: 'https://tensorfeed.ai/developers/agent-payments#circuit-breaker',
+          },
+          429,
+          { 'Retry-After': String(retryAfterSeconds) },
+        ),
+      };
+    }
+
     if (record.balance < cost) {
       return {
         paid: false,

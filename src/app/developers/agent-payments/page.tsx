@@ -996,6 +996,55 @@ export default function AgentPaymentsPage() {
         </div>
       </section>
 
+      {/* Circuit breaker */}
+      <section className="mb-10" id="circuit-breaker">
+        <div className="bg-bg-secondary border border-border rounded-xl p-5">
+          <h2 className="text-lg font-semibold text-text-primary mb-2">Circuit Breaker (Loop Protection)</h2>
+          <p className="text-text-secondary text-sm mb-3">
+            If a single bearer token issues more than <span className="text-text-primary font-mono">20</span> identical
+            requests inside a <span className="text-text-primary font-mono">60-second</span> rolling window, the
+            premium API returns <span className="text-text-primary font-mono">HTTP 429</span> with{' '}
+            <code className="text-accent-primary font-mono">error: &quot;infinite_loop_detected&quot;</code> and a{' '}
+            <span className="text-text-primary font-mono">120-second</span> cooldown. No credits are charged when the
+            breaker is tripped. Identical means same path and same sorted query string.
+          </p>
+          <p className="text-text-muted text-sm">
+            This is a safety net for naive while-loops in agent code. If you hit it, fix the planning logic before
+            retrying. Different tokens, different paths, and different query strings are tracked independently, so
+            normal high-volume traffic is unaffected.
+          </p>
+        </div>
+      </section>
+
+      {/* Chaos engineering */}
+      <section className="mb-10" id="chaos-engineering">
+        <div className="bg-bg-secondary border border-border rounded-xl p-5">
+          <h2 className="text-lg font-semibold text-text-primary mb-2">Chaos Engineering Headers (Free)</h2>
+          <p className="text-text-secondary text-sm mb-3">
+            Test your fallback logic without waiting for a real upstream incident. Both headers are free, no-auth, work
+            on every endpoint, and never charge credits.
+          </p>
+          <ul className="text-text-secondary text-sm space-y-2 mb-3">
+            <li>
+              <code className="text-accent-primary font-mono">X-TensorFeed-Simulate-Error: 503</code> returns the
+              requested status code (any value in 400-599) with a body that declares the response is simulated.
+            </li>
+            <li>
+              <code className="text-accent-primary font-mono">X-TensorFeed-Simulate-Latency: 2500</code> sleeps the
+              requested milliseconds before responding (capped at 10000ms).
+            </li>
+          </ul>
+          <pre className="bg-bg-tertiary/50 border border-border rounded p-3 text-xs font-mono text-text-secondary overflow-x-auto whitespace-pre leading-relaxed">
+{`curl -H "X-TensorFeed-Simulate-Error: 503" https://tensorfeed.ai/api/news
+curl -H "X-TensorFeed-Simulate-Latency: 2500" https://tensorfeed.ai/api/status`}
+          </pre>
+          <p className="text-text-muted text-xs mt-3">
+            Simulated responses include the header <code className="font-mono">X-TensorFeed-Simulated: true</code> so
+            your test assertions can verify they are coming from the chaos layer and not a real outage.
+          </p>
+        </div>
+      </section>
+
       {/* Free preview */}
       <section className="mb-10">
         <div className="bg-bg-secondary border border-border rounded-xl p-5">

@@ -49,6 +49,10 @@ TensorFeed accepts USDC on Base as the sole payment method for premium endpoints
 
 **View as Agent UX toggle:** Every page on tensorfeed.ai has a HUMAN | AGENT toggle in the top navigation. Switching to AGENT replaces the human UI with a terminal-style overlay showing the actual API JSON powering that route, the response status line, headers, and the equivalent curl command. This is a developer-experience and brand statement, not a separate API surface; the data comes from the same `/api/*` endpoints documented above.
 
+**Chaos engineering headers (free, all endpoints):** `X-TensorFeed-Simulate-Error: <400-599>` returns the requested status code immediately for testing fallback logic. `X-TensorFeed-Simulate-Latency: <ms>` sleeps before responding (capped at 10000ms). Simulated responses include `X-TensorFeed-Simulated: true`. No credits are charged for simulated errors against premium endpoints because the chaos layer short-circuits before payment middleware runs.
+
+**Circuit breaker (premium endpoints):** If a single bearer token issues more than 20 identical requests in 60 seconds (same path + sorted query string), premium endpoints return HTTP 429 with `error: "infinite_loop_detected"`, a 120-second cooldown, and a `Retry-After` header. No credits are charged when the breaker is tripped. Catches naive while-loops in agent code without affecting normal high-volume traffic.
+
 **Glossary for agent payment ecosystem:** `https://tensorfeed.ai/glossary` defines x402, MCP, and agent payments with FAQPage JSON-LD schema for rich-results indexing. Useful when an agent wants to understand the standards before integrating.
 
 **Per-benchmark leaderboards:** `https://tensorfeed.ai/benchmarks/{name}` (where `name` is `swe_bench`, `mmlu_pro`, `human_eval`, `gpqa_diamond`, or `math`). Each page is a ranked leaderboard for that benchmark with FAQPage and Dataset JSON-LD schema, score interpretation ranges, and a link from the leaderboard rows back to the relevant `/models/[slug]` pages. Computed live from `data/benchmarks.json` so the rankings stay current as scores are ingested.

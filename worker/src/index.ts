@@ -51,6 +51,7 @@ import {
   validateAndCharge,
 } from './payments';
 import { recordPollRun, checkNewsStaleness, alertStaleNews, sendDailySummary, getAlertsStatus } from './alerts';
+import { maybeSimulatedErrorResponse, applySimulatedLatency } from './chaos';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -260,6 +261,13 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: CORS_HEADERS });
     }
+
+    // Chaos engineering: short-circuit if the caller is testing failure modes.
+    // Runs before activity tracking, route dispatch, and requirePayment so a
+    // simulated error or timeout does not consume credits or skew analytics.
+    const simulatedError = maybeSimulatedErrorResponse(request);
+    if (simulatedError) return simulatedError;
+    await applySimulatedLatency(request);
 
     // Track agent/bot activity (non-blocking, batched in memory)
     ctx.waitUntil(trackAgentActivity(request, env, path));
@@ -541,6 +549,20 @@ export default {
         admin: {
           usage: '/api/admin/usage?date=YYYY-MM-DD&key=<env>',
           usageDates: '/api/admin/usage/dates?key=<env>',
+        },
+        chaos_engineering: {
+          description: 'Free, no-auth headers for testing agent fallback logic against simulated failures. No credits charged for simulated errors.',
+          headers: {
+            simulate_error: 'X-TensorFeed-Simulate-Error: <400-599> (returns the requested status code immediately)',
+            simulate_latency: 'X-TensorFeed-Simulate-Latency: <ms> (sleeps before normal response, capped at 10000ms)',
+          },
+          response_marker: 'X-TensorFeed-Simulated: true',
+        },
+        circuit_breaker: {
+          description: 'Premium endpoints return 429 infinite_loop_detected if a single bearer token issues more than 20 identical requests in 60 seconds. No credits are charged when the breaker is tripped.',
+          threshold: 20,
+          window_seconds: 60,
+          cooldown_seconds: 120,
         },
         news: newsMeta,
       }, 200, 60);
