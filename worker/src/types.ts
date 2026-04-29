@@ -31,6 +31,22 @@ export interface Env {
   // ?key=ENVIRONMENT pattern, which was unsafe once the repo went
   // public (ENVIRONMENT="production" lives in wrangler.toml).
   ADMIN_KEY?: string;
+  // Active LLM endpoint probing. Each is independently optional;
+  // probe.ts gracefully skips any provider whose key is unset, so the
+  // module degrades to whichever providers you have keys for. Set with:
+  //   wrangler secret put PROBE_ANTHROPIC_KEY
+  //   wrangler secret put PROBE_OPENAI_KEY
+  //   wrangler secret put PROBE_GOOGLE_KEY
+  //   wrangler secret put PROBE_MISTRAL_KEY
+  //   wrangler secret put PROBE_COHERE_KEY
+  // Probe cost is roughly $0.05-0.10 per provider per month at 15-minute
+  // sampling with single-token responses. Per-provider daily budget cap
+  // is enforced in code via PROBE_MAX_DAILY_CALLS.
+  PROBE_ANTHROPIC_KEY?: string;
+  PROBE_OPENAI_KEY?: string;
+  PROBE_GOOGLE_KEY?: string;
+  PROBE_MISTRAL_KEY?: string;
+  PROBE_COHERE_KEY?: string;
 }
 
 export interface Article {

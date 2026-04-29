@@ -433,6 +433,52 @@ export interface WhatsNewHeadline {
   categories: string[];
 }
 
+export interface ProbeProviderAggregate {
+  provider: string;
+  count: number;
+  success_count: number;
+  ok_pct: number;
+  ttfb: { p50: number | null; p95: number | null; p99: number | null };
+  total: { p50: number | null; p95: number | null; p99: number | null };
+  status_codes: Record<string, number>;
+  last_probe_at: string | null;
+  last_error: string | null;
+}
+
+export interface ProbeLatestResponse {
+  ok: boolean;
+  summary: {
+    computed_at: string;
+    window_label: string;
+    providers: ProbeProviderAggregate[];
+  };
+}
+
+export interface ProbeSeriesPoint {
+  date: string;
+  count: number | null;
+  ok_pct: number | null;
+  uptime_pct: number | null;
+  ttfb_p50: number | null;
+  ttfb_p95: number | null;
+  ttfb_p99: number | null;
+  total_p50: number | null;
+  total_p95: number | null;
+  total_p99: number | null;
+  incident_hours: number;
+  has_data: boolean;
+}
+
+export interface ProbeSeriesResponse {
+  provider: string;
+  from: string;
+  to: string;
+  days: number;
+  points: ProbeSeriesPoint[];
+  summary: { overall_uptime_pct: number | null; days_with_data: number; days_with_incidents: number };
+  notes: string[];
+}
+
 export interface MCPRegistrySnapshotResponse {
   ok: boolean;
   summary: {
@@ -1305,6 +1351,39 @@ export class TensorFeed {
         days: options?.days,
         news_limit: options?.newsLimit,
       },
+      requireToken: true,
+    });
+  }
+
+  /**
+   * Last 24 hours of measured LLM endpoint latency and availability.
+   *
+   * Free, no auth. TensorFeed pings each major LLM provider's chat
+   * completion endpoint every 15 min and records ttfb / total time /
+   * HTTP status. Returns per-provider aggregates. Data is unique
+   * because we measure it (not self-reported by providers).
+   */
+  async getProbeLatest(): Promise<ProbeLatestResponse> {
+    return this.request<ProbeLatestResponse>('GET', '/probe/latest');
+  }
+
+  /**
+   * Daily SLA series for one LLM provider, measured by TensorFeed.
+   * Costs 1 credit. Range capped at 90 days, default 30 days back.
+   *
+   * Provider must be one of: anthropic, openai, google, mistral, cohere.
+   *
+   * @throws Error if no token is set
+   * @throws PaymentRequired if the token has insufficient credits
+   */
+  async getProbeSeries(options: {
+    provider: 'anthropic' | 'openai' | 'google' | 'mistral' | 'cohere';
+    from?: string;
+    to?: string;
+  }): Promise<ProbeSeriesResponse> {
+    this.requireToken('getProbeSeries');
+    return this.request<ProbeSeriesResponse>('GET', '/premium/probe/series', {
+      params: { provider: options.provider, from: options.from, to: options.to },
       requireToken: true,
     });
   }

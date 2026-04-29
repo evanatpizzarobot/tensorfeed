@@ -2,6 +2,12 @@
 
 All notable changes to the [TensorFeed.ai MCP server](https://github.com/RipperMercs/tensorfeed/tree/main/mcp-server). Free tools work without configuration; premium tools require a bearer token via the `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/developers/agent-payments](https://tensorfeed.ai/developers/agent-payments).
 
+## 1.11.0 - 2026-04-29
+
+### Added
+- `probe_latest` tool — last 24 hours of measured LLM endpoint latency and availability per provider (Anthropic, OpenAI, Google, Mistral, Cohere). TensorFeed pings each provider's chat completion endpoint every 15 min and records ttfb / total / status. The data is unique because it is measured, not self-reported. Free, no auth.
+- `probe_series` tool — daily SLA series for one provider with ttfb/total p50/p95/p99 and incident-hour count, 90-day max range. 1 credit per call. Pairs with `premium_routing` for picking a model whose SLA you can verify.
+
 ## 1.10.0 - 2026-04-29
 
 ### Added

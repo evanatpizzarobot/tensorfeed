@@ -228,6 +228,26 @@
         "description": "Free. Total servers, by-status breakdown, top namespaces, newly added/reactivated/deprecated counts. Captured daily at 9:30 AM UTC from registry.modelcontextprotocol.io."
       }
     },
+    "/probe/latest": {
+      "get": {
+        "tags": ["Free"],
+        "summary": "Last 24h of measured LLM endpoint latency and availability",
+        "description": "Free. Per-provider aggregates over the last 24 hours of probe results: count, ok_pct, ttfb p50/p95/p99, total latency p50/p95/p99, status code distribution, last error. Probe cycles run every 15 min; data is unique because we measure it ourselves."
+      }
+    },
+    "/premium/probe/series": {
+      "get": {
+        "tags": ["Premium"],
+        "summary": "Daily SLA series for one LLM provider",
+        "description": "1 credit. Per-day count, success rate, ttfb p50/p95/p99, total p50/p95/p99, incident-hour count. Range capped at 90 days, default 30 days back. The data is unique because we capture it ourselves; no public source publishes per-day measured SLA per LLM provider.",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "provider", "in": "query", "required": true, "schema": { "type": "string", "enum": ["anthropic", "openai", "google", "mistral", "cohere"] } },
+          { "name": "from", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "to", "in": "query", "schema": { "type": "string", "format": "date" } }
+        ]
+      }
+    },
     "/premium/mcp/registry/series": {
       "get": {
         "tags": ["Premium"],

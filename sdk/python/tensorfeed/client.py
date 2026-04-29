@@ -793,6 +793,67 @@ class TensorFeed:
         """
         return self._request("GET", "/mcp/registry/snapshot")
 
+    # ── Free: LLM endpoint probing (last 24h) ───────────────────────
+
+    def get_probe_latest(self) -> dict[str, Any]:
+        """Last 24 hours of measured LLM endpoint latency and availability.
+
+        Free, no auth. TensorFeed pings each major LLM provider's chat
+        completion endpoint every 15 min and records ttfb / total time /
+        HTTP status. Returns per-provider aggregates (count, ok_pct,
+        ttfb p50/p95/p99, total p50/p95/p99, status code distribution,
+        last error). Data is unique because we measure it (not
+        self-reported by providers).
+
+        Returns:
+            Dict with ``ok`` and ``summary`` keys. The ``summary`` includes
+            ``computed_at``, ``window_label``, and ``providers`` (list of
+            per-provider aggregates).
+        """
+        return self._request("GET", "/probe/latest")
+
+    # ── Paid: LLM probe time series (Tier 1, 1 credit) ─────────────
+
+    def get_probe_series(
+        self,
+        *,
+        provider: str,
+        from_date: str | None = None,
+        to_date: str | None = None,
+    ) -> dict[str, Any]:
+        """Daily SLA series for one LLM provider, measured by TensorFeed.
+
+        Costs 1 credit. Returns per-day count, success rate, ttfb
+        p50/p95/p99, total p50/p95/p99, incident-hour count for each
+        day in the requested window. Provider status pages are
+        politically managed; this is the measured truth.
+
+        Args:
+            provider: One of "anthropic", "openai", "google", "mistral",
+                "cohere".
+            from_date: Inclusive start YYYY-MM-DD. Defaults to 30 days
+                before ``to_date``.
+            to_date: Inclusive end YYYY-MM-DD. Defaults to today UTC.
+
+        Returns:
+            Dict with ``provider``, ``from``, ``to``, ``days``, ``points``
+            (per-day datapoints with ``has_data`` flag), ``summary``
+            (overall uptime, days with data, days with incidents).
+
+        Raises:
+            ValueError: if no token is set on the client
+            PaymentRequired: if the token has insufficient credits
+        """
+        self._require_token("get_probe_series")
+        params: dict[str, Any] = {"provider": provider}
+        if from_date is not None:
+            params["from"] = from_date
+        if to_date is not None:
+            params["to"] = to_date
+        return self._request(
+            "GET", "/premium/probe/series", params=params, require_token=True,
+        )
+
     # ── Paid: MCP registry time series (Tier 1, 1 credit) ──────────
 
     def get_mcp_registry_series(

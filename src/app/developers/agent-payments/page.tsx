@@ -377,6 +377,33 @@ const ENDPOINTS: PremiumEndpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/premium/probe/series',
+    description:
+      "Daily SLA series for one LLM provider, measured by TensorFeed itself. Returns per-day count, success rate, ttfb p50/p95/p99, total latency p50/p95/p99, incident-hour count, plus an overall window summary. The free /api/probe/latest serves the most-recent 24h aggregate. We probe Anthropic, OpenAI, Google, Mistral, and Cohere chat-completion endpoints every 15 min with a single-token prompt and record measured response time + status. The data is unique: provider status pages are politically managed; this is what we measure. Pairs naturally with /api/premium/routing for picking a model whose SLA you can verify. 90-day max range, default 30 days back.",
+    cost: '1 credit per call',
+    example: `// Query: ?provider=anthropic&from=2026-04-01&to=2026-04-29
+{
+  "ok": true,
+  "provider": "anthropic",
+  "from": "2026-04-01",
+  "to": "2026-04-29",
+  "days": 29,
+  "points": [
+    {
+      "date": "2026-04-29",
+      "count": 96, "ok_pct": 0.989, "uptime_pct": 0.989,
+      "ttfb_p50": 320, "ttfb_p95": 510, "ttfb_p99": 740,
+      "total_p50": 410, "total_p95": 690, "total_p99": 1120,
+      "incident_hours": 0, "has_data": true
+    }
+  ],
+  "summary": { "overall_uptime_pct": 0.992, "days_with_data": 29, "days_with_incidents": 2 },
+  "notes": [],
+  "billing": { "credits_charged": 1, "credits_remaining": 41 }
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/premium/mcp/registry/series',
     description:
       "Multi-day time series of the official Model Context Protocol server registry: total server count, active/deprecated breakdown, daily added and removed counts. The registry is open data, but a 30/90-day trend requires daily capture started weeks ago. We capture every morning at 9:30 AM UTC. 90-day max range, default 30 days back. A free single-day snapshot lives at /api/mcp/registry/snapshot.",

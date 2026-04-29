@@ -55,6 +55,8 @@ tensorfeed/
       whats-new.test.ts  Vitest coverage for window math, news limit, status counts, validation, no-snapshot fallback
       mcp-registry.ts  Daily MCP server registry telemetry: paginate registry.modelcontextprotocol.io, dedup by name (latest version), compute summary + day-over-day deltas, store under mcp-reg:* prefix, expose range queries
       mcp-registry.test.ts  Vitest coverage for dedup logic, summarize transitions (new/reactivated/deprecated), and resolveRange validation
+      probe.ts          Active LLM endpoint probing: every 15 min POST a tiny prompt at each configured provider (Anthropic/OpenAI/Google/Mistral/Cohere), measure ttfb + total + status, append to 24h ring buffer, rewrite latest summary, daily roll-up to dated aggregate. Per-provider daily call cap.
+      probe.test.ts     Vitest coverage for percentile math, aggregate (success/failure/last-error/status-code grouping), resolveRange, listProviders
       podcasts.ts     Podcast feed polling
       trending.ts     Trending GitHub repos
       twitter.ts      X/Twitter auto-posting
@@ -130,6 +132,11 @@ GET https://tensorfeed.ai/api/refresh?key=<ADMIN_KEY>
   - `mcp-reg:summary:{YYYY-MM-DD}`: daily MCP registry summary (counts, deltas, top namespaces)
   - `mcp-reg:servers:{YYYY-MM-DD}`: full deduped server list for that day (latest version per name); used by the next day's capture for delta computation
   - `mcp-reg:index`: ordered list of dates with MCP registry snapshot data
+  - `probe:buf:{provider}`: rolling 24h buffer of last 96 probe results per LLM provider (capped, so storage is bounded)
+  - `probe:latest`: pre-computed last-24h summary across all providers, served by /api/probe/latest
+  - `probe:daily:{YYYY-MM-DD}:{provider}`: daily aggregate per provider, served by /api/premium/probe/series
+  - `probe:index`: ordered list of dates with probe daily data
+  - `probe:budget:{YYYY-MM-DD}:{provider}`: per-provider per-day call counter, capped at 200 (36h TTL)
 
 ## KV Operation Limits (CRITICAL)
 
@@ -150,6 +157,8 @@ Defined in `worker/wrangler.toml`. All cron handlers dispatched from `worker/src
 - `0 7 * * *`: Daily 7am UTC: models, benchmarks, agents catalog update (LiteLLM + HuggingFace), then daily history snapshot capture (`worker/src/history.ts`, Phase 0 of agent payments)
 - `30 8 * * *`: Daily 8:30am UTC: trending AI repos from GitHub
 - `30 9 * * *`: Daily 9:30am UTC: MCP server registry telemetry capture (`worker/src/mcp-registry.ts`). Paginates registry.modelcontextprotocol.io, dedups by name keeping isLatest, computes day-over-day deltas, stores under `mcp-reg:` prefix. Backs free `/api/mcp/registry/snapshot` and premium `/api/premium/mcp/registry/series`.
+- `*/15 * * * *`: Active LLM endpoint probing (`worker/src/probe.ts`). For each provider with a configured `PROBE_<PROVIDER>_KEY` secret, POST a single-token prompt to its chat endpoint, measure ttfb + total + status, append to a 24h ring buffer per provider, rewrite the latest summary. Per-provider daily call cap (200) prevents runaway spend. Backs free `/api/probe/latest` and premium `/api/premium/probe/series`.
+- `5 0 * * *`: Daily 12:05am UTC: roll yesterday's per-provider 24h probe buffer into a dated daily aggregate (`probe:daily:{date}:{provider}`) for the premium probe series endpoint.
 - `30 14 * * *`: Daily 2:30pm UTC: X/Twitter post (1/day, see X posting rules below)
 
 ## Data Flow
@@ -227,6 +236,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/health`, `/api/ping`, `/api/meta`, `/api/cron-status`, `/api/snapshots`, `/api/alerts-status`
 - `/api/history`, `/api/history/{YYYY-MM-DD}/{type}`: Daily historical snapshots (Phase 0 of agent payments)
 - `/api/mcp/registry/snapshot`: Today's summary of the official MCP server registry (total servers, by-status breakdown, top namespaces, 1-day deltas). Captured daily at 9:30 AM UTC from registry.modelcontextprotocol.io. Bootstraps a live capture on cold start so it never returns empty.
+- `/api/probe/latest`: Last 24h of measured LLM endpoint latency and availability per provider (Anthropic, OpenAI, Google, Mistral, Cohere). Per-provider count, ok_pct, ttfb p50/p95/p99, total p50/p95/p99, status code distribution, last error. Refreshed every 15 min by the probe cron. Returns 503 with explanatory body if no PROBE_*_KEY secrets are configured.
 - `/api/preview/routing?task=code|reasoning|creative|general&budget=&min_quality=`: Free top-1 routing recommendation (5 calls/day per IP)
 - `/api/payment/info`: Wallet, pricing tiers, supported flows, verification metadata
 - `/api/payment/buy-credits` (POST): Generate a 30-min payment quote with memo nonce
@@ -251,6 +261,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker.
 - `/api/premium/compare/models?ids=`: Tier 1, 1 credit. Side-by-side comparison of 2-5 models with pricing, benchmarks (union-of-keys normalized to null for missing), status, news. Plus rankings (cheapest_blended, most_context, by_benchmark leaderboard).
 - `/api/premium/whats-new?days=&news_limit=`: Tier 1, 1 credit. Agent morning brief: pricing changes, new/removed models, status incidents, top news headlines from last 1-7 days. Single call instead of stitching free endpoints client-side.
 - `/api/premium/mcp/registry/series?from=&to=`: Tier 1, 1 credit. Multi-day time series of the official MCP server registry: total servers, active count, daily added/removed. Range capped at 90 days. The registry itself is open data; the 30/90-day trend requires daily capture started weeks ago and cannot be backfilled.
+- `/api/premium/probe/series?provider=&from=&to=`: Tier 1, 1 credit. Daily measured-SLA series for one LLM provider: count, ok_pct, ttfb p50/p95/p99, total p50/p95/p99, incident-hour count. Range capped at 90 days. Provider must be one of anthropic, openai, google, mistral, cohere. The data is unique because TensorFeed measures it (vs. self-reported provider status pages). Pairs with `/api/premium/routing` for picking a model whose SLA you can verify.
 
 **Admin (auth-gated via `?key=<ADMIN_KEY>`, where `ADMIN_KEY` is a Worker secret set via `wrangler secret put ADMIN_KEY`. Constant-time compare. Default-denies if the secret is unset. Replaces the earlier `?key=ENVIRONMENT` pattern, which was unsafe once the repo went public since `ENVIRONMENT = "production"` lives in `wrangler.toml`):**
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup

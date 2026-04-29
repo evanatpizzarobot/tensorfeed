@@ -917,6 +917,108 @@ server.tool(
   },
 );
 
+// ── Tool: probe_latest (free) ───────────────────────────────────────
+
+server.tool(
+  'probe_latest',
+  'Last 24 hours of measured LLM endpoint latency and availability per provider (Anthropic, OpenAI, Google, Mistral, Cohere). TensorFeed pings each provider\'s chat completion endpoint every 15 min and records time-to-first-byte, total response time, and HTTP status. Returns per-provider success rate and ttfb/total p50/p95/p99 latency. The data is unique because we measure it ourselves, not self-reported by the providers. Useful when an agent needs to pick a provider whose SLA you can verify, or to detect ongoing incidents before they hit a status page. Free, no auth.',
+  {},
+  async () => {
+    const data = (await fetchJSON('/probe/latest')) as {
+      summary: {
+        computed_at: string;
+        window_label: string;
+        providers: Array<{
+          provider: string;
+          count: number;
+          ok_pct: number;
+          ttfb: { p50: number | null; p95: number | null; p99: number | null };
+          total: { p50: number | null; p95: number | null; p99: number | null };
+          last_probe_at: string | null;
+          last_error: string | null;
+        }>;
+      };
+    };
+    const s = data.summary;
+    if (s.providers.length === 0) {
+      return { content: [{ type: 'text' as const, text: 'No probe data yet. Probing starts as soon as TensorFeed has at least one provider key configured.' }] };
+    }
+    const rows = s.providers
+      .sort((a, b) => b.ok_pct - a.ok_pct)
+      .map(p => {
+        const okPct = (p.ok_pct * 100).toFixed(1);
+        const ttfb = p.ttfb.p50 !== null ? `p50 ${p.ttfb.p50}ms / p95 ${p.ttfb.p95}ms / p99 ${p.ttfb.p99}ms` : 'no successful probes';
+        const total = p.total.p50 !== null ? `p50 ${p.total.p50}ms / p95 ${p.total.p95}ms / p99 ${p.total.p99}ms` : 'no successful probes';
+        const err = p.last_error ? `\n      last error: ${p.last_error}` : '';
+        return `  ${p.provider}: ${okPct}% ok over ${p.count} probes\n    ttfb:  ${ttfb}\n    total: ${total}${err}`;
+      })
+      .join('\n\n');
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `LLM Endpoint SLA (${s.window_label}, computed ${s.computed_at})\n\n${rows}\n\nSource: TensorFeed measured probes, not self-reported.`,
+        },
+      ],
+    };
+  },
+);
+
+// ── Tool: probe_series (1 credit) ───────────────────────────────────
+
+server.tool(
+  'probe_series',
+  'Daily SLA series for one LLM provider, measured by TensorFeed. Returns per-day count, success rate, ttfb p50/p95/p99, total p50/p95/p99, and incident-hour count across the requested window. Provider status pages are politically managed; this is the measured truth. Pairs naturally with premium_routing for picking a model whose SLA you can verify. Costs 1 credit.',
+  {
+    provider: z.enum(['anthropic', 'openai', 'google', 'mistral', 'cohere']).describe('LLM provider key'),
+    from: z.string().optional().describe('Inclusive start YYYY-MM-DD (default: 30 days before to)'),
+    to: z.string().optional().describe('Inclusive end YYYY-MM-DD (default: today UTC)'),
+  },
+  async ({ provider, from, to }) => {
+    const params = new URLSearchParams();
+    params.set('provider', provider);
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    const data = (await fetchJSON(`/premium/probe/series?${params}`, { auth: true })) as {
+      provider: string;
+      from: string;
+      to: string;
+      days: number;
+      points: Array<{
+        date: string;
+        ok_pct: number | null;
+        ttfb_p50: number | null;
+        ttfb_p95: number | null;
+        total_p50: number | null;
+        total_p95: number | null;
+        incident_hours: number;
+        has_data: boolean;
+      }>;
+      summary: { overall_uptime_pct: number | null; days_with_data: number; days_with_incidents: number };
+      notes: string[];
+      billing?: { credits_remaining?: number };
+    };
+    const lines = data.points
+      .map(p => p.has_data
+        ? `  ${p.date}  ${(p.ok_pct! * 100).toFixed(1)}% ok  ttfb p50/p95: ${p.ttfb_p50}/${p.ttfb_p95}ms  total p50/p95: ${p.total_p50}/${p.total_p95}ms  incidents: ${p.incident_hours}h`
+        : `  ${p.date}  (no data)`,
+      )
+      .join('\n');
+    const overall = data.summary.overall_uptime_pct !== null
+      ? `${(data.summary.overall_uptime_pct * 100).toFixed(2)}%`
+      : 'insufficient data';
+    const notes = data.notes.length ? '\nNotes: ' + data.notes.join('; ') : '';
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `${data.provider} measured SLA, ${data.from} -> ${data.to}\nOverall uptime: ${overall}  (${data.summary.days_with_data} days with data, ${data.summary.days_with_incidents} with incidents)\n\n${lines}${notes}\n\nCredits remaining: ${data.billing?.credits_remaining ?? '?'}`,
+        },
+      ],
+    };
+  },
+);
+
 // ── Tool: mcp_registry_snapshot (free) ──────────────────────────────
 
 server.tool(

@@ -25,6 +25,15 @@ crons = [
   # registry.modelcontextprotocol.io. Powers /api/mcp/registry/snapshot
   # (free) and /api/premium/mcp/registry/series (1 credit).
   "30 9 * * *",
+  # Active LLM endpoint probing (worker/src/probe.ts). Every 15 min:
+  # POST a tiny prompt at each provider with an API key configured,
+  # measure ttfb + total + status, append to a 24h ring buffer, and
+  # rewrite the latest summary. Free /api/probe/latest serves the
+  # summary; premium /api/premium/probe/series serves daily history.
+  "*/15 * * * *",
+  # Daily 5 minutes past midnight UTC: roll yesterday's per-provider
+  # 24h buffer into a dated daily aggregate for premium time series.
+  "5 0 * * *",
   # X/Twitter: 1 post/day, re-enabled 2026-04-12 after spam flag on 2026-04-04.
   # Hold at 1/day for 30 clean days before bumping to 2/day ("30 8,17 * * *").
   "30 14 * * *",

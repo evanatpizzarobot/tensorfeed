@@ -44,6 +44,15 @@ import {
   DEFAULT_RANGE_DAYS as MCP_REG_DEFAULT_RANGE_DAYS,
 } from './mcp-registry';
 import {
+  runProbeCycle,
+  rollupYesterday as rollupProbeYesterday,
+  getLatestSummary as getProbeLatest,
+  getProviderSeries,
+  resolveRange as resolveProbeRange,
+  PROBE_MAX_RANGE_DAYS,
+  PROBE_DEFAULT_RANGE_DAYS,
+} from './probe';
+import {
   requirePayment,
   getPaymentInfo,
   createQuote,
@@ -604,6 +613,7 @@ export default {
           history: '/api/history',
           historySnapshot: '/api/history/{YYYY-MM-DD}/{type}',
           mcpRegistrySnapshot: '/api/mcp/registry/snapshot',
+          probeLatest: '/api/probe/latest',
           routingPreview: '/api/preview/routing',
           premiumRouting: '/api/premium/routing',
           premiumPricingSeries: '/api/premium/history/pricing/series?model=&from=&to=',
@@ -619,6 +629,7 @@ export default {
           premiumCompareModels: '/api/premium/compare/models?ids=opus-4-7,gpt-5-5,gemini-3',
           premiumWhatsNew: '/api/premium/whats-new?days=1&news_limit=10',
           premiumMcpRegistrySeries: '/api/premium/mcp/registry/series?from=&to=',
+          premiumProbeSeries: '/api/premium/probe/series?provider=&from=&to=',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -713,6 +724,23 @@ export default {
         return jsonResponse({ ok: false, error: 'registry_unavailable' }, 503);
       }
       return jsonResponse({ ok: true, summary }, 200, 600);
+    }
+
+    // === ACTIVE LLM PROBE: LATEST SUMMARY (free) ===
+    // Last 24h of measured ttfb / total / status per provider, refreshed
+    // every 15 min by the probe cron. Returns 503 with explanatory body
+    // if no provider keys are configured (cron has nothing to probe).
+
+    if (path === '/api/probe/latest') {
+      const summary = await getProbeLatest(env);
+      if (!summary) {
+        return jsonResponse({
+          ok: false,
+          error: 'no_probe_data',
+          hint: 'Set at least one PROBE_<PROVIDER>_KEY Worker secret to start collecting data',
+        }, 503);
+      }
+      return jsonResponse({ ok: true, summary }, 200, 60);
     }
 
     // === ROUTING PREVIEW (free, rate-limited; Phase 1 of agent payments) ===
@@ -1104,6 +1132,46 @@ export default {
       const result = await getMcpRegistrySeries(env, range.from!, range.to!);
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/mcp/registry/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: LLM PROBE TIME SERIES (Tier 1, 1 credit) ===
+    // Per-day SLA series for one provider: count, ok_pct, ttfb p50/p95/p99,
+    // total p50/p95/p99, incident-hour count. The data is unique because
+    // we measure it ourselves; no public source publishes 30/90-day SLA
+    // history per LLM provider. 90-day max range, default 30 days back.
+
+    if (path === '/api/premium/probe/series') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const provider = url.searchParams.get('provider')?.trim();
+      if (!provider) {
+        return jsonResponse({
+          ok: false,
+          error: 'provider_required',
+          hint: 'Pass ?provider=<name> (anthropic, openai, google, mistral, cohere)',
+        }, 400);
+      }
+      const range = resolveProbeRange(url.searchParams.get('from'), url.searchParams.get('to'));
+      if (!range.ok) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: range.error,
+            limits: {
+              max_range_days: PROBE_MAX_RANGE_DAYS,
+              default_range_days: PROBE_DEFAULT_RANGE_DAYS,
+            },
+          },
+          400,
+        );
+      }
+
+      const result = await getProviderSeries(env, provider, range.from!, range.to!);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/probe/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -1507,11 +1575,19 @@ export default {
       const task = url.searchParams.get('task');
       if (task === 'history') {
         const result = await captureHistory(env);
-        return jsonResponse({ ok: true, message: 'History snapshot captured', ...result });
+        return jsonResponse({ message: 'History snapshot captured', ...result });
       }
       if (task === 'mcp-registry') {
         const result = await captureRegistrySnapshot(env);
-        return jsonResponse({ ok: true, message: 'MCP registry snapshot captured', ...result });
+        return jsonResponse({ message: 'MCP registry snapshot captured', ...result });
+      }
+      if (task === 'probe') {
+        const result = await runProbeCycle(env);
+        return jsonResponse({ message: 'Probe cycle ran', ...result });
+      }
+      if (task === 'probe-rollup') {
+        const result = await rollupProbeYesterday(env);
+        return jsonResponse({ message: 'Probe daily rollup ran', ...result });
       }
       await Promise.all([pollRSSFeeds(env), pollStatusPages(env), updateCatalog(env), pollPodcastFeeds(env), pollTrendingRepos(env)]);
 
@@ -1675,6 +1751,15 @@ export default {
       // status transitions. Backs /api/mcp/registry/snapshot (free) and
       // /api/premium/mcp/registry/series (1 credit).
       await run('captureMCPRegistry', () => captureRegistrySnapshot(env));
+    } else if (cron === '*/15 * * * *') {
+      // Every 15 min: probe each LLM provider with a configured key,
+      // measure latency + status, write the latest 24h summary.
+      // Per-provider daily budget cap prevents runaway spend.
+      await run('runProbeCycle', () => runProbeCycle(env));
+    } else if (cron === '5 0 * * *') {
+      // Daily 00:05 UTC: roll yesterday's per-provider buffer into a
+      // dated daily aggregate for premium time-series queries.
+      await run('rollupProbeYesterday', () => rollupProbeYesterday(env));
     }
 
     // Record RSS poll history for the daily summary digest

@@ -13,6 +13,7 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server that gives AI
 | `get_ai_today` | Summary of top AI stories from the last 24 hours |
 | `get_agent_activity` | Live AI bot traffic on TensorFeed.ai with top-bot breakdown |
 | `mcp_registry_snapshot` | Today's summary of the official MCP server registry: total servers, top namespaces, newly added/reactivated/deprecated names |
+| `probe_latest` | Last 24h of measured LLM endpoint latency and availability per provider (ttfb/total p50/p95/p99). Unique because measured, not self-reported |
 
 ## Premium Tools (paid in USDC on Base)
 
@@ -33,6 +34,7 @@ These tools require a `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/
 | `compare_models` | 1 credit | Side-by-side comparison of 2-5 models with normalized benchmarks and rankings |
 | `whats_new` | 1 credit | Agent morning brief: pricing changes, incidents, top news from last 1-7 days |
 | `mcp_registry_series` | 1 credit | Multi-day MCP registry growth and churn series, 90-day max range |
+| `probe_series` | 1 credit | Daily SLA series for one LLM provider with ttfb/total p50/p95/p99 and incident-hour count, 90-day max range |
 | `list_watches` | Free | List active webhook watches owned by the token |
 | `create_price_watch` | 1 credit | Register a webhook watch on a model price change |
 | `create_status_watch` | 1 credit | Register a webhook watch on a service status transition |
