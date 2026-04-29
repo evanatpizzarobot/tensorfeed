@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TensorFeed.ai
 
-## Getting Started
+Real-time AI industry intelligence for humans and AI agents. News from 15+ sources, live service status for every major LLM provider, model pricing and benchmark history, an AI agents directory, and a pay-per-call premium API settled in USDC on Base mainnet (no accounts, no API keys).
 
-First, run the development server:
+Site: **https://tensorfeed.ai**
+
+## What this repo contains
+
+- **Web dashboard** (`src/`): Next.js 14 App Router, static export, deployed to Cloudflare Pages
+- **API backend** (`worker/`): Cloudflare Worker `tensorfeed-api`, attached to `tensorfeed.ai/api/*`. Cron-driven RSS polling, status scraping, model catalog updates, daily history snapshots, daily MCP server registry telemetry
+- **MCP server** (`mcp-server/`): [Model Context Protocol](https://modelcontextprotocol.io) server published as `@tensorfeed/mcp-server` on npm. Exposes 19 tools (6 free, 13 paid) for use in Claude Desktop, Claude Code, Cursor, Cline, and any other MCP client. See `mcp-server/README.md` for the full tool list and setup
+- **Python SDK** (`sdk/python/`): `pip install tensorfeed`. Full coverage of free + premium endpoints, optional `[web3]` extra for one-call USDC sign-and-send
+- **JavaScript SDK** (`sdk/javascript/`): `npm install tensorfeed`. Same surface as the Python client
+
+## MCP server quick start
+
+The TensorFeed MCP server is the fastest way to plug an AI agent into the TensorFeed API.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx -y @tensorfeed/mcp-server
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or in your Claude Desktop / Claude Code config:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+{
+  "mcpServers": {
+    "tensorfeed": {
+      "command": "npx",
+      "args": ["-y", "@tensorfeed/mcp-server"]
+    }
+  }
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Free tools work without auth. To enable the 13 paid tools (routing recommendations, news search, history series, cost projection, provider deep-dive, model comparison, MCP registry series, webhook watches, and more), add a `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/developers/agent-payments](https://tensorfeed.ai/developers/agent-payments) using USDC on Base. New wallets get a 50-credit welcome bonus on first payment.
 
-## Learn More
+Listed in the official MCP server registry as `ai.tensorfeed/mcp-server`. See `mcp-server/README.md` for the full tool catalog, example agent queries, and pricing.
 
-To learn more about Next.js, take a look at the following resources:
+## API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All endpoints live at `https://tensorfeed.ai/api/*`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Free, no auth:**
+- `/api/news`, `/api/status`, `/api/models`, `/api/benchmarks`, `/api/incidents`
+- `/api/agents/activity`, `/api/agents/news`, `/api/agents/status`, `/api/agents/pricing`, `/api/agents/directory`
+- `/api/podcasts`, `/api/trending-repos`
+- `/api/history`, `/api/history/{YYYY-MM-DD}/{type}` (daily snapshots)
+- `/api/mcp/registry/snapshot` (daily telemetry of the official MCP server registry)
+- `/api/health`, `/api/ping`, `/api/meta`, `/api/cron-status`
 
-## Deploy on Vercel
+**Paid (1 credit each, USDC on Base):**
+- `/api/premium/routing`, `/api/premium/news/search`, `/api/premium/cost/projection`
+- `/api/premium/history/pricing/series`, `/api/premium/history/benchmarks/series`, `/api/premium/history/status/uptime`
+- `/api/premium/agents/directory`, `/api/premium/providers/{name}`, `/api/premium/compare/models`
+- `/api/premium/whats-new` (agent morning brief), `/api/premium/mcp/registry/series`
+- `/api/premium/watches` (webhook watches with daily/weekly digest tier)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Full documentation: [tensorfeed.ai/developers](https://tensorfeed.ai/developers) and [tensorfeed.ai/developers/agent-payments](https://tensorfeed.ai/developers/agent-payments). Machine-readable: [`/llms.txt`](https://tensorfeed.ai/llms.txt), [`/openapi.json`](https://tensorfeed.ai/openapi.json), [`/.well-known/x402.json`](https://tensorfeed.ai/.well-known/x402.json).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Discovery surfaces for AI agents
+
+- Official MCP server registry: `ai.tensorfeed/mcp-server`
+- llms.txt: https://tensorfeed.ai/llms.txt
+- OpenAPI 3.1 spec: https://tensorfeed.ai/openapi.json
+- x402 V2 manifest: https://tensorfeed.ai/.well-known/x402.json
+- Agent-first landing: https://tensorfeed.ai/for-ai-agents
+- View as Agent toggle: every page on the site exposes the underlying API JSON via a navbar toggle, so agents can introspect what powers any view
+
+## Stack
+
+Next.js 14 (static export), Cloudflare Pages + Workers + KV, Tailwind CSS, JetBrains Mono + Inter, Resend for email alerts, Cloudflare Web Analytics. The MCP server is plain TypeScript on top of the official `@modelcontextprotocol/sdk`.
+
+## Development
+
+```bash
+npm install
+npm run dev      # Next.js dev server at localhost:3000
+npm run build    # Static export
+npm run lint
+```
+
+Worker:
+
+```bash
+cd worker
+npm install
+npm test         # 214 vitest cases, all green
+wrangler deploy
+```
+
+MCP server:
+
+```bash
+cd mcp-server
+npm install
+npm run build
+npm start
+```
+
+## License
+
+MIT. See `LICENSE`.
+
+## Contact
+
+- support@tensorfeed.ai
+- press@tensorfeed.ai
+- feedback@tensorfeed.ai
+
+A Pizza Robot Studios project.

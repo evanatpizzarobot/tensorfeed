@@ -11,6 +11,8 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server that gives AI
 | `is_service_down` | Check if a specific AI service is down |
 | `get_model_pricing` | Compare pricing across all major AI model providers |
 | `get_ai_today` | Summary of top AI stories from the last 24 hours |
+| `get_agent_activity` | Live AI bot traffic on TensorFeed.ai with top-bot breakdown |
+| `mcp_registry_snapshot` | Today's summary of the official MCP server registry: total servers, top namespaces, newly added/reactivated/deprecated names |
 
 ## Premium Tools (paid in USDC on Base)
 
@@ -24,14 +26,13 @@ These tools require a `TENSORFEED_TOKEN` env var. Buy credits at [tensorfeed.ai/
 | `pricing_series` | 1 credit | Daily price points for one model with min/max/delta summary |
 | `benchmark_series` | 1 credit | Score evolution for a benchmark on one model |
 | `status_uptime` | 1 credit | Daily uptime % for one provider with incident-day list |
-| `history_compare` | 1 credit | Diff two daily snapshots: added, removed, changed entries |
 | `premium_agents_directory` | 1 credit | Enriched agents catalog with live status, news, traffic, trending_score |
 | `news_search` | 1 credit | Full-text news search with date/provider/category filters and relevance scoring |
 | `cost_projection` | 1 credit | Project workload cost across 1-10 AI models with 4 time horizons and cheapest-monthly ranking |
-| `forecast` | 1 credit | Linear-regression forecast for a price field or benchmark score with 95% CI and confidence label |
 | `provider_deepdive` | 1 credit | One provider's full profile: status, all models with benchmarks joined, recent news, traffic |
 | `compare_models` | 1 credit | Side-by-side comparison of 2-5 models with normalized benchmarks and rankings |
 | `whats_new` | 1 credit | Agent morning brief: pricing changes, incidents, top news from last 1-7 days |
+| `mcp_registry_series` | 1 credit | Multi-day MCP registry growth and churn series, 90-day max range |
 | `list_watches` | Free | List active webhook watches owned by the token |
 | `create_price_watch` | 1 credit | Register a webhook watch on a model price change |
 | `create_status_watch` | 1 credit | Register a webhook watch on a service status transition |
