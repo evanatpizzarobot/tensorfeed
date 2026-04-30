@@ -882,6 +882,25 @@ export default {
           standard_manifest: '/.well-known/agent-fair-trade.json',
           public_record: '/api/payment/no-charge-stats',
           doc: 'https://tensorfeed.ai/agent-fair-trade',
+          network: {
+            description: 'TensorFeed and TerminalFeed share a single bearer-token + credit ledger. A token minted on either site works on both. Each site signs receipts with its own keypair.',
+            established: '2026-04-30',
+            host_ledger: 'tensorfeed.ai',
+            sister_sites: [
+              {
+                site: 'tensorfeed.ai',
+                manifest: 'https://tensorfeed.ai/.well-known/agent-fair-trade.json',
+                manifesto: 'https://tensorfeed.ai/agent-fair-trade',
+                receipt_key: 'https://tensorfeed.ai/.well-known/tensorfeed-receipt-key.json',
+              },
+              {
+                site: 'terminalfeed.io',
+                manifest: 'https://terminalfeed.io/.well-known/agent-fair-trade.json',
+                manifesto: 'https://terminalfeed.io/agent-fair-trade',
+                receipt_key: 'https://terminalfeed.io/.well-known/terminalfeed-receipt-key.json',
+              },
+            ],
+          },
         },
         news: newsMeta,
       }, 200, 60);
