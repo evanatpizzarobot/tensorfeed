@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { BookOpen, FileText, Trophy, ExternalLink } from 'lucide-react';
+import HighlightedText from '@/lib/text-highlight';
 interface Article {
   id: string;
   title: string;
@@ -176,14 +177,14 @@ export default function ResearchPage() {
                   <FileText className="w-5 h-5 text-text-muted shrink-0 mt-0.5" />
                   <div className="min-w-0 flex-1">
                     <h3 className="text-sm font-semibold text-text-primary mb-1 leading-snug group-hover:text-accent-cyan transition-colors">
-                      {article.title}
+                      <HighlightedText text={article.title} />
                     </h3>
                     <p className="text-xs text-text-muted mb-2">
                       {article.source} &middot; {timeAgo(article.publishedAt)}
                     </p>
                     {article.snippet && !/^(Article URL:|Comments URL:|Points:)/m.test(article.snippet) && (
                       <p className="text-text-secondary text-xs mb-3 leading-relaxed line-clamp-3">
-                        {article.snippet}
+                        <HighlightedText text={article.snippet} />
                       </p>
                     )}
                     <div className="flex items-center justify-between">

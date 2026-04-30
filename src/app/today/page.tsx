@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Calendar, TrendingUp, AlertTriangle, ExternalLink, Cpu } from 'lucide-react';
+import HighlightedText from '@/lib/text-highlight';
 interface Article {
   id: string;
   title: string;
@@ -214,7 +215,7 @@ export default function TodayPage() {
                     className="flex items-start gap-2 px-3 py-2 rounded-md hover:bg-bg-secondary transition-colors group"
                   >
                     <span className="text-text-primary text-sm leading-snug flex-1 group-hover:text-accent-cyan transition-colors">
-                      {article.title}
+                      <HighlightedText text={article.title} />
                     </span>
                     <span className="text-[10px] text-text-muted shrink-0 mt-0.5">{timeAgo(article.publishedAt)}</span>
                   </a>

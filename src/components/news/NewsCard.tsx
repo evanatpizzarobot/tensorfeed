@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react';
 import { NewsArticle } from '@/lib/types';
 import { timeAgo } from '@/lib/api';
 import BookmarkButton from './BookmarkButton';
+import HighlightedText from '@/lib/text-highlight';
 
 const SOURCE_COLORS: Record<string, string> = {
   'Google AI Blog': 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -95,14 +96,14 @@ export default function NewsCard({ article, featured = false }: NewsCardProps & 
           rel="noopener noreferrer"
           className={`font-semibold text-accent-cyan hover:underline ${featured ? 'text-xl leading-snug' : 'text-lg'}`}
         >
-          {article.title}
+          <HighlightedText text={article.title} />
         </a>
       </h3>
 
       {/* Snippet */}
       {snippet && (
         <p className={`text-sm text-text-muted mb-4 ${featured ? 'line-clamp-3' : 'line-clamp-2'}`}>
-          {snippet}
+          <HighlightedText text={snippet} />
         </p>
       )}
 

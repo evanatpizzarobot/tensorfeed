@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { PenTool, Clock, ArrowRight } from 'lucide-react';
 import { ORIGINALS } from '@/lib/originals-directory';
+import HighlightedText from '@/lib/text-highlight';
 
 export const metadata: Metadata = {
   title: 'TensorFeed Originals | In-Depth AI Analysis & Editorial',
@@ -52,7 +53,7 @@ export default function OriginalsPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-1 flex-wrap">
                   <h2 className="text-lg font-semibold text-text-primary group-hover:text-accent-primary transition-colors">
-                    {article.title}
+                    <HighlightedText text={article.title} />
                   </h2>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-text-muted mb-3">
