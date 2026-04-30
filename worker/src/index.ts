@@ -416,6 +416,93 @@ async function premiumResponse(
   return new Response(JSON.stringify(responseBody), { status: 200, headers });
 }
 
+/**
+ * AFTA schema-validation-failure response. Used after requirePayment has
+ * already validated the bearer token but the handler detects malformed
+ * input. Returns HTTP 400 with the error details, logs the no-charge
+ * event to pay:no-charge:{date}, and includes a signed receipt with
+ * no_charge_reason: "schema_validation_failure" so the agent has
+ * cryptographic proof that the failure was free.
+ *
+ * Without this helper, validation 400s would still avoid the debit
+ * (deferred-debit means commitPayment never runs), but they would
+ * not be visible on the public no-charge ledger and would not carry
+ * a receipt. Both gaps mattered for the AFTA promise to be agent-
+ * verifiable, which is why this helper exists.
+ */
+async function premiumValidationFailure(
+  errorBody: Record<string, unknown>,
+  payment: import('./payments').PaymentResult,
+  request: Request,
+  env: Env,
+): Promise<Response> {
+  const url = new URL(request.url);
+  const endpoint = url.pathname;
+
+  // Log the no-charge event and ensure no debit. commitPayment with
+  // schema_validation_failure as the reason writes to the ledger and
+  // does not touch the credit balance.
+  const commit = await commitPayment(env, payment, endpoint, 'schema_validation_failure');
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'no-store',
+  };
+  if (payment.token) headers['X-Payment-Token-Balance'] = String(commit.balanceAfter);
+  if (payment.newToken && payment.token) {
+    headers['X-Payment-Token'] = payment.token;
+    headers['X-Payment-Token-Note'] = 'Save this token; use Authorization: Bearer <token> for future calls.';
+  }
+
+  const billing: Record<string, unknown> = {
+    credits_charged: 0,
+    credits_remaining: commit.balanceAfter,
+    no_charge_reason: 'schema_validation_failure',
+    afta_doc: 'https://tensorfeed.ai/agent-fair-trade',
+  };
+  if (payment.newToken) {
+    billing.new_token_issued = true;
+    billing.token = payment.token;
+  }
+
+  const bodyResult: Record<string, unknown> = { ok: false, ...errorBody };
+
+  // Receipt: same shape as premiumResponse, but credits_charged is 0,
+  // captured_at is null (handler bailed before computing), and
+  // no_charge_reason is fixed.
+  const requestHash = await hashRequest(request.method, url);
+  const responseHash = await hashResponse(bodyResult);
+  const core: ReceiptCore = {
+    v: 1,
+    id: generateReceiptId(),
+    endpoint,
+    method: request.method,
+    token_short: tokenShort(payment.token || ''),
+    credits_charged: 0,
+    credits_remaining: commit.balanceAfter,
+    request_hash: requestHash,
+    response_hash: responseHash,
+    captured_at: null,
+    server_time: new Date().toISOString(),
+    no_charge_reason: 'schema_validation_failure',
+    freshness_sla_seconds: null,
+  };
+  const signed = await signReceipt(env, core);
+  const responseBody: Record<string, unknown> = {
+    ...bodyResult,
+    billing,
+  };
+  if (signed) {
+    responseBody.receipt = signed;
+    headers['X-TensorFeed-Receipt-Id'] = signed.id;
+  } else {
+    responseBody.receipt_status = 'pending_key_bootstrap';
+  }
+
+  return new Response(JSON.stringify(responseBody), { status: 400, headers });
+}
+
 // ─────────────────────────────────────────────────────────────────────
 
 export default {
@@ -1456,27 +1543,25 @@ export default {
 
       const gpuParam = url.searchParams.get('gpu')?.trim();
       if (!gpuParam) {
-        return jsonResponse({
-          ok: false,
-          error: 'gpu_required',
-          hint: 'Pass ?gpu=<canonical> (e.g. H100, A100-80GB)',
-        }, 400);
+        return await premiumValidationFailure(
+          { error: 'gpu_required', hint: 'Pass ?gpu=<canonical> (e.g. H100, A100-80GB)' },
+          payment, request, env,
+        );
       }
       if (!isCanonicalGPU(gpuParam)) {
-        return jsonResponse({ ok: false, error: 'invalid_gpu' }, 400);
+        return await premiumValidationFailure({ error: 'invalid_gpu' }, payment, request, env);
       }
       const range = resolveGpuRange(url.searchParams.get('from'), url.searchParams.get('to'));
       if (!range.ok) {
-        return jsonResponse(
+        return await premiumValidationFailure(
           {
-            ok: false,
             error: range.error,
             limits: {
               max_range_days: GPU_MAX_RANGE_DAYS,
               default_range_days: GPU_DEFAULT_RANGE_DAYS,
             },
           },
-          400,
+          payment, request, env,
         );
       }
 
@@ -1527,7 +1612,10 @@ export default {
       const modelKeys = idsParam.split(',').map(s => s.trim()).filter(s => s.length > 0);
       const result = await compareModels(env, { modelKeys });
       if (!result.ok) {
-        return jsonResponse(result, 400);
+        return await premiumValidationFailure(
+          result as unknown as Record<string, unknown>,
+          payment, request, env,
+        );
       }
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/compare/models', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
@@ -1587,7 +1675,10 @@ export default {
         ...(primaryHorizon ? { primaryHorizon } : {}),
       });
       if (!result.ok) {
-        return jsonResponse(result, 400);
+        return await premiumValidationFailure(
+          result as unknown as Record<string, unknown>,
+          payment, request, env,
+        );
       }
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/cost/projection', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
@@ -1618,7 +1709,10 @@ export default {
 
       const result = await searchNews(env, opts);
       if (!result.ok) {
-        return jsonResponse(result, 400);
+        return await premiumValidationFailure(
+          result as unknown as Record<string, unknown>,
+          payment, request, env,
+        );
       }
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/news/search', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
