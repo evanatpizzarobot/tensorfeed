@@ -26,6 +26,7 @@ Detailed reference for the Worker, KV layout, endpoints, cron schedule, and subs
 - `whats-new.ts`: Premium morning brief (1-7 day window, pricing diff, status incidents, top news, in one paid call)
 - `mcp-registry.ts`: Daily MCP server registry telemetry (paginate registry.modelcontextprotocol.io, dedup by name keeping latest version, compute summary plus day-over-day deltas, store under mcp-reg:* prefix, expose range queries)
 - `probe.ts`: Active LLM endpoint probing (every 15 min POST a tiny prompt at each configured provider [Anthropic/OpenAI/Google/Mistral/Cohere], measure ttfb + total + status, append to 24h ring buffer, rewrite latest summary, daily roll-up to dated aggregate, per-provider daily call cap)
+- `gpu-pricing.ts`: GPU rental price aggregation across cloud GPU marketplaces. Phase 1 sources: Vast.ai (unauthenticated) and RunPod (GraphQL, requires `RUNPOD_API_KEY`). Normalizes heterogeneous GPU naming into a canonical taxonomy (H200, H100, B200, A100-80GB, etc), refreshes every 4h, daily snapshot for the historical series. Backs free `/api/gpu/pricing`, `/api/gpu/pricing/cheapest`, premium `/api/premium/gpu/pricing/series`.
 - `podcasts.ts`: Podcast feed polling
 - `trending.ts`: Trending GitHub repos
 - `twitter.ts`: X/Twitter auto-posting
@@ -62,6 +63,9 @@ Each `*.ts` has a sibling `*.test.ts` Vitest file where applicable.
   - `probe:daily:{YYYY-MM-DD}:{provider}`: daily aggregate per provider, served by /api/premium/probe/series
   - `probe:index`: ordered list of dates with probe daily data
   - `probe:budget:{YYYY-MM-DD}:{provider}`: per-provider per-day call counter, capped at 200 (36h TTL)
+  - `gpu:current`: latest unified GPU pricing snapshot across all configured marketplaces, rewritten every 4h
+  - `gpu:daily:{YYYY-MM-DD}`: dated daily snapshot for the premium series endpoint
+  - `gpu:index`: ordered list of dates with GPU pricing snapshot data
 
 Optional: `OFAC_AUDIT_LOG` namespace for compliance audit trail beyond Workers' default ~3-day log retention. Screening helper writes conditionally so the unbound case is a no-op.
 
@@ -77,6 +81,8 @@ Defined in `worker/wrangler.toml`. All cron handlers dispatched from `worker/src
 - `30 8 * * *`: Daily 8:30am UTC, trending AI repos from GitHub
 - `30 9 * * *`: Daily 9:30am UTC, MCP server registry telemetry capture (`mcp-registry.ts`). Paginates registry.modelcontextprotocol.io, dedups by name keeping isLatest, computes day-over-day deltas, stores under `mcp-reg:` prefix. Backs free `/api/mcp/registry/snapshot` and premium `/api/premium/mcp/registry/series`.
 - `5 0 * * *`: Daily 12:05am UTC, roll yesterday's per-provider 24h probe buffer into a dated daily aggregate (`probe:daily:{date}:{provider}`) for the premium probe series endpoint.
+- `15 */4 * * *`: GPU pricing refresh (`gpu-pricing.ts`). Polls Vast.ai (public) and RunPod (when `RUNPOD_API_KEY` is set), normalizes GPU names into the canonical taxonomy, writes the unified snapshot to `gpu:current`. Backs free `/api/gpu/pricing` and `/api/gpu/pricing/cheapest`.
+- `45 0 * * *`: Daily 12:45am UTC, capture daily GPU pricing snapshot for the historical series. Backs premium `/api/premium/gpu/pricing/series`. Cannot be backfilled.
 - `30 14 * * *`: Daily 2:30pm UTC, X/Twitter post (1/day, see X posting rules below)
 
 ## Data Flow
@@ -157,6 +163,8 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker. Authoritative ma
 - `/api/history`, `/api/history/{YYYY-MM-DD}/{type}`: Daily historical snapshots (Phase 0 of agent payments)
 - `/api/mcp/registry/snapshot`: Today's summary of the official MCP server registry. Captured daily at 9:30 AM UTC. Bootstraps a live capture on cold start so it never returns empty.
 - `/api/probe/latest`: Last 24h of measured LLM endpoint latency and availability per provider. Refreshed every 15 min by the probe cron. Returns 503 with explanatory body if no PROBE_*_KEY secrets are configured.
+- `/api/gpu/pricing`: Aggregated GPU rental pricing across cloud GPU marketplaces (Vast.ai + RunPod). Cheapest on-demand and spot per canonical GPU class. Refreshed every 4 hours.
+- `/api/gpu/pricing/cheapest?gpu=H100&type=on_demand|spot`: Top 3 cheapest current offers for one canonical GPU. Agent-friendly entry point.
 - `/api/preview/routing?task=code|reasoning|creative|general&budget=&min_quality=`: Free top-1 routing recommendation (5 calls/day per IP)
 - `/api/payment/info`: Wallet, pricing tiers, supported flows, verification metadata
 - `/api/payment/buy-credits` (POST): Generate a 30-min payment quote with memo nonce
@@ -182,6 +190,7 @@ All mounted under `https://tensorfeed.ai/api/*` via the Worker. Authoritative ma
 - `/api/premium/whats-new?days=&news_limit=`: Agent morning brief, 1-7 day window.
 - `/api/premium/mcp/registry/series?from=&to=`: Multi-day time series of the official MCP server registry. Range capped at 90 days. Cannot be backfilled (depends on daily capture).
 - `/api/premium/probe/series?provider=&from=&to=`: Daily measured-SLA series. Range capped at 90 days. Provider must be one of anthropic, openai, google, mistral, cohere.
+- `/api/premium/gpu/pricing/series?gpu=&from=&to=`: Daily price series for one canonical GPU across all tracked marketplace providers. Cheapest on-demand and spot per day, provider count, total offers, plus pct change. Range capped at 90 days. Cannot be backfilled.
 
 **Admin (auth-gated via `?key=<ADMIN_KEY>`):** `ADMIN_KEY` is a Worker secret, constant-time compare, default-denies if unset.
 - `/api/admin/usage?date=YYYY-MM-DD`: Daily revenue + usage rollup
@@ -208,7 +217,7 @@ To add a source: append to `data/sources.json` with `id`, `name`, `url`, `domain
 Authoritative list lives in `src/app/sitemap.ts`. Major buckets:
 
 - **Main**: `/`, `/models`, `/agents`, `/research`, `/status`, `/live`, `/originals`, `/today`, `/timeline`, `/podcasts`
-- **Tools**: `/tools/cost-calculator`, `/tools/trending`, `/benchmarks`, `/ask`, `/alerts`, `/incidents`, `/compare`
+- **Tools**: `/tools/cost-calculator`, `/tools/trending`, `/benchmarks`, `/ask`, `/alerts`, `/incidents`, `/compare`, `/gpu-pricing`
 - **Status pillar pages**: `/is-claude-down`, `/is-chatgpt-down`, `/is-gemini-down`, `/is-copilot-down`, `/is-perplexity-down`, `/is-cohere-down`, `/is-mistral-down`, `/is-huggingface-down`, `/is-replicate-down`, `/is-midjourney-down`
 - **SEO guides**: `/what-is-ai`, `/best-ai-tools`, `/best-ai-chatbots`, `/ai-api-pricing-guide`, `/what-are-ai-agents`, `/best-open-source-llms`
 - **Editorial originals**: under `/originals/*`

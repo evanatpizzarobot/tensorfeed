@@ -203,6 +203,42 @@ const ENDPOINTS: Endpoint[] = [
   },
   {
     method: 'GET',
+    path: '/api/gpu/pricing',
+    description: 'Aggregated GPU rental pricing across cloud GPU marketplaces (Vast.ai + RunPod when key configured). Cheapest on-demand and spot price per canonical GPU class (H200, H100, A100, RTX 4090, MI300X, etc), normalized from heterogeneous provider naming. Refreshed every 4 hours. Daily snapshot powers the premium /api/premium/gpu/pricing/series endpoint.',
+    cache: 'Cache for 10 minutes',
+    example: `{
+  "ok": true,
+  "snapshot": {
+    "capturedAt": "2026-04-29T18:15:00Z",
+    "providers": ["vast", "runpod"],
+    "by_canonical": [
+      {
+        "canonical": "H100", "vram_gb": 80,
+        "provider_count": 2, "total_offers": 47,
+        "cheapest_on_demand": { "provider": "runpod", "usd_hr": 1.99, "gpu_raw": "H100 80GB SXM5" },
+        "cheapest_spot": { "provider": "vast", "usd_hr": 1.45, "gpu_raw": "H100" }
+      }
+    ]
+  }
+}`,
+  },
+  {
+    method: 'GET',
+    path: '/api/gpu/pricing/cheapest',
+    description: 'Top 3 cheapest current GPU offers for one canonical GPU class. Designed as the agent-friendly entry point: an agent picking a GPU does not need the full snapshot, just where to rent this right now and for how much.',
+    params: '?gpu=H100&type=on_demand|spot',
+    cache: 'Cache for 5 minutes',
+    example: `{
+  "ok": true,
+  "gpu": "H100", "vram_gb": 80, "type": "on_demand",
+  "results": [
+    { "provider": "runpod", "usd_hr": 1.99, "gpu_raw": "H100 80GB SXM5", "available_count": 2, "region": null },
+    { "provider": "vast", "usd_hr": 2.10, "gpu_raw": "H100 PCIe", "available_count": 1, "region": "US-East" }
+  ]
+}`,
+  },
+  {
+    method: 'GET',
     path: '/api/agents/news.json',
     description: 'Alias for /api/news. Agent-friendly URL for news data.',
     cache: 'Cache for 5 minutes',

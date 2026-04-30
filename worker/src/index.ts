@@ -53,6 +53,18 @@ import {
   PROBE_DEFAULT_RANGE_DAYS,
 } from './probe';
 import {
+  refreshCurrent as refreshGpuPricing,
+  getCurrent as getGpuPricingCurrent,
+  captureDailySnapshot as captureGpuDaily,
+  pickCheapest as pickCheapestGpu,
+  resolveRange as resolveGpuRange,
+  getSeries as getGpuSeries,
+  isCanonicalGPU,
+  CanonicalGPU,
+  GPU_MAX_RANGE_DAYS,
+  GPU_DEFAULT_RANGE_DAYS,
+} from './gpu-pricing';
+import {
   requirePayment,
   getPaymentInfo,
   createQuote,
@@ -614,6 +626,8 @@ export default {
           historySnapshot: '/api/history/{YYYY-MM-DD}/{type}',
           mcpRegistrySnapshot: '/api/mcp/registry/snapshot',
           probeLatest: '/api/probe/latest',
+          gpuPricing: '/api/gpu/pricing',
+          gpuPricingCheapest: '/api/gpu/pricing/cheapest?gpu=H100&type=on_demand|spot',
           routingPreview: '/api/preview/routing',
           premiumRouting: '/api/premium/routing',
           premiumPricingSeries: '/api/premium/history/pricing/series?model=&from=&to=',
@@ -630,6 +644,7 @@ export default {
           premiumWhatsNew: '/api/premium/whats-new?days=1&news_limit=10',
           premiumMcpRegistrySeries: '/api/premium/mcp/registry/series?from=&to=',
           premiumProbeSeries: '/api/premium/probe/series?provider=&from=&to=',
+          premiumGpuPricingSeries: '/api/premium/gpu/pricing/series?gpu=&from=&to=',
           paymentInfo: '/api/payment/info',
           paymentBuyCredits: '/api/payment/buy-credits',
           paymentConfirm: '/api/payment/confirm',
@@ -741,6 +756,65 @@ export default {
         }, 503);
       }
       return jsonResponse({ ok: true, summary }, 200, 60);
+    }
+
+    // === GPU PRICING: CURRENT SNAPSHOT (free) ===
+    // Aggregated GPU rental prices across cloud GPU marketplaces (Vast.ai
+    // public + RunPod GraphQL when key is configured). Refreshed every 4
+    // hours by the gpu-pricing cron. Cold-start bootstrap kicks a refresh
+    // so the endpoint never returns null.
+
+    if (path === '/api/gpu/pricing') {
+      const snapshot = await getGpuPricingCurrent(env);
+      if (!snapshot) {
+        return jsonResponse({
+          ok: false,
+          error: 'no_pricing_data',
+          hint: 'Phase 1 sources are Vast.ai (public) and RunPod (requires RUNPOD_API_KEY secret). If both are unreachable, this endpoint returns 503.',
+        }, 503);
+      }
+      return jsonResponse({ ok: true, snapshot }, 200, 600);
+    }
+
+    // === GPU PRICING: CHEAPEST RIGHT NOW (free) ===
+    // /api/gpu/pricing/cheapest?gpu=H100&type=on_demand|spot
+    // Returns the top 3 cheapest current offers for one canonical GPU.
+    // Designed as the agent-friendly entry point: an agent picking a GPU
+    // does not need the full snapshot, just "where do I rent this right
+    // now and for how much."
+
+    if (path === '/api/gpu/pricing/cheapest') {
+      const gpuParam = url.searchParams.get('gpu')?.trim();
+      const typeParam = (url.searchParams.get('type')?.trim() || 'on_demand') as 'on_demand' | 'spot';
+
+      if (!gpuParam) {
+        return jsonResponse({
+          ok: false,
+          error: 'gpu_required',
+          hint: 'Pass ?gpu=<canonical> (e.g. H100, H200, A100-80GB, RTX-4090). Full taxonomy at /api/meta.',
+        }, 400);
+      }
+      if (!isCanonicalGPU(gpuParam)) {
+        return jsonResponse({
+          ok: false,
+          error: 'invalid_gpu',
+          hint: `Pass a canonical GPU key. Known: H200, H100, B200, A100-80GB, A100-40GB, L40S, L40, L4, RTX-6000-Ada, A6000, A5000, A4000, RTX-4090, RTX-3090, V100, MI300X, MI250.`,
+        }, 400);
+      }
+      if (typeParam !== 'on_demand' && typeParam !== 'spot') {
+        return jsonResponse({
+          ok: false,
+          error: 'invalid_type',
+          hint: 'Pass ?type=on_demand or ?type=spot (default: on_demand)',
+        }, 400);
+      }
+
+      const snapshot = await getGpuPricingCurrent(env);
+      if (!snapshot) {
+        return jsonResponse({ ok: false, error: 'no_pricing_data' }, 503);
+      }
+      const result = pickCheapestGpu(snapshot, gpuParam as CanonicalGPU, typeParam);
+      return jsonResponse(result, 200, 300);
     }
 
     // === ROUTING PREVIEW (free, rate-limited; Phase 1 of agent payments) ===
@@ -1172,6 +1246,52 @@ export default {
       const result = await getProviderSeries(env, provider, range.from!, range.to!);
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/probe/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
+      );
+      return premiumResponse(result, payment, 1);
+    }
+
+    // === PAID PREMIUM: GPU PRICING TIME SERIES (Tier 1, 1 credit) ===
+    // /api/premium/gpu/pricing/series?gpu=H100&from=&to=
+    // Daily cheapest on-demand and spot for one canonical GPU across all
+    // tracked providers, plus pct change start-to-end. Range capped at
+    // 90 days. Snapshot is captured daily; cannot be backfilled, so the
+    // historical series compounds with time. The data is unique because
+    // we aggregate across multiple marketplaces day after day; no other
+    // source publishes a longitudinal price series joined this way.
+
+    if (path === '/api/premium/gpu/pricing/series') {
+      const payment = await requirePayment(request, env, 1);
+      if (!payment.paid) return payment.response!;
+
+      const gpuParam = url.searchParams.get('gpu')?.trim();
+      if (!gpuParam) {
+        return jsonResponse({
+          ok: false,
+          error: 'gpu_required',
+          hint: 'Pass ?gpu=<canonical> (e.g. H100, A100-80GB)',
+        }, 400);
+      }
+      if (!isCanonicalGPU(gpuParam)) {
+        return jsonResponse({ ok: false, error: 'invalid_gpu' }, 400);
+      }
+      const range = resolveGpuRange(url.searchParams.get('from'), url.searchParams.get('to'));
+      if (!range.ok) {
+        return jsonResponse(
+          {
+            ok: false,
+            error: range.error,
+            limits: {
+              max_range_days: GPU_MAX_RANGE_DAYS,
+              default_range_days: GPU_DEFAULT_RANGE_DAYS,
+            },
+          },
+          400,
+        );
+      }
+
+      const result = await getGpuSeries(env, gpuParam as CanonicalGPU, range.from!, range.to!);
+      ctx.waitUntil(
+        logPremiumUsage(env, '/api/premium/gpu/pricing/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
       return premiumResponse(result, payment, 1);
     }
@@ -1760,6 +1880,16 @@ export default {
       // Daily 00:05 UTC: roll yesterday's per-provider buffer into a
       // dated daily aggregate for premium time-series queries.
       await run('rollupProbeYesterday', () => rollupProbeYesterday(env));
+    } else if (cron === '15 */4 * * *') {
+      // Every 4 hours at :15: refresh GPU pricing across configured
+      // marketplaces (Vast.ai public + RunPod when key is set).
+      // Powers /api/gpu/pricing and /api/gpu/pricing/cheapest.
+      await run('refreshGpuPricing', () => refreshGpuPricing(env));
+    } else if (cron === '45 0 * * *') {
+      // Daily 00:45 UTC: capture a daily GPU pricing snapshot for the
+      // historical series. Compounds into the moat that backs
+      // /api/premium/gpu/pricing/series.
+      await run('captureGpuDaily', () => captureGpuDaily(env));
     }
 
     // Record RSS poll history for the daily summary digest

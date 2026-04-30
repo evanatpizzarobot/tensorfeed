@@ -47,6 +47,12 @@ export interface Env {
   PROBE_GOOGLE_KEY?: string;
   PROBE_MISTRAL_KEY?: string;
   PROBE_COHERE_KEY?: string;
+  // GPU pricing aggregation (worker/src/gpu-pricing.ts). Each key is
+  // independently optional; gpu-pricing.ts skips a provider whose key
+  // is unset. Vast.ai uses an unauthenticated public endpoint, so it
+  // works with no secret. RunPod requires an API key. Set with:
+  //   wrangler secret put RUNPOD_API_KEY
+  RUNPOD_API_KEY?: string;
 }
 
 export interface Article {
