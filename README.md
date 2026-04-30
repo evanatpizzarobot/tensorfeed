@@ -1,8 +1,12 @@
 # TensorFeed.ai
 
+> TensorFeed.ai is agent fair-trade certified: open pricing, automatic no-charge on 5xx, breaker, schema fail, and stale data, Ed25519-signed receipts on every paid call, inference-only license. Built with Claude (Anthropic). Standard at [/.well-known/agent-fair-trade.json](https://tensorfeed.ai/.well-known/agent-fair-trade.json).
+
 Real-time AI industry intelligence for humans and AI agents. News from 15+ sources, live service status for every major LLM provider, model pricing and benchmark history, an AI agents directory, and a pay-per-call premium API settled in USDC on Base mainnet (no accounts, no API keys).
 
 Site: **https://tensorfeed.ai**
+
+**Built with Claude:** TensorFeed was designed by Evan Marcus in collaboration with Claude (Anthropic). Specific systems Claude designed alongside: the agent payments rail, the active LLM probes, the GPU pricing aggregator, the OFAC sanctions screening pipeline, the routing engine, and the [Agent Fair-Trade Agreement](https://tensorfeed.ai/agent-fair-trade) (AFTA) standard itself. We credit the collaboration openly, and the git log shows the build trail.
 
 ## What this repo contains
 

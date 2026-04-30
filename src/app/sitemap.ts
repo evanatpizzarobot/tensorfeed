@@ -104,6 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Developer, editorial, changelog
     { url: `${baseUrl}/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/developers/agent-payments`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/agent-fair-trade`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/changelog`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
     { url: `${baseUrl}/originals`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${baseUrl}/originals/claude-opus-4-7-release`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },

@@ -1,5 +1,6 @@
 import { Env } from './types';
 import { checkCircuitBreaker } from './circuit-breaker';
+import type { NoChargeReason } from './receipts';
 
 /**
  * Payment middleware for premium endpoints.
@@ -686,6 +687,8 @@ export async function getPaymentInfo(env: Env): Promise<unknown> {
   }));
   return {
     ok: true,
+    agent_fair_trade:
+      'TensorFeed.ai is agent fair-trade certified: open pricing, automatic no-charge on 5xx, breaker, schema fail, and stale data, Ed25519-signed receipts on every paid call, inference-only license. Built with Claude (Anthropic). Standard at /.well-known/agent-fair-trade.json.',
     operator: {
       legal_entity: 'Pizza Robot Studios LLC',
       jurisdiction: 'California, USA',
@@ -1017,14 +1020,36 @@ export async function validateAndCharge(
   return { ok: true, credits_remaining: record.balance };
 }
 
-// === Middleware: requirePayment ===
+// === Middleware: requirePayment + commitPayment (deferred-debit model) ===
+
+/**
+ * Agent Fair-Trade Agreement (AFTA) deferred-debit flow:
+ *
+ *   1. requirePayment() validates token + breaker + balance >= cost,
+ *      but does NOT debit. Returns currentBalance + cost.
+ *   2. Handler computes the response (which may surface captured_at
+ *      for staleness checks).
+ *   3. commitPayment() either debits (normal path) or records a
+ *      no-charge event (5xx, breaker, schema-fail, stale-data).
+ *
+ * This swap from "debit on entry" to "validate on entry, commit on
+ * success" is what makes the no-charge guarantees enforceable in code
+ * rather than just promised in marketing copy. Every no-charge event
+ * is logged to pay:no-charge:{date} so the daily aggregate at
+ * /api/payment/no-charge-stats is auditable.
+ */
 
 export interface PaymentResult {
   paid: boolean;
   response?: Response;
-  tokenRemaining?: number;
+  // When paid=true, populated for the commit step:
   token?: string;
-  newToken?: boolean; // true if minted via x402 (caller should advertise it)
+  cost?: number;             // credits to be debited on commit (0 if no-charge)
+  currentBalance?: number;   // balance BEFORE the pending debit
+  // Best-case post-commit balance, exposed for legacy callers and the
+  // X-Payment-Token-Balance header. commitPayment returns the real value.
+  tokenRemaining?: number;
+  newToken?: boolean;        // true if minted via x402 (caller should advertise)
 }
 
 export async function requirePayment(
@@ -1102,10 +1127,16 @@ export async function requirePayment(
         ),
       };
     }
-    record.balance -= cost;
-    record.last_used = new Date().toISOString();
-    await env.TENSORFEED_CACHE.put(`pay:credits:${token}`, JSON.stringify(record));
-    return { paid: true, tokenRemaining: record.balance, token };
+    // AFTA deferred-debit: do NOT decrement here. commitPayment will
+    // run after the handler resolves and either debit or record a
+    // no-charge event under the published guarantees.
+    return {
+      paid: true,
+      token,
+      cost,
+      currentBalance: record.balance,
+      tokenRemaining: record.balance - cost,
+    };
   }
 
   // Path 2: x402 fallback (per-call payment via tx hash)
@@ -1116,10 +1147,14 @@ export async function requirePayment(
       // Already claimed; charge against the existing token if it has balance
       const tokenRecord = (await env.TENSORFEED_CACHE.get(`pay:credits:${existing.token}`, 'json')) as CreditsRecord | null;
       if (tokenRecord && tokenRecord.balance >= cost) {
-        tokenRecord.balance -= cost;
-        tokenRecord.last_used = new Date().toISOString();
-        await env.TENSORFEED_CACHE.put(`pay:credits:${existing.token}`, JSON.stringify(tokenRecord));
-        return { paid: true, tokenRemaining: tokenRecord.balance, token: existing.token };
+        // AFTA deferred-debit: don't decrement until commitPayment.
+        return {
+          paid: true,
+          token: existing.token,
+          cost,
+          currentBalance: tokenRecord.balance,
+          tokenRemaining: tokenRecord.balance - cost,
+        };
       }
       return {
         paid: false,
@@ -1216,8 +1251,10 @@ export async function requirePayment(
 
     const token = generateToken();
     const now = new Date().toISOString();
+    // AFTA deferred-debit: mint at full credits, commitPayment will
+    // debit cost (or skip if no-charge guarantee triggers).
     const tokenRecord: CreditsRecord = {
-      balance: credits - cost,
+      balance: credits,
       created: now,
       last_used: now,
       agent_ua: request.headers.get('User-Agent') || 'unknown',
@@ -1249,8 +1286,10 @@ export async function requirePayment(
 
     return {
       paid: true,
-      tokenRemaining: tokenRecord.balance,
       token,
+      cost,
+      currentBalance: tokenRecord.balance,
+      tokenRemaining: tokenRecord.balance - cost,
       newToken: true,
     };
   }
@@ -1296,4 +1335,151 @@ function paymentRequiredResponse(env: Env, creditsRequired: number, tier: number
       'X-Payment-Min-USD': String(minUsd),
     },
   );
+}
+
+// === AFTA: commitPayment + no-charge logging ===
+
+const NO_CHARGE_PREFIX = 'pay:no-charge:';
+const NO_CHARGE_INDEX_KEY = 'pay:no-charge:index';
+const NO_CHARGE_MAX_INDEX_DATES = 365 * 3;
+
+interface NoChargeEvent {
+  ts: string;
+  reason: NoChargeReason;
+  endpoint: string;
+  cost_skipped: number;
+  token_short: string;
+}
+
+interface DailyNoChargeRollup {
+  date: string;
+  count: number;
+  by_reason: Record<string, number>;
+  by_endpoint: Record<string, number>;
+  credits_skipped: number;
+  events: NoChargeEvent[];   // capped at 200 for the most recent
+}
+
+function noChargeKey(date: string): string {
+  return `${NO_CHARGE_PREFIX}${date}`;
+}
+
+function dateString(d: Date = new Date()): string {
+  return d.toISOString().slice(0, 10);
+}
+
+function shortenToken(token: string): string {
+  if (!token || !token.startsWith('tf_live_')) return token.slice(0, 8) + '...';
+  const body = token.slice(8);
+  return `tf_live_${body.slice(0, 8)}...${body.slice(-8)}`;
+}
+
+async function readNoChargeIndex(env: Env): Promise<string[]> {
+  const raw = await env.TENSORFEED_CACHE.get(NO_CHARGE_INDEX_KEY, 'json') as string[] | null;
+  return raw || [];
+}
+
+async function pushNoChargeIndexDate(env: Env, date: string): Promise<void> {
+  const dates = await readNoChargeIndex(env);
+  if (!dates.includes(date)) {
+    dates.unshift(date);
+    if (dates.length > NO_CHARGE_MAX_INDEX_DATES) dates.length = NO_CHARGE_MAX_INDEX_DATES;
+    await env.TENSORFEED_CACHE.put(NO_CHARGE_INDEX_KEY, JSON.stringify(dates));
+  }
+}
+
+async function logNoChargeEvent(
+  env: Env,
+  reason: NonNullable<NoChargeReason>,
+  endpoint: string,
+  costSkipped: number,
+  token: string,
+): Promise<void> {
+  const date = dateString();
+  const existing = (await env.TENSORFEED_CACHE.get(noChargeKey(date), 'json')) as DailyNoChargeRollup | null;
+  const event: NoChargeEvent = {
+    ts: new Date().toISOString(),
+    reason,
+    endpoint,
+    cost_skipped: costSkipped,
+    token_short: shortenToken(token),
+  };
+  const rollup: DailyNoChargeRollup = existing || {
+    date,
+    count: 0,
+    by_reason: {},
+    by_endpoint: {},
+    credits_skipped: 0,
+    events: [],
+  };
+  rollup.count += 1;
+  rollup.credits_skipped += costSkipped;
+  rollup.by_reason[reason] = (rollup.by_reason[reason] || 0) + 1;
+  rollup.by_endpoint[endpoint] = (rollup.by_endpoint[endpoint] || 0) + 1;
+  rollup.events.unshift(event);
+  if (rollup.events.length > 200) rollup.events.length = 200;
+  await env.TENSORFEED_CACHE.put(noChargeKey(date), JSON.stringify(rollup));
+  await pushNoChargeIndexDate(env, date);
+}
+
+/**
+ * AFTA commit phase. Called by premiumResponse() after the handler
+ * returns. Honors the published no-charge guarantees:
+ *
+ *   - 5xx                          -> no charge
+ *   - circuit_breaker              -> no charge (already handled in
+ *                                     requirePayment, but re-checked here
+ *                                     for completeness)
+ *   - schema_validation_failure    -> no charge
+ *   - stale_data                   -> no charge, response is also
+ *                                     flagged with stale: true so the
+ *                                     agent knows to retry later
+ *
+ * Idempotent on the no-charge path. Race condition note: between
+ * requirePayment and commitPayment another request can clear the
+ * balance; in that case commitPayment debits to 0 rather than
+ * negative. Same risk as the previous read-modify-write code; the
+ * deferred-debit refactor does not introduce a new risk.
+ */
+export async function commitPayment(
+  env: Env,
+  payment: PaymentResult,
+  endpoint: string,
+  noChargeReason: NoChargeReason,
+): Promise<{ creditsCharged: number; balanceAfter: number; noChargeReason: NoChargeReason }> {
+  if (!payment.paid || !payment.token || payment.cost === undefined) {
+    return { creditsCharged: 0, balanceAfter: 0, noChargeReason: null };
+  }
+  const cost = payment.cost;
+
+  if (noChargeReason !== null) {
+    await logNoChargeEvent(env, noChargeReason, endpoint, cost, payment.token);
+    return {
+      creditsCharged: 0,
+      balanceAfter: payment.currentBalance ?? 0,
+      noChargeReason,
+    };
+  }
+
+  const record = (await env.TENSORFEED_CACHE.get(`pay:credits:${payment.token}`, 'json')) as CreditsRecord | null;
+  if (!record) {
+    // Token disappeared (admin burn, race). Treat as no-charge so the
+    // agent isn't billed for a call we cannot account for.
+    await logNoChargeEvent(env, 'stale_data', endpoint, cost, payment.token);
+    return { creditsCharged: 0, balanceAfter: 0, noChargeReason: 'stale_data' };
+  }
+  const balanceAfter = Math.max(0, record.balance - cost);
+  record.balance = balanceAfter;
+  record.last_used = new Date().toISOString();
+  await env.TENSORFEED_CACHE.put(`pay:credits:${payment.token}`, JSON.stringify(record));
+  return { creditsCharged: cost, balanceAfter, noChargeReason: null };
+}
+
+export async function getNoChargeRollup(env: Env, date?: string): Promise<DailyNoChargeRollup | null> {
+  const targetDate = date || dateString();
+  return (await env.TENSORFEED_CACHE.get(noChargeKey(targetDate), 'json')) as DailyNoChargeRollup | null;
+}
+
+export async function listNoChargeDates(env: Env): Promise<string[]> {
+  return readNoChargeIndex(env);
 }

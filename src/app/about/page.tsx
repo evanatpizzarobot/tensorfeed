@@ -56,6 +56,35 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Built with Claude */}
+      <section className="mb-10">
+        <h2 className="text-xl font-semibold text-text-primary mb-4">Built with Claude</h2>
+        <div className="space-y-4 text-text-secondary leading-relaxed">
+          <p>
+            TensorFeed was designed by Evan Marcus in collaboration with Claude (Anthropic). The
+            agent payments rail, the active LLM probes, the GPU pricing aggregator, the OFAC
+            sanctions screening pipeline, the routing engine, and the{' '}
+            <a href="/agent-fair-trade" className="text-accent-primary hover:underline">
+              Agent Fair-Trade Agreement
+            </a>{' '}
+            standard itself were all designed alongside Claude. The git log at{' '}
+            <a
+              href="https://github.com/RipperMercs/tensorfeed"
+              className="text-accent-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              github.com/RipperMercs/tensorfeed
+            </a>{' '}
+            shows the build trail.
+          </p>
+          <p>
+            We are proud of the collaboration and we credit it openly. An API for agents,
+            designed with an agent.
+          </p>
+        </div>
+      </section>
+
       {/* Our Mission */}
       <section className="mb-10">
         <div className="flex items-center gap-2 mb-4">

@@ -27,6 +27,8 @@ Detailed reference for the Worker, KV layout, endpoints, cron schedule, and subs
 - `mcp-registry.ts`: Daily MCP server registry telemetry (paginate registry.modelcontextprotocol.io, dedup by name keeping latest version, compute summary plus day-over-day deltas, store under mcp-reg:* prefix, expose range queries)
 - `probe.ts`: Active LLM endpoint probing (every 15 min POST a tiny prompt at each configured provider [Anthropic/OpenAI/Google/Mistral/Cohere], measure ttfb + total + status, append to 24h ring buffer, rewrite latest summary, daily roll-up to dated aggregate, per-provider daily call cap)
 - `gpu-pricing.ts`: GPU rental price aggregation across cloud GPU marketplaces. Phase 1 sources: Vast.ai (unauthenticated) and RunPod (GraphQL, requires `RUNPOD_API_KEY`). Normalizes heterogeneous GPU naming into a canonical taxonomy (H200, H100, B200, A100-80GB, etc), refreshes every 4h, daily snapshot for the historical series. Backs free `/api/gpu/pricing`, `/api/gpu/pricing/cheapest`, premium `/api/premium/gpu/pricing/series`.
+- `receipts.ts`: AFTA Ed25519 signing rail. Loads `RECEIPT_PRIVATE_KEY_JWK` Worker secret, signs canonical-JSON receipts on every premium response. Public key at `/.well-known/tensorfeed-receipt-key.json`. If secret is unset, premium responses ship without receipts (graceful, surfaced in `/api/meta`).
+- `freshness.ts`: Per-endpoint freshness SLA registry. Each premium endpoint declares max data age. The premiumResponse() wrapper checks captured_at against the SLA; if stale, the deferred debit is skipped (no-charge), response is flagged with stale: true, and the no-charge event is logged.
 - `podcasts.ts`: Podcast feed polling
 - `trending.ts`: Trending GitHub repos
 - `twitter.ts`: X/Twitter auto-posting
@@ -66,6 +68,8 @@ Each `*.ts` has a sibling `*.test.ts` Vitest file where applicable.
   - `gpu:current`: latest unified GPU pricing snapshot across all configured marketplaces, rewritten every 4h
   - `gpu:daily:{YYYY-MM-DD}`: dated daily snapshot for the premium series endpoint
   - `gpu:index`: ordered list of dates with GPU pricing snapshot data
+  - `pay:no-charge:{YYYY-MM-DD}`: AFTA daily rollup of no-charge events (5xx, breaker, schema fail, stale data) with per-reason and per-endpoint counts plus the most-recent 200 events. Public via `/api/payment/no-charge-stats`.
+  - `pay:no-charge:index`: ordered list of dates with no-charge data
 
 Optional: `OFAC_AUDIT_LOG` namespace for compliance audit trail beyond Workers' default ~3-day log retention. Screening helper writes conditionally so the unbound case is a no-op.
 
@@ -96,6 +100,20 @@ Defined in `worker/wrangler.toml`. All cron handlers dispatched from `worker/src
 Fallback: Worker keeps rolling snapshots in KV. If a live poll returns empty or fails, `snapshots.ts` restores the previous known-good payload so the public API never serves blank data. `alerts.ts` sends an email if news staleness exceeds thresholds and sends a daily ops summary.
 
 ## Subsystems
+
+### Agent Fair-Trade Agreement (AFTA)
+
+TensorFeed publishes and self-adopts the Agent Fair-Trade Agreement, an open standard for API publishers fair to AI agents. Three pillars, all enforced in code:
+
+1. **No-charge guarantees**, codified in `worker/src/payments.ts` (`commitPayment` + deferred-debit model). 5xx, circuit breaker trips, schema validation failures, and stale data all skip the credit debit. Every event is logged to `pay:no-charge:{YYYY-MM-DD}` and exposed at `/api/payment/no-charge-stats` as a public, auditable record.
+2. **Ed25519-signed receipts** on every premium response (`worker/src/receipts.ts`). Canonical JSON + asymmetric signing means agents verify with no shared secret. Public key at `/.well-known/tensorfeed-receipt-key.json`. Verify endpoint at `/api/receipt/verify`. If the worker secret `RECEIPT_PRIVATE_KEY_JWK` is unset, premium responses ship without receipts (graceful, surfaced in `/api/meta`).
+3. **Public on-chain payment rail** (USDC on Base mainnet). Every credit purchase leaves an immutable record on the Base block explorer. Receipt rail and on-chain rail are independent attestations.
+
+Per-endpoint freshness SLAs live in `worker/src/freshness.ts`. Adding a new premium endpoint requires declaring its SLA there (or null for compute-only / immutable endpoints).
+
+The standard manifest is at `/.well-known/agent-fair-trade.json`. The adoption schema other publishers can use is at `/.well-known/agent-fair-trade-schema.json`. Manifesto page: `/agent-fair-trade`.
+
+Bootstrap procedure for the receipt keypair: run `node worker/scripts/generate-receipt-key.mjs`, paste the printed private JWK into `wrangler secret put RECEIPT_PRIVATE_KEY_JWK`, replace `public/.well-known/tensorfeed-receipt-key.json` with the printed public JWK, deploy.
 
 ### Chaos Engineering Headers (free, all endpoints)
 

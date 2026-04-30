@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensorfeed.ai/.well-known/agent-fair-trade-schema.json",
+  "title": "Agent Fair-Trade Agreement",
+  "description": "An open, voluntary standard for API publishers that are fair to AI agents. Self-publish a /.well-known/agent-fair-trade.json conforming to this schema. There is no certification authority and no fee. Adoption is the certification.",
+  "type": "object",
+  "required": [
+    "version",
+    "publisher",
+    "self_description",
+    "no_charge_guarantees",
+    "receipts",
+    "pricing",
+    "data_license"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the AFTA standard the publisher conforms to.",
+      "examples": ["1.0"]
+    },
+    "name": { "type": "string" },
+    "abbrev": { "type": "string" },
+    "publisher": {
+      "type": "object",
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "type": "string" },
+        "legal_entity": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "contact": { "type": "string" },
+        "manifesto_page": { "type": "string", "format": "uri" },
+        "source_repo": { "type": "string", "format": "uri" }
+      }
+    },
+    "self_description": {
+      "type": "string",
+      "description": "Canonical 30-50 word description of the publisher's AFTA posture. Should be repeated verbatim across llms.txt, OpenAPI info.description, README, and any agent-facing surface."
+    },
+    "no_charge_guarantees": {
+      "type": "array",
+      "description": "List of conditions under which the publisher pledges not to charge for a paid API call.",
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable identifier for the guarantee. Common values: 5xx, circuit_breaker, schema_validation_failure, stale_data, rate_limited, depleted_balance.",
+            "examples": ["5xx", "circuit_breaker", "schema_validation_failure", "stale_data"]
+          },
+          "description": { "type": "string" },
+          "code": {
+            "type": "string",
+            "description": "Pointer to the source location that enforces this guarantee. Strongly recommended."
+          },
+          "verifiable_via": {
+            "type": "string",
+            "description": "How an agent or auditor can verify this guarantee in production (URL, endpoint, or test procedure)."
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "freshness_slas": {
+      "description": "Either an inline array of per-endpoint SLAs, or a URL to a live registry."
+    },
+    "receipts": {
+      "type": "object",
+      "description": "Cryptographic receipt commitment. Required even if 'signed' is false (in which case the publisher must explicitly declare the absence).",
+      "required": ["signed"],
+      "properties": {
+        "signed": { "type": "boolean" },
+        "algorithm": { "type": "string", "examples": ["EdDSA", "ECDSA-P256"] },
+        "curve": { "type": "string", "examples": ["Ed25519", "P-256"] },
+        "canonical_form": { "type": "string", "description": "Identifier for the canonical-JSON form used to compute signatures." },
+        "public_key_url": { "type": "string", "format": "uri" },
+        "verify_endpoint": { "type": "string", "format": "uri" },
+        "fields_signed": { "type": "array", "items": { "type": "string" } },
+        "rotation_policy": { "type": "string" }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "required": ["transparent", "listed_at"],
+      "properties": {
+        "transparent": { "type": "boolean" },
+        "listed_at": { "type": "string", "format": "uri" },
+        "currency": { "type": "string" },
+        "network": { "type": "string", "description": "EIP-155 chain ID, e.g. eip155:8453 for Base mainnet, or 'fiat' if not on-chain." },
+        "network_name": { "type": "string" },
+        "rail_rationale": { "type": "string", "description": "Why this payment rail was chosen, particularly for fairness to AI agents." }
+      }
+    },
+    "data_license": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "examples": ["inference-only", "training-allowed", "training-with-attribution", "custom"]
+        },
+        "description": { "type": "string" },
+        "terms_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "deprecation": {
+      "type": "object",
+      "properties": {
+        "notice_days": { "type": "integer", "minimum": 0 },
+        "channel": { "type": "string", "format": "uri" },
+        "policy": { "type": "string" }
+      }
+    },
+    "sanctions": {
+      "type": "object",
+      "properties": {
+        "screening": { "type": "string" }
+      }
+    },
+    "adoption": {
+      "type": "object",
+      "properties": {
+        "open_invitation": { "type": "string" },
+        "current_adopters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["site"],
+            "properties": {
+              "site": { "type": "string" },
+              "adopted_at": { "type": "string", "format": "date" }
+            }
+          }
+        }
+      }
+    },
+    "lastUpdated": { "type": "string", "format": "date" }
+  }
+}

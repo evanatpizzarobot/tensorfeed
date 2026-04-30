@@ -53,6 +53,14 @@ export interface Env {
   // works with no secret. RunPod requires an API key. Set with:
   //   wrangler secret put RUNPOD_API_KEY
   RUNPOD_API_KEY?: string;
+  // Agent Fair-Trade Agreement: Ed25519 private key used to sign every
+  // premium response receipt. Stored as a JWK string (kty=OKP, crv=Ed25519).
+  // Generate with `node worker/scripts/generate-receipt-key.mjs` and set
+  // via `wrangler secret put RECEIPT_PRIVATE_KEY_JWK`. The matching
+  // public key lives at /.well-known/tensorfeed-receipt-key.json. If
+  // unset, premium responses ship without a receipt (graceful, with
+  // /api/meta exposing the bootstrap status). See receipts.ts.
+  RECEIPT_PRIVATE_KEY_JWK?: string;
 }
 
 export interface Article {

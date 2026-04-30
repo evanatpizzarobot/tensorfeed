@@ -66,6 +66,9 @@ import {
 } from './gpu-pricing';
 import {
   requirePayment,
+  commitPayment,
+  getNoChargeRollup,
+  listNoChargeDates,
   getPaymentInfo,
   createQuote,
   confirmPayment,
@@ -77,6 +80,18 @@ import {
   getPaymentHistory,
   validateAndCharge,
 } from './payments';
+import {
+  signReceipt,
+  hashRequest,
+  hashResponse,
+  tokenShort,
+  generateReceiptId,
+  receiptStatus,
+  verifyReceiptSignature,
+  ReceiptCore,
+  NoChargeReason,
+} from './receipts';
+import { checkStaleness, resolveSLA, describeSLAs } from './freshness';
 import { recordPollRun, checkNewsStaleness, alertStaleNews, sendDailySummary, getAlertsStatus } from './alerts';
 import { maybeSimulatedErrorResponse, applySimulatedLatency } from './chaos';
 import {
@@ -287,36 +302,118 @@ async function cachedKVGet(
 }
 
 /**
- * Wraps a successful premium endpoint result with billing metadata and
- * the X-Payment-* response headers used by both credits and x402 flows.
+ * Wraps a successful premium endpoint result with billing metadata,
+ * commits the deferred-debit (or skips per AFTA no-charge guarantees),
+ * and attaches an Ed25519-signed receipt the agent can verify against
+ * /.well-known/tensorfeed-receipt-key.json.
+ *
+ * AFTA contract:
+ *   - Stale data (capturedAt past the endpoint's freshness SLA) -> no charge.
+ *   - Receipt is structurally non-forgeable; agents store it and audit later.
+ *
+ * The handler should pass `request` so the receipt records request hash
+ * + endpoint, and optionally `capturedAt` (ISO 8601) so staleness can be
+ * checked. If `capturedAt` is null and the endpoint has an SLA, we treat
+ * the response as fresh (don't punish billing for missing metadata).
  */
-function premiumResponse(
+async function premiumResponse(
   result: object,
-  payment: { tokenRemaining?: number; token?: string; newToken?: boolean },
-  creditsCharged: number,
-): Response {
+  payment: import('./payments').PaymentResult,
+  creditsRequested: number,
+  request: Request,
+  env: Env,
+): Promise<Response> {
+  const url = new URL(request.url);
+  const endpoint = url.pathname;
+
+  // Extract captured_at from the result if the handler surfaced one.
+  // Convention: result.capturedAt OR result.captured_at OR result.snapshot.capturedAt.
+  const r = result as Record<string, unknown>;
+  const candidateCapturedAt =
+    (typeof r.capturedAt === 'string' && r.capturedAt) ||
+    (typeof r.captured_at === 'string' && r.captured_at) ||
+    (typeof r.snapshot === 'object' &&
+      r.snapshot !== null &&
+      typeof (r.snapshot as Record<string, unknown>).capturedAt === 'string' &&
+      (r.snapshot as Record<string, string>).capturedAt) ||
+    null;
+
+  // AFTA staleness check
+  const staleness = checkStaleness(endpoint, candidateCapturedAt);
+  let noChargeReason: NoChargeReason = null;
+  if (staleness.applies && staleness.stale) {
+    noChargeReason = 'stale_data';
+  }
+
+  // Commit the deferred debit. Returns the actual creditsCharged and
+  // the post-commit balance. On a no-charge path, creditsCharged is 0
+  // and the event is logged for /api/payment/no-charge-stats.
+  const commit = await commitPayment(env, payment, endpoint, noChargeReason);
+
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Cache-Control': 'no-store',
   };
-  if (payment.token) headers['X-Payment-Token-Balance'] = String(payment.tokenRemaining ?? 0);
+  if (payment.token) headers['X-Payment-Token-Balance'] = String(commit.balanceAfter);
   if (payment.newToken && payment.token) {
     headers['X-Payment-Token'] = payment.token;
     headers['X-Payment-Token-Note'] = 'Save this token; use Authorization: Bearer <token> for future calls.';
   }
 
-  return new Response(
-    JSON.stringify({
-      ...result,
-      billing: {
-        credits_charged: creditsCharged,
-        credits_remaining: payment.tokenRemaining,
-        ...(payment.newToken ? { new_token_issued: true, token: payment.token } : {}),
-      },
-    }),
-    { status: 200, headers },
-  );
+  // Build the body. If staleness triggered no-charge, surface a stale
+  // marker so the agent can decide to retry rather than trust the data.
+  const bodyResult: Record<string, unknown> = { ...(result as Record<string, unknown>) };
+  if (commit.noChargeReason === 'stale_data') {
+    bodyResult.stale = true;
+    bodyResult.stale_age_seconds = staleness.ageSeconds;
+    bodyResult.stale_sla_seconds = staleness.slaSeconds;
+  }
+
+  const billing: Record<string, unknown> = {
+    credits_charged: commit.creditsCharged,
+    credits_remaining: commit.balanceAfter,
+  };
+  if (commit.noChargeReason !== null) {
+    billing.no_charge_reason = commit.noChargeReason;
+    billing.afta_doc = 'https://tensorfeed.ai/agent-fair-trade';
+  }
+  if (payment.newToken) {
+    billing.new_token_issued = true;
+    billing.token = payment.token;
+  }
+
+  // Receipt: build core, sign with Ed25519, embed in response.
+  const requestHash = await hashRequest(request.method, url);
+  const responseHash = await hashResponse(bodyResult);
+  const core: ReceiptCore = {
+    v: 1,
+    id: generateReceiptId(),
+    endpoint,
+    method: request.method,
+    token_short: tokenShort(payment.token || ''),
+    credits_charged: commit.creditsCharged,
+    credits_remaining: commit.balanceAfter,
+    request_hash: requestHash,
+    response_hash: responseHash,
+    captured_at: candidateCapturedAt || null,
+    server_time: new Date().toISOString(),
+    no_charge_reason: commit.noChargeReason,
+    freshness_sla_seconds: staleness.slaSeconds,
+  };
+  const signed = await signReceipt(env, core);
+  const responseBody: Record<string, unknown> = {
+    ...bodyResult,
+    billing,
+  };
+  if (signed) {
+    responseBody.receipt = signed;
+    headers['X-TensorFeed-Receipt-Id'] = signed.id;
+  } else {
+    responseBody.receipt_status = 'pending_key_bootstrap';
+  }
+
+  return new Response(JSON.stringify(responseBody), { status: 200, headers });
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -605,6 +702,8 @@ export default {
         ok: true,
         site: 'tensorfeed.ai',
         description: 'AI news, model tracking, and real-time AI ecosystem data.',
+        afta_self_description:
+          'TensorFeed.ai is agent fair-trade certified: open pricing, automatic no-charge on 5xx, breaker, schema fail, and stale data, Ed25519-signed receipts on every paid call, inference-only license. Built with Claude (Anthropic). Standard at /.well-known/agent-fair-trade.json.',
         feeds: {
           rss: '/api/feed.xml',
           json: '/api/feed.json',
@@ -651,6 +750,8 @@ export default {
           paymentBalance: '/api/payment/balance',
           paymentUsage: '/api/payment/usage',
           paymentHistory: '/api/payment/history',
+          paymentNoChargeStats: '/api/payment/no-charge-stats',
+          receiptVerify: '/api/receipt/verify',
         },
         admin: {
           usage: '/api/admin/usage?date=YYYY-MM-DD&key=<ADMIN_KEY>',
@@ -683,6 +784,15 @@ export default {
           description: 'Aggregated text on the agent-facing endpoints is scrubbed at read time. Strips ASCII control chars, bidi/zero-width spoofing, and neutralizes role-confusion tokens (<|im_start|>, [INST], "system:" line prefixes, "ignore previous instructions"). Title/snippet are length-capped.',
           enabled_on: ['/api/news', '/api/agents/news', '/feed.xml', '/feed.json', '/feed/*.xml'],
           doc: 'https://tensorfeed.ai/developers/agent-payments#prompt-injection-sanitization',
+        },
+        agent_fair_trade: {
+          description: 'Agent Fair-Trade Agreement (AFTA): code-enforced no-charge guarantees, Ed25519-signed receipts on every paid call, public on-chain payment rail (USDC on Base). Combined: every dollar that flows through TensorFeed has two independent attestations (the Base RPC tx record, immutable and public, and our signed receipt, verifiable and non-forgeable).',
+          no_charge_guarantees: ['5xx', 'circuit_breaker', 'schema_validation_failure', 'stale_data'],
+          receipts: receiptStatus(env),
+          freshness_slas: describeSLAs(),
+          standard_manifest: '/.well-known/agent-fair-trade.json',
+          public_record: '/api/payment/no-charge-stats',
+          doc: 'https://tensorfeed.ai/agent-fair-trade',
         },
         news: newsMeta,
       }, 200, 60);
@@ -1009,6 +1119,87 @@ export default {
       return jsonResponse(result, 200, 0);
     }
 
+    // === AFTA: NO-CHARGE STATS (free, public) ===
+    // Daily aggregate of every call we did NOT charge for, with per-reason
+    // and per-endpoint breakdown plus the most-recent 200 events. This is
+    // the published, auditable proof of the Agent Fair-Trade Agreement
+    // no-charge guarantees. /api/payment/no-charge-stats?date=YYYY-MM-DD
+    // for a specific day; default is today. /api/payment/no-charge-stats/dates
+    // returns the index of dates with rollup data.
+
+    if (path === '/api/payment/no-charge-stats/dates') {
+      const dates = await listNoChargeDates(env);
+      return jsonResponse({ ok: true, dates }, 200, 60);
+    }
+
+    if (path === '/api/payment/no-charge-stats') {
+      const dateParam = url.searchParams.get('date');
+      const rollup = await getNoChargeRollup(env, dateParam || undefined);
+      if (!rollup) {
+        return jsonResponse(
+          {
+            ok: true,
+            date: dateParam || new Date().toISOString().slice(0, 10),
+            count: 0,
+            credits_skipped: 0,
+            by_reason: {},
+            by_endpoint: {},
+            events: [],
+            note: 'No no-charge events recorded for this date. Either no events have triggered the AFTA guarantees, or the date is in the future.',
+          },
+          200,
+          60,
+        );
+      }
+      return jsonResponse({ ok: true, ...rollup }, 200, 60);
+    }
+
+    // === AFTA: RECEIPT VERIFY (free, public) ===
+    // Verify a signed receipt against our published Ed25519 public key.
+    // Agents can also verify offline by fetching /.well-known/tensorfeed-receipt-key.json
+    // and running the canonical-JSON signature check themselves; this endpoint
+    // is a convenience for SDKs and a discoverability surface.
+    //
+    // POST body: { receipt: <signed receipt> }
+    // Returns: { ok: true, valid: bool, key_id, message? }
+
+    if (path === '/api/receipt/verify' && request.method === 'POST') {
+      try {
+        const body = (await request.json()) as { receipt?: unknown };
+        const r = body.receipt as Record<string, unknown> | undefined;
+        if (!r || typeof r !== 'object') {
+          return jsonResponse({ ok: false, error: 'receipt_required' }, 400);
+        }
+        // Fetch our own public JWK to verify against. The key file is
+        // a static asset at /.well-known/tensorfeed-receipt-key.json,
+        // served by Cloudflare Pages on the same zone.
+        const keyRes = await fetch('https://tensorfeed.ai/.well-known/tensorfeed-receipt-key.json', {
+          headers: { Accept: 'application/json' },
+          signal: AbortSignal.timeout(5000),
+        });
+        if (!keyRes.ok) {
+          return jsonResponse({ ok: false, error: 'public_key_unavailable' }, 503);
+        }
+        const publicJwk = await keyRes.json() as { kty?: string; crv?: string; x?: string; kid?: string };
+        if (publicJwk.kty !== 'OKP' || publicJwk.crv !== 'Ed25519' || !publicJwk.x) {
+          return jsonResponse({ ok: false, error: 'public_key_malformed' }, 503);
+        }
+        const valid = await verifyReceiptSignature(
+          r as unknown as import('./receipts').SignedReceipt,
+          publicJwk as unknown as { kty: 'OKP'; crv: 'Ed25519'; x: string; kid?: string },
+        );
+        return jsonResponse({
+          ok: true,
+          valid,
+          key_id: publicJwk.kid || null,
+          algorithm: 'EdDSA / Ed25519',
+          canonical_form: 'tensorfeed-canonical-json-v1',
+        });
+      } catch {
+        return jsonResponse({ ok: false, error: 'invalid_request_body' }, 400);
+      }
+    }
+
     // === PAID PREMIUM ENDPOINT: ROUTING (Tier 2, requires credits) ===
 
     if (path === '/api/premium/routing') {
@@ -1110,7 +1301,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/history/pricing/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     if (path === '/api/premium/history/benchmarks/series') {
@@ -1145,7 +1336,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/history/benchmarks/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     if (path === '/api/premium/history/status/uptime') {
@@ -1175,7 +1366,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/history/status/uptime', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: MCP REGISTRY TIME SERIES (Tier 1, 1 credit) ===
@@ -1207,7 +1398,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/mcp/registry/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: LLM PROBE TIME SERIES (Tier 1, 1 credit) ===
@@ -1247,7 +1438,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/probe/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: GPU PRICING TIME SERIES (Tier 1, 1 credit) ===
@@ -1293,7 +1484,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/gpu/pricing/series', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: WHATS-NEW SUMMARY (Tier 1, 1 credit) ===
@@ -1318,7 +1509,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/whats-new', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: COMPARE MODELS (Tier 1, 1 credit) ===
@@ -1341,7 +1532,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/compare/models', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: PROVIDER DEEP-DIVE (Tier 1, 1 credit) ===
@@ -1362,7 +1553,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/providers', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: COST PROJECTION (Tier 1, 1 credit) ===
@@ -1401,7 +1592,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/cost/projection', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: NEWS SEARCH (Tier 1, 1 credit) ===
@@ -1432,7 +1623,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/news/search', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: ENRICHED AGENTS DIRECTORY (Tier 1, 1 credit) ===
@@ -1477,7 +1668,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/agents/directory', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     // === PAID PREMIUM: WATCHES (webhook alerts) ===
@@ -1514,7 +1705,7 @@ export default {
       ctx.waitUntil(
         logPremiumUsage(env, '/api/premium/watches', request.headers.get('User-Agent') || 'unknown', 1, payment.token),
       );
-      return premiumResponse(result, payment, 1);
+      return await premiumResponse(result, payment, 1, request, env);
     }
 
     if (path === '/api/premium/watches' && request.method === 'GET') {
