@@ -1,9 +1,13 @@
 {
-  "_status": "pending_bootstrap",
-  "_note": "This is a placeholder. The real Ed25519 public JWK lands here after the worker secret RECEIPT_PRIVATE_KEY_JWK is provisioned. Run worker/scripts/generate-receipt-key.mjs to mint a fresh keypair, paste the private into the worker secret, replace this file with the public JWK. Until then, premium responses ship without receipts and /api/meta surfaces the bootstrap state.",
-  "kty": "OKP",
-  "crv": "Ed25519",
-  "use": "sig",
+  "key_ops": [
+    "verify"
+  ],
+  "ext": true,
   "alg": "EdDSA",
+  "crv": "Ed25519",
+  "x": "QYbWY_93pcWVrw2CRXuAYlaYFeUVEmuQqzTREmOSoKs",
+  "kty": "OKP",
+  "kid": "db1f1dc3dbf62c66",
+  "use": "sig",
   "verify_doc": "https://tensorfeed.ai/agent-fair-trade#receipts"
 }
